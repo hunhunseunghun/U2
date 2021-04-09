@@ -1,24 +1,24 @@
 import logo from './logo.svg';
-import './App.css';
+import './style/common.scss';
+import './style/mobile.scss';
+import { BrowserRouter } from 'react-router-dom';
+import {Route,HashRouter} from 'react-router-dom';
+import { dispatch } from 'use-bus'
 
+import Header from './component/Header';
+import Footer from './component/Footer';
+import Tutorial from './page/Tutorial';
+import TutorialDetail from './page/TutorialDetail';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <BrowserRouter>
+            <div className={'app'} onClick={() => dispatch('@@popup/close')}>
+                <Header></Header>
+                <Route exact path="/" component={Tutorial} />
+                <Route exact path="/tutorial/detail/:id" component={TutorialDetail} />
+                <Footer></Footer>
+            </div>
+      </BrowserRouter>
   );
 }
 
