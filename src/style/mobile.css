@@ -138,6 +138,8 @@
     position: absolute;
     right: 20px;
     top: 19px;
+    width: 22px;
+    height: 22px;
   }
   .header .mobile_menu.active .mm1 {
     transform: translateY(7px) rotateZ(45deg);
@@ -150,6 +152,7 @@
   }
   .header .mobile_menu .mm_ic_container {
     position: relative;
+    width: 100%;
   }
   .header .mobile_menu .mm_ic_container .mm_ic {
     display: inline-block;

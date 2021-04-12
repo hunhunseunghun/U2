@@ -152,6 +152,8 @@ $black:#181818;
      position: absolute;
      right:20px;
      top:19px;
+     width:22px;
+     height:22px;
      &.active{
        .mm1{
          transform: translateY(7px) rotateZ(45deg);
@@ -165,6 +167,7 @@ $black:#181818;
      }
      .mm_ic_container{
        position: relative;
+       width: 100%;
        .mm_ic{
          display:inline-block;
          width:22px;

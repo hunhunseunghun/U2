@@ -4,6 +4,7 @@ import {useLocation,Link} from 'react-router-dom';
 function Header(props){
     const [whiteFix,setWhiteFix] = useState(false);
     const [headerFix,setHeaderFix] = useState(false);
+    const [mobileMenuActive,setMobileMenuActive] = useState(false);
     const [windowAppYn,setWindowAppYn] =  useState(false);
     const location = useLocation();
     useEffect(()=>{
@@ -40,15 +41,15 @@ function Header(props){
 
     },[location])
     return(
-        <div className={'header '+(whiteFix?'white ':'')+(headerFix?'fixed ':'')+(windowAppYn?'window_app':'')}>
+        <div className={'header '+(whiteFix?'white ':'')+(headerFix?'fixed ':'')+(windowAppYn?'window_app':'')+(mobileMenuActive?'active':'')}>
          <div className={'header_tl'}>
              <Link to={'/'}><div className={'logo_section'}><img src={'/img/logo'+(whiteFix?'_w':'')+'.svg'}/></div></Link>
              <div className={'search_section'}>
                  <input type={'text'} placeholder={'필요한 영상제작팁을 검색하세요'}/>
                  <img src={'/img/ic_search'+(whiteFix?'_w':'')+'.svg'}/>
              </div>
-             <div className={'mobile_menu mobile_view'}>
-                 <div className={'mm_ic_container'}>
+             <div className={'mobile_menu mobile_view '+(mobileMenuActive?'active':'')} onClick={(e)=>{e.stopPropagation();setMobileMenuActive(!mobileMenuActive);}}>
+                 <div className={'mm_ic_container '}>
                      <div className={'mm_ic mm1'}></div>
                      <div className={'mm_ic mm2'}></div>
                      <div className={'mm_ic mm3'}></div>
