@@ -9,6 +9,9 @@ import Header from './component/Header';
 import Footer from './component/Footer';
 import Tutorial from './page/Tutorial';
 import TutorialDetail from './page/TutorialDetail';
+import SnsSelect from './page/post/SnsSelect';
+import ChannelAdd from './page/post/ChannelAdd';
+import VideoPost from "./page/post/VideoPost";
 function App() {
   return (
       <BrowserRouter>
@@ -16,6 +19,9 @@ function App() {
                 <Header></Header>
                 <Route exact path="/" component={Tutorial} />
                 <Route exact path="/tutorial/detail/:id" component={TutorialDetail} />
+                <Route exact path="/post/select" component={SnsSelect} />
+                <Route exact path="/post/channel_add" component={ChannelAdd} />
+                <Route exact path="/post/post" component={VideoPost} />
                 <Footer></Footer>
             </div>
       </BrowserRouter>
