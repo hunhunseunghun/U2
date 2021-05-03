@@ -1,11 +1,29 @@
 import {useState,useEffect} from 'react';
-
+import qs from "qs";
+import axios from "axios";
 function ChannelAdd(props){
+    const { access_token } = qs.parse(window.location.hash.substr(1));
 
-    useEffect(()=>{
+    useEffect(() => {
+        const YOUTUBE_URI = "https://www.googleapis.com/youtube/v3/channels";
+        console.log(access_token);
 
+        const queryStr = qs.stringify({
+            part:'id,snippet',
+            mine:true,
+        });
 
-    },[])
+        axios.get(YOUTUBE_URI+'?'+queryStr, {
+            headers: { Authorization: "Bearer " + access_token },
+
+        })
+            .then(data => {
+                console.log(data)
+            });
+    }, [access_token]);
+    const channel_add= ()=>{
+        window.location.href='/post/post?access_token='+access_token;
+    }
     return(
         <div className={'contents_wrap'}>
             <div className={'video_post vp_channel_add'}>
@@ -40,7 +58,7 @@ function ChannelAdd(props){
                     </div>
                 </div>
                 <div className={'vp_bt_section'}>
-                    <button className={'default_bt sns_submit_bt'}>
+                    <button className={'default_bt sns_submit_bt'} onClick={channel_add}>
                         유튜브 채널 등록하기
                     </button>
                 </div>

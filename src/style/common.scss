@@ -181,22 +181,40 @@ textarea{
     font-weight:600;
     .sub_filter_section{
       flex:1;
+      display:flex;
+      align-items: center;
         .ft_programs{
           display:none;
         }
+      .ft_tags{
+        margin-left:50px;
+        display:flex;
+        .tag_item{
+          padding:4px 12px;
+          //border:1px solid #ddd;
+          border-radius: 20px;
+          color:#AAAAAA;
+          cursor: pointer;
+          &.active{
+            color:$black;
+            border-color: $black;
+          }
+        }
+      }
     }
     .ft_deco{
-      margin-right:30px;
+      margin-right:20px;
+      margin-top:2px;
     }
     .ft_process{
       display:flex;
       .ftp_item{
-        margin-right:17px;
+        margin-right:10px;
         color:#AAAAAA;
         .ftp_t{
           cursor: pointer;
         }
-        &.selected{
+        &.active{
           color:$black;
         }
         img{
@@ -248,6 +266,12 @@ textarea{
   .tutorial_items{
     padding:40px 45px 100px;
     background-color: #fafafa;
+    &>.not_contents{
+      padding:100px 0px;
+      text-align: center;
+      font-size:15px;
+      color:#898989;
+    }
     .tt_item{
       display:inline-block;
       vertical-align: top;
@@ -258,6 +282,23 @@ textarea{
       text-align: left;
       background-color: #fff;
       .tt_img{
+        width:100%;
+        height:250px;
+        background-size: cover;
+        background-color: #eee;
+        display:flex;
+        align-items: center;
+        justify-content: center;
+
+        .not_contents{
+          padding:7px 15px;
+          background-color: #fff;
+          border:1px solid #e5e5e5;
+          border-radius: 20px;
+          font-size:12px;
+          color:#898989;
+        }
+
         img{
           width:100%;
         }
@@ -272,6 +313,9 @@ textarea{
           font-size:18px;
           line-height: 26px;
           font-weight:600;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
         .tt_sub{
           margin-top:8px;

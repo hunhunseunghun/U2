@@ -3,6 +3,7 @@ import axios from "axios";
 import {API_URL, IMG_URL} from "../const/URL";
 import {Link, useLocation} from "react-router-dom";
 import Moment from "react-moment";
+import {createMarkup} from "../library/InnterHtml";
 
 function TutorialDetail(props){
     const [tutorialDetail,setTutorialDetail] =  useState({});
@@ -19,7 +20,7 @@ function TutorialDetail(props){
             console.log(result);
             setTutorialDetail(result.data);
         })
-    },[location])
+    },[])
     return(
         <div className={'contents_wrap'}>
           <div className={'tutorial_detail td1'}>
@@ -89,8 +90,8 @@ function TutorialDetail(props){
                                         </li>
                                     </ul>
                                 </div>
-                                <div className={'vd_contents'}>
-                                    {vItem.videoDesc}
+                                <div className={'vd_contents'} dangerouslySetInnerHTML={createMarkup(vItem.videoDesc)}>
+
                                 </div>
                             </div>
                         )

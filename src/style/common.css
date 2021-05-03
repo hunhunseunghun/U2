@@ -177,24 +177,41 @@ textarea {
 }
 .contents_wrap .filter_section .sub_filter_section {
   flex: 1;
+  display: flex;
+  align-items: center;
 }
 .contents_wrap .filter_section .sub_filter_section .ft_programs {
   display: none;
 }
+.contents_wrap .filter_section .sub_filter_section .ft_tags {
+  margin-left: 50px;
+  display: flex;
+}
+.contents_wrap .filter_section .sub_filter_section .ft_tags .tag_item {
+  padding: 4px 12px;
+  border-radius: 20px;
+  color: #AAAAAA;
+  cursor: pointer;
+}
+.contents_wrap .filter_section .sub_filter_section .ft_tags .tag_item.active {
+  color: #181818;
+  border-color: #181818;
+}
 .contents_wrap .filter_section .ft_deco {
-  margin-right: 30px;
+  margin-right: 20px;
+  margin-top: 2px;
 }
 .contents_wrap .filter_section .ft_process {
   display: flex;
 }
 .contents_wrap .filter_section .ft_process .ftp_item {
-  margin-right: 17px;
+  margin-right: 10px;
   color: #AAAAAA;
 }
 .contents_wrap .filter_section .ft_process .ftp_item .ftp_t {
   cursor: pointer;
 }
-.contents_wrap .filter_section .ft_process .ftp_item.selected {
+.contents_wrap .filter_section .ft_process .ftp_item.active {
   color: #181818;
 }
 .contents_wrap .filter_section .ft_process .ftp_item img {
@@ -241,6 +258,12 @@ textarea {
   padding: 40px 45px 100px;
   background-color: #fafafa;
 }
+.contents_wrap .tutorial_items > .not_contents {
+  padding: 100px 0px;
+  text-align: center;
+  font-size: 15px;
+  color: #898989;
+}
 .contents_wrap .tutorial_items .tt_item {
   display: inline-block;
   vertical-align: top;
@@ -250,6 +273,23 @@ textarea {
   cursor: pointer;
   text-align: left;
   background-color: #fff;
+}
+.contents_wrap .tutorial_items .tt_item .tt_img {
+  width: 100%;
+  height: 250px;
+  background-size: cover;
+  background-color: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.contents_wrap .tutorial_items .tt_item .tt_img .not_contents {
+  padding: 7px 15px;
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 20px;
+  font-size: 12px;
+  color: #898989;
 }
 .contents_wrap .tutorial_items .tt_item .tt_img img {
   width: 100%;
@@ -265,6 +305,9 @@ textarea {
   font-size: 18px;
   line-height: 26px;
   font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .contents_wrap .tutorial_items .tt_item .tt_contents .tt_sub {
   margin-top: 8px;

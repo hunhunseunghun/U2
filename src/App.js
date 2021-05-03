@@ -20,7 +20,7 @@ function App() {
                 <Route exact path="/" component={Tutorial} />
                 <Route exact path="/tutorial/detail/:id" component={TutorialDetail} />
                 <Route exact path="/post/select" component={SnsSelect} />
-                <Route exact path="/post/channel_add" component={ChannelAdd} />
+                <Route exact path="/post/select/channel_add" component={ChannelAdd} />
                 <Route exact path="/post/post" component={VideoPost} />
                 <Footer></Footer>
             </div>

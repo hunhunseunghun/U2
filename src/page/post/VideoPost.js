@@ -1,17 +1,33 @@
 import {useState,useEffect} from 'react';
 import { TagInput } from 'reactjs-tag-input'
 import {useForm} from 'react-hook-form'
+import {MediaUploader} from "../../library/youtubeUpload";
+import qs from "qs";
+import axios from "axios";
+
 function VideoPost(props){
+    const { access_token } = qs.parse(window.location.hash.substr(1));
     const [tags,setTags] = useState([{
         index: 0,
         displayValue: 'tag'
     }]);
+    const [file,setFile]= useState({});
     const [fileName,setFileName]= useState('파일이름');
     const [uploadPercent,setUploadPercent] = useState(0);
     const { register, handleSubmit } = useForm();
 
     useEffect(()=>{
+        const queryStr = qs.stringify({
+            part:'id,snippet',
+            mine:true,
+        });
+        axios.get('https://www.googleapis.com/youtube/v3/channels'+'?'+queryStr, {
+            headers: { Authorization: "Bearer " + access_token },
 
+        })
+            .then(data => {
+                console.log(data)
+            });
 
     },[])
 
@@ -34,22 +50,23 @@ function VideoPost(props){
         }
         const form = new FormData();
         form.append('video', e.target.files[0]);
-        this.result = this.http.post('https://videoinfoapi.azurewebsites.net/api/videoinfo', form, {
-            observe: 'body'
-        });
+        setFile(e.target.files[0]);
+        // this.result = this.http.post('https://videoinfoapi.azurewebsites.net/api/videoinfo', form, {
+        //     observe: 'body'
+        // });
 
 
 
-        reader.onload = function(file){
-            const fileContent = file;
-            img.src = file.target.result;
-            console.log(file.target);
-            fileDetails.width = img.naturalWidth;
-            fileDetails.height = img.naturalHeight;
-
-            console.log(fileDetails);
-
-        }
+        // reader.onload = function(file){
+        //     const fileContent = file;
+        //     img.src = file.target.result;
+        //     console.log(file.target);
+        //     fileDetails.width = img.naturalWidth;
+        //     fileDetails.height = img.naturalHeight;
+        //
+        //     console.log(fileDetails);
+        //
+        // }
 
         video.src = URL.createObjectURL(e.target.files[0]);;
         reader.readAsDataURL(e.target.files[0]);
@@ -65,12 +82,84 @@ function VideoPost(props){
 
         console.log(tagsData);
 
+        const queryStr = qs.stringify({
+            part:'snippet',
+            mine:true
+        });
+        const form = new FormData();
+        form.append('video', file);
+        console.log(form);
+
+        axios({
+            method: 'post',
+            url:'https://www.googleapis.com/upload/youtube/v3/videos',
+            data:file,
+            headers: { Authorization: "Bearer " + access_token }
+    })
+            .then(data => {
+                console.log(data)
+            });
+
+        const metadata = {
+            snippet: {
+                title: "테스트",
+                description: "설명부분",
+                tags: "태그",
+                categoryId: "카테고리id"
+            },
+        };
+
+
+        const uploader = new MediaUploader({
+            baseUrl: 'https://www.googleapis.com/upload/youtube/v3/videos',
+            file:file,
+            token: access_token,
+            metadata: metadata,
+            params: {
+                part: Object.keys(metadata).join(',')
+            },
+            // onError: function(data) {
+            //     let message = data;
+            //     console.log(data);
+            //     // Assuming the error is raised by the YouTube API, data will be
+            //     // a JSON string with error.message set. That may not be the
+            //     // only time onError will be raised, though.
+            //     try {
+            //         //const errorResponse = JSON.parse(data);
+            //         //console.log(errorResponse);
+            //         //message = errorResponse.error.message;
+            //     } finally {
+            //         alert(message);
+            //     }
+            // }.bind(this),
+            // onProgress: function(data) {
+            //     var currentTime = Date.now();
+            //     var bytesUploaded = data.loaded;
+            //     var totalBytes = data.total;
+            //     // The times are in millis, so we need to divide by 1000 to get seconds.
+            //     var bytesPerSecond = bytesUploaded / ((currentTime - this.uploadStartTime) / 1000);
+            //     var estimatedSecondsRemaining = (totalBytes - bytesUploaded) / bytesPerSecond;
+            //     var percentageComplete = (bytesUploaded * 100) / totalBytes;
+            //
+            //     console.log(bytesUploaded,totalBytes)
+            //
+            //
+            // }.bind(this),
+            // onComplete: function(data) {
+            //     var uploadResponse = JSON.parse(data);
+            //     console.log(uploadResponse);
+            // }.bind(this)
+        });
+        //uploader.upload();
+
     }
 
     const onTagsChanged=(tag)=>{
         setTags(tag);
         console.log(tag);
+
     }
+
     return(
         <div className={'contents_wrap'}>
             {<div className={'video_post vp_post'}>
