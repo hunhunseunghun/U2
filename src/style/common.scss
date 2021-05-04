@@ -211,6 +211,7 @@ textarea{
       .ftp_item{
         margin-right:10px;
         color:#AAAAAA;
+        cursor: pointer;
         .ftp_t{
           cursor: pointer;
         }
@@ -218,7 +219,7 @@ textarea{
           color:$black;
         }
         img{
-          margin-left:17px;
+          margin-left:10px;
         }
       }
 
@@ -232,19 +233,31 @@ textarea{
           position: absolute;
           right:0px;
           top:30px;
-          width:100px;
+          width:110px;
           padding:10px 0px;
           border-radius: 15px;
           border: 1px solid #eee;
           z-index: 5;
           background-color: #fff;
           &.ftr_pop_program{
-            width:130px;
+            width:180px;
           }
           ul li{
             line-height: 36px;
             padding:0px 25px;
             cursor: pointer;
+            position: relative;
+            .active_deco{
+                display:inline-block;
+              vertical-align: top;
+              margin-top:10px;
+              margin-left:5px;
+                width:4px;
+                height:4px;
+              border-radius: 50%;
+                background-color: #282828;
+
+            }
             &:hover{
               background-color: #eee;
             }
@@ -802,4 +815,30 @@ div.cNrjqJ{
     border-radius: 4px;
     color:#fff;
   }
+}
+@media only screen and (max-width: 1300px)  and (min-width: 900px){
+  .contents_wrap{
+    .filter_section{
+      .ft_process{
+        .ftp_item{
+          .ftp_num{
+            border:1px solid #ddd;
+            border-radius: 50%;
+            width:24px;
+            height:24px;
+            display:inline-block;
+            text-align: center;
+            line-height: 24px;
+          }
+          img{
+            opacity: 0.5;
+          }
+          .ftp_t{
+            display:none;
+          }
+        }
+      }
+    }
+  }
+
 }

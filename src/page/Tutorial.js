@@ -7,15 +7,23 @@ import useBus from 'use-bus'
 function Tutorial(props){
     const [cateProgramPopYn,setCateProgramPopYn] =  useState(false);
     const [cateOrderPopYn,setCateOrderPopYn] =  useState(false);
+    const [mobileYn,setMobileYn] =  useState(false);
+    const [mobileFilterViewYn,setMobileFilterViewYn] =  useState(false);
+
     const [categoryList,setCategoryList] = useState([]);
     const [tagList,setTagList] = useState([]);
-
+    const [toolList,setToolList] = useState([]);
     const [tutorialItems,setTutorialItems] =  useState({});
 
     const [currentCate,setCurrentCate] = useState(2);
     const [currentTag,setCurrentTag] = useState('');
+    const [currentTool,setCurrentTool] = useState([]);
+    const [currentSort,setCurrentSort] = useState(1);
 
     useEffect(()=>{
+        if(window.innerWidth<900){
+            setMobileYn(true);
+        }
         axios.get(API_URL+'/Lecture/category/all').then((result)=>{
             console.log(result.data);
             setCategoryList(result.data.filter(cItem=>cItem.categoryIdx<=11));
@@ -24,6 +32,11 @@ function Tutorial(props){
         axios.get(API_URL+'/Lecture/topichash/all').then((result)=>{
             console.log(result.data);
             setTagList(result.data);
+
+        })
+        axios.get(API_URL+'/Lecture/toolmaster/list').then((result)=>{
+
+            setToolList(result.data);
 
         })
         axios.get(API_URL+'/Lecture/topic/list?option='+currentCate).then((result)=>{
@@ -42,7 +55,7 @@ function Tutorial(props){
     )
     const cateChange=(idx)=>{
             setCurrentCate(idx);
-            axios.get(API_URL+'/Lecture/topic/list?option='+idx+'&tag='+currentTag).then((result)=>{
+            axios.get(API_URL+'/Lecture/topic/list?option='+idx+'&tag='+currentTag+'&newerFirst='+currentSort+'&toolFilterString='+currentTool).then((result)=>{
                 console.log(result);
                 setTutorialItems(result.data);
             })
@@ -50,7 +63,7 @@ function Tutorial(props){
     const tagChange=(keyword)=>{
         if(keyword!==currentTag){
             setCurrentTag(keyword);
-            axios.get(API_URL+'/Lecture/topic/list?option='+currentCate+'&tag='+currentTag).then((result)=>{
+            axios.get(API_URL+'/Lecture/topic/list?option='+currentCate+'&tag='+currentTag+'&newerFirst='+currentSort+'&toolFilterString='+currentTool).then((result)=>{
                 console.log(result);
                 setTutorialItems(result.data);
             })
@@ -59,18 +72,44 @@ function Tutorial(props){
         }
 
     }
+    const sortChange=(sort)=>{
+
+        setCurrentSort(sort);
+        axios.get(API_URL+'/Lecture/topic/list?option='+currentCate+'&tag='+currentTag+'&newerFirst='+sort+'&toolFilterString='+currentTool).then((result)=>{
+            console.log(result.data);
+            setTutorialItems(result.data);
+        })
+    }
+    const toolChange=(idx)=>{
+        let tempToolList= [];
+        if(currentTool.indexOf(idx)>=0){
+            tempToolList = currentTool.filter(tIdx=>tIdx!==idx)
+
+        }else{
+            tempToolList=[...currentTool,idx];
+        }
+        setCurrentTool(tempToolList);
+        let toolStr='';
+        tempToolList.map((tl,index)=>{
+            return index!==(tempToolList.length-1)?toolStr+=(tl+'-'):toolStr+=tl;
+        });
+        axios.get(API_URL+'/Lecture/topic/list?option='+currentCate+'&tag='+currentTag+'&newerFirst='+currentSort+'&toolFilterString='+toolStr).then((result)=>{
+            console.log(result.data);
+            setTutorialItems(result.data);
+        })
+    }
     return(
         <div className={'contents_wrap'}>
             <div className={'filter_section'}>
                <div className={'ft_deco'}>
                    <img src={'/img/ic_filter.svg'}/>
-                   <div className={'ft_title mobile_view'}>필터 <img src={'/img/ic_arrow_down.svg'}/></div>
+                   <div className={'ft_title mobile_view'} onClick={()=>{setMobileFilterViewYn(!mobileFilterViewYn)}}>필터 <img src={'/img/ic_arrow_down.svg'}/></div>
                </div>
-                <div className={'sub_filter_section'}>
+                {(!mobileYn||mobileFilterViewYn)&&<div className={'sub_filter_section'}>
                     <div className={'ft_process'}>
-                        {categoryList.map((cItem,index)=><div className={'ftp_item '+(cItem.categoryIdx===currentCate?'active':'')} key={index} onClick={(e)=>{cateChange(cItem.categoryIdx)}}>
-                            <span className={'ftp_t'}>{cItem.categoryName}</span>
-                            {index!==(categoryList.length-1)&&<img src={'/img/ic_arrow_right_g.svg'}/>}
+                        {categoryList.map((cItem,cIndex)=><div className={'ftp_item '+(cItem.categoryIdx===currentCate?'active':'')} key={cIndex} onClick={(e)=>{cateChange(cItem.categoryIdx)}}>
+                            <span className={'ftp_num'} title={cItem.categoryName}>{(cIndex+1)}</span><span className={'ftp_t'}>. {cItem.categoryName}</span>
+                            {cIndex!==(categoryList.length-1)&&<img src={'/img/ic_arrow_right_g.svg'}/>}
                         </div>)}
 
                     </div>
@@ -86,16 +125,16 @@ function Tutorial(props){
                             <li>Photoshop</li>
                         </ul>
                     </div>
-                </div>
+                </div>}
 
 
                 <div className={'ft_right_section'}>
                     <div className={'ftr_select_item'}>
-                        <div className={'ftr_selected'} onClick={(e)=>{e.stopPropagation();setCateProgramPopYn(false);setCateOrderPopYn(!cateOrderPopYn)}}>추천순 <img src={'/img/ic_arrow_down.svg'}/></div>
+                        <div className={'ftr_selected'} onClick={(e)=>{e.stopPropagation();setCateProgramPopYn(false);setCateOrderPopYn(!cateOrderPopYn)}}>{currentSort===1?'최신순':'오래된순'} <img src={'/img/ic_arrow_down.svg'}/></div>
                         {cateOrderPopYn&&<div className={'ftr_pop'}>
                             <ul>
-                                <li>날짜순</li>
-                                <li>추천순</li>
+                                <li onClick={()=>{sortChange(1)}}>최신순</li>
+                                <li onClick={()=>{sortChange(0)}}>오래된순</li>
                             </ul>
                         </div>}
                     </div>
@@ -103,11 +142,7 @@ function Tutorial(props){
                         <div className={'ftr_selected'}  onClick={(e)=>{e.stopPropagation();setCateOrderPopYn(false);setCateProgramPopYn(!cateProgramPopYn)}}>프로그램 <img src={'/img/ic_arrow_down.svg'}/></div>
                         {cateProgramPopYn&&<div className={'ftr_pop ftr_pop_program'}>
                             <ul>
-                                <li>Photoshop</li>
-                                <li>Photoshop</li>
-                                <li>Photoshop</li>
-                                <li>Photoshop</li>
-                                <li>Photoshop</li>
+                                {toolList.map((toolItem,tIndex)=><li key={tIndex} onClick={()=>{toolChange(toolItem.toolIdx)}}>{toolItem.toolName}{currentTool.indexOf(toolItem.toolIdx)>=0&&<span className={'active_deco'}></span>}</li>)}
                             </ul>
                         </div>}
                     </div>
