@@ -99,10 +99,10 @@
     margin-top: 10px;
   }
   .header .logo_section {
-    margin-top: 3px;
+    margin-top: 10px;
   }
   .header .logo_section img {
-    width: 36px;
+    width: 34px;
   }
   .header > .main_menu {
     display: none;
@@ -172,6 +172,203 @@
     top: 14px;
   }
 
+  .contents_wrap .intro.intro1 .main_copy_section {
+    left: 0px;
+    width: 100%;
+    margin-top: -110px;
+  }
+  .contents_wrap .intro.intro1 .main_copy_section .main_copy {
+    font-size: 34px;
+    line-height: 48px;
+    text-align: center;
+  }
+  .contents_wrap .intro.intro1 .main_copy_section .sub_copy {
+    margin-top: 20px;
+    font-size: 15px;
+    text-align: center;
+  }
+  .contents_wrap .intro.intro1 .main_copy_section .bt_section {
+    margin-top: 40px;
+    text-align: center;
+  }
+  .contents_wrap .intro.intro2 {
+    padding: 50px 20px;
+  }
+  .contents_wrap .intro.intro2 .section_title {
+    font-size: 14px;
+  }
+  .contents_wrap .intro.intro2 .main_copy {
+    font-size: 15px;
+    line-height: 28px;
+  }
+  .contents_wrap .intro.intro3 {
+    padding: 60px 20px;
+  }
+  .contents_wrap .intro.intro3 .deco_img {
+    right: 0px;
+    text-align: right;
+  }
+  .contents_wrap .intro.intro3 .deco_img img {
+    width: 50%;
+  }
+  .contents_wrap .intro.intro3 .main_copy {
+    font-size: 18px;
+    line-height: 28px;
+    position: relative;
+    z-index: 5;
+  }
+  .contents_wrap .intro.intro3 .strength_items {
+    margin-top: 60px;
+    flex-direction: column;
+  }
+  .contents_wrap .intro.intro3 .strength_items .st_item {
+    margin-bottom: 40px;
+    margin-right: 0px;
+  }
+  .contents_wrap .intro.intro3 .strength_items .st_item .st_title {
+    font-size: 16px;
+  }
+  .contents_wrap .intro.intro3 .strength_items .st_item .st_contents {
+    margin-top: 20px;
+    font-size: 14px;
+    line-height: 24px;
+  }
+  .contents_wrap .intro.intro4 {
+    padding: 0px 20px 30px;
+  }
+  .contents_wrap .intro.intro4 .section_title {
+    font-size: 18px;
+  }
+  .contents_wrap .intro.intro4 .tool_items {
+    margin-top: 60px;
+    flex-direction: column;
+  }
+  .contents_wrap .intro.intro4 .tool_items .tool_list {
+    width: 100%;
+  }
+  .contents_wrap .intro.intro4 .tool_items .tool_list .tool_item {
+    margin-bottom: 30px;
+  }
+  .contents_wrap .intro.intro4 .tool_items .tool_list .tool_item img {
+    width: 30px;
+    height: 30px;
+    margin-right: 15px;
+  }
+  .contents_wrap .intro.intro4 .tool_items .tool_list .tool_item .tool_contents .tool_name {
+    font-size: 15px;
+  }
+  .contents_wrap .intro.intro4 .tool_items .tool_list .tool_item .tool_contents .tool_desc {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 22px;
+  }
+  .contents_wrap .intro.intro5 {
+    padding: 50px 20px;
+  }
+  .contents_wrap .intro.intro5 .section_title {
+    font-size: 18px;
+  }
+  .contents_wrap .intro.intro5 .price_items {
+    margin-top: 30px;
+    flex-direction: column;
+  }
+  .contents_wrap .intro.intro5 .price_items .pr_item {
+    width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+  }
+  .contents_wrap .intro.intro5 .price_items .pr_item .pr_title {
+    font-size: 16px;
+  }
+  .contents_wrap .intro.intro5 .price_items .pr_item .pr_tags {
+    margin-top: 10px;
+  }
+  .contents_wrap .intro.intro5 .price_items .pr_item .pr_tags .pr_tag {
+    font-size: 13px;
+    padding: 8px 15px;
+  }
+  .contents_wrap .intro.intro5 .price_items .pr_item .pr_price .pr_value {
+    font-size: 18px;
+  }
+  .contents_wrap .intro.intro5 .price_items .pr_item .pr_price .pr_sub_desc {
+    font-size: 14px;
+  }
+  .contents_wrap .intro.intro5 .price_items .pr_item .pr_contents {
+    height: 100%;
+  }
+  .contents_wrap .intro.intro5 .price_items .pr_item .pr_contents .pr_desc {
+    margin-top: 20px;
+  }
+  .contents_wrap .intro.intro5 .price_items .pr_item .pr_bt_section {
+    margin-top: 30px;
+  }
+  .contents_wrap .intro.intro6 {
+    padding: 50px 20px;
+    height: 100%;
+    background-position: center center;
+  }
+  .contents_wrap .intro.intro6 .process_section {
+    font-size: 14px;
+  }
+  .contents_wrap .intro.intro6 .copy_items {
+    margin-bottom: 20px;
+    margin-top: 30px;
+  }
+  .contents_wrap .intro.intro6 .copy_items .copy_item {
+    width: 100%;
+    margin-left: -50%;
+  }
+  .contents_wrap .intro.intro6 .copy_items .copy_item .main_copy {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 28px;
+  }
+  .contents_wrap .intro.intro6 .copy_items .copy_item .main_copy .t_deco_start, .contents_wrap .intro.intro6 .copy_items .copy_item .main_copy .t_deco_end {
+    font-size: 20px;
+    display: none;
+  }
+  .contents_wrap .intro.intro6 .copy_items .copy_item .copy_writer {
+    font-weight: 500;
+    margin-top: 20px;
+    font-size: 13px;
+  }
+  .contents_wrap .intro.intro7 {
+    padding: 50px 0px;
+  }
+  .contents_wrap .intro.intro7 .section_title {
+    font-size: 18px;
+  }
+  .contents_wrap .intro.intro7 .faq_items {
+    margin-top: 30px;
+  }
+  .contents_wrap .intro.intro7 .faq_items .faq_item .faq_header {
+    flex-wrap: wrap;
+    padding: 15px 20px;
+    height: 100%;
+    font-size: 14px;
+  }
+  .contents_wrap .intro.intro7 .faq_items .faq_item .faq_header .faq_num {
+    width: 35px;
+  }
+  .contents_wrap .intro.intro7 .faq_items .faq_item .faq_header .faq_cate {
+    display: none;
+  }
+  .contents_wrap .intro.intro7 .faq_items .faq_item .faq_header .faq_deco {
+    width: 20px;
+    display: none;
+  }
+  .contents_wrap .intro.intro7 .faq_items .faq_item .faq_header .faq_deco img {
+    width: 10px;
+  }
+  .contents_wrap .intro.intro7 .faq_items .faq_item .faq_contents {
+    padding: 20px 20px 20px;
+    font-size: 14px;
+    line-height: 24px;
+  }
+  .contents_wrap .intro.intro7 .faq_items .faq_item .faq_contents .faq_num {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
   .contents_wrap .filter_section {
     padding: 52px 20px 0px;
     height: 45px;
@@ -212,7 +409,6 @@
   .contents_wrap .filter_section .ft_deco .ft_title {
     font-size: 14px;
     font-weight: 600;
-    margin-left: 10px;
   }
   .contents_wrap .filter_section .ft_deco .ft_title img {
     width: 10px;
@@ -383,6 +579,22 @@
   .footer .ft_copyright {
     font-size: 12px;
     right: 20px;
+  }
+
+  .default_bt {
+    font-size: 14px;
+  }
+  .default_bt.join_bt {
+    margin: 0px auto;
+    font-size: 16px;
+    width: 180px;
+    height: 54px;
+    border-width: 1px;
+  }
+  .default_bt.go_to_price_bt {
+    font-size: 15px;
+    height: 54px;
+    border-width: 1px;
   }
 }
 

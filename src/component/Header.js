@@ -8,8 +8,7 @@ function Header(props){
     const [windowAppYn,setWindowAppYn] =  useState(false);
     const location = useLocation();
     useEffect(()=>{
-        console.log(location.pathname.indexOf('/tutorial/detail/'))
-        if(location.pathname.indexOf('/tutorial/detail/')>=0){
+        if(location.pathname.indexOf('/tutorial/detail/')>=0||location.pathname==='/'){
             setWhiteFix(true);
             //console.log(whiteFix);
         }else{
@@ -29,7 +28,7 @@ function Header(props){
                 setWhiteFix(false);
             }else{
                 setHeaderFix(false);
-                if(location.pathname.indexOf('/tutorial/detail/')>=0){
+                if(location.pathname.indexOf('/tutorial/detail/')>=0||location.pathname==='/'){
                     setWhiteFix(true);
                 }else{
                     setWhiteFix(false);
@@ -44,10 +43,10 @@ function Header(props){
         <div className={'header '+(whiteFix?'white ':'')+(headerFix?'fixed ':'')+(windowAppYn?'window_app':'')+(mobileMenuActive?'active':'')}>
          <div className={'header_tl'}>
              <Link to={'/'}><div className={'logo_section'}><img src={'/img/logo'+(whiteFix?'_w':'')+'.svg'}/></div></Link>
-             <div className={'search_section'}>
+             {location.pathname.indexOf('/')<0&&<div className={'search_section'}>
                  <input type={'text'} placeholder={'필요한 영상제작팁을 검색하세요'}/>
                  <img src={'/img/ic_search'+(whiteFix?'_w':'')+'.svg'}/>
-             </div>
+             </div>}
              <div className={'mobile_menu mobile_view '+(mobileMenuActive?'active':'')} onClick={(e)=>{e.stopPropagation();setMobileMenuActive(!mobileMenuActive);}}>
                  <div className={'mm_ic_container '}>
                      <div className={'mm_ic mm1'}></div>
@@ -60,7 +59,7 @@ function Header(props){
           <div className={'main_menu'}>
               <ul>
                   <li>메인으로</li>
-                  <li className={'active'}><Link to={'/'}>영상제작팁</Link></li>
+                  <li className={'active'}><Link to={'/tutorial'}>영상제작팁</Link></li>
                   <li>요금제</li>
                   <li>로그인/회원가입</li>
               </ul>

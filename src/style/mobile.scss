@@ -111,9 +111,9 @@ $black:#181818;
 
    }
    .logo_section{
-     margin-top:3px;
+     margin-top:10px;
      img{
-       width:36px;
+       width:34px;
      }
    }
    &>.main_menu{
@@ -190,6 +190,216 @@ $black:#181818;
    }
  }
   .contents_wrap{
+    .intro{
+      &.intro1{
+        .main_copy_section{
+          left:0px;
+          width:100%;
+          margin-top:-110px;
+          .main_copy{
+            font-size:34px;
+            line-height: 48px;
+            text-align: center;
+          }
+          .sub_copy{
+            margin-top:20px;
+            font-size:15px;
+            text-align: center;
+          }
+          .bt_section{
+            margin-top:40px;
+            text-align: center;
+          }
+        }
+
+      }
+      &.intro2{
+        padding:50px 20px;
+        .section_title{
+          font-size:14px;
+        }
+        .main_copy{
+          font-size:15px;
+          line-height: 28px;
+        }
+      }
+      &.intro3{
+        padding:60px 20px;
+        .deco_img{
+          right:0px;
+          text-align: right;
+         img{
+           width:50%;
+         }
+        }
+        .main_copy{
+          font-size:18px;
+          line-height: 28px;
+          position: relative;
+          z-index: 5;
+        }
+        .strength_items{
+          margin-top:60px;
+          flex-direction: column;
+          .st_item{
+            margin-bottom:40px;
+            margin-right:0px;
+            .st_title{
+              font-size:16px;
+            }
+            .st_contents{
+              margin-top:20px;
+              font-size:14px;
+              line-height: 24px;
+            }
+          }
+        }
+      }
+      &.intro4{
+        padding:0px 20px 30px;
+        .section_title{
+          font-size:18px;
+        }
+        .tool_items{
+          margin-top:60px;
+          flex-direction: column;
+          .tool_list{
+            width:100%;
+            .tool_item{
+              margin-bottom:30px;
+              img{
+                width:30px;
+                height:30px;
+                margin-right:15px;
+              }
+              .tool_contents{
+                .tool_name{
+                  font-size:15px;
+                }
+                .tool_desc{
+                  margin-top:10px;
+                  font-size:14px;
+                  line-height: 22px;
+                }
+              }
+            }
+          }
+        }
+      }
+      &.intro5{
+        padding:50px 20px;
+        .section_title{
+          font-size:18px;
+        }
+        .price_items{
+          margin-top:30px;
+          flex-direction: column;
+          .pr_item{
+            width:100%;
+            margin-bottom:20px;
+            border:1px solid #eee;
+            .pr_title{
+              font-size:16px;
+            }
+            .pr_tags{
+              margin-top:10px;
+              .pr_tag{
+                font-size:13px;
+                padding:8px 15px;
+              }
+            }
+            .pr_price{
+
+              .pr_value{
+                font-size:18px;
+              }
+              .pr_sub_desc{
+                font-size:14px;
+              }
+            }
+            .pr_contents{
+              height:100%;
+              .pr_desc{
+                margin-top:20px;
+              }
+            }
+            .pr_bt_section{
+              margin-top:30px;
+            }
+          }
+        }
+      }
+      &.intro6{
+        padding:50px 20px;
+        height:100%;
+        background-position: center center;
+        .process_section{
+          font-size:14px;
+        }
+        .copy_items{
+          margin-bottom:20px;
+          margin-top:30px;
+          .copy_item{
+            width:100%;
+            margin-left:-50%;
+            .main_copy{
+              font-size:15px;
+              font-weight:500;
+              line-height: 28px;
+              .t_deco_start,.t_deco_end{
+                  font-size:20px;
+                display:none;
+              }
+
+            }
+            .copy_writer{
+              font-weight:500;
+              margin-top:20px;
+              font-size:13px;
+            }
+          }
+        }
+      }
+      &.intro7{
+        padding:50px 0px;
+        .section_title{
+          font-size:18px;
+        }
+        .faq_items{
+          margin-top:30px;
+          .faq_item{
+            .faq_header{
+              flex-wrap: wrap;
+              padding:15px 20px;
+              height:100%;
+              font-size:14px;
+              .faq_num{
+                width:35px;
+              }
+              .faq_cate{
+                display:none;
+              }
+              .faq_deco{
+                width:20px;
+                display:none;
+                img{
+                  width:10px;
+                }
+              }
+            }
+            .faq_contents{
+              padding:20px 20px 20px;
+              font-size:14px;
+              line-height: 24px;
+              .faq_num{
+                font-size:14px;
+                margin-bottom:10px;
+              }
+            }
+          }
+        }
+      }
+    }
     .filter_section{
       padding:52px 20px 0px;
       height:45px;
@@ -233,7 +443,6 @@ $black:#181818;
         .ft_title{
           font-size:14px;
           font-weight:600;
-          margin-left:10px;
           img{
               width:10px;
               margin-left:4px;
@@ -425,5 +634,22 @@ $black:#181818;
     }
   }
 
+  .default_bt{
+    font-size:14px;
+    &.join_bt{
+      margin:0px auto;
+      font-size:16px;
+      width:180px;
+      height:54px;
+      border-width: 1px;
+    }
+    &.go_to_price_bt{
+      font-size:15px;
+      height:54px;
+      border-width: 1px;
+    }
+  }
+
 }
+
 

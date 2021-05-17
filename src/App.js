@@ -7,6 +7,7 @@ import { dispatch } from 'use-bus'
 
 import Header from './component/Header';
 import Footer from './component/Footer';
+import Main from './page/Main';
 import Tutorial from './page/Tutorial';
 import TutorialDetail from './page/TutorialDetail';
 import SnsSelect from './page/post/SnsSelect';
@@ -17,7 +18,8 @@ function App() {
       <BrowserRouter>
             <div className={'app'} onClick={() => dispatch('@@popup/close')}>
                 <Header></Header>
-                <Route exact path="/" component={Tutorial} />
+                <Route exact path="/" component={Main} />
+                <Route exact path="/tutorial" component={Tutorial} />
                 <Route exact path="/tutorial/detail/:id" component={TutorialDetail} />
                 <Route exact path="/post/select" component={SnsSelect} />
                 <Route exact path="/post/select/channel_add" component={ChannelAdd} />

@@ -4,6 +4,7 @@ import {API_URL, IMG_URL} from "../const/URL";
 import {Link, useLocation} from "react-router-dom";
 import Moment from "react-moment";
 import {createMarkup} from "../library/InnterHtml";
+import {Helmet} from "react-helmet";
 
 function TutorialDetail(props){
     const [tutorialDetail,setTutorialDetail] =  useState({});
@@ -23,33 +24,45 @@ function TutorialDetail(props){
     },[])
     return(
         <div className={'contents_wrap'}>
-          <div className={'tutorial_detail td1'}>
-              {tutorialDetail.topicImage&&<div className={'td_back'} style={{backgroundImage:'url('+IMG_URL+'/'+tutorialDetail.topicImage+')'}}>
-              </div>}
+            <Helmet>
+                {/*<title>My Title</title>*/}
+                {/*<meta name="title" content={'My Title'} />*/}
+                <meta name="image" content={'https://web-test.u2.life/img/logo.svg'} />
+                <meta name="description" content={'titleTest'} />
+                <meta name="url" content={window.location.href}  />
+
+                <meta property="og:title" content={'My Title'} />
+                <meta property="og:image"content={'https://web-test.u2.life/img/logo.svg'} />
+                <meta property="og:description" content={'titleTest'} />
+                <meta property="og:url" content={window.location.href} />
+            </Helmet>
+            <div className={'tutorial_detail td1'}>
+                {tutorialDetail.topicImage&&<div className={'td_back'} style={{backgroundImage:'url('+IMG_URL+'/'+tutorialDetail.topicImage+')'}}>
+                </div>}
                 <div className={'td_title'}>
-                   <div className={'tdt_t'}>
-                       {tutorialDetail.topicName}
-                   </div>
+                    <div className={'tdt_t'}>
+                        {tutorialDetail.topicName}
+                    </div>
                     <div className={'td_subtitle'}>
                         {tutorialDetail.categoryName}/ 총 {tutorialDetail.timeTotal}시간/ <Moment format="YYYY. MM. DD.">
                         {tutorialDetail.regDate}</Moment>
                     </div>
                 </div>
 
-              <div className={'td_writer'}>
-                  <span className={'user_profile'} style={{backgroundImage:'url(/img/temp_profile.png)'}}></span> {tutorialDetail.memberName}
-              </div>
-              <div className={'td_programs'}>
-                  {tutorialDetail.toolLogos&&tutorialDetail.toolLogos.map((pItem,pIndex)=>{
-                      return(
-                          <img key={pIndex} src={'/img/'+pItem+'.png'}/>
-                      )
-                  })}
-              </div>
-          </div>
-          <div className={'tutorial_detail td2'}>
-              {tutorialDetail.topicDesc}
-          </div>
+                <div className={'td_writer'}>
+                    <span className={'user_profile'} style={{backgroundImage:'url(/img/temp_profile.png)'}}></span> {tutorialDetail.memberName}
+                </div>
+                <div className={'td_programs'}>
+                    {tutorialDetail.toolLogos&&tutorialDetail.toolLogos.map((pItem,pIndex)=>{
+                        return(
+                            <img key={pIndex} src={ IMG_URL+'/tools/'+pItem+'.png'}/>
+                        )
+                    })}
+                </div>
+            </div>
+            <div className={'tutorial_detail td2'}>
+                <div dangerouslySetInnerHTML={createMarkup(tutorialDetail.topicDesc)}></div>
+            </div>
             <div className={'tutorial_detail td3'}>
                 <div className={'section_title'}>Course Table</div>
                 <div className={'course_items'}>
@@ -57,7 +70,7 @@ function TutorialDetail(props){
                         return(
                             <div className={'course_item'} key={vIndex}>
                                 <div className={'cs_step'}>step{vIndex+1}.</div>
-                                <div className={'cs_title'}>{vItem.videoName}</div>
+                                <div className={'cs_title'}>{vItem.sectionTitle}</div>
                                 <div className={'cs_time'}>총 {vItem.playTime}분</div>
                             </div>
                         )
@@ -72,8 +85,8 @@ function TutorialDetail(props){
                         return(
                             <div className={'video_item'} key={vIndex}>
                                 <div className={'vd_title'}>{vItem.sectionTitle}</div>
-                                <div className={'vd_video'}>
-                                    <iframe width="900" height="510" src={"https://www.youtube.com/embed/"+vItem.vodLinkUrl}
+                                {vItem.vodLinkUrl&&<div className={'vd_video'}>
+                                    <iframe width="900" height="510" src={"https://www.youtube.com/embed/"+vItem.vodLinkUrl+'?start='+vItem.videoStartTime}
                                             title="YouTube video player" frameBorder="0"
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                             allowFullScreen></iframe>
@@ -81,15 +94,15 @@ function TutorialDetail(props){
                                         <li>출처 : {vItem.sourceName}</li>
                                         <li>영상제목 : <a href={vItem.sourceLink} target={'_blank'}>{vItem.videoName}</a></li>
                                         <li>관련 앱<br/>
-                                            {vItem.toolLogos&&tutorialDetail.toolLogos.map((spItem,spIndex)=>{
+                                            {vItem.toolLogos&&vItem.toolLogos.map((spItem,spIndex)=>{
                                                 return(
-                                                    <img key={spIndex} src={'/img/'+spItem+'.png'}/>
+                                                    <img key={spIndex} src={ IMG_URL+'/tools/'+spItem+'.png'}/>
                                                 )
                                             })}
 
                                         </li>
                                     </ul>
-                                </div>
+                                </div>}
                                 <div className={'vd_contents'} dangerouslySetInnerHTML={createMarkup(vItem.videoDesc)}>
 
                                 </div>
@@ -104,7 +117,7 @@ function TutorialDetail(props){
                     {tutorialDetail.topicRecommands&&tutorialDetail.topicRecommands.map((tItem,index)=>{
                         return(
                             <Link to={{pathname:'/tutorial/detail/'+tItem.topicIdx,
-                            search:windowAppYn?'?windowapp=true':''
+                                search:windowAppYn?'?windowapp=true':''
                             }} key={index}>
                                 <div className={'tt_item'}>
                                     <div className={'tt_img'}>
@@ -120,7 +133,7 @@ function TutorialDetail(props){
                                             <div className={'tt_programs'}>
                                                 {tItem.toolLogos.map((pItem,pIndex)=>{
                                                     return(
-                                                        <img key={pIndex} src={'/img/'+pItem+'.png'}/>
+                                                        <img key={pIndex} src={IMG_URL+'/tools/'+pItem+'.png'}/>
                                                     )
                                                 })}
                                             </div>

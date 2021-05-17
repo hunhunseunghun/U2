@@ -1,5 +1,6 @@
 import {useState,useEffect} from 'react';
 import {Link} from 'react-router-dom';
+import useHistoryState from 'use-history-state';
 import axios from "axios";
 import {API_URL,IMG_URL} from "../const/URL";
 import Moment from 'react-moment';
@@ -15,10 +16,10 @@ function Tutorial(props){
     const [toolList,setToolList] = useState([]);
     const [tutorialItems,setTutorialItems] =  useState({});
 
-    const [currentCate,setCurrentCate] = useState(2);
-    const [currentTag,setCurrentTag] = useState('');
-    const [currentTool,setCurrentTool] = useState([]);
-    const [currentSort,setCurrentSort] = useState(1);
+    const [currentCate,setCurrentCate] = useHistoryState(1,'cate');
+    const [currentTag,setCurrentTag] = useHistoryState('','tag');
+    const [currentTool,setCurrentTool] = useHistoryState([],'tool');
+    const [currentSort,setCurrentSort] = useHistoryState(1,'sort');
 
     useEffect(()=>{
         if(window.innerWidth<900){
@@ -26,7 +27,13 @@ function Tutorial(props){
         }
         axios.get(API_URL+'/Lecture/category/all').then((result)=>{
             console.log(result.data);
-            setCategoryList(result.data.filter(cItem=>cItem.categoryIdx<=11));
+            const cateUseList = result.data.filter(cItem=>cItem.usestateCode===1);
+            setCategoryList(cateUseList);
+            setCurrentCate(cateUseList[0].categoryIdx);
+            axios.get(API_URL+'/Lecture/topic/list?option='+cateUseList[0].categoryIdx+'&newerFirst='+currentSort).then((result)=>{
+                console.log(result);
+                setTutorialItems(result.data);
+            })
 
         })
         axios.get(API_URL+'/Lecture/topichash/all').then((result)=>{
@@ -39,10 +46,7 @@ function Tutorial(props){
             setToolList(result.data);
 
         })
-        axios.get(API_URL+'/Lecture/topic/list?option='+currentCate).then((result)=>{
-            console.log(result);
-            setTutorialItems(result.data);
-        })
+
     },[])
 
     useBus(
@@ -102,7 +106,6 @@ function Tutorial(props){
         <div className={'contents_wrap'}>
             <div className={'filter_section'}>
                <div className={'ft_deco'}>
-                   <img src={'/img/ic_filter.svg'}/>
                    <div className={'ft_title mobile_view'} onClick={()=>{setMobileFilterViewYn(!mobileFilterViewYn)}}>필터 <img src={'/img/ic_arrow_down.svg'}/></div>
                </div>
                 {(!mobileYn||mobileFilterViewYn)&&<div className={'sub_filter_section'}>
