@@ -189,6 +189,107 @@ $black:#181818;
 
    }
  }
+  .popup_section{
+    overflow-y: auto;
+    .popup{
+      width:95%;
+      box-sizing: border-box;
+      padding:15px 15px;
+      margin:10px 0px;
+      .pop_title{
+        font-size:13px;
+      }
+      &.pop_price_compare{
+        width:95%;
+        max-width:500px;
+        margin-top:450px;
+
+        .pop_contents{
+          margin-top:10px;
+          .pc_items{
+            flex-direction: column;
+            .price_item{
+              display: block;
+              padding: 10px 15px;
+              box-sizing: border-box;
+              width: 100%;
+              margin-bottom:10px;
+              &.service_item{
+                .price_detail{
+                  max-width: 100%;
+                }
+                .price_bt_section{
+                  justify-content: flex-start;
+                  button{
+                    margin-right:6px;
+                  }
+                  .price_buy_bt{
+                    margin-right:0px;
+                  }
+                }
+              }
+              .price_title{
+                font-size:16px;
+              }
+              .price_desc{
+                margin-top:8px;
+              }
+              .price_info_items{
+                margin-top:30px;
+                position: relative;
+                top:inherit;
+                right:inherit;
+                width:100%;
+                justify-content: flex-start;
+                .pi_item{
+                  width:50%;
+                  margin-left:0px;
+                  margin-bottom:20px;
+                  font-size:13px;
+                  &:nth-child(3n){
+                    width:50%;
+                  }
+                }
+              }
+              .price_detail{
+               display:none;
+              }
+              .price_bt_section{
+                flex-wrap: wrap;
+                justify-content: space-between;
+                margin-top:10px;
+                &>button{
+                  width:32%;
+                  margin-right:0px;
+                }
+                .price_buy_bt{
+                  width:100%;
+                }
+                .price_info_section{
+                  margin-top:20px;
+                  margin-bottom:10px;
+                  width:100%;
+                  flex:inherit;
+                  justify-content: flex-end;
+                  .pr_select_item{
+                    font-size:14px;
+                  }
+                  .pr_value{
+                    font-size:20px;
+                    margin-left:20px;
+                    margin-right:0px;
+                  }
+                }
+
+              }
+
+            }
+          }
+
+        }
+      }
+    }
+  }
   .contents_wrap{
     .intro{
       &.intro1{
@@ -412,6 +513,14 @@ $black:#181818;
           }
         }
       }
+      .sub_tab_menu{
+        font-size:14px;
+        width:100%;
+        li{
+          margin-right:25px;
+        }
+
+      }
       .sub_filter_section{
         position: absolute;
         top: 90px;
@@ -517,6 +626,7 @@ $black:#181818;
 
       }
     }
+
     .tutorial_detail{
       .section_title{
         font-size:15px;
@@ -613,6 +723,261 @@ $black:#181818;
         }
       }
     }
+    .price_section {
+      padding: 15px 20px;
+      .section_title{
+        font-size:13px;
+      }
+      .price_items{
+        margin-bottom:50px;
+        .price_item{
+          display: block;
+          padding: 10px 15px;
+          box-sizing: border-box;
+          width: 100%;
+          &.service_item{
+            .price_detail{
+              max-width: 100%;
+            }
+            .price_bt_section{
+              justify-content: flex-start;
+              button{
+                margin-right:6px;
+              }
+              .price_buy_bt{
+                margin-right:0px;
+              }
+            }
+          }
+          .price_title{
+            font-size:16px;
+          }
+          .price_desc{
+            margin-top:8px;
+          }
+          .price_info_items{
+            margin-top:30px;
+            position: relative;
+            top:inherit;
+            right:inherit;
+            width:100%;
+            justify-content: flex-start;
+            .pi_item{
+              width:50%;
+              margin-left:0px;
+              margin-bottom:20px;
+              font-size:13px;
+              &:nth-child(3n){
+                width:50%;
+              }
+            }
+          }
+          .price_detail{
+            margin-top:20px;
+            line-height: 24px;
+          }
+          .price_bt_section{
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top:30px;
+            &>button{
+              width:32%;
+              margin-right:0px;
+            }
+            .price_buy_bt{
+              width:100%;
+            }
+            .price_info_section{
+              margin-top:20px;
+              margin-bottom:10px;
+              width:100%;
+              flex:inherit;
+              justify-content: flex-end;
+              .pr_select_item{
+                font-size:14px;
+              }
+              .pr_value{
+                font-size:20px;
+                margin-left:20px;
+                margin-right:0px;
+              }
+            }
+
+          }
+
+        }
+        .price_bt_section{
+          margin-top:30px;
+        }
+      }
+      .price_compare_section{
+        border-top:1px solid #eee;
+        left:0px;
+        height:inherit;
+        .pc_container{
+          padding:10px 20px;
+          box-sizing: border-box;
+          .section_title{
+           display:none;
+          }
+          .pc_bt_section{
+            flex-wrap: wrap;
+            .pc_items{
+              width:100%;
+              justify-content: space-between;
+              .pc_item{
+                font-size:14px;
+                margin-right:0px;
+                padding:0px 10px;
+                box-sizing: border-box;
+                width:49%;
+                height:42px;
+              }
+            }
+            .pc_right_bt_section{
+              margin-top:10px;
+              flex-wrap:wrap;
+              width:100%;
+              .price_compare_bt{
+                width:100%;
+                margin-top:10px;
+              }
+            }
+          }
+        }
+
+      }
+    }
+    .price_detail_section{
+      padding:0px 0px;
+      .pr_container{
+        padding:15px 20px;
+        border: none;
+        .section_title{
+          font-size:13px;
+        }
+       .pr_summary{
+         .price_title{
+           font-size:16px;
+         }
+         .price_desc{
+           margin-top:8px;
+         }
+         .price_detail{
+           margin-top:20px;
+           line-height: 24px;
+         }
+         .price_info_items{
+           margin-top:30px;
+           position: relative;
+           top:inherit;
+           right:inherit;
+           width:100%;
+           justify-content: flex-start;
+           .pi_item{
+             width:50%;
+             margin-left:0px;
+             margin-right:0px;
+             margin-bottom:20px;
+             font-size:13px;
+             &:nth-child(3n){
+               width:50%;
+             }
+           }
+         }
+         .price_bt_section{
+           margin-top:30px;
+           position: relative;
+           right:inherit;
+           top:inherit;
+           flex-wrap: wrap;
+           .price_buy_bt{
+             width:100%;
+             margin-top:10px;
+           }
+           .price_info_section{
+             width:100%;
+             .pr_select_item{
+               font-size:14px;
+             }
+             .pr_value{
+               font-size:20px;
+               margin-left:15px;
+               margin-right:15px;
+             }
+           }
+           .sns_share_bt{
+             margin-right:0px;
+             height:48px;
+             font-size:14px;
+           }
+
+         }
+       }
+        .pr_benefit{
+          flex-wrap:wrap;
+          margin-top:20px;
+          .prb_item{
+            width:calc(50vw - 25px);
+            justify-content: space-between;
+            margin-bottom:25px;
+            .prb_circle{
+              width:calc(50vw - 25px);
+              height:calc(50vw - 25px);
+            }
+            .prb_desc{
+              margin-top:10px;
+              line-height: 22px;
+            }
+          }
+        }
+        .pr_composition{
+          flex-direction: column;
+          margin-top:30px;
+          .prc_item{
+            width:100%;
+            margin-bottom:30px;
+            .prc_title{
+              font-size:14px;
+            }
+            .prc_contents{
+              line-height: 26px;
+              margin-top:10px;
+            }
+          }
+        }
+        .pr_service{
+          .prs_item{
+            width:100%;
+            margin-right:0px;
+            margin-bottom:30px;
+            flex-direction: column;
+            img{
+              width:25px;
+              margin-right:15px;
+            }
+            .prs_contents{
+              margin-top:15px;
+              .prs_title{
+                font-size:14px;
+              }
+              .prs_desc{
+                line-height: 24px;
+              }
+            }
+          }
+        }
+        .pr_spec_items{
+          flex-direction: column;
+          margin-bottom:30px;
+          .pcs_item{
+            width:100%;
+            margin-bottom:20px;
+          }
+        }
+
+      }
+    }
   }
   .footer{
     padding:20px;
@@ -647,6 +1012,26 @@ $black:#181818;
       font-size:15px;
       height:54px;
       border-width: 1px;
+    }
+    &.price_sub_bt{
+      font-size:14px;
+      padding:0px 10px;
+      height:46px;
+    }
+    &.more_item_bt{
+      padding:12px 25px;
+      font-size:14px;
+    }
+    &.pc_reset_bt{
+      font-size:13px;
+    }
+    &.price_compare_bt{
+
+    }
+    &.pop_check_bt{
+      font-size:14px;
+      height:44px;
+      width:100px;
     }
   }
 

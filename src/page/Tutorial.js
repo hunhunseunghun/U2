@@ -16,21 +16,25 @@ function Tutorial(props){
     const [toolList,setToolList] = useState([]);
     const [tutorialItems,setTutorialItems] =  useState({});
 
-    const [currentCate,setCurrentCate] = useHistoryState(1,'cate');
+    const [currentCate,setCurrentCate] = useHistoryState(0,'cate');
     const [currentTag,setCurrentTag] = useHistoryState('','tag');
     const [currentTool,setCurrentTool] = useHistoryState([],'tool');
-    const [currentSort,setCurrentSort] = useHistoryState(1,'sort');
+    const [currentSort,setCurrentSort] = useHistoryState(3,'sort');
 
     useEffect(()=>{
         if(window.innerWidth<900){
             setMobileYn(true);
         }
+
         axios.get(API_URL+'/Lecture/category/all').then((result)=>{
             console.log(result.data);
             const cateUseList = result.data.filter(cItem=>cItem.usestateCode===1);
-            setCategoryList(cateUseList);
-            setCurrentCate(cateUseList[0].categoryIdx);
-            axios.get(API_URL+'/Lecture/topic/list?option='+cateUseList[0].categoryIdx+'&newerFirst='+currentSort).then((result)=>{
+           setCategoryList(cateUseList);
+            let cateIdx;
+            if(currentCate===0) cateIdx = cateUseList[0].categoryIdx;
+            else cateIdx = currentCate;
+            setCurrentCate(cateIdx);
+            axios.get(API_URL+'/Lecture/topic/list?option='+cateIdx+'&newerFirst='+currentSort).then((result)=>{
                 console.log(result);
                 setTutorialItems(result.data);
             })
@@ -133,9 +137,10 @@ function Tutorial(props){
 
                 <div className={'ft_right_section'}>
                     <div className={'ftr_select_item'}>
-                        <div className={'ftr_selected'} onClick={(e)=>{e.stopPropagation();setCateProgramPopYn(false);setCateOrderPopYn(!cateOrderPopYn)}}>{currentSort===1?'최신순':'오래된순'} <img src={'/img/ic_arrow_down.svg'}/></div>
-                        {cateOrderPopYn&&<div className={'ftr_pop'}>
+                        <div className={'ftr_selected'} onClick={(e)=>{e.stopPropagation();setCateProgramPopYn(false);setCateOrderPopYn(!cateOrderPopYn)}}>{currentSort===1?'최신순':(currentSort===3?'추천순':'오래된순')} <img src={'/img/ic_arrow_down.svg'}/></div>
+                        {cateOrderPopYn&&<div className={'pop_sub ftr_pop'}>
                             <ul>
+                                <li onClick={()=>{sortChange(3)}}>추천순</li>
                                 <li onClick={()=>{sortChange(1)}}>최신순</li>
                                 <li onClick={()=>{sortChange(0)}}>오래된순</li>
                             </ul>
@@ -143,7 +148,7 @@ function Tutorial(props){
                     </div>
                     <div className={'ftr_select_item mobile_hidden'}>
                         <div className={'ftr_selected'}  onClick={(e)=>{e.stopPropagation();setCateOrderPopYn(false);setCateProgramPopYn(!cateProgramPopYn)}}>프로그램 <img src={'/img/ic_arrow_down.svg'}/></div>
-                        {cateProgramPopYn&&<div className={'ftr_pop ftr_pop_program'}>
+                        {cateProgramPopYn&&<div className={'pop_sub ftr_pop ftr_pop_program'}>
                             <ul>
                                 {toolList.map((toolItem,tIndex)=><li key={tIndex} onClick={()=>{toolChange(toolItem.toolIdx)}}>{toolItem.toolName}{currentTool.indexOf(toolItem.toolIdx)>=0&&<span className={'active_deco'}></span>}</li>)}
                             </ul>
@@ -157,8 +162,9 @@ function Tutorial(props){
                     return(
                         <Link to={'/tutorial/detail/'+tItem.topicIdx} key={index}>
                             <div className={'tt_item'}>
-                                <div className={'tt_img'} style={{backgroundImage:'url('+IMG_URL+'/'+tItem.bannerImage+')'}}>
-                                    {tItem.bannerImage===null&&<span className={'not_contents'}>Image not found</span>}
+                                <div className={'tt_img'} >
+                                    {tItem.bannerImage!==null&&<img src={IMG_URL+'/'+tItem.bannerImage}/>}
+                                    {tItem.bannerImage===null&&<div className={'no_img'}><img src={'/img/no_image.png'}/><span className={'not_contents'}>Image not found</span></div>}
                                 </div>
                                 <div className={'tt_contents'}>
                                     <div className={'tt_title'}>{tItem.topicName}</div>

@@ -172,6 +172,102 @@
     top: 14px;
   }
 
+  .popup_section {
+    overflow-y: auto;
+  }
+  .popup_section .popup {
+    width: 95%;
+    box-sizing: border-box;
+    padding: 15px 15px;
+    margin: 10px 0px;
+  }
+  .popup_section .popup .pop_title {
+    font-size: 13px;
+  }
+  .popup_section .popup.pop_price_compare {
+    width: 95%;
+    max-width: 500px;
+    margin-top: 450px;
+  }
+  .popup_section .popup.pop_price_compare .pop_contents {
+    margin-top: 10px;
+  }
+  .popup_section .popup.pop_price_compare .pop_contents .pc_items {
+    flex-direction: column;
+  }
+  .popup_section .popup.pop_price_compare .pop_contents .pc_items .price_item {
+    display: block;
+    padding: 10px 15px;
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .popup_section .popup.pop_price_compare .pop_contents .pc_items .price_item.service_item .price_detail {
+    max-width: 100%;
+  }
+  .popup_section .popup.pop_price_compare .pop_contents .pc_items .price_item.service_item .price_bt_section {
+    justify-content: flex-start;
+  }
+  .popup_section .popup.pop_price_compare .pop_contents .pc_items .price_item.service_item .price_bt_section button {
+    margin-right: 6px;
+  }
+  .popup_section .popup.pop_price_compare .pop_contents .pc_items .price_item.service_item .price_bt_section .price_buy_bt {
+    margin-right: 0px;
+  }
+  .popup_section .popup.pop_price_compare .pop_contents .pc_items .price_item .price_title {
+    font-size: 16px;
+  }
+  .popup_section .popup.pop_price_compare .pop_contents .pc_items .price_item .price_desc {
+    margin-top: 8px;
+  }
+  .popup_section .popup.pop_price_compare .pop_contents .pc_items .price_item .price_info_items {
+    margin-top: 30px;
+    position: relative;
+    top: inherit;
+    right: inherit;
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .popup_section .popup.pop_price_compare .pop_contents .pc_items .price_item .price_info_items .pi_item {
+    width: 50%;
+    margin-left: 0px;
+    margin-bottom: 20px;
+    font-size: 13px;
+  }
+  .popup_section .popup.pop_price_compare .pop_contents .pc_items .price_item .price_info_items .pi_item:nth-child(3n) {
+    width: 50%;
+  }
+  .popup_section .popup.pop_price_compare .pop_contents .pc_items .price_item .price_detail {
+    display: none;
+  }
+  .popup_section .popup.pop_price_compare .pop_contents .pc_items .price_item .price_bt_section {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  .popup_section .popup.pop_price_compare .pop_contents .pc_items .price_item .price_bt_section > button {
+    width: 32%;
+    margin-right: 0px;
+  }
+  .popup_section .popup.pop_price_compare .pop_contents .pc_items .price_item .price_bt_section .price_buy_bt {
+    width: 100%;
+  }
+  .popup_section .popup.pop_price_compare .pop_contents .pc_items .price_item .price_bt_section .price_info_section {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 100%;
+    flex: inherit;
+    justify-content: flex-end;
+  }
+  .popup_section .popup.pop_price_compare .pop_contents .pc_items .price_item .price_bt_section .price_info_section .pr_select_item {
+    font-size: 14px;
+  }
+  .popup_section .popup.pop_price_compare .pop_contents .pc_items .price_item .price_bt_section .price_info_section .pr_value {
+    font-size: 20px;
+    margin-left: 20px;
+    margin-right: 0px;
+  }
+
   .contents_wrap .intro.intro1 .main_copy_section {
     left: 0px;
     width: 100%;
@@ -378,6 +474,13 @@
   .contents_wrap .filter_section.active .ft_title img {
     transform: rotateZ(180deg);
   }
+  .contents_wrap .filter_section .sub_tab_menu {
+    font-size: 14px;
+    width: 100%;
+  }
+  .contents_wrap .filter_section .sub_tab_menu li {
+    margin-right: 25px;
+  }
   .contents_wrap .filter_section .sub_filter_section {
     position: absolute;
     top: 90px;
@@ -562,6 +665,250 @@
     width: 100%;
     max-width: 100%;
   }
+  .contents_wrap .price_section {
+    padding: 15px 20px;
+  }
+  .contents_wrap .price_section .section_title {
+    font-size: 13px;
+  }
+  .contents_wrap .price_section .price_items {
+    margin-bottom: 50px;
+  }
+  .contents_wrap .price_section .price_items .price_item {
+    display: block;
+    padding: 10px 15px;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  .contents_wrap .price_section .price_items .price_item.service_item .price_detail {
+    max-width: 100%;
+  }
+  .contents_wrap .price_section .price_items .price_item.service_item .price_bt_section {
+    justify-content: flex-start;
+  }
+  .contents_wrap .price_section .price_items .price_item.service_item .price_bt_section button {
+    margin-right: 6px;
+  }
+  .contents_wrap .price_section .price_items .price_item.service_item .price_bt_section .price_buy_bt {
+    margin-right: 0px;
+  }
+  .contents_wrap .price_section .price_items .price_item .price_title {
+    font-size: 16px;
+  }
+  .contents_wrap .price_section .price_items .price_item .price_desc {
+    margin-top: 8px;
+  }
+  .contents_wrap .price_section .price_items .price_item .price_info_items {
+    margin-top: 30px;
+    position: relative;
+    top: inherit;
+    right: inherit;
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .contents_wrap .price_section .price_items .price_item .price_info_items .pi_item {
+    width: 50%;
+    margin-left: 0px;
+    margin-bottom: 20px;
+    font-size: 13px;
+  }
+  .contents_wrap .price_section .price_items .price_item .price_info_items .pi_item:nth-child(3n) {
+    width: 50%;
+  }
+  .contents_wrap .price_section .price_items .price_item .price_detail {
+    margin-top: 20px;
+    line-height: 24px;
+  }
+  .contents_wrap .price_section .price_items .price_item .price_bt_section {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 30px;
+  }
+  .contents_wrap .price_section .price_items .price_item .price_bt_section > button {
+    width: 32%;
+    margin-right: 0px;
+  }
+  .contents_wrap .price_section .price_items .price_item .price_bt_section .price_buy_bt {
+    width: 100%;
+  }
+  .contents_wrap .price_section .price_items .price_item .price_bt_section .price_info_section {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 100%;
+    flex: inherit;
+    justify-content: flex-end;
+  }
+  .contents_wrap .price_section .price_items .price_item .price_bt_section .price_info_section .pr_select_item {
+    font-size: 14px;
+  }
+  .contents_wrap .price_section .price_items .price_item .price_bt_section .price_info_section .pr_value {
+    font-size: 20px;
+    margin-left: 20px;
+    margin-right: 0px;
+  }
+  .contents_wrap .price_section .price_items .price_bt_section {
+    margin-top: 30px;
+  }
+  .contents_wrap .price_section .price_compare_section {
+    border-top: 1px solid #eee;
+    left: 0px;
+    height: inherit;
+  }
+  .contents_wrap .price_section .price_compare_section .pc_container {
+    padding: 10px 20px;
+    box-sizing: border-box;
+  }
+  .contents_wrap .price_section .price_compare_section .pc_container .section_title {
+    display: none;
+  }
+  .contents_wrap .price_section .price_compare_section .pc_container .pc_bt_section {
+    flex-wrap: wrap;
+  }
+  .contents_wrap .price_section .price_compare_section .pc_container .pc_bt_section .pc_items {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .contents_wrap .price_section .price_compare_section .pc_container .pc_bt_section .pc_items .pc_item {
+    font-size: 14px;
+    margin-right: 0px;
+    padding: 0px 10px;
+    box-sizing: border-box;
+    width: 49%;
+    height: 42px;
+  }
+  .contents_wrap .price_section .price_compare_section .pc_container .pc_bt_section .pc_right_bt_section {
+    margin-top: 10px;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .contents_wrap .price_section .price_compare_section .pc_container .pc_bt_section .pc_right_bt_section .price_compare_bt {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .contents_wrap .price_detail_section {
+    padding: 0px 0px;
+  }
+  .contents_wrap .price_detail_section .pr_container {
+    padding: 15px 20px;
+    border: none;
+  }
+  .contents_wrap .price_detail_section .pr_container .section_title {
+    font-size: 13px;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_summary .price_title {
+    font-size: 16px;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_summary .price_desc {
+    margin-top: 8px;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_summary .price_detail {
+    margin-top: 20px;
+    line-height: 24px;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_summary .price_info_items {
+    margin-top: 30px;
+    position: relative;
+    top: inherit;
+    right: inherit;
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_summary .price_info_items .pi_item {
+    width: 50%;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 20px;
+    font-size: 13px;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_summary .price_info_items .pi_item:nth-child(3n) {
+    width: 50%;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_summary .price_bt_section {
+    margin-top: 30px;
+    position: relative;
+    right: inherit;
+    top: inherit;
+    flex-wrap: wrap;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_summary .price_bt_section .price_buy_bt {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_summary .price_bt_section .price_info_section {
+    width: 100%;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_summary .price_bt_section .price_info_section .pr_select_item {
+    font-size: 14px;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_summary .price_bt_section .price_info_section .pr_value {
+    font-size: 20px;
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_summary .price_bt_section .sns_share_bt {
+    margin-right: 0px;
+    height: 48px;
+    font-size: 14px;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_benefit {
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_benefit .prb_item {
+    width: calc(50vw - 25px);
+    justify-content: space-between;
+    margin-bottom: 25px;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_benefit .prb_item .prb_circle {
+    width: calc(50vw - 25px);
+    height: calc(50vw - 25px);
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_benefit .prb_item .prb_desc {
+    margin-top: 10px;
+    line-height: 22px;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_composition {
+    flex-direction: column;
+    margin-top: 30px;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_composition .prc_item {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_composition .prc_item .prc_title {
+    font-size: 14px;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_composition .prc_item .prc_contents {
+    line-height: 26px;
+    margin-top: 10px;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_service .prs_item {
+    width: 100%;
+    margin-right: 0px;
+    margin-bottom: 30px;
+    flex-direction: column;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_service .prs_item img {
+    width: 25px;
+    margin-right: 15px;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_service .prs_item .prs_contents {
+    margin-top: 15px;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_service .prs_item .prs_contents .prs_title {
+    font-size: 14px;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_service .prs_item .prs_contents .prs_desc {
+    line-height: 24px;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_spec_items {
+    flex-direction: column;
+    margin-bottom: 30px;
+  }
+  .contents_wrap .price_detail_section .pr_container .pr_spec_items .pcs_item {
+    width: 100%;
+    margin-bottom: 20px;
+  }
 
   .footer {
     padding: 20px;
@@ -595,6 +942,23 @@
     font-size: 15px;
     height: 54px;
     border-width: 1px;
+  }
+  .default_bt.price_sub_bt {
+    font-size: 14px;
+    padding: 0px 10px;
+    height: 46px;
+  }
+  .default_bt.more_item_bt {
+    padding: 12px 25px;
+    font-size: 14px;
+  }
+  .default_bt.pc_reset_bt {
+    font-size: 13px;
+  }
+  .default_bt.pop_check_bt {
+    font-size: 14px;
+    height: 44px;
+    width: 100px;
   }
 }
 

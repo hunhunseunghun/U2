@@ -10,6 +10,8 @@ import Footer from './component/Footer';
 import Main from './page/Main';
 import Tutorial from './page/Tutorial';
 import TutorialDetail from './page/TutorialDetail';
+import Price from './page/price/Price';
+import PriceDetail from './page/price/PriceDetail';
 import SnsSelect from './page/post/SnsSelect';
 import ChannelAdd from './page/post/ChannelAdd';
 import VideoPost from "./page/post/VideoPost";
@@ -21,6 +23,8 @@ function App() {
                 <Route exact path="/" component={Main} />
                 <Route exact path="/tutorial" component={Tutorial} />
                 <Route exact path="/tutorial/detail/:id" component={TutorialDetail} />
+                <Route exact path="/price" component={Price} />
+                <Route exact path="/price/detail/:id" component={PriceDetail} />
                 <Route exact path="/post/select" component={SnsSelect} />
                 <Route exact path="/post/select/channel_add" component={ChannelAdd} />
                 <Route exact path="/post/post" component={VideoPost} />

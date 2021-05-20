@@ -2,6 +2,7 @@ import {useState,useEffect} from 'react';
 import {useLocation,Link} from 'react-router-dom';
 
 function Header(props){
+    const [mobileYn,setMobileYn] =  useState(false);
     const [whiteFix,setWhiteFix] = useState(false);
     const [headerFix,setHeaderFix] = useState(false);
     const [mobileMenuActive,setMobileMenuActive] = useState(false);
@@ -35,15 +36,26 @@ function Header(props){
                 }
             }
         });
+        window.addEventListener('resize',()=>{
+            if(window.innerWidth<900&&!mobileYn){
+                setMobileYn(true);
+                window.location.reload();
+            }else if(window.innerWidth>=900&&mobileYn){
+                setMobileYn(false);
+                window.location.reload();
+            }
+        })
 
         window.scrollTo(0, 0);
 
-    },[location])
+    },[location]);
+
+
     return(
         <div className={'header '+(whiteFix?'white ':'')+(headerFix?'fixed ':'')+(windowAppYn?'window_app':'')+(mobileMenuActive?'active':'')}>
          <div className={'header_tl'}>
              <Link to={'/'}><div className={'logo_section'}><img src={'/img/logo'+(whiteFix?'_w':'')+'.svg'}/></div></Link>
-             {location.pathname.indexOf('/')<0&&<div className={'search_section'}>
+             {location.pathname!=='/'&&<div className={'search_section'}>
                  <input type={'text'} placeholder={'필요한 영상제작팁을 검색하세요'}/>
                  <img src={'/img/ic_search'+(whiteFix?'_w':'')+'.svg'}/>
              </div>}
@@ -58,9 +70,9 @@ function Header(props){
          </div>
           <div className={'main_menu'}>
               <ul>
-                  <li>메인으로</li>
-                  <li className={'active'}><Link to={'/tutorial'}>영상제작팁</Link></li>
-                  <li>요금제</li>
+                  <li className={location.pathname==='/'?'active':''}><Link to={'/'}>메인으로</Link></li>
+                  <li className={location.pathname.indexOf('/tutorial')>=0?'active':''}><Link to={'/tutorial'}>영상제작팁</Link></li>
+                  <li className={location.pathname.indexOf('/price')>=0?'active':''}><Link to={'/price'}>요금제</Link></li>
                   <li>로그인/회원가입</li>
               </ul>
           </div>
