@@ -16,7 +16,7 @@ function TutorialDetail(props){
         if(params.get('windowapp')){
             setWindowAppYn(true);
         }
-        const t_idx = location.pathname.substr(17,20)
+        const t_idx = location.pathname.substr(17,22)
         axios.get(API_URL+'/Lecture/topic/'+t_idx).then((result)=>{
             console.log(result);
             setTutorialDetail(result.data);
@@ -24,18 +24,6 @@ function TutorialDetail(props){
     },[])
     return(
         <div className={'contents_wrap'}>
-            <Helmet>
-                {/*<title>My Title</title>*/}
-                {/*<meta name="title" content={'My Title'} />*/}
-                <meta name="image" content={'https://web-test.u2.life/img/logo.svg'} />
-                <meta name="description" content={'titleTest'} />
-                <meta name="url" content={window.location.href}  />
-
-                <meta property="og:title" content={'My Title'} />
-                <meta property="og:image"content={'https://web-test.u2.life/img/logo.svg'} />
-                <meta property="og:description" content={'titleTest'} />
-                <meta property="og:url" content={window.location.href} />
-            </Helmet>
             <div className={'tutorial_detail td1'}>
                 {tutorialDetail.topicImage&&<div className={'td_back'} style={{backgroundImage:'url('+IMG_URL+'/'+tutorialDetail.topicImage+')'}}>
                 </div>}

@@ -1,5 +1,6 @@
 import {useState,useEffect} from 'react';
 import {useLocation,Link} from 'react-router-dom';
+import {IMG_URL} from "../const/URL";
 
 function Header(props){
     const [mobileYn,setMobileYn] =  useState(false);
@@ -7,8 +8,10 @@ function Header(props){
     const [headerFix,setHeaderFix] = useState(false);
     const [mobileMenuActive,setMobileMenuActive] = useState(false);
     const [windowAppYn,setWindowAppYn] =  useState(false);
+    const [headerYn,setHeaderYn] =  useState(true);
     const location = useLocation();
     useEffect(()=>{
+        setMobileMenuActive(false);
         if(location.pathname.indexOf('/tutorial/detail/')>=0||location.pathname==='/'){
             setWhiteFix(true);
             //console.log(whiteFix);
@@ -18,6 +21,11 @@ function Header(props){
         const params = new URLSearchParams(location.search);
         if(params.get('windowapp')){
             setWindowAppYn(true);
+        }
+        if(location.pathname.indexOf('/login')>=0){
+            setHeaderYn(false);
+        }else{
+            setHeaderYn(true);
         }
 
 
@@ -37,13 +45,13 @@ function Header(props){
             }
         });
         window.addEventListener('resize',()=>{
-            if(window.innerWidth<900&&!mobileYn){
-                setMobileYn(true);
-                window.location.reload();
-            }else if(window.innerWidth>=900&&mobileYn){
-                setMobileYn(false);
-                window.location.reload();
-            }
+            // if(window.innerWidth<900&&!mobileYn){
+            //     setMobileYn(true);
+            //     window.location.reload();
+            // }else if(window.innerWidth>=900&&mobileYn){
+            //     setMobileYn(false);
+            //     window.location.reload();
+            // }
         })
 
         window.scrollTo(0, 0);
@@ -52,7 +60,7 @@ function Header(props){
 
 
     return(
-        <div className={'header '+(whiteFix?'white ':'')+(headerFix?'fixed ':'')+(windowAppYn?'window_app':'')+(mobileMenuActive?'active':'')}>
+        <div className={'header '+(whiteFix?'white ':'')+(headerFix?'fixed ':'')+(windowAppYn?'window_app':'')+(mobileMenuActive?'active':'')+(headerYn?'':'not_display')}>
          <div className={'header_tl'}>
              <Link to={'/'}><div className={'logo_section'}><img src={'/img/logo'+(whiteFix?'_w':'')+'.svg'}/></div></Link>
              {location.pathname!=='/'&&<div className={'search_section'}>
@@ -73,17 +81,25 @@ function Header(props){
                   <li className={location.pathname==='/'?'active':''}><Link to={'/'}>메인으로</Link></li>
                   <li className={location.pathname.indexOf('/tutorial')>=0?'active':''}><Link to={'/tutorial'}>영상제작팁</Link></li>
                   <li className={location.pathname.indexOf('/price')>=0?'active':''}><Link to={'/price'}>요금제</Link></li>
-                  <li>로그인/회원가입</li>
+                  <li><Link to={'/login'}>로그인/회원가입</Link></li>
+                  {/*<li>*/}
+                  {/*    <div className={'profile_img'} style={{backgroundImage:'url(/img/temp_profile.png)'}}></div>*/}
+                  {/*    <div className={'pop_sub profile_pop'}>*/}
+                  {/*        <ul>*/}
+                  {/*            <li>로그아웃</li>*/}
+                  {/*        </ul>*/}
+                  {/*    </div>*/}
+                  {/*</li>*/}
               </ul>
           </div>
 
             <div className={'mobile_menu_section'}>
                 <div className={'main_menu'}>
                     <ul>
-                        <li><span className={'mm_t'}>메인으로</span></li>
-                        <li className={'active'}><span className={'mm_t'}>영상제작팁</span></li>
-                        <li><span className={'mm_t'}>요금제</span></li>
-                        <li><span className={'mm_t'}>로그인/회원가입</span></li>
+                        <li className={location.pathname==='/'?'active':''}><Link to={'/'} className={'mm_t'}>메인으로</Link></li>
+                        <li className={location.pathname.indexOf('/tutorial')>=0?'active':''}><Link to={'/tutorial'} className={'mm_t'}>영상제작팁</Link></li>
+                        <li className={location.pathname.indexOf('/price')>=0?'active':''}><Link to={'/price'} className={'mm_t'}>요금제</Link></li>
+                        <li><Link to={'/login'} className={'mm_t'}>로그인/회원가입</Link></li>
                     </ul>
                 </div>
                 <div className={'sub_menu'}>

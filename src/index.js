@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+window.Kakao.init('46d7dfe1c4549fb4de7fd95f5b8fa57e'); // Kakao init
 ReactDOM.render(
   <React.StrictMode>
     <App />

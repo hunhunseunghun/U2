@@ -8,6 +8,7 @@ import { dispatch } from 'use-bus'
 import Header from './component/Header';
 import Footer from './component/Footer';
 import Main from './page/Main';
+import Login from './page/Login';
 import Tutorial from './page/Tutorial';
 import TutorialDetail from './page/TutorialDetail';
 import Price from './page/price/Price';
@@ -21,6 +22,7 @@ function App() {
             <div className={'app'} onClick={() => dispatch('@@popup/close')}>
                 <Header></Header>
                 <Route exact path="/" component={Main} />
+                <Route exact path="/login" component={Login} />
                 <Route exact path="/tutorial" component={Tutorial} />
                 <Route exact path="/tutorial/detail/:id" component={TutorialDetail} />
                 <Route exact path="/price" component={Price} />

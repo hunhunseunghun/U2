@@ -4,6 +4,7 @@ import {useLocation} from 'react-router-dom';
 
 function Footer(props){
     const [windowAppYn,setWindowAppYn] =  useState(false);
+    const [footerYn,setFooterYn] =  useState(true);
     const location = useLocation();
 
 
@@ -12,9 +13,14 @@ function Footer(props){
         if(params.get('windowapp')){
             setWindowAppYn(true);
         }
+        if(location.pathname.indexOf('/login')>=0){
+            setFooterYn(false);
+        }else{
+            setFooterYn(true);
+        }
     },[location])
     return(
-        <div className={'footer '+(windowAppYn?'window_app':'')}>
+        <div className={'footer '+(windowAppYn?'window_app':'')+(footerYn?'':'not_display')}>
             <div className={'ft_menu'}>
                 <div className={'ftm_item'}>이용약관</div>
                 <div className={'ftm_item'}>개인정보취급방침</div>

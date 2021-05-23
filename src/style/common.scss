@@ -129,6 +129,9 @@ textarea{
   display:flex;
   align-items:center;
   transition-duration: 0.2s;
+  &.not_display{
+    display:none;
+  }
   &.window_app{
     display:none;
   }
@@ -207,15 +210,27 @@ textarea{
     flex:1;
     display:flex;
     justify-content: flex-end;
+    ul{
+      display:flex;
+      align-items:center;
+    }
     ul li{
       display:inline-block;
       cursor: pointer;
-      margin-left:45px;
+      margin-left:40px;
       font-weight:700;
       font-size:16px;
       position: relative;
+      line-height: 1;
+      .profile_img{
+        width:28px;
+        height:28px;
+        display:inline-block;
+        background-size: cover;
+        background-position: center center;
+      }
       &.active{
-        &::after,span::after{
+        &::after,span::after,.mm_t::after{
           content: '';
           position: absolute;
           width:4px;
@@ -265,6 +280,11 @@ textarea{
          background-color: #fff;
          border:1px solid #eee;
          position: relative;
+         &.disable_item{
+           .pr_value{
+             text-decoration: line-through;
+           }
+         }
          .price_title{
            font-size:18px;
            font-weight:600;
@@ -297,6 +317,9 @@ textarea{
                color:#898989;
                margin-bottom:10px;
              }
+             .pi_contents{
+               line-height: 22px;
+             }
            }
 
          }
@@ -313,6 +336,12 @@ textarea{
                font-size:15px;
                font-weight:600;
                display:flex;
+               cursor: pointer;
+               position: relative;
+               .ftr_price_program{
+                 top:inherit;
+                 bottom:30px;
+               }
                img{
                  vertical-align: middle;
                  margin-top:-3px;
@@ -365,9 +394,36 @@ textarea{
   padding:10px 0px;
   border-radius: 15px;
   border: 1px solid #eee;
-  z-index: 5;
+  z-index: 10;
   background-color: #fff;
   filter: drop-shadow(0px 2px 10px rgba(0, 0, 0, 0.1));
+  &.profile_pop{
+    right:0px;
+    top:30px;
+    width:130px;
+    color:$black;
+    ul li{
+      width:100%;
+      margin-left: 0px;
+      line-height: 36px;
+      padding:0px 25px;
+      cursor: pointer;
+      position: relative;
+      .active_deco{
+        display:inline-block;
+        vertical-align: top;
+        margin-top:10px;
+        margin-left:5px;
+        width:4px;
+        height:4px;
+        border-radius: 50%;
+        background-color: #282828;
+      }
+      &:hover{
+        background-color: #eee;
+      }
+    }
+  }
   &.ftr_pop{
 
     right:0px;
@@ -384,12 +440,12 @@ textarea{
     &.ftr_price_program{
       right:inherit;
       left:-10px;
-      width:150px;
+      width:190px;
     }
     &.ftr_price_storage{
       right:inherit;
       left:-10px;
-      width:190px;
+      width:270px;
     }
     &.ftr_price_use_time{
       right:inherit;
@@ -434,6 +490,12 @@ textarea{
   &.sns_share_pop{
     width:180px;
     padding:20px 30px;
+    pointer-events: none;
+    opacity: 0;
+    &.active{
+      opacity: 1;
+      pointer-events: inherit;
+    }
 
     ul{
       display:flex;
@@ -452,6 +514,46 @@ textarea{
 
 }
 .contents_wrap{
+  .login_section{
+    padding:100px 0px;
+    box-sizing: border-box;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    min-height:100vh;
+    background-color: #fafafa;
+
+    .login_container{
+      max-width:1000px;
+      display:flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      margin-bottom:20px;
+      .section_title{
+        font-size:20px;
+        font-weight:600;
+        margin-top:20px;
+      }
+      .sns_items{
+        margin-top:40px;
+        display:flex;
+        justify-content: center;
+        flex-direction: column;
+        .default_bt{
+          margin-bottom:15px;
+        }
+      }
+      .login_bottom_info{
+        margin-top:40px;
+        font-size:14px;
+        .back_bt{
+          font-weight:600;
+          cursor: pointer;
+        }
+      }
+    }
+  }
   .intro{
     overflow: hidden;
     &.intro1{
@@ -802,9 +904,10 @@ textarea{
       flex:1;
       display:flex;
       align-items: center;
-        .ft_programs{
+        .ft_programs,.ft_title{
           display:none;
         }
+
       .ft_tags{
         margin-left:20px;
         display:flex;
@@ -848,7 +951,13 @@ textarea{
 
       .ftr_selected{
         cursor: pointer;
+        &.active{
+          img{
+            transform:rotate(180deg);
+          }
+        }
         img{
+          transition-duration: 0.2s;
           margin-left:3px;
           vertical-align: middle;
           margin-top:-4px;
@@ -1122,6 +1231,16 @@ textarea{
   .price_section {
     padding: 40px 45px 100px;
     background-color: #fafafa;
+    .no_contents{
+      padding:200px 0px;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      border: 1px solid #eee;
+      font-size:15px;
+      color:#898989;
+    }
     .section_title{
       font-size:16px;
       font-weight:600;
@@ -1134,6 +1253,14 @@ textarea{
         margin-top:50px;
         display:flex;
         justify-content: center;
+
+        .share_bt_section{
+          position: relative;
+          .sns_share_pop{
+            left:0px;
+            top:50px;
+          }
+        }
       }
       .price_item{
         padding:33px 50px;
@@ -1141,6 +1268,19 @@ textarea{
         background-color: #fff;
         border:1px solid #eee;
         position: relative;
+        &.disable_item{
+          .pr_value{
+            text-decoration: line-through;
+          }
+        }
+        &.compare_selected{
+          border-color:#282828;
+          .compare_bt{
+            border:none;
+            background-color: #282828;
+            color:#fff;
+          }
+        }
         &.service_item{
           .price_detail{
             margin-top:20px;
@@ -1159,7 +1299,9 @@ textarea{
         .price_desc{
           margin-top:10px;
           font-size:14px;
+          line-height: 23px;
           color:#898989;
+          max-width:350px;
         }
         .price_detail{
           margin-top:160px;
@@ -1187,6 +1329,9 @@ textarea{
                 color:#898989;
                 margin-bottom:10px;
             }
+            .pi_contents{
+              line-height: 22px;
+            }
           }
 
         }
@@ -1207,6 +1352,10 @@ textarea{
               font-size:15px;
               font-weight:600;
               display:flex;
+              position: relative;
+              .pr_selected{
+                cursor: pointer;
+              }
               img{
                 vertical-align: middle;
                 margin-top:-3px;
@@ -1229,6 +1378,7 @@ textarea{
     }
     .price_compare_section{
       position: fixed;
+      left:0px;
       bottom:0px;
       height:130px;
       width:100%;
@@ -1262,7 +1412,7 @@ textarea{
           .pc_right_bt_section{
             display:flex;
             .pc_reset_bt{
-              margin-right:20px;
+              margin-right:30px;
             }
           }
         }
@@ -1273,6 +1423,9 @@ textarea{
   .price_detail_section{
     padding:40px 45px 100px;
     background-color: #fafafa;
+    .pr_value{
+      text-decoration: line-through;
+    }
     .pr_container{
       background-color: #fff;
         max-width:1200px;
@@ -1309,6 +1462,9 @@ textarea{
               color:#898989;
               margin-bottom:10px;
             }
+            .pi_contents{
+              line-height: 22px;
+            }
           }
 
         }
@@ -1339,6 +1495,8 @@ textarea{
               font-size:15px;
               font-weight:600;
               display:flex;
+              position: relative;
+              cursor: pointer;
               img{
                 vertical-align: middle;
                 margin-top:-3px;
@@ -1369,6 +1527,7 @@ textarea{
         display:flex;
         margin-top:50px;
         justify-content: space-between;
+        width: 100%;
         .prb_item{
           width:204px;
           .prb_circle{
@@ -1667,6 +1826,9 @@ textarea{
   box-sizing: border-box;
   border-top:1px solid #eee;
   position: relative;
+  &.not_display{
+    display:none;
+  }
   &.window_app{
     display:none;
   }
@@ -1857,6 +2019,12 @@ div.cNrjqJ{
     border-radius: 4px;
     font-weight:600;
     color:#fff;
+    &.disable_bt{
+      background-color: #ccc;
+      &:hover{
+        background-color:#ccc;
+      }
+    }
     &:hover{
       background-color:#181818;
     }
@@ -1872,6 +2040,21 @@ div.cNrjqJ{
       background-color:#353535;
     }
   }
+  &.sns_login_bt{
+    width:420px;
+    height:70px;
+    border-radius: 70px;
+    background-color: #fff;
+    border:1px solid #eee;
+    font-weight:500;
+    img{
+      height:20px;
+      margin-right:15px;
+    }
+    &:hover{
+      border-color:#898989;
+    }
+  }
 }
 @media only screen and (max-width: 1350px)  and (min-width: 900px){
   .header{
@@ -1881,7 +2064,7 @@ div.cNrjqJ{
       }
     }
     .main_menu{
-      ul li{
+     &>ul >li{
         margin-left:20px;
       }
     }
@@ -1908,6 +2091,34 @@ div.cNrjqJ{
         }
       }
     }
+    .intro{
+      &.intro3{
+        .deco_img{
+         img{
+           width:350px;
+         }
+        }
+      }
+      &.intro5{
+        padding:160px 30px;
+        .price_items{
+          .pr_item{
+            .pr_tags{
+              flex-direction: column;
+              .pr_tag{
+                margin-bottom:10px;
+                text-align: center;
+              }
+            }
+            .pr_contents{
+              .pr_desc{
+                margin-top:20px;
+              }
+            }
+          }
+        }
+      }
+    }
     .tutorial_items{
       .tt_item{
         width: calc(33.3% - 30px);
@@ -1917,6 +2128,13 @@ div.cNrjqJ{
             padding:0px 15px;
             bottom:10px;
           }
+        }
+      }
+    }
+    .price_section{
+      .price_items{
+        .price_item{
+          padding:20px 30px;
         }
       }
     }

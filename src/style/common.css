@@ -144,6 +144,9 @@ textarea {
   align-items: center;
   transition-duration: 0.2s;
 }
+.header.not_display {
+  display: none;
+}
 .header.window_app {
   display: none;
 }
@@ -219,15 +222,27 @@ textarea {
   display: flex;
   justify-content: flex-end;
 }
+.header .main_menu ul {
+  display: flex;
+  align-items: center;
+}
 .header .main_menu ul li {
   display: inline-block;
   cursor: pointer;
-  margin-left: 45px;
+  margin-left: 40px;
   font-weight: 700;
   font-size: 16px;
   position: relative;
+  line-height: 1;
 }
-.header .main_menu ul li.active::after, .header .main_menu ul li.active span::after {
+.header .main_menu ul li .profile_img {
+  width: 28px;
+  height: 28px;
+  display: inline-block;
+  background-size: cover;
+  background-position: center center;
+}
+.header .main_menu ul li.active::after, .header .main_menu ul li.active span::after, .header .main_menu ul li.active .mm_t::after {
   content: "";
   position: absolute;
   width: 4px;
@@ -277,6 +292,9 @@ textarea {
   border: 1px solid #eee;
   position: relative;
 }
+.popup_section .popup.pop_price_compare .pc_items .price_item.disable_item .pr_value {
+  text-decoration: line-through;
+}
 .popup_section .popup.pop_price_compare .pc_items .price_item .price_title {
   font-size: 18px;
   font-weight: 600;
@@ -311,6 +329,9 @@ textarea {
   color: #898989;
   margin-bottom: 10px;
 }
+.popup_section .popup.pop_price_compare .pc_items .price_item .price_info_items .pi_item .pi_contents {
+  line-height: 22px;
+}
 .popup_section .popup.pop_price_compare .pc_items .price_item .price_bt_section {
   margin-top: 30px;
   display: flex;
@@ -326,6 +347,12 @@ textarea {
   font-size: 15px;
   font-weight: 600;
   display: flex;
+  cursor: pointer;
+  position: relative;
+}
+.popup_section .popup.pop_price_compare .pc_items .price_item .price_bt_section .price_info_section .pr_select_item .ftr_price_program {
+  top: inherit;
+  bottom: 30px;
 }
 .popup_section .popup.pop_price_compare .pc_items .price_item .price_bt_section .price_info_section .pr_select_item img {
   vertical-align: middle;
@@ -371,9 +398,36 @@ textarea {
   padding: 10px 0px;
   border-radius: 15px;
   border: 1px solid #eee;
-  z-index: 5;
+  z-index: 10;
   background-color: #fff;
   filter: drop-shadow(0px 2px 10px rgba(0, 0, 0, 0.1));
+}
+.pop_sub.profile_pop {
+  right: 0px;
+  top: 30px;
+  width: 130px;
+  color: #181818;
+}
+.pop_sub.profile_pop ul li {
+  width: 100%;
+  margin-left: 0px;
+  line-height: 36px;
+  padding: 0px 25px;
+  cursor: pointer;
+  position: relative;
+}
+.pop_sub.profile_pop ul li .active_deco {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 10px;
+  margin-left: 5px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #282828;
+}
+.pop_sub.profile_pop ul li:hover {
+  background-color: #eee;
 }
 .pop_sub.ftr_pop {
   right: 0px;
@@ -391,12 +445,12 @@ textarea {
 .pop_sub.ftr_pop.ftr_price_program {
   right: inherit;
   left: -10px;
-  width: 150px;
+  width: 190px;
 }
 .pop_sub.ftr_pop.ftr_price_storage {
   right: inherit;
   left: -10px;
-  width: 190px;
+  width: 270px;
 }
 .pop_sub.ftr_pop.ftr_price_use_time {
   right: inherit;
@@ -438,6 +492,12 @@ textarea {
 .pop_sub.sns_share_pop {
   width: 180px;
   padding: 20px 30px;
+  pointer-events: none;
+  opacity: 0;
+}
+.pop_sub.sns_share_pop.active {
+  opacity: 1;
+  pointer-events: inherit;
 }
 .pop_sub.sns_share_pop ul {
   display: flex;
@@ -453,6 +513,45 @@ textarea {
   margin-top: 4px;
 }
 
+.contents_wrap .login_section {
+  padding: 100px 0px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #fafafa;
+}
+.contents_wrap .login_section .login_container {
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.contents_wrap .login_section .login_container .section_title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 20px;
+}
+.contents_wrap .login_section .login_container .sns_items {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.contents_wrap .login_section .login_container .sns_items .default_bt {
+  margin-bottom: 15px;
+}
+.contents_wrap .login_section .login_container .login_bottom_info {
+  margin-top: 40px;
+  font-size: 14px;
+}
+.contents_wrap .login_section .login_container .login_bottom_info .back_bt {
+  font-weight: 600;
+  cursor: pointer;
+}
 .contents_wrap .intro {
   overflow: hidden;
 }
@@ -790,7 +889,7 @@ textarea {
   display: flex;
   align-items: center;
 }
-.contents_wrap .filter_section .sub_filter_section .ft_programs {
+.contents_wrap .filter_section .sub_filter_section .ft_programs, .contents_wrap .filter_section .sub_filter_section .ft_title {
   display: none;
 }
 .contents_wrap .filter_section .sub_filter_section .ft_tags {
@@ -834,7 +933,11 @@ textarea {
 .contents_wrap .filter_section .ftr_select_item .ftr_selected {
   cursor: pointer;
 }
+.contents_wrap .filter_section .ftr_select_item .ftr_selected.active img {
+  transform: rotate(180deg);
+}
 .contents_wrap .filter_section .ftr_select_item .ftr_selected img {
+  transition-duration: 0.2s;
   margin-left: 3px;
   vertical-align: middle;
   margin-top: -4px;
@@ -1093,6 +1196,16 @@ textarea {
   padding: 40px 45px 100px;
   background-color: #fafafa;
 }
+.contents_wrap .price_section .no_contents {
+  padding: 200px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #eee;
+  font-size: 15px;
+  color: #898989;
+}
 .contents_wrap .price_section .section_title {
   font-size: 16px;
   font-weight: 600;
@@ -1107,12 +1220,30 @@ textarea {
   display: flex;
   justify-content: center;
 }
+.contents_wrap .price_section .price_items .price_bt_section .share_bt_section {
+  position: relative;
+}
+.contents_wrap .price_section .price_items .price_bt_section .share_bt_section .sns_share_pop {
+  left: 0px;
+  top: 50px;
+}
 .contents_wrap .price_section .price_items .price_item {
   padding: 33px 50px;
   margin-bottom: 30px;
   background-color: #fff;
   border: 1px solid #eee;
   position: relative;
+}
+.contents_wrap .price_section .price_items .price_item.disable_item .pr_value {
+  text-decoration: line-through;
+}
+.contents_wrap .price_section .price_items .price_item.compare_selected {
+  border-color: #282828;
+}
+.contents_wrap .price_section .price_items .price_item.compare_selected .compare_bt {
+  border: none;
+  background-color: #282828;
+  color: #fff;
 }
 .contents_wrap .price_section .price_items .price_item.service_item .price_detail {
   margin-top: 20px;
@@ -1130,7 +1261,9 @@ textarea {
 .contents_wrap .price_section .price_items .price_item .price_desc {
   margin-top: 10px;
   font-size: 14px;
+  line-height: 23px;
   color: #898989;
+  max-width: 350px;
 }
 .contents_wrap .price_section .price_items .price_item .price_detail {
   margin-top: 160px;
@@ -1160,6 +1293,9 @@ textarea {
   color: #898989;
   margin-bottom: 10px;
 }
+.contents_wrap .price_section .price_items .price_item .price_info_items .pi_item .pi_contents {
+  line-height: 22px;
+}
 .contents_wrap .price_section .price_items .price_item .price_bt_section {
   margin-top: 50px;
   display: flex;
@@ -1178,6 +1314,10 @@ textarea {
   font-size: 15px;
   font-weight: 600;
   display: flex;
+  position: relative;
+}
+.contents_wrap .price_section .price_items .price_item .price_bt_section .price_info_section .pr_select_item .pr_selected {
+  cursor: pointer;
 }
 .contents_wrap .price_section .price_items .price_item .price_bt_section .price_info_section .pr_select_item img {
   vertical-align: middle;
@@ -1195,6 +1335,7 @@ textarea {
 }
 .contents_wrap .price_section .price_compare_section {
   position: fixed;
+  left: 0px;
   bottom: 0px;
   height: 130px;
   width: 100%;
@@ -1232,11 +1373,14 @@ textarea {
   display: flex;
 }
 .contents_wrap .price_section .price_compare_section .pc_container .pc_bt_section .pc_right_bt_section .pc_reset_bt {
-  margin-right: 20px;
+  margin-right: 30px;
 }
 .contents_wrap .price_detail_section {
   padding: 40px 45px 100px;
   background-color: #fafafa;
+}
+.contents_wrap .price_detail_section .pr_value {
+  text-decoration: line-through;
 }
 .contents_wrap .price_detail_section .pr_container {
   background-color: #fff;
@@ -1276,6 +1420,9 @@ textarea {
   color: #898989;
   margin-bottom: 10px;
 }
+.contents_wrap .price_detail_section .pr_container .pr_summary .price_info_items .pi_item .pi_contents {
+  line-height: 22px;
+}
 .contents_wrap .price_detail_section .pr_container .pr_summary .price_detail {
   margin-top: 50px;
   font-size: 15px;
@@ -1305,6 +1452,8 @@ textarea {
   font-size: 15px;
   font-weight: 600;
   display: flex;
+  position: relative;
+  cursor: pointer;
 }
 .contents_wrap .price_detail_section .pr_container .pr_summary .price_bt_section .price_info_section .pr_select_item img {
   vertical-align: middle;
@@ -1331,6 +1480,7 @@ textarea {
   display: flex;
   margin-top: 50px;
   justify-content: space-between;
+  width: 100%;
 }
 .contents_wrap .price_detail_section .pr_container .pr_benefit .prb_item {
   width: 204px;
@@ -1606,6 +1756,9 @@ textarea {
   border-top: 1px solid #eee;
   position: relative;
 }
+.footer.not_display {
+  display: none;
+}
 .footer.window_app {
   display: none;
 }
@@ -1796,6 +1949,12 @@ div.cNrjqJ input::placeholder {
   font-weight: 600;
   color: #fff;
 }
+.default_bt.price_compare_bt.disable_bt {
+  background-color: #ccc;
+}
+.default_bt.price_compare_bt.disable_bt:hover {
+  background-color: #ccc;
+}
 .default_bt.price_compare_bt:hover {
   background-color: #181818;
 }
@@ -1810,12 +1969,27 @@ div.cNrjqJ input::placeholder {
 .default_bt.pop_check_bt:hover {
   background-color: #353535;
 }
+.default_bt.sns_login_bt {
+  width: 420px;
+  height: 70px;
+  border-radius: 70px;
+  background-color: #fff;
+  border: 1px solid #eee;
+  font-weight: 500;
+}
+.default_bt.sns_login_bt img {
+  height: 20px;
+  margin-right: 15px;
+}
+.default_bt.sns_login_bt:hover {
+  border-color: #898989;
+}
 
 @media only screen and (max-width: 1350px) and (min-width: 900px) {
   .header .search_section input {
     width: 240px;
   }
-  .header .main_menu ul li {
+  .header .main_menu > ul > li {
     margin-left: 20px;
   }
 
@@ -1834,6 +2008,22 @@ div.cNrjqJ input::placeholder {
   .contents_wrap .filter_section .ft_process .ftp_item .ftp_t {
     display: none;
   }
+  .contents_wrap .intro.intro3 .deco_img img {
+    width: 350px;
+  }
+  .contents_wrap .intro.intro5 {
+    padding: 160px 30px;
+  }
+  .contents_wrap .intro.intro5 .price_items .pr_item .pr_tags {
+    flex-direction: column;
+  }
+  .contents_wrap .intro.intro5 .price_items .pr_item .pr_tags .pr_tag {
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .contents_wrap .intro.intro5 .price_items .pr_item .pr_contents .pr_desc {
+    margin-top: 20px;
+  }
   .contents_wrap .tutorial_items .tt_item {
     width: calc(33.3% - 30px);
   }
@@ -1843,6 +2033,9 @@ div.cNrjqJ input::placeholder {
   .contents_wrap .tutorial_items .tt_item .tt_contents .tt_bottom {
     padding: 0px 15px;
     bottom: 10px;
+  }
+  .contents_wrap .price_section .price_items .price_item {
+    padding: 20px 30px;
   }
   .contents_wrap .price_detail_section .pr_container {
     min-width: 1100px;

@@ -110,9 +110,9 @@ function Tutorial(props){
         <div className={'contents_wrap'}>
             <div className={'filter_section'}>
                <div className={'ft_deco'}>
-                   <div className={'ft_title mobile_view'} onClick={()=>{setMobileFilterViewYn(!mobileFilterViewYn)}}>필터 <img src={'/img/ic_arrow_down.svg'}/></div>
+                   <div className={'ft_title mobile_view '+(mobileFilterViewYn?'active':'')} onClick={()=>{setMobileFilterViewYn(!mobileFilterViewYn)}}>필터 <img src={'/img/ic_arrow_down.svg'}/></div>
                </div>
-                {(!mobileYn||mobileFilterViewYn)&&<div className={'sub_filter_section'}>
+                {(!mobileYn||mobileFilterViewYn)&&<div className={'sub_filter_section'} onClick={()=>{setMobileFilterViewYn(false)}}>
                     <div className={'ft_process'}>
                         {categoryList.map((cItem,cIndex)=><div className={'ftp_item '+(cItem.categoryIdx===currentCate?'active':'')} key={cIndex} onClick={(e)=>{cateChange(cItem.categoryIdx)}}>
                             <span className={'ftp_num'} title={cItem.categoryName}>{(cIndex+1)}</span><span className={'ftp_t'}>. {cItem.categoryName}</span>
@@ -120,16 +120,14 @@ function Tutorial(props){
                         </div>)}
 
                     </div>
+                    <div className={'ft_title'}>태그</div>
                     <div className={'ft_tags'}>
                         {tagList.map((tagItem,tIndex)=><div key={tIndex} className={'tag_item '+(tagItem===currentTag?'active':'')} onClick={()=>{tagChange(tagItem)}}>#{tagItem}</div>)}
                     </div>
+                    <div className={'ft_title'}>프로그램</div>
                     <div className={'ft_programs'}>
                         <ul>
-                            <li>Photoshop</li>
-                            <li>Photoshop</li>
-                            <li>Photoshop</li>
-                            <li>Photoshop</li>
-                            <li>Photoshop</li>
+                            {toolList.map((toolItem,tIndex)=><li key={tIndex} onClick={()=>{toolChange(toolItem.toolIdx)}} className={currentTool.indexOf(toolItem.toolIdx)>=0?'active':''}>{toolItem.toolName}</li>)}
                         </ul>
                     </div>
                 </div>}
@@ -137,7 +135,7 @@ function Tutorial(props){
 
                 <div className={'ft_right_section'}>
                     <div className={'ftr_select_item'}>
-                        <div className={'ftr_selected'} onClick={(e)=>{e.stopPropagation();setCateProgramPopYn(false);setCateOrderPopYn(!cateOrderPopYn)}}>{currentSort===1?'최신순':(currentSort===3?'추천순':'오래된순')} <img src={'/img/ic_arrow_down.svg'}/></div>
+                        <div className={'ftr_selected '+(cateOrderPopYn?'active':'')} onClick={(e)=>{e.stopPropagation();setCateProgramPopYn(false);setCateOrderPopYn(!cateOrderPopYn)}}>{currentSort===1?'최신순':(currentSort===3?'추천순':'오래된순')} <img src={'/img/ic_arrow_down.svg'}/></div>
                         {cateOrderPopYn&&<div className={'pop_sub ftr_pop'}>
                             <ul>
                                 <li onClick={()=>{sortChange(3)}}>추천순</li>
@@ -147,7 +145,7 @@ function Tutorial(props){
                         </div>}
                     </div>
                     <div className={'ftr_select_item mobile_hidden'}>
-                        <div className={'ftr_selected'}  onClick={(e)=>{e.stopPropagation();setCateOrderPopYn(false);setCateProgramPopYn(!cateProgramPopYn)}}>프로그램 <img src={'/img/ic_arrow_down.svg'}/></div>
+                        <div className={'ftr_selected '+(cateProgramPopYn?'active':'')}  onClick={(e)=>{e.stopPropagation();setCateOrderPopYn(false);setCateProgramPopYn(!cateProgramPopYn)}}>프로그램 <img src={'/img/ic_arrow_down.svg'}/></div>
                         {cateProgramPopYn&&<div className={'pop_sub ftr_pop ftr_pop_program'}>
                             <ul>
                                 {toolList.map((toolItem,tIndex)=><li key={tIndex} onClick={()=>{toolChange(toolItem.toolIdx)}}>{toolItem.toolName}{currentTool.indexOf(toolItem.toolIdx)>=0&&<span className={'active_deco'}></span>}</li>)}
