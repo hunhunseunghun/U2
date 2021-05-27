@@ -1,9 +1,10 @@
 import {useState,useEffect} from 'react';
 import {useLocation,Link} from 'react-router-dom';
-import {IMG_URL} from "../const/URL";
+import {API_URL, IMG_URL} from "../const/URL";
 import {  useDispatch,useSelector } from "react-redux";
 import * as baseActions from "../store/base";
 import useBus from "use-bus";
+import axios from "axios";
 function Header(props){
     const [mobileYn,setMobileYn] =  useState(false);
     const [whiteFix,setWhiteFix] = useState(false);
@@ -35,6 +36,29 @@ function Header(props){
         }else{
             setHeaderYn(true);
         }
+
+        if(!userInfo.email){
+            const token = localStorage.getItem('token');
+            console.log(token);
+            if(token){
+                axios.get(API_URL+'/member/profile',{
+                    headers: {
+                        Authorization: "Bearer " + token
+                    }
+                }).then((result)=>{
+                    console.log(result)
+                    dispatch(baseActions.setUserInfo({
+                        email:result.data.email,
+                        fullName:result.data.fullName,
+                        photo:result.data.photoUrl,
+                        token:result.data.token,
+                        charge:result.data.chargeApp.chargeIdx
+                    }));
+                })
+            }
+
+        }
+
 
 
         let scTop;

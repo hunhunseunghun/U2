@@ -11,14 +11,7 @@ export const login = createAction(LOGIN);
 export const logout = createAction(LOGOUT);
 export const setUserInfo = createAction(SET_USER_INFO);
 
-export const getUserInfo = async (token, dispatch) => {
-  const response = await axios.get(API_URL+"/rest-api/getUser", {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  });
-  dispatch(setUserInfo(response.data));
-};
+
 
 const initialState = {
   userInfo: {
@@ -33,7 +26,7 @@ const initialState = {
 export default handleActions(
   {
     [LOGIN]: (state, action) => {
-      localStorage.setItem("token", action.payload);
+      localStorage.setItem("token", action.payload.token);
       return {
         ...state,
         userInfo: action.payload,

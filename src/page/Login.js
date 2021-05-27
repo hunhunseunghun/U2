@@ -2,7 +2,7 @@ import {useState,useEffect} from 'react';
 import axios from "axios";
 import {useLocation,Link,useHistory} from "react-router-dom";
 import qs from "qs";
-import {API_URL} from "../const/URL";
+import {API_URL, HOST_URL} from "../const/URL";
 import GoogleLogin from 'react-google-login';
 import {useDispatch} from "react-redux";
 import * as baseActions from "../store/base";
@@ -113,7 +113,7 @@ function Login(props){
 
                     const queryStr = qs.stringify({
                         client_id:CLIENT_ID,
-                        redirect_uri: 'http://localhost:3000/login',
+                        redirect_uri: HOST_URL+'/login',
                         response_type: "token",
                         scope:'profile email'
                     });
@@ -131,9 +131,6 @@ function Login(props){
                     success: (auth) => {
                         window.Kakao.API.request({
                             url:'/v2/user/me',
-                            // data: {
-                            //     property_keys: ["kakao_account.email","kakao_account.profile"]
-                            // },
                             success(result) {
                                 console.log(result);
                                 ourLogin({

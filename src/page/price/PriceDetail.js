@@ -1,5 +1,5 @@
 import {useState,useEffect} from 'react';
-import {Link, useLocation} from 'react-router-dom';
+import {Link, useHistory, useLocation} from 'react-router-dom';
 import useHistoryState from 'use-history-state';
 import axios from "axios";
 import {API_URL, HOST_URL, IMG_URL} from "../../const/URL";
@@ -7,6 +7,9 @@ import Moment from 'react-moment';
 import useBus from 'use-bus'
 import {createMarkup} from "../../library/InnterHtml";
 import {brTagParser} from "../../library/common";
+import {useDispatch, useSelector} from "react-redux";
+import * as baseActions from "../../store/base";
+import {setUserInfo} from "../../store/base";
 
 function Tutorial(props){
 
@@ -20,7 +23,9 @@ function Tutorial(props){
     const [priceDiscounts,setPriceDiscounts] = useState([]);
 
     const [currentDiscount,setDiscount]= useState(0);
-
+    const userInfo = useSelector(state => state.userInfo);
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     useEffect(()=>{
         const params = new URLSearchParams(location.search);
@@ -101,6 +106,50 @@ function Tutorial(props){
                 alert('주소가 복사되었습니다');
 
             }
+        }
+    }
+    const chargeBuyClick = (idx) => {
+
+        if(!userInfo.email) {
+            alert("로그인이 필요합니다.");
+            history.push('/login');
+        }
+        if(userInfo.charge!==idx){
+            axios.post(API_URL+'/member/chargepaychange',
+                {
+                    ChargeIdx: idx
+                },
+                {
+                    headers: {
+                        Authorization: "Bearer " + userInfo.token
+                    }
+                }).then((result)=>{
+                console.log(result);
+                dispatch(baseActions.setUserInfo({
+                    ...userInfo,
+                    charge:result.data.chargeIdx,
+                }));
+                alert("구매가 완료되었습니다.");
+
+            })
+        }else{
+            axios.post(API_URL+'/member/chargepayremove',
+                {
+                    ChargeIdx: idx
+                },
+                {
+                    headers: {
+                        Authorization: "Bearer " + userInfo.token
+                    }
+                }).then((result)=>{
+                console.log(result);
+                dispatch(baseActions.setUserInfo({
+                    ...userInfo,
+                    charge:result.data.chargeIdx,
+                }));
+                alert("요금제가 해지되었습니다.");
+
+            })
         }
     }
 
@@ -185,7 +234,10 @@ function Tutorial(props){
                                     </li>
                                 </ul>
                             </div>}
-                            <button className={'default_bt price_buy_bt'}>구매하기</button>
+                            <button className={'default_bt price_buy_bt '+(userInfo.charge===priceDetail.chargeIdx?'price_cancel':'')} onClick={() => {
+                                chargeBuyClick(priceDetail.chargeIdx)
+                            }}>{(userInfo.charge===priceDetail.chargeIdx?'해지하기':(userInfo.charge===0?'구매하기':'변경하기'))}
+                            </button>
                         </div>
                     </div>
                     <div className={'section_title'}>주요혜택</div>

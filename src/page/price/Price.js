@@ -8,6 +8,7 @@ import useBus from 'use-bus'
 import {brTagParser} from '../../library/common';
 import { useSelector ,useDispatch} from 'react-redux';
 import * as baseActions from "../../store/base";
+import {setUserInfo} from "../../store/base";
 
 function Price(props) {
 
@@ -320,17 +321,54 @@ function Price(props) {
             alert("로그인이 필요합니다.");
             history.push('/login');
         }
+        if(userInfo.charge!==idx){
+            axios.post(API_URL+'/member/chargepaychange',
+                {
+                    ChargeIdx: idx
+                },
+                {
+                    headers: {
+                        Authorization: "Bearer " + userInfo.token
+                    }
+                }).then((result)=>{
+                console.log(result);
+                dispatch(baseActions.setUserInfo({
+                    ...userInfo,
+                    charge:result.data.chargeIdx,
+                }));
+                alert("구매가 완료되었습니다.");
 
-        axios({
-            method: 'post',
-            url:API_URL+'/member/chargepay',
-            data:{
-                ChargeIdx:idx
-            },
-            headers: { Authorization: "Bearer "+userInfo.token}
-        }).then((result)=>{
-            alert("구매가 완료되었습니다.");
-        })
+            })
+        }else{
+            axios.post(API_URL+'/member/chargepayremove',
+                {
+                    ChargeIdx: idx
+                },
+                {
+                    headers: {
+                        Authorization: "Bearer " + userInfo.token
+                    }
+                }).then((result)=>{
+                console.log(result);
+                dispatch(baseActions.setUserInfo({
+                    ...userInfo,
+                    charge:result.data.chargeIdx,
+                }));
+                alert("요금제가 해지되었습니다.");
+
+            })
+        }
+
+        // axios({
+        //     method: 'post',
+        //     url:API_URL+'/member/chargepay',
+        //     data:{
+        //         ChargeIdx:idx
+        //     },
+        //     headers: { Authorization: "Bearer "+userInfo.token}
+        // }).then((result)=>{
+        //     alert("구매가 완료되었습니다.");
+        // })
     }
 
     const storageChange = (idx) => {
@@ -824,7 +862,7 @@ function Price(props) {
                             </div>
                             <button className={'default_bt price_buy_bt '+(userInfo.charge===pr.chargeIdx?'price_cancel':'')} onClick={() => {
                                 chargeBuyClick(pr.chargeIdx)
-                            }}>{(userInfo.charge===pr.chargeIdx?'해지하기':(userInfo.charge===0?'구매하기':'변경하기'))}
+                            }}>{(userInfo.charge===pr.chargeIdx?'해지하기':'구매하기')}
                             </button>
                         </div>
 
