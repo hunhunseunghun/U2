@@ -3,6 +3,12 @@ import './style/common.scss';
 import './style/mobile.scss';
 import { BrowserRouter } from 'react-router-dom';
 import {Route,HashRouter} from 'react-router-dom';
+
+import {createStore,applyMiddleware,compose} from 'redux';
+import {Provider} from 'react-redux';
+import penderMiddleware from 'redux-pender';
+import base from './store/base';
+
 import { dispatch } from 'use-bus'
 
 import Header from './component/Header';
@@ -16,9 +22,18 @@ import PriceDetail from './page/price/PriceDetail';
 import SnsSelect from './page/post/SnsSelect';
 import ChannelAdd from './page/post/ChannelAdd';
 import VideoPost from "./page/post/VideoPost";
+
+const Middlewares = [penderMiddleware()];
+const isDev = process.env.NODE_ENV === 'development';
+const devTools = isDev && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+const composeEnhancers = devTools || compose;
+const store = createStore(base,composeEnhancers(
+    applyMiddleware(...Middlewares)));
+
 function App() {
   return (
       <BrowserRouter>
+          <Provider store={store}>
             <div className={'app'} onClick={() => dispatch('@@popup/close')}>
                 <Header></Header>
                 <Route exact path="/" component={Main} />
@@ -32,6 +47,7 @@ function App() {
                 <Route exact path="/post/post" component={VideoPost} />
                 <Footer></Footer>
             </div>
+          </Provider>
       </BrowserRouter>
   );
 }

@@ -106,6 +106,21 @@ function Tutorial(props){
             setTutorialItems(result.data);
         })
     }
+    useEffect(()=>{
+        const resizeEvent = ()=>{
+            if (window.innerWidth < 900 && !mobileYn) {
+                setMobileYn(true);
+                //window.location.reload();
+            } else if (window.innerWidth >= 900 && mobileYn) {
+                setMobileYn(false);
+                //window.location.reload();
+            }
+        }
+        window.addEventListener('resize',resizeEvent)
+        return ()=>{
+            window.removeEventListener('resize',resizeEvent);
+        }
+    },[mobileYn])
     return(
         <div className={'contents_wrap'}>
             <div className={'filter_section'}>
@@ -165,7 +180,7 @@ function Tutorial(props){
                                     {tItem.bannerImage===null&&<div className={'no_img'}><img src={'/img/no_image.png'}/><span className={'not_contents'}>Image not found</span></div>}
                                 </div>
                                 <div className={'tt_contents'}>
-                                    <div className={'tt_title'}>{tItem.topicName}</div>
+                                    <div className={'tt_title'} title={tItem.topicName}>{tItem.topicName}</div>
                                     <div className={'tt_sub'}>{tItem.categoryName}/ 총 {tItem.timeTotal}시간/ <Moment format="YYYY. MM. DD.">
                                         {tItem.regDate}
                                     </Moment></div>

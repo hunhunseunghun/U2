@@ -25,20 +25,16 @@ function TutorialDetail(props){
     return(
         <div className={'contents_wrap'}>
             <div className={'tutorial_detail td1'}>
-                {tutorialDetail.topicImage&&<div className={'td_back'} style={{backgroundImage:'url('+IMG_URL+'/'+tutorialDetail.topicImage+')'}}>
+                {tutorialDetail.topicImage&&<div className={'td_back'}>
                 </div>}
                 <div className={'td_title'}>
                     <div className={'tdt_t'}>
                         {tutorialDetail.topicName}
                     </div>
                     <div className={'td_subtitle'}>
-                        {tutorialDetail.categoryName}/ 총 {tutorialDetail.timeTotal}시간/ <Moment format="YYYY. MM. DD.">
+                        {tutorialDetail.memberName}/ {tutorialDetail.categoryName}/ 총 {tutorialDetail.timeTotal}시간/ <Moment format="YYYY. MM. DD.">
                         {tutorialDetail.regDate}</Moment>
                     </div>
-                </div>
-
-                <div className={'td_writer'}>
-                    <span className={'user_profile'} style={{backgroundImage:'url(/img/temp_profile.png)'}}></span> {tutorialDetail.memberName}
                 </div>
                 <div className={'td_programs'}>
                     {tutorialDetail.toolLogos&&tutorialDetail.toolLogos.map((pItem,pIndex)=>{
@@ -48,9 +44,9 @@ function TutorialDetail(props){
                     })}
                 </div>
             </div>
-            <div className={'tutorial_detail td2'}>
+            {tutorialDetail.topicDesc&&<div className={'tutorial_detail td2'}>
                 <div dangerouslySetInnerHTML={createMarkup(tutorialDetail.topicDesc)}></div>
-            </div>
+            </div>}
             <div className={'tutorial_detail td3'}>
                 <div className={'section_title'}>Course Table</div>
                 <div className={'course_items'}>

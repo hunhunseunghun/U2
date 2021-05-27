@@ -2,7 +2,7 @@ import {useState,useEffect} from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import useHistoryState from 'use-history-state';
 import axios from "axios";
-import {API_URL,IMG_URL} from "../../const/URL";
+import {API_URL, HOST_URL, IMG_URL} from "../../const/URL";
 import Moment from 'react-moment';
 import useBus from 'use-bus'
 import {createMarkup} from "../../library/InnterHtml";
@@ -29,7 +29,7 @@ function Tutorial(props){
         }
         axios.get(API_URL+'/common/code/contract').then((result)=>{
             setPriceDiscounts(result.data);
-            setDiscount(result.data[0]);
+            setDiscount(result.data[1]);
         })
         const p_idx = location.pathname.substr(14,18);
         axios.get(API_URL+'/common/chargemaster/'+p_idx).then((result)=>{
@@ -45,11 +45,10 @@ function Tutorial(props){
                     content: {
                         title: result.data.chargeName,
                         description: result.data.chargeSubName,
-                        imageUrl:
-                            "https://w.namu.la/s/5a218e413a95f08b57a7b18998c294f9a8c18f2447e7e5ec6d369557b876646c8bf998ec5fd20db50eec75cfa5aeb7defb174242ace627c8d73bd90c86f934a98adb426c8a2f3cb512c7a66b69637bf92ce125f3becd127e0ae6aa7429ab11a2c5e5a9af2dd1895ac4aaebd346c8581d",
+                        imageUrl: IMG_URL+'/'+result.data.chargePhoto,
                         link: {
-                            webUrl: "https://eumray.com", // 카카오 PC에서 확인할 때 연결될 웹 url
-                            mobileWebUrl: "https://eumray.com", // 카카오 앱에서 확인할 때 연결될 웹 url
+                            webUrl: HOST_URL+"/price/detail/"+result.data.chargeIdx, // 카카오 PC에서 확인할 때 연결될 웹 url
+                            mobileWebUrl:HOST_URL+"/price/detail/"+result.data.chargeIdx, // 카카오 앱에서 확인할 때 연결될 웹 url
                         },
                     },
                 });
@@ -66,6 +65,7 @@ function Tutorial(props){
         '@@popup/close',
         () =>{
            setSharePopYn(false);
+            setDiscountPopYn(false);
         },
         [],
     );
@@ -130,7 +130,7 @@ function Tutorial(props){
                             <div className={'pi_item'}>
                                 <div className={'pi_title'}>기본 스토리지</div>
                                 <div className={'pi_contents'}>
-                                    {priceDetail.storageMasters.length===0?'없음':priceDetail.storageMasters.map((st,stIndex)=><div key={stIndex}>{st.storageName+' 공간 '+st.storageSize+'gb'}</div>)}
+                                    {priceDetail.storageMasters.length===0?'없음':priceDetail.storageMasters.map((st,stIndex)=><div key={stIndex}>{st.storageName+' 공간 '+st.storageSize+'GB'}</div>)}
                                 </div>
                             </div>
                             <div className={'pi_item'}>
@@ -140,14 +140,14 @@ function Tutorial(props){
                             <div className={'pi_item'}>
                                 <div className={'pi_title'}>추가 SW</div>
                                 <div className={'pi_contents'}>{priceDetail.toolsAdditional.length===0?'없음':priceDetail.toolsAdditional.map((tl,tl_index)=>{
-                                    if((tl_index+1)!==priceDetail.tools.length) return tl.toolName+',';
+                                    if((tl_index+1)!==priceDetail.toolsAdditional.length) return tl.toolName+', ';
                                     else return tl.toolName;
                                 })}</div>
                             </div>
                             <div className={'pi_item'}>
                                 <div className={'pi_title'}>추가 스토리지</div>
                                 <div className={'pi_contents'}>
-                                    {priceDetail.storageMastersAdditional.length===0?'없음':priceDetail.storageMastersAdditional.map((st,stIndex)=><div key={stIndex}>{st.storageName+' 공간 '+st.storageSize+'gb'}</div>)}
+                                    {priceDetail.storageMastersAdditional.length===0?'없음':priceDetail.storageMastersAdditional.map((st,stIndex)=><div key={stIndex}>{st.storageName+' 공간 '+st.storageSize+'GB'}</div>)}
                                 </div>
                             </div>
                             <div className={'pi_item'}>
@@ -159,7 +159,7 @@ function Tutorial(props){
                         <div className={'price_bt_section'}>
                             <div className={'price_info_section'}>
                                 <div className={'pr_select_item'}>
-                                    <div className={'pr_selected'} onClick={()=>{setDiscountPopYn(!disCountPopYn)}}>{currentDiscount.codeDesc}시 <img src={'/img/ic_arrow_down.svg'}/></div>
+                                    <div className={'pr_selected'} onClick={(e)=>{e.stopPropagation();setDiscountPopYn(!disCountPopYn)}}>{currentDiscount.codeDesc}시 <img src={'/img/ic_arrow_down.svg'}/></div>
                                     {disCountPopYn&&<div className={'pop_sub ftr_pop ftr_price_program'}>
                                         <ul>
                                             {priceDiscounts.map((d_item,d_index)=><li key={d_index} onClick={()=>{selectDiscount(d_item)}}>{d_item.codeDesc}</li>)}
@@ -209,7 +209,12 @@ function Tutorial(props){
                         <div className={'price_bt_section'}>
                             <div className={'price_info_section'}>
                                 <div className={'pr_select_item'}>
-                                    <div className={'pr_selected'}>1년약정시 <img src={'/img/ic_arrow_down.svg'}/></div>
+                                    <div className={'pr_selected'} onClick={(e)=>{e.stopPropagation();setDiscountPopYn(!disCountPopYn)}}>{currentDiscount.codeDesc}시 <img src={'/img/ic_arrow_down.svg'}/></div>
+                                    {disCountPopYn&&<div className={'pop_sub ftr_pop ftr_price_program'}>
+                                        <ul>
+                                            {priceDiscounts.map((d_item,d_index)=><li key={d_index} onClick={()=>{selectDiscount(d_item)}}>{d_item.codeDesc}</li>)}
+                                        </ul>
+                                    </div>}
                                 </div>
                                 <div className={'pr_value'}>월 {(priceDetail.price*(1-parseInt(currentDiscount.codeName)*0.01)).toLocaleString()}원</div>
                             </div>

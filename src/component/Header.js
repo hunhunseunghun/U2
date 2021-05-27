@@ -1,7 +1,9 @@
 import {useState,useEffect} from 'react';
 import {useLocation,Link} from 'react-router-dom';
 import {IMG_URL} from "../const/URL";
-
+import {  useDispatch,useSelector } from "react-redux";
+import * as baseActions from "../store/base";
+import useBus from "use-bus";
 function Header(props){
     const [mobileYn,setMobileYn] =  useState(false);
     const [whiteFix,setWhiteFix] = useState(false);
@@ -9,10 +11,16 @@ function Header(props){
     const [mobileMenuActive,setMobileMenuActive] = useState(false);
     const [windowAppYn,setWindowAppYn] =  useState(false);
     const [headerYn,setHeaderYn] =  useState(true);
+    const [profilePopYn,setProfilePopYn] =  useState(false);
     const location = useLocation();
+    const dispatch = useDispatch();
+    const userInfo = useSelector(state => state.userInfo);
     useEffect(()=>{
+        if(window.innerWidth<900){
+            setMobileYn(true);
+        }
         setMobileMenuActive(false);
-        if(location.pathname.indexOf('/tutorial/detail/')>=0||location.pathname==='/'){
+        if(location.pathname==='/'){
             setWhiteFix(true);
             //console.log(whiteFix);
         }else{
@@ -37,28 +45,31 @@ function Header(props){
                 setWhiteFix(false);
             }else{
                 setHeaderFix(false);
-                if(location.pathname.indexOf('/tutorial/detail/')>=0||location.pathname==='/'){
+                if(location.pathname==='/'){
                     setWhiteFix(true);
                 }else{
                     setWhiteFix(false);
                 }
             }
         });
-        window.addEventListener('resize',()=>{
-            // if(window.innerWidth<900&&!mobileYn){
-            //     setMobileYn(true);
-            //     window.location.reload();
-            // }else if(window.innerWidth>=900&&mobileYn){
-            //     setMobileYn(false);
-            //     window.location.reload();
-            // }
-        })
+
+
 
         window.scrollTo(0, 0);
 
+
     },[location]);
-
-
+    useBus(
+        '@@popup/close',
+        () => {
+            setProfilePopYn(false);
+        },
+        [],
+    );
+    const logOutClick=()=>{
+        dispatch(baseActions.logout());
+        window.reload();
+    }
     return(
         <div className={'header '+(whiteFix?'white ':'')+(headerFix?'fixed ':'')+(windowAppYn?'window_app':'')+(mobileMenuActive?'active':'')+(headerYn?'':'not_display')}>
          <div className={'header_tl'}>
@@ -81,25 +92,30 @@ function Header(props){
                   <li className={location.pathname==='/'?'active':''}><Link to={'/'}>메인으로</Link></li>
                   <li className={location.pathname.indexOf('/tutorial')>=0?'active':''}><Link to={'/tutorial'}>영상제작팁</Link></li>
                   <li className={location.pathname.indexOf('/price')>=0?'active':''}><Link to={'/price'}>요금제</Link></li>
-                  <li><Link to={'/login'}>로그인/회원가입</Link></li>
-                  {/*<li>*/}
-                  {/*    <div className={'profile_img'} style={{backgroundImage:'url(/img/temp_profile.png)'}}></div>*/}
-                  {/*    <div className={'pop_sub profile_pop'}>*/}
-                  {/*        <ul>*/}
-                  {/*            <li>로그아웃</li>*/}
-                  {/*        </ul>*/}
-                  {/*    </div>*/}
-                  {/*</li>*/}
+                  {!userInfo.email&&<li><Link to={'/login'}>로그인/회원가입</Link></li>}
+                  {userInfo.email&&<li>
+                      <div className={'profile_img'} onClick={(e)=>{e.stopPropagation();setProfilePopYn(!profilePopYn)}} style={{backgroundImage:'url('+(userInfo.photo?userInfo.photo:'/img/tempProfile.jpg')+')'}}></div>
+                      {profilePopYn&&<div className={'pop_sub profile_pop'}>
+                          <ul>
+                              <li onClick={()=>{logOutClick()}}>로그아웃</li>
+                          </ul>
+                      </div>}
+                  </li>}
               </ul>
           </div>
 
             <div className={'mobile_menu_section'}>
+                {userInfo.email&&<div className={'user_info'}>
+                    <div className={'profile_img'} style={{backgroundImage:'url('+(userInfo.photo?userInfo.photo:'/img/tempProfile.jpg')+')'}}></div>
+                    <div className={'profile_email'}>{userInfo.email}</div>
+                </div>}
                 <div className={'main_menu'}>
                     <ul>
                         <li className={location.pathname==='/'?'active':''}><Link to={'/'} className={'mm_t'}>메인으로</Link></li>
                         <li className={location.pathname.indexOf('/tutorial')>=0?'active':''}><Link to={'/tutorial'} className={'mm_t'}>영상제작팁</Link></li>
                         <li className={location.pathname.indexOf('/price')>=0?'active':''}><Link to={'/price'} className={'mm_t'}>요금제</Link></li>
-                        <li><Link to={'/login'} className={'mm_t'}>로그인/회원가입</Link></li>
+                        {!userInfo.email&&<li><Link to={'/login'} className={'mm_t'}>로그인/회원가입</Link></li>}
+                        {userInfo.email&&<li onClick={()=>{logOutClick()}}>로그아웃</li>}
                     </ul>
                 </div>
                 <div className={'sub_menu'}>

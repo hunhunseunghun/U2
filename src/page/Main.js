@@ -3,10 +3,11 @@ import axios from "axios";
 import {API_URL, IMG_URL} from "../const/URL";
 import {Link, useLocation} from "react-router-dom";
 import {gsap} from 'gsap';
+import {useSelector} from "react-redux";
 function Main(props){
     const [mobileYn,setMobileYn] =  useState(false);
     const [quoteCount,setQuoteCount] = useState(0);
-
+    const userInfo = useSelector(state => state.userInfo);
     useEffect(()=>{
         if(window.innerWidth<900){
             setMobileYn(true);
@@ -46,7 +47,7 @@ function Main(props){
                        지금 가입하면 영상 제작 Tip을 마음껏 보실 수 있어요!
                    </div>
                    <div className={'bt_section'}>
-                       <div className={'default_bt join_bt'}>서비스 가입하기</div>
+                       <Link to={userInfo.email?'/price':'/login'}><div className={'default_bt join_bt'}>서비스 가입하기</div></Link>
                    </div>
                </div>
             </div>
@@ -118,6 +119,9 @@ function Main(props){
                                 <div className={'tool_name'}>Adobe AfterEffect</div>
                                 <div className={'tool_desc'}>누구나 간편하고 쉽게 이미지 보정, 편집을 할 수 있는 최적의 소프트웨어</div>
                             </div>
+                        </div>
+                        <div className={'tool_sub_desc'}>
+                            *Adebe제품은 이미 구입한 계정이 있을시, 본인계정으로 설치가 가능합니다.
                         </div>
                     </div>
                     <div className={'tool_list'}>

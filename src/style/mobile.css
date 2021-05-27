@@ -45,6 +45,9 @@
   .header.white .mobile_menu .mm_ic_container .mm_ic {
     background-color: #fff;
   }
+  .header.white .mobile_menu.active .mm_ic_container .mm_ic {
+    background-color: #181818;
+  }
   .header.fixed {
     height: 54px;
   }
@@ -62,7 +65,8 @@
     z-index: 90;
   }
   .header .mobile_menu_section {
-    display: inherit;
+    display: flex;
+    flex-direction: column;
     position: fixed;
     z-index: 99;
     top: 0px;
@@ -74,6 +78,29 @@
     padding-top: 80px;
     box-sizing: border-box;
     transition-duration: 0.2s;
+  }
+  .header .mobile_menu_section .user_info {
+    display: flex;
+    flex-direction: column;
+    height: inherit;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+    width: calc(100% - 80px);
+    margin-left: 40px;
+    border-bottom: 1px solid #ddd;
+  }
+  .header .mobile_menu_section .user_info .profile_img {
+    width: 36px;
+    height: 36px;
+    overflow: hidden;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center center;
+  }
+  .header .mobile_menu_section .user_info .profile_email {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 500;
   }
   .header .mobile_menu_section .main_menu {
     justify-content: flex-start;
@@ -373,6 +400,11 @@
   .contents_wrap .intro.intro4 .tool_items .tool_list {
     width: 100%;
   }
+  .contents_wrap .intro.intro4 .tool_items .tool_list .tool_sub_desc {
+    font-size: 14px;
+    line-height: 22px;
+    margin-bottom: 40px;
+  }
   .contents_wrap .intro.intro4 .tool_items .tool_list .tool_item {
     margin-bottom: 30px;
   }
@@ -654,28 +686,21 @@
   .contents_wrap .tutorial_detail .section_title {
     font-size: 15px;
   }
+  .contents_wrap .tutorial_detail.td1 {
+    height: inherit;
+    padding: 150px 20px 50px;
+  }
   .contents_wrap .tutorial_detail.td1 .td_title {
-    font-size: 28px;
-    line-height: 42px;
-    padding: 0px 20px;
+    font-size: 27px;
+    line-height: 40px;
+    padding: 0px;
   }
   .contents_wrap .tutorial_detail.td1 .td_title .td_subtitle {
     margin-top: 15px;
     font-size: 14px;
   }
-  .contents_wrap .tutorial_detail.td1 .td_writer {
-    left: 20px;
-    font-size: 14px;
-  }
-  .contents_wrap .tutorial_detail.td1 .td_writer .user_profile {
-    width: 30px;
-    height: 30px;
-  }
-  .contents_wrap .tutorial_detail.td1 .td_programs {
-    right: 20px;
-  }
   .contents_wrap .tutorial_detail.td1 .td_programs img {
-    width: 28px;
+    height: 28px;
     margin-left: 8px;
   }
   .contents_wrap .tutorial_detail.td2 {
