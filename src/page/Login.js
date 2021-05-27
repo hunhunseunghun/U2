@@ -110,10 +110,9 @@ function Login(props){
 
                     const CLIENT_ID = '298115075163-hlqv6f9barc61674b385qats4j1gqgup.apps.googleusercontent.com';
                     const AUTHORIZE_URI = "https://accounts.google.com/o/oauth2/v2/auth";
-
                     const queryStr = qs.stringify({
                         client_id:CLIENT_ID,
-                        redirect_uri: HOST_URL+'/login',
+                        redirect_uri: window.location.href,
                         response_type: "token",
                         scope:'profile email'
                     });
@@ -132,7 +131,7 @@ function Login(props){
                         window.Kakao.API.request({
                             url:'/v2/user/me',
                             success(result) {
-                                console.log(result);
+                                //console.log(result);
                                 ourLogin({
                                     email:result.kakao_account.email,
                                     name:result.kakao_account.profile.nickname,
@@ -143,7 +142,7 @@ function Login(props){
                             },
                             fail() { /* Handle error */ },
                         })
-                        console.log('정상적으로 로그인 되었습니다.', auth);
+                        //console.log('정상적으로 로그인 되었습니다.', auth);
                     },
                     fail: (err) => {
                         console.error(err)

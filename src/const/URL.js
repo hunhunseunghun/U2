@@ -1,4 +1,5 @@
 //상용
+//const HOST_URL='https://u2.life'
 // const API_URL='https://api.u2.life/api'
 // const IMG_URL='https://admin.u2.life/upload'
 

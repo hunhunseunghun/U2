@@ -182,7 +182,7 @@ function Tutorial(props){
                                 <div className={'tt_contents'}>
                                     <div className={'tt_title'} title={tItem.topicName}>{tItem.topicName}</div>
                                     <div className={'tt_sub'}>{tItem.categoryName}/ 총 {tItem.timeTotal}시간/ <Moment format="YYYY. MM. DD.">
-                                        {tItem.regDate}
+                                        {tItem.modifyDate}
                                     </Moment></div>
                                     <div className={'tt_bottom'}>
                                         <div className={'tt_writer'}>by {tItem.memberName}</div>

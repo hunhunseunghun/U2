@@ -52,7 +52,7 @@ function Price(props) {
             setMobileYn(true);
         }
 
-        console.log(userInfo);
+        //console.log(userInfo);
 
         axios.get(API_URL + '/common/code/contract').then((result) => {
             setPriceDiscounts(result.data);
@@ -331,7 +331,7 @@ function Price(props) {
                         Authorization: "Bearer " + userInfo.token
                     }
                 }).then((result)=>{
-                console.log(result);
+                //console.log(result);
                 dispatch(baseActions.setUserInfo({
                     ...userInfo,
                     charge:result.data.chargeIdx,
@@ -349,7 +349,7 @@ function Price(props) {
                         Authorization: "Bearer " + userInfo.token
                     }
                 }).then((result)=>{
-                console.log(result);
+                //console.log(result);
                 dispatch(baseActions.setUserInfo({
                     ...userInfo,
                     charge:result.data.chargeIdx,
