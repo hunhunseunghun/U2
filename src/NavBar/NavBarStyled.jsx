@@ -10,6 +10,7 @@ export const NavContainer = styled.div`
   align-items: center;
   transition-duration: 0.2s;
   box-sizing: border-box;
+  background-color: white;
 
   textarea {
     box-sizing: border-box;
