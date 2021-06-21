@@ -26,9 +26,6 @@ export const NavContainer = styled.div`
     text-decoration: none;
     cursor: pointer;
   }
-  .logo_section {
-    cursor: pointer;
-  }
 
   .main_menu {
     flex: 1 1;
@@ -81,6 +78,6 @@ export const NavContainer = styled.div`
     }
   }
   .profileImg {
-    width: 40px;
+    width: 30px;
   }
 `;
