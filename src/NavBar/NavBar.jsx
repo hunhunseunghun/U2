@@ -1,6 +1,6 @@
 import React from "react";
 import { NavContainer } from "./NavBarStyled";
-import logo from "../Img/logo_w.svg";
+import logo from "../Img/logo.svg";
 import profileImg from "../Img/profileImg.svg";
 
 const NavBar = () => {

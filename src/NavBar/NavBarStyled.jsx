@@ -9,7 +9,6 @@ export const NavContainer = styled.div`
   display: flex;
   align-items: center;
   transition-duration: 0.2s;
-  background-color: gray;
   box-sizing: border-box;
 
   textarea {
