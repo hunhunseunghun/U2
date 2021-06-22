@@ -77,9 +77,6 @@ export const NavContainer = styled.div`
       background-color: #181818;
     }
   }
-  .profileImg {
-    width: 30px;
-  }
 
   // 영상마켓 드롭 다운 메뉴
 
@@ -119,5 +116,38 @@ export const NavContainer = styled.div`
   }
   .vidmarket_dorpdown {
     display: none;
+  }
+  .tab_porfile {
+  }
+  .pop_off {
+    display: none;
+  }
+  .pop_sub {
+    position: absolute;
+    padding: 10px 0;
+    border-radius: 15px;
+    border: 1px solid #eee;
+    z-index: 10;
+    background-color: #fff;
+    -webkit-filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.1));
+    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.1));
+  }
+  .profile_pop {
+    right: 0;
+    top: 30px;
+    width: 130px;
+    color: #181818;
+  }
+  .profile_pop ul li {
+    width: 100%;
+    margin-left: 0;
+    line-height: 36px;
+    padding: 0 25px;
+    cursor: pointer;
+    position: relative;
+    text-align: -webkit-match-parent;
+  }
+  .profileImg {
+    width: 30px;
   }
 `;
