@@ -83,21 +83,38 @@ export const NavContainer = styled.div`
 
   // 영상마켓 드롭 다운 메뉴
 
-  .tab_vidmarke {
+  .tab_vidmarket {
     position: relative;
   }
-  .tab_vidmarke:hover {
-    background-color: red;
-    .vidmarket_dorpdown {
+  .tab_vidmarket {
+    &:hover .vidmarket_dorpdown {
       position: absolute;
-      display: flex;
+      display: block;
       justify-content: center;
-      top: 100px;
-      left: 0;
-      width: 100%;
-      padding: 10px 0 30px;
+      top: 16px;
+      left: -40%;
+      width: 200%;
+      padding-top: 10px;
       text-align: left;
-      background-color: grey;
+      box-shadow: 16px 16px 16px 0px rgb(0, 0, 0, 0.2);
+      background-color: white;
+      font-size: 12px;
+      font-weight: normal;
+      border-radius: 5px;
+
+      .dropdown_prjapply {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+      }
+
+      div {
+        padding: 15px 10px;
+
+        &:hover {
+          font-weight: bold;
+          background-color: #00000026;
+        }
+      }
     }
   }
   .vidmarket_dorpdown {

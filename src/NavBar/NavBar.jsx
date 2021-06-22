@@ -3,7 +3,7 @@ import { NavContainer } from "./NavBarStyled";
 import logo from "../Img/logo.svg";
 import profileImg from "../Img/profileImg.svg";
 
-const NavBar = () => {
+const NavBar = ({ history }) => {
   return (
     <NavContainer className="header white">
       <div className="header_tl">
@@ -25,8 +25,24 @@ const NavBar = () => {
             <a href="/price">요금제</a>
           </li>
           <li className="tab_vidmarket">
-            <a href="/login">영상마켓</a>
-            <div className="vidmarket_dorpdown">프로젝트 등록</div>
+            <a
+              onClick={() => {
+                history.push("/survmain");
+              }}
+            >
+              영상마켓
+            </a>
+            <div className="vidmarket_dorpdown">
+              <div
+                className="dropdown_prjapply"
+                onClick={() => {
+                  history.push("/prjregi");
+                }}
+              >
+                프로젝트 등록
+              </div>
+              <div className="dropdown_currprj">진행중인 프로젝트</div>
+            </div>
           </li>
           <li>
             <a className="profileImg" href="/login">
