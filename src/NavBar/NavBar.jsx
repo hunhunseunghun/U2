@@ -1,9 +1,9 @@
 import React from "react";
 import { NavContainer } from "./NavBarStyled";
-import logo from "../Img/logo_w.svg";
+import logo from "../Img/logo.svg";
 import profileImg from "../Img/profileImg.svg";
 
-const NavBar = () => {
+const NavBar = ({ history }) => {
   return (
     <NavContainer className="header white">
       <div className="header_tl">
@@ -24,8 +24,25 @@ const NavBar = () => {
           <li className="">
             <a href="/price">요금제</a>
           </li>
-          <li>
-            <a href="/login">영상마켓</a>
+          <li className="tab_vidmarket">
+            <a
+              onClick={() => {
+                history.push("/survmain");
+              }}
+            >
+              영상마켓
+            </a>
+            <div className="vidmarket_dorpdown">
+              <div
+                className="dropdown_prjapply"
+                onClick={() => {
+                  history.push("/prjregi");
+                }}
+              >
+                프로젝트 등록
+              </div>
+              <div className="dropdown_currprj">진행중인 프로젝트</div>
+            </div>
           </li>
           <li>
             <a className="profileImg" href="/login">

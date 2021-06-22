@@ -9,8 +9,8 @@ export const NavContainer = styled.div`
   display: flex;
   align-items: center;
   transition-duration: 0.2s;
-  background-color: gray;
   box-sizing: border-box;
+  background-color: white;
 
   textarea {
     box-sizing: border-box;
@@ -79,5 +79,45 @@ export const NavContainer = styled.div`
   }
   .profileImg {
     width: 30px;
+  }
+
+  // 영상마켓 드롭 다운 메뉴
+
+  .tab_vidmarket {
+    position: relative;
+  }
+  .tab_vidmarket {
+    &:hover .vidmarket_dorpdown {
+      position: absolute;
+      display: block;
+      justify-content: center;
+      top: 16px;
+      left: -40%;
+      width: 200%;
+      padding-top: 10px;
+      text-align: left;
+      box-shadow: 16px 16px 16px 0px rgb(0, 0, 0, 0.2);
+      background-color: white;
+      font-size: 12px;
+      font-weight: normal;
+      border-radius: 5px;
+
+      .dropdown_prjapply {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+      }
+
+      div {
+        padding: 15px 10px;
+
+        &:hover {
+          font-weight: bold;
+          background-color: #00000026;
+        }
+      }
+    }
+  }
+  .vidmarket_dorpdown {
+    display: none;
   }
 `;
