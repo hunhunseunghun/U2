@@ -24,8 +24,9 @@ const NavBar = () => {
           <li className="">
             <a href="/price">요금제</a>
           </li>
-          <li>
+          <li className="tab_vidmarket">
             <a href="/login">영상마켓</a>
+            <div className="vidmarket_dorpdown">프로젝트 등록</div>
           </li>
           <li>
             <a className="profileImg" href="/login">

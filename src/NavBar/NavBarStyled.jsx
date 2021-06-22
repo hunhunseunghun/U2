@@ -80,4 +80,27 @@ export const NavContainer = styled.div`
   .profileImg {
     width: 30px;
   }
+
+  // 영상마켓 드롭 다운 메뉴
+
+  .tab_vidmarke {
+    position: relative;
+  }
+  .tab_vidmarke:hover {
+    background-color: red;
+    .vidmarket_dorpdown {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      top: 100px;
+      left: 0;
+      width: 100%;
+      padding: 10px 0 30px;
+      text-align: left;
+      background-color: grey;
+    }
+  }
+  .vidmarket_dorpdown {
+    display: none;
+  }
 `;

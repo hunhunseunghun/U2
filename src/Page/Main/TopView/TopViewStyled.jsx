@@ -19,6 +19,9 @@ export const TopViewContainer = styled.div`
     position: absolute;
     bottom: 20px;
   }
+  .slick-dots li button {
+    color: white;
+  }
   .slide img {
     width: 100%;
     height: 100%;

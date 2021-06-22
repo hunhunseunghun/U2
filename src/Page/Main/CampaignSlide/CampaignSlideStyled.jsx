@@ -48,13 +48,18 @@ export const CampSliContainer = styled.div`
     left: 2%;
     top: 38%;
   }
-  .dotsImg {
-    width: 40px;
-    height: 40px;
+  .slick-thumb {
+    bottom: -65px;
   }
-
-  .slideImg {
-    width: 40px;
-    height: 40px;
+  .slick-thumb li {
+    width: 50px;
+    height: 50px;
+  }
+  .slick-active .campThumImg {
+    border: 1px solid red;
+  }
+  .campThumImg {
+    width: 50px;
+    height: 50px;
   }
 `;

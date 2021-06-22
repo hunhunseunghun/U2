@@ -15,7 +15,6 @@ export const MainContainer = styled.div`
   .campArea {
     display: flex;
     padding: 40px;
-    background-color: grey;
 
     .campListWrap {
       width: 300px;
@@ -39,5 +38,33 @@ export const MainContainer = styled.div`
         cursor: pointer;
       }
     }
+  }
+
+  .applyBanner {
+    position: relative;
+    margin-bottom: 5rem;
+  }
+  .applyBannerImg {
+    width: 100%;
+    height: 150px;
+  }
+
+  .applyBtnWrap {
+    position: absolute;
+    right: 20px;
+    bottom: 30px;
+  }
+
+  .applyBtn {
+    all: unset;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    background-color: black;
+    color: white;
+  }
+  .applyBtn:hover {
+    cursor: pointer;
   }
 `;

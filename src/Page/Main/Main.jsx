@@ -5,7 +5,7 @@ import TopAds from "./TopAds/TopAds.jsx";
 import ContentTap from "./ContentTap/ContentTab.jsx";
 import ContentElement from "./ContentElement/ContentElement.jsx";
 import CampaignSlide from "./CampaignSlide/CampaignSlide.jsx";
-import { List } from "@material-ui/core";
+import Slider3 from "../../Img/slider3.jpeg";
 
 const Main = () => {
   return (
@@ -65,6 +65,15 @@ const Main = () => {
           <CampaignSlide />
         </div>
       </section>
+      <div className="applyBanner">
+        <img src={Slider3} alt={Slider3} className="applyBannerImg" />
+        <div className="applyBtnWrap">
+          <button className="applyBtn">
+            <div>프로젝트</div>
+            <div>등록</div>
+          </button>
+        </div>
+      </div>
     </MainContainer>
   );
 };

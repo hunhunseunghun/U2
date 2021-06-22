@@ -11,6 +11,7 @@ const dummy = [
   "https://www.youtube.com/embed/n9A1W52uJIA",
   "https://www.youtube.com/embed/n9A1W52uJIA",
 ];
+const dummyThum = [Slider1, Slider2, Slider3];
 const CampaignSlide = () => {
   const [imageIndex, setImageIndex] = useState(0);
   const NextArrow = ({ onClick }) => {
@@ -30,6 +31,7 @@ const CampaignSlide = () => {
   };
   const settings = {
     dots: true,
+    dotsClass: "slick-dots slick-thumb",
     infinite: true,
     lazyload: true,
     speed: 800,
@@ -42,15 +44,26 @@ const CampaignSlide = () => {
     arrows: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-    appendDots: (dots) => (
-      <div
-        style={{
-          backgroundColor: "#ddd",
-        }}
-      >
-        <ul style={{ margin: "0px" }}> {dots} </ul>
-      </div>
-    ),
+    customPaging: (i) => {
+      return (
+        <div className={`campThum${i} campThum`}>
+          <img
+            src={dummyThum[i]}
+            className={`campThumImg${i} campThumImg`}
+            key={i}
+          />
+        </div>
+      );
+    },
+    // appendDots: (dots) => (
+    //   <div
+    //     style={{
+    //       backgroundColor: "#ddd",
+    //     }}
+    //   >
+    //     <ul style={{ margin: "0px" }}> {dots} </ul>
+    //   </div>
+    // ),
   };
 
   return (
@@ -59,7 +72,7 @@ const CampaignSlide = () => {
         <Slider {...settings}>
           {dummy.map((ele, idx) => (
             <div
-              className={"campSlide"}
+              className={`campSlide campSlide${idx}`}
               key={ele}
               onClick={() => {
                 // history.push({
