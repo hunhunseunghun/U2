@@ -1,11 +1,19 @@
-function RegiQuests({
-	datas,
-	Pagination,
-	pageSize,
-	count,
-	currentPage,
-	handlePageChange,
-}) {
+import { useState } from 'react';
+import { paginate } from './paginate';
+import Pagination from './Pagination';
+function RegiQuests({ datas }) {
+	let [quests, setQuests] = useState({
+		data: datas,
+		pageSize: 3,
+		currentPage: 1,
+	});
+
+	const { data, pageSize, currentPage } = quests;
+	const pagedQuests = paginate(data, currentPage, pageSize);
+	const { length: count } = quests.data;
+	let handlePageChange = (page) => {
+		setQuests({ ...quests, currentPage: page });
+	};
 	return (
 		<div>
 			<table border={1} width="100%">
@@ -19,8 +27,8 @@ function RegiQuests({
 					</tr>
 				</thead>
 				<tbody align="center" style={{ borderColor: 'blue' }}>
-					{datas
-						? datas.map((data) => {
+					{pagedQuests
+						? pagedQuests.map((data) => {
 								return (
 									<tr height="100px">
 										<td>

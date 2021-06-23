@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import { MyWorkContainer } from './MyWorkStyled.jsx';
 import Accepter from './tabs/accepter/Accepter.jsx';
 import Quester from './tabs/quester/Quester.jsx';
-import { paginate } from './tabs/Subtabs/paginate.js';
-import Pagination from './tabs/Subtabs/Pagination';
 const obj = {
-	0: <Accepter paginate={paginate} Pagination={Pagination}></Accepter>,
-	1: <Quester paginate={paginate} Pagination={Pagination}></Quester>,
+	0: <Accepter></Accepter>,
+	1: <Quester></Quester>,
 };
 const MyWork = () => {
 	let [currentTab, setCurrentTab] = useState(0);

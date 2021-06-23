@@ -1,35 +1,15 @@
 import { useState } from 'react';
 import RegiQuests from '../Subtabs/RegiQuests';
 import datas from './sampledata';
-function Quester({ paginate, Pagination }) {
+function Quester() {
 	let [currentTab, setCurrentTab] = useState(0);
-	let [quests, setQuests] = useState({
-		data: datas,
-		pageSize: 3,
-		currentPage: 1,
-	});
-
-	const { data, pageSize, currentPage } = quests;
-	const pagedQuests = paginate(data, currentPage, pageSize);
-	const { length: count } = quests.data;
 
 	let handleClickSubtab = (id) => {
 		setCurrentTab(id);
 	};
-	let handlePageChange = (page) => {
-		setQuests({ ...quests, currentPage: page });
-	};
+
 	let tabs = {
-		0: (
-			<RegiQuests
-				datas={pagedQuests}
-				pageSize={pageSize}
-				itemsCount={count}
-				currentPage={currentPage}
-				onPageChange={handlePageChange}
-				Pagination={Pagination}
-			></RegiQuests>
-		),
+		0: <RegiQuests datas={datas}></RegiQuests>,
 	};
 	return (
 		<div>
