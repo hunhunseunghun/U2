@@ -2,6 +2,9 @@ import styled from "styled-components";
 
 export const RegiContainer = styled.div`
   width: 100%;
+  .noDisplay {
+    display: none;
+  }
 
   .ele {
     display: flex;
