@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { EleContainer } from "./ContentElementStyled.jsx";
 import { LinearProgress } from "@material-ui/core";
 import dummyImg from "../../../Img/topviewEX.png";
+import ceImg from "../../../Img/ceImg.png";
 
 const ContentElement = () => {
   const [progressValue, setProgressValue] = useState(60);
@@ -11,7 +12,7 @@ const ContentElement = () => {
   return (
     <EleContainer>
       <div className="eleImgArea">
-        <img src={dummyImg} alt={dummyImg} className="eleImg" />
+        <img src={ceImg} alt={ceImg} className="eleImg" />
       </div>
       <div className="eleDescArea">
         <h1 className="eleDesTitle">
