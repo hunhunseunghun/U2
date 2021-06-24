@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+
 export const MainContainer = styled.div`
   padding: 90px;
   display: flex;
@@ -10,6 +11,7 @@ export const MainContainer = styled.div`
     flex-direction: column;
     align-items: center;
     width: 1400px;
+    
   }
 
   .topWrap {
@@ -28,12 +30,18 @@ export const MainContainer = styled.div`
 
   .campArea {
     display: flex;
-    padding: 40px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height:632px;
+    margin-top:200px;
+    background-color: #e0e0e0;
+    
+    
 
     .campListWrap {
-      width: 300px;
-      height: 400px;
-      background-color: white;
+      text-align: center;
+    
 
       .campTitle_top {
         font-size: 1rem;
@@ -52,7 +60,12 @@ export const MainContainer = styled.div`
         cursor: pointer;
       }
     }
+
+    .campSlideWrap{
+      width: 698px;
+    }
   }
+
 
   .applyBanner {
     position: relative;

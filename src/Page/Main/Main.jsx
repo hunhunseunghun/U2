@@ -30,7 +30,7 @@ const Main = () => {
               <div className="campTitle_top">U2 와 함께한</div>
               <div className="campTitle_bottom">스마트한 영상 제작</div>
             </div>
-
+           
             <div className="campList">
               {/* {campList.map((ele, idx) => (const dummyData = [Slider1, Slider2, Slider3];
 
@@ -44,7 +44,7 @@ const Main = () => {
               </div>
             ))} */}
 
-              <div className="campEle">
+              {/* <div className="campEle">
                 <div>LOGO</div>
                 <div>삼성생명</div>
               </div>
@@ -59,7 +59,7 @@ const Main = () => {
               <div className="campEle">
                 <div>LOGO</div>
                 <div>삼성생명</div>
-              </div>
+              </div> */}
             </div>
           </div>
 

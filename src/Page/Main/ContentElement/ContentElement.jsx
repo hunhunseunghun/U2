@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { EleContainer } from "./ContentElementStyled.jsx";
 import { LinearProgress } from "@material-ui/core";
 import dummyImg from "../../../Img/topviewEX.png";
+import ceImg from "../../../Img/ceImg.png";
 
 const ContentElement = () => {
   const [progressValue, setProgressValue] = useState(60);
@@ -11,7 +12,7 @@ const ContentElement = () => {
   return (
     <EleContainer>
       <div className="eleImgArea">
-        <img src={dummyImg} alt={dummyImg} className="eleImg" />
+        <img src={ceImg} alt={ceImg} className="eleImg" />
       </div>
       <div className="eleDescArea">
         <h1 className="eleDesTitle">
@@ -19,8 +20,7 @@ const ContentElement = () => {
         </h1>
         <div className="eleDesc">
           글로벌 슈퍼 루키 에스파, 싱글 포에버 2월 5일 공개 기념 이벤트 u2
-          서비스에서 에스파 테마를 다운받고, 약속 메시지가 담긴 뮤직비디오를
-          제작해
+          서비스에서 에스파 테마를 다운받고, 약속 메시지가 담긴 뮤직비디오...
         </div>
       </div>
       <div className="eleFunc">
@@ -35,10 +35,10 @@ const ContentElement = () => {
             color="secondary"
             value={progressValue}
           />
-          <div className="progressValue">{progressValue}</div>
         </div>
-        <div className="meetArea">
-          <input type="checkbox" name="chk_info" value="HTML" />
+        <section className="infoTop">
+          <div className="meetArea">
+           <input type="checkbox" name="chk_info" value="HTML" />
           <div className="meetText">OFF 미팅</div>
         </div>
         <div className="budgetArea">
@@ -48,8 +48,10 @@ const ContentElement = () => {
         <div className="remainDateArea">
           <div className="remainDate">00일</div>
           <div className="remainText">남은 일자</div>
-        </div>
-      </div>
+        </div>        
+        </section>
+        
+      <section className="infoBottom">
       <div className="cmntValArea">
         <img
           src={require("../../../Img/comment.svg").default}
@@ -65,6 +67,14 @@ const ContentElement = () => {
         />
         <div className="shareVal">{shareValue}</div>
       </div>
+
+
+      </section>
+      
+      </div>
+
+
+     
     </EleContainer>
   );
 };
