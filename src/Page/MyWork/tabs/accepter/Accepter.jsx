@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import RegiQuests from '../Subtabs/QuestTable';
+import RegiQuests from '../Subtabs/RegiQuests';
 import SubmitQuests from '../Subtabs/SubmitQuests';
 import LikedQuests from '../Subtabs/LikedQuests';
 import datas from './sampledata';
