@@ -82,12 +82,12 @@ const CampaignSlide = () => {
               }}
               key={idx}
             >
-              <iframe
+              {/* <iframe
                 src="https://www.youtube.com/embed/n9A1W52uJIA"
                 title="YouTube video player"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              ></iframe>
+              ></iframe> */}
             </div>
           ))}
         </Slider>

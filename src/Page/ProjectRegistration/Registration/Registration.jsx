@@ -10,17 +10,32 @@ const Registration = () => {
   const [uploadFilePath, setUploadFilePath] = useState("Choose file to upload"); //업로드 파일패스 , placholder 값
   const [editFilePath, setEditFilePath] = useState("Choose file to upload"); //편집 대상 파일 패스, placeholder 값
   const [editFile, setEditFile] = useState(null);
+  const myStorage = window.localStorage;
+
+  //window.localstorage에 state 저장 페이지 새로고침시 state값 유지 목적
+  useEffect(() => {
+    setOnMeet(JSON.parse(myStorage.getItem("onMeet")));
+  }, []);
+
+  useEffect(() => {
+    myStorage.setItem("onMeet", onMeet);
+    console.log("useEffect excuted");
+  }, [onMeet, editFile]);
+
+  const handleTest = () => {
+    console.log(myStorage.getItem("onMeet"));
+    console.log(onMeet);
+    console.log(myStorage);
+  };
 
   // on offline meet state handle
-
   const handleOnline = () => {
     setOnMeet(true);
   };
-  console.log(onMeet);
+
   const handleOffline = () => {
     setOnMeet(false);
   };
-  console.log(onMeet);
 
   // const [upLoadFileArr, setUploadFileArr] = useState([]); //업로드 파일 배열
   const fileChangeHandler = (e) => {
@@ -105,7 +120,9 @@ const Registration = () => {
   return (
     <RegiContainer>
       <section className="ele request">
-        <div className="menu">의뢰 주체</div>
+        <div className="menu" onClick={handleTest}>
+          의뢰 주체
+        </div>
         <div className="inputInfo">
           <div className="radioWrap">
             <input type="radio" name="chk_info" value="indivisual" />
@@ -176,7 +193,7 @@ const Registration = () => {
             src={chatIcon}
             width="50px"
             alt="onlineChat"
-            clasName="onlineMeetIcon"
+            className="onlineMeetIcon"
           />
           <div className="onlineMeetText">
             <div>비대면 미팅</div>

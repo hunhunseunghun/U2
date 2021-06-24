@@ -7,7 +7,7 @@ export const DdContainer = styled.div`
     background: #ffffff;
     border-radius: 8px;
     position: absolute;
-    right: 0;
+    left: -50%;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
     opacity: 0;
     visibility: hidden;
