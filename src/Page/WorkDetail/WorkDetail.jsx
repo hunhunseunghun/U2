@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { WorkDetailContainer } from './WorkDetailStyled';
 function WorkDetail(props) {
-	let [subject, setSubject] = useState();
+	let [subject, setSubject] = useState('광고/홍보');
+	let [meeting, setMeeting] = useState('비대면');
+	let [term, setTerm] = useState(['YouTube', 'TIKTOK', '파일 업로드']);
+	let [prise, setPrise] = useState();
 	return (
 		<WorkDetailContainer>
 			<section>
