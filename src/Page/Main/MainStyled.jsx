@@ -1,15 +1,29 @@
 import styled from "styled-components";
 
 export const MainContainer = styled.div`
-  padding: 90px 2rem 0 2rem;
+  padding: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .entireWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1400px;
+  }
 
   .topWrap {
     display: flex;
   }
 
+  .contentWrap {
+    width: 1321px;
+  }
+
   .contentEle {
+    width: 1326px;
+    height: 504px;
     display: flex;
-    flex-wrap: wrap;
   }
 
   .campArea {
