@@ -1,32 +1,64 @@
 import styled from "styled-components";
 
 export const EleContainer = styled.div`
-  width: 300px;
-  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 328px;
+  height: 504px;
+  margin-right: 5px;
+  margin-bottom: 5px;
 
+  .eleImgArea {
+    width: 319px;
+    height: 179px;
+  }
   .eleImg {
     width: 100%;
   }
-
-  h1 {
-    font-size: 1rem;
-    font-weight: bold;
-  }
   .eleDescArea {
-    padding: 5px;
+    width: 271px;
+  }
+  .eleDesTitle {
+    height: 48px;
+    font-size: 21px;
+    line-height: 24px;
+    font-weight: 500;
+  }
 
-    .eleDesc {
-      padding: 5px;
-      font-size: 0.8rem;
-    }
+  .eleDesc {
+    width: 256px;
+    font-size: 12px;
+    line-height: 15px;
+    color: #080505;
+  }
+
+  .eleFunc {
+    padding-top: 20px;
   }
 
   .progressArea {
-    display: flex;
+    width: 282px;
+
+    .progressText {
+      display: flex;
+      font-size: 12px;
+      line-height: 18px;
+      font-weight: 600;
+      color: #ff1204;
+
+      div {
+        margin-right: 22px;
+      }
+    }
 
     .progressBar {
-      width: 80%;
-      height: 1rem;
+      width: 100%;
+      height: 21px;
+      background-color: #ff8f89;
+      color: white;
+      border-radius: 3px;
+      margin-top: 5px;
     }
   }
 

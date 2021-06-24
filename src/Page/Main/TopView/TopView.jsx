@@ -4,8 +4,9 @@ import Slider from "react-slick";
 import Slider1 from "../../../Img/slider1.jpeg";
 import Slider2 from "../../../Img/slider2.jpeg";
 import Slider3 from "../../../Img/slider3.jpeg";
+import dummyImg from "../../../Img/topviewEX.png";
 
-const dummy = [Slider1, Slider2, Slider3];
+const dummy = [dummyImg, dummyImg, dummyImg];
 const TopView = () => {
   const NextArrow = () => {
     return <div className="arrow next"></div>;
@@ -18,7 +19,7 @@ const TopView = () => {
     dots: true,
     infinite: true,
     lazyload: true,
-    speed: 800,
+    speed: 1000,
     slidesToShow: 1,
     centerMode: true,
     centerPadding: 0,

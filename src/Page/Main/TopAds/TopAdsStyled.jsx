@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
 export const AdsContainer = styled.div`
-  min-width: 200px;
-  width: 200px;
-  height: 450px;
+  width: 342px;
+  height: 515px;
   text-align: center;
   background-color: #8080807f;
 
