@@ -5,22 +5,22 @@ const ContentTap = () => {
   return (
     <TabContainer>
       <div className="tab_entire">
-        <div>전체</div>
+        <span>전체</span>
       </div>
       <div className="tab_compet">
-        <div>공모전</div>
+        <span>공모전</span>
       </div>
       <div className="tab_promo">
-        <div>광고/홍보</div>
+        <span>광고/홍보</span>
       </div>
       <div className="tab_cv">
-        <div>창작영상</div>
+        <span>창작영상</span>
       </div>
       <div className="tab_ve">
-        <div>영상편집</div>
+        <span>영상편집</span>
       </div>
       <div className="tab_ir">
-        <div>강사모집</div>
+        <span>강사모집</span>
       </div>
     </TabContainer>
   );

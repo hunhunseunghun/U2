@@ -1,25 +1,26 @@
 import styled from "styled-components";
 
 export const CampSliContainer = styled.div`
-  width: 600px;
-  height: 350px;
-
+   width: 100%;
+   height: 393px;
+  
   .campSlideWrap {
     position: relative;
-    width: 100%;
-    height: 350px;
+    
   }
 
   .campSlide {
-    height: 350px;
+  width: 100%;
+   height: 393px;
   }
   .campSlide img {
+    width: 100%;
   }
 
-  iframe {
+  /* iframe {
     width: 600px;
     height: 350px;
-  }
+  } */
 
   .arrow {
     position: absolute;
@@ -49,17 +50,25 @@ export const CampSliContainer = styled.div`
     top: 38%;
   }
   .slick-thumb {
-    bottom: -65px;
+   
+   
+    
+    width:100%;
+    bottom: -70px;
+    padding:none;
   }
   .slick-thumb li {
-    width: 50px;
+    width: 77px;
     height: 50px;
+  }
+  .campThum{
+    display:flex;
   }
   .slick-active .campThumImg {
     border: 1px solid red;
   }
   .campThumImg {
-    width: 50px;
+    width: 83px;
     height: 50px;
   }
 `;
