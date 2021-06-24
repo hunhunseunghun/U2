@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { paginate } from './paginate';
 import Pagination from './Pagination';
+import { Link } from 'react-router-dom';
 function RegiQuests({ datas }) {
 	let [quests, setQuests] = useState({
 		data: datas,
@@ -31,13 +32,25 @@ function RegiQuests({ datas }) {
 						? pagedQuests.map((data) => {
 								return (
 									<tr height="100px">
-										<td>
-											<img src={data.img}></img>
-										</td>
-										<td>{data.name}</td>
-										<td>{data.contriNum}</td>
-										<td>{data.inspect}</td>
-										<td>{data.dueDate}</td>{' '}
+										{/* <Link to={{ pathname: '/workdetail' }}>
+											<td>
+												<img src={data.img}></img>
+											</td>
+											<td>{data.name}</td>
+											<td>{data.contriNum}</td>
+											<td>{data.inspect}</td>
+											<td>{data.dueDate}</td>{' '}
+										</Link> */}
+										{Object.keys(data).map((keyname) => {
+											console.log('keyname: ', keyname);
+											return (
+												<td>
+													<Link to={{ pathname: '/workdetail' }}>
+														{data[keyname]}
+													</Link>
+												</td>
+											);
+										})}
 									</tr>
 								);
 						  })
