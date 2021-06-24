@@ -7,7 +7,7 @@ function RegiQuests({ datas }) {
 		pageSize: 3,
 		currentPage: 1,
 	});
-
+	// console.log('datas: ', datas);
 	const { data, pageSize, currentPage } = quests;
 	const pagedQuests = paginate(data, currentPage, pageSize);
 	const { length: count } = quests.data;

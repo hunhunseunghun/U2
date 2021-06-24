@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import RegiQuests from '../Subtabs/RegiQuests';
+import RegiQuests from '../Subtabs/QuestTable';
 import SubmitQuests from '../Subtabs/SubmitQuests';
 import LikedQuests from '../Subtabs/LikedQuests';
 import datas from './sampledata';
@@ -13,7 +13,7 @@ function Accepter() {
 	let tabs = {
 		0: <RegiQuests datas={datas}></RegiQuests>,
 		1: <SubmitQuests></SubmitQuests>,
-		2: <LikedQuests></LikedQuests>,
+		2: <LikedQuests datas={datas}></LikedQuests>,
 	};
 	return (
 		<div>
