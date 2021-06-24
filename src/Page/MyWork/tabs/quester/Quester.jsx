@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import QuestTable from '../Subtabs/QuestTable';
+import RegiQuests from '../Subtabs/RegiQuests';
 import datas from './sampledata';
 function Quester() {
 	let [currentTab, setCurrentTab] = useState(0);
@@ -9,7 +9,7 @@ function Quester() {
 	};
 
 	let tabs = {
-		0: <QuestTable datas={datas}></QuestTable>,
+		0: <RegiQuests datas={datas}></RegiQuests>,
 	};
 	return (
 		<div>
