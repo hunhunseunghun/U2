@@ -31,4 +31,18 @@ export const PrjRegiContainer = styled.div`
   .prjDesc {
     padding: 10px 1px;
   }
+  .btnArea {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+
+    button {
+      width: 100px;
+      margin: 10px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
 `;

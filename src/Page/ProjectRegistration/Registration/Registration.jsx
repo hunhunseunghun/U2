@@ -1,12 +1,42 @@
 import React, { useState, useEffect, useRef } from "react";
 import { RegiContainer } from "./RegistrationStyled.jsx";
+import chatIcon from "../../../Img/chat.svg";
+import offlineChatIcon from "../../../Img/offlinechat.svg";
 
 const Registration = () => {
   const selectDom = useRef(0);
+  const [onMeet, setOnMeet] = useState(null); //온라인 오프라인 미팅 state 값
   const [upLoadFile, setUpLoadFile] = useState(null); //업로드 파일 객체
   const [uploadFilePath, setUploadFilePath] = useState("Choose file to upload"); //업로드 파일패스 , placholder 값
   const [editFilePath, setEditFilePath] = useState("Choose file to upload"); //편집 대상 파일 패스, placeholder 값
   const [editFile, setEditFile] = useState(null);
+  const myStorage = window.localStorage;
+
+  //window.localstorage에 state 저장 페이지 새로고침시 state값 유지 목적
+  useEffect(() => {
+    setOnMeet(JSON.parse(myStorage.getItem("onMeet")));
+  }, []);
+
+  useEffect(() => {
+    myStorage.setItem("onMeet", onMeet);
+    console.log("useEffect excuted");
+  }, [onMeet, editFile]);
+
+  const handleTest = () => {
+    console.log(myStorage.getItem("onMeet"));
+    console.log(onMeet);
+    console.log(myStorage);
+  };
+
+  // on offline meet state handle
+  const handleOnline = () => {
+    setOnMeet(true);
+  };
+
+  const handleOffline = () => {
+    setOnMeet(false);
+  };
+
   // const [upLoadFileArr, setUploadFileArr] = useState([]); //업로드 파일 배열
   const fileChangeHandler = (e) => {
     let fileNames = [];
@@ -90,7 +120,9 @@ const Registration = () => {
   return (
     <RegiContainer>
       <section className="ele request">
-        <div className="menu">의뢰 주체</div>
+        <div className="menu" onClick={handleTest}>
+          의뢰 주체
+        </div>
         <div className="inputInfo">
           <div className="radioWrap">
             <input type="radio" name="chk_info" value="indivisual" />
@@ -149,8 +181,42 @@ const Registration = () => {
           </div> */}
         </div>
       </section>
-      <section className="ele">
+      <section className="ele ">
         <div className="menu">* 프로젝트 미팅 여부</div>
+        <div
+          className={
+            onMeet !== null && onMeet ? "onlineMeet isActive" : "onlineMeet"
+          }
+          onClick={handleOnline}
+        >
+          <img
+            src={chatIcon}
+            width="50px"
+            alt="onlineChat"
+            className="onlineMeetIcon"
+          />
+          <div className="onlineMeetText">
+            <div>비대면 미팅</div>
+            <div>화상채팅을 통해 미팅합니다.</div>
+          </div>
+        </div>
+        <div
+          className={
+            onMeet !== null && !onMeet ? "offlineMeet isActive" : "offlineMeet"
+          }
+          onClick={handleOffline}
+        >
+          <img
+            src={offlineChatIcon}
+            alt={offlineChatIcon}
+            className="offlineIcon"
+            width="40px"
+          />
+          <div className="offlineMeetText">
+            <div>오프라인 미팅 필요</div>
+            <div>과제 수행 중 오프라인 미팅이 필요합니다.</div>
+          </div>
+        </div>
       </section>
       <section className="ele">
         <div className="menu">편집 대상 파일</div>

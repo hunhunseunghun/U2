@@ -6,7 +6,7 @@ import IR from "./Select/IR.jsx";
 import Registration from "./Registration/Registration.jsx";
 import { PrjRegiContainer } from "./ProjectRegiStyled.jsx";
 
-const ProjectRegi = () => {
+const ProjectRegi = ({ history }) => {
   return (
     <PrjRegiContainer>
       <section className="titleArea">
@@ -30,6 +30,18 @@ const ProjectRegi = () => {
           주십시오.
         </div>
         <Registration />
+      </section>
+
+      <section className="btnArea">
+        <button className="cancleBtn">취소</button>
+        <button
+          className="nextBtn"
+          onClick={() => {
+            history.push("/setTc");
+          }}
+        >
+          다음
+        </button>
       </section>
     </PrjRegiContainer>
   );

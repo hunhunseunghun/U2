@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Redirect, Link } from "react-router-dom";
 import { DdContainer } from "./DropDownStyled.jsx";
 
 const DdProfile = ({ ddPofile, dropdownRef, history, handleDdProfile }) => {
@@ -15,20 +16,21 @@ const DdProfile = ({ ddPofile, dropdownRef, history, handleDdProfile }) => {
             </a>
           </li>
           <li>
-            <a
+            <Link
               onClick={() => {
-                history.push("/mywork");
                 handleDdProfile();
+                console.log("link clicked");
               }}
+              to={{ pathname: "/mywork", state: { test: "test" } }}
             >
               나의 과제
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/">검수 현황</a>
+            <Link>검수 현황</Link>
           </li>
           <li>
-            <a href="/">로그 아웃</a>
+            <Link>로그 아웃</Link>
           </li>
         </ul>
       </nav>
