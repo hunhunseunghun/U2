@@ -15,8 +15,11 @@ function WorkDetail(props) {
 						<div className="project-info spec">대상</div>
 						<div>{subject}</div>
 						<div className="project-info spec">프로젝트 미팅</div>
+						<div>{meeting}</div>
 						<div className="project-info spec">과제 완료 조건</div>
+						<div>{term}</div>
 						<div className="project-info spec">보상</div>
+						<div>{prise}</div>
 					</div>
 				</section>
 				<article style={{ border: 'solid', borderColor: 'black' }}>
