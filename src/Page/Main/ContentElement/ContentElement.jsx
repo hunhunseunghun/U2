@@ -27,14 +27,14 @@ const ContentElement = () => {
         <div className="progressArea">
           <div className="progressText">
             {/* <button className="paticipantBtn">+</button> */}
-            <div>참가자</div> <div>{`${progressValue}`}</div>
+            {/* <div>참가자</div> <div>{`${progressValue}`}</div> */}
           </div>
-          <LinearProgress
+          {/* <LinearProgress
             className="progressBar"
             variant="determinate"
             color="secondary"
             value={progressValue}
-          />
+          /> */}
         </div>
         <section className="infoTop">
           <div className="meetArea">
