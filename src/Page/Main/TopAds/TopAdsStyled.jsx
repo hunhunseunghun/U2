@@ -36,13 +36,13 @@ export const AdsContainer = styled.div`
     width: 186px;
     height: 38px;
     font-weight: 600;
-    background-color: #ff4438;
+    /* background-color: #ff4438; */
     color: #fff;
     border-radius: 4px;
 
     &:hover {
       cursor: pointer;
-      background-color: #ff1405;
+      /* background-color: #ff1405; */
     }
   }
 `;
