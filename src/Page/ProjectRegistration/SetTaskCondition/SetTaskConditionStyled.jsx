@@ -91,4 +91,15 @@ export const TcContainer = styled.div`
       }
     }
   }
+
+  .inputStart,
+  .inputFinish {
+    display: flex;
+  }
+  .MuiFormLabel-root,
+  .MuiFormHelperText-root,
+  .MuiInputBase-root {
+    font-weight: 500;
+    font-family: "Roboto", "Noto Sans KR", "Noto Sans", sans-serif;
+  }
 `;

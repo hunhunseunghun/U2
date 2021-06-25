@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios"
 import { MainContainer } from "./MainStyled.jsx";
 import TopView from "./TopView/TopView.jsx";
 import TopAds from "./TopAds/TopAds.jsx";
@@ -7,7 +8,17 @@ import ContentElement from "./ContentElement/ContentElement.jsx";
 import CampaignSlide from "./CampaignSlide/CampaignSlide.jsx";
 import Slider3 from "../../Img/slider3.jpeg";
 
+const server = process.env.REACT_APP_U2_DB_HOST
+
 const Main = () => {
+  const [data, setData] = useState(null)
+
+  useEffect(()=>{
+    axios.get(`${server}/api/Campaign/challengemaster`).then(res=>{
+      setData(res.data)
+    }
+    )
+  },[])
   return (
     <MainContainer>
       <div className="entireWrapper">
@@ -18,10 +29,10 @@ const Main = () => {
         <section className="contentWrap">
           <ContentTap />
           <div className="contentEle">
-            <ContentElement />
-            <ContentElement />
-            <ContentElement />
-            <ContentElement />
+            <ContentElement data={data}/>
+            <ContentElement data={data}/>
+            <ContentElement data={data}/>
+            <ContentElement data={data}/>
           </div>
         </section>
         <section className="campArea">
