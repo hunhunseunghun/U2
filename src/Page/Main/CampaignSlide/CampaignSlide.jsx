@@ -5,13 +5,12 @@ import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import Slider1 from "../../../Img/slider1.jpeg";
 import Slider2 from "../../../Img/slider2.jpeg";
 import Slider3 from "../../../Img/slider3.jpeg";
+import campSlidImg from "../../../Img/campSlidImg.png"
 
-const dummy = [
-  "https://www.youtube.com/embed/n9A1W52uJIA",
-  "https://www.youtube.com/embed/n9A1W52uJIA",
-  "https://www.youtube.com/embed/n9A1W52uJIA",
+const dummy = [campSlidImg,campSlidImg,campSlidImg,campSlidImg,campSlidImg,campSlidImg,campSlidImg,campSlidImg
+  
 ];
-const dummyThum = [Slider1, Slider2, Slider3];
+const dummyThum = [campSlidImg,campSlidImg, campSlidImg, campSlidImg,campSlidImg, campSlidImg,campSlidImg,campSlidImg];
 const CampaignSlide = () => {
   const [imageIndex, setImageIndex] = useState(0);
   const NextArrow = ({ onClick }) => {
@@ -88,6 +87,7 @@ const CampaignSlide = () => {
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               ></iframe> */}
+              <img src={ele} key={idx}/>
             </div>
           ))}
         </Slider>

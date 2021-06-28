@@ -6,12 +6,12 @@ export const TopViewContainer = styled.div`
 
   .slideWrap {
     position: relative;
-    width: 1100px;
-    height: 450px;
+    width: 1058px;
+    height: 515px;
   }
 
   .slide {
-    height: 450px;
+    height: 515px;
     transform: scale(1);
     transition: transform 0.3s;
   }
