@@ -2,6 +2,7 @@ import React from 'react';
 import { usePagination } from '@material-ui/lab/Pagination';
 import { makeStyles } from '@material-ui/core/styles';
 import _ from 'lodash';
+import { Pagination2Styled } from './Pagination2Styled';
 
 const useStyles = makeStyles({
 	ul: {
@@ -28,7 +29,7 @@ function Pagination2({ itemsCount, handlePageChange }) {
 	console.log('items: ', items);
 
 	return (
-		<nav>
+		<Pagination2Styled>
 			<ul className={classes.ul}>
 				{items.map(({ page, type, selected, ...item }, index) => {
 					let children = null;
@@ -41,105 +42,105 @@ function Pagination2({ itemsCount, handlePageChange }) {
 					// if (selected) {
 					// 	handlePageChange(page);
 					// }
-					if (type === 'start-ellipsis' || type === 'end-ellipsis') {
-						children = '…';
-					} else if (type === 'page') {
-						children = (
-							<button
-								type="button"
-								style={{ fontWeight: selected ? 'bold' : undefined }}
-								disabled={item.disabled}
-								onClick={(e) => {
-									item.onClick(e);
-									handlePageChange(page);
-								}}
-								// {...item}
-							>
-								{page}
-							</button>
-						);
-					} else {
-						switch (type) {
-							case 'first': {
-								children = (
-									<button
-										type="button"
-										style={{ cursor: 'pointer' }}
-										disabled={item.disabled}
-										onClick={(e) => {
-											item.onClick(e);
-											handlePageChange(page);
-										}}
-									>
-										◀◀
-									</button>
-								);
-								break;
-							}
-							case 'previous': {
-								children = (
-									<button
-										type="button"
-										style={{ cursor: 'pointer' }}
-										disabled={item.disabled}
-										onClick={(e) => {
-											item.onClick(e);
-											handlePageChange(page);
-										}}
-									>
-										◀
-									</button>
-								);
-								break;
-							}
-							case 'next': {
-								children = (
-									<button
-										type="button"
-										style={{ cursor: 'pointer' }}
-										disabled={item.disabled}
-										onClick={(e) => {
-											item.onClick(e);
-											handlePageChange(page);
-										}}
-									>
-										▶
-									</button>
-								);
-								break;
-							}
-							case 'last': {
-								children = (
-									<button
-										type="button"
-										style={{ cursor: 'pointer' }}
-										disabled={item.disabled}
-										onClick={(e) => {
-											item.onClick(e);
-											handlePageChange(page);
-										}}
-									>
-										▶▶
-									</button>
-								);
-								break;
-							}
-							default: {
-								break;
-							}
+
+					switch (type) {
+						case 'start-ellipsis':
+						case 'end-ellipsis':
+							children = '…';
+							break;
+
+						case 'page': {
+							children = (
+								<button
+									type="button"
+									className={selected ? 'selectedPage' : undefined}
+									// style={{
+									// 	fontWeight: selected ? 'bolder' : undefined,
+									// }}
+									disabled={item.disabled}
+									onClick={(e) => {
+										item.onClick(e);
+										handlePageChange(page);
+									}}
+								>
+									{page}
+								</button>
+							);
+							break;
 						}
-						// children = (
-						// 	// <button type="button" {...item}>
-						// 	// 	{type}
-						// 	// </button>
-						// 	<a>◀</a>
-						// );
+						case 'first': {
+							children = (
+								<button
+									type="button"
+									style={{ cursor: 'pointer' }}
+									disabled={item.disabled}
+									onClick={(e) => {
+										item.onClick(e);
+										handlePageChange(page);
+									}}
+								>
+									◀◀
+								</button>
+							);
+							break;
+						}
+						case 'previous': {
+							children = (
+								<button
+									type="button"
+									style={{ cursor: 'pointer' }}
+									disabled={item.disabled}
+									onClick={(e) => {
+										item.onClick(e);
+										handlePageChange(page);
+									}}
+								>
+									◀
+								</button>
+							);
+							break;
+						}
+						case 'next': {
+							children = (
+								<button
+									type="button"
+									style={{ cursor: 'pointer' }}
+									disabled={item.disabled}
+									onClick={(e) => {
+										item.onClick(e);
+										handlePageChange(page);
+									}}
+								>
+									▶
+								</button>
+							);
+							break;
+						}
+						case 'last': {
+							children = (
+								<button
+									type="button"
+									style={{ cursor: 'pointer' }}
+									disabled={item.disabled}
+									onClick={(e) => {
+										item.onClick(e);
+										handlePageChange(page);
+									}}
+								>
+									▶▶
+								</button>
+							);
+							break;
+						}
+						default: {
+							break;
+						}
 					}
 
 					return <li key={index}>{children}</li>;
 				})}
 			</ul>
-		</nav>
+		</Pagination2Styled>
 	);
 }
 export default Pagination2;

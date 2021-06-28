@@ -3,8 +3,8 @@ import { WorkDetailContainer } from './WorkDetailStyled';
 function WorkDetail(props) {
 	let [subject, setSubject] = useState('광고/홍보');
 	let [meeting, setMeeting] = useState('비대면');
-	let [term, setTerm] = useState(['YouTube', 'TIKTOK', '파일 업로드']);
-	let [prise, setPrise] = useState();
+	let [terms, setTerms] = useState(['YouTube', 'TIKTOK', '파일 업로드']);
+	let [prise, setPrise] = useState('10000원');
 	return (
 		<WorkDetailContainer>
 			<section>
@@ -17,7 +17,11 @@ function WorkDetail(props) {
 						<div className="project-info spec">프로젝트 미팅</div>
 						<div>{meeting}</div>
 						<div className="project-info spec">과제 완료 조건</div>
-						<div>{term}</div>
+						<div>
+							{terms.map((term) => {
+								return <div>{term}</div>;
+							})}
+						</div>
 						<div className="project-info spec">보상</div>
 						<div>{prise}</div>
 					</div>
