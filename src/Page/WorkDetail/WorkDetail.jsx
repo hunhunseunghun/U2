@@ -5,6 +5,7 @@ function WorkDetail(props) {
 	let [meeting, setMeeting] = useState('비대면');
 	let [terms, setTerms] = useState(['YouTube', 'TIKTOK', '파일 업로드']);
 	let [prise, setPrise] = useState('10000원');
+	console.log(props);
 	return (
 		<WorkDetailContainer>
 			<section>
@@ -26,9 +27,14 @@ function WorkDetail(props) {
 						<div>{prise}</div>
 					</div>
 				</section>
-				<article style={{ border: 'solid', borderColor: 'black' }}>
-					project details
-				</article>
+				{/* <article style={{ border: 'solid', borderColor: 'black' }}>
+					<fieldset>챌린지 대상자</fieldset>
+					<fieldset>검수 대상자</fieldset>
+				</article> */}
+				<div className="tabs">
+					<span className="tab-contents">챌린지 대상자</span>
+					<span className="tab-contents">검수 대상자</span>
+				</div>
 			</section>
 		</WorkDetailContainer>
 	);

@@ -26,23 +26,12 @@ function Pagination2({ itemsCount, handlePageChange }) {
 		siblingCount: 3,
 		boundaryCount: 1,
 	});
-	console.log('items: ', items);
 
 	return (
 		<Pagination2Styled>
 			<ul className={classes.ul}>
 				{items.map(({ page, type, selected, ...item }, index) => {
 					let children = null;
-					console.log('--------------------------');
-					console.log('type: ', type);
-					console.log('selected: ', selected);
-					console.log('item: ', item);
-					console.log('page: ', page);
-					console.log('index: ', index);
-					// if (selected) {
-					// 	handlePageChange(page);
-					// }
-
 					switch (type) {
 						case 'start-ellipsis':
 						case 'end-ellipsis':
@@ -53,10 +42,9 @@ function Pagination2({ itemsCount, handlePageChange }) {
 							children = (
 								<button
 									type="button"
-									className={selected ? 'selectedPage' : undefined}
-									// style={{
-									// 	fontWeight: selected ? 'bolder' : undefined,
-									// }}
+									className={
+										(selected ? 'selectedPage' : undefined) + ' ' + `${type}`
+									}
 									disabled={item.disabled}
 									onClick={(e) => {
 										item.onClick(e);
@@ -72,14 +60,14 @@ function Pagination2({ itemsCount, handlePageChange }) {
 							children = (
 								<button
 									type="button"
-									style={{ cursor: 'pointer' }}
+									className={type}
 									disabled={item.disabled}
 									onClick={(e) => {
 										item.onClick(e);
 										handlePageChange(page);
 									}}
 								>
-									◀◀
+									{`<<`}
 								</button>
 							);
 							break;
@@ -88,14 +76,14 @@ function Pagination2({ itemsCount, handlePageChange }) {
 							children = (
 								<button
 									type="button"
-									style={{ cursor: 'pointer' }}
+									className={type}
 									disabled={item.disabled}
 									onClick={(e) => {
 										item.onClick(e);
 										handlePageChange(page);
 									}}
 								>
-									◀
+									{`<`}
 								</button>
 							);
 							break;
@@ -104,14 +92,14 @@ function Pagination2({ itemsCount, handlePageChange }) {
 							children = (
 								<button
 									type="button"
-									style={{ cursor: 'pointer' }}
+									className={type}
 									disabled={item.disabled}
 									onClick={(e) => {
 										item.onClick(e);
 										handlePageChange(page);
 									}}
 								>
-									▶
+									{`>`}
 								</button>
 							);
 							break;
@@ -120,14 +108,14 @@ function Pagination2({ itemsCount, handlePageChange }) {
 							children = (
 								<button
 									type="button"
-									style={{ cursor: 'pointer' }}
+									className={type}
 									disabled={item.disabled}
 									onClick={(e) => {
 										item.onClick(e);
 										handlePageChange(page);
 									}}
 								>
-									▶▶
+									{`>>`}
 								</button>
 							);
 							break;

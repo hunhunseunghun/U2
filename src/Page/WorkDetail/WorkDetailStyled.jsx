@@ -13,8 +13,16 @@ export const WorkDetailContainer = styled.div`
 		display: flex;
 		flex-direction: column;
 	}
-	article {
+	.tabs {
+		border: solid;
+		border-color: black;
+		/* display: flex;
+		flex-direction: row; */
 		width: 500px;
+	}
+	.tab-contents {
+		border: solid;
+		border-color: grey;
 	}
 	.project-name {
 		border: solid;
@@ -24,4 +32,9 @@ export const WorkDetailContainer = styled.div`
 		text-align: start;
 		font-weight: bold;
 	}
+
+	/* .tabs{
+		display: flex;
+		flex-direction: row;
+	} */
 `;

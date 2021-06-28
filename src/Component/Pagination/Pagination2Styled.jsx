@@ -4,7 +4,8 @@ export const Pagination2Styled = styled.nav`
 	/* position: absolute; */
 	button {
 		border: none;
-		width: 30px;
+		/* width: 30px; */
+		background-color: white;
 	}
 	button:hover {
 		cursor: pointer;
@@ -13,7 +14,11 @@ export const Pagination2Styled = styled.nav`
 		font-weight: bolder;
 		color: red;
 	}
-	ul {
-		width: 200;
+	button.page {
+		width: 22px;
+		height: 20px;
+		border: 1px solid #cdcdcd;
+		/* font-size: 13px; */
+		font-weight: 400;
 	}
 `;
