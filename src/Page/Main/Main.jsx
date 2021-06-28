@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios"
+import axios from "axios";
 import { MainContainer } from "./MainStyled.jsx";
 import TopView from "./TopView/TopView.jsx";
 import TopAds from "./TopAds/TopAds.jsx";
@@ -8,17 +8,17 @@ import ContentElement from "./ContentElement/ContentElement.jsx";
 import CampaignSlide from "./CampaignSlide/CampaignSlide.jsx";
 import Slider3 from "../../Img/slider3.jpeg";
 
-const server = process.env.REACT_APP_U2_DB_HOST
+const server = process.env.REACT_APP_U2_DB_HOST;
 
 const Main = () => {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState(null);
 
-  useEffect(()=>{
-    axios.get(`${server}/api/Campaign/challengemaster`).then(res=>{
-      setData(res.data)
-    }
-    )
-  },[])
+  // useEffect(()=>{
+  //   axios.get(`${server}/api/Campaign/challengemaster`).then(res=>{
+  //     setData(res.data)
+  //   }
+  //   )
+  // }, [])
   return (
     <MainContainer>
       <div className="entireWrapper">
@@ -29,10 +29,10 @@ const Main = () => {
         <section className="contentWrap">
           <ContentTap />
           <div className="contentEle">
-            <ContentElement data={data}/>
-            <ContentElement data={data}/>
-            <ContentElement data={data}/>
-            <ContentElement data={data}/>
+            <ContentElement data={data} />
+            <ContentElement data={data} />
+            <ContentElement data={data} />
+            <ContentElement data={data} />
           </div>
         </section>
         <section className="campArea">
@@ -41,7 +41,7 @@ const Main = () => {
               <div className="campTitle_top">U2 와 함께한</div>
               <div className="campTitle_bottom">스마트한 영상 제작</div>
             </div>
-           
+
             <div className="campList">
               {/* {campList.map((ele, idx) => (const dummyData = [Slider1, Slider2, Slider3];
 
