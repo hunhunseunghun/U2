@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const RegiConationer = styled.div`
+  padding-top: 90px;
   width: 100%;
   .titleArea {
     display: flex;
