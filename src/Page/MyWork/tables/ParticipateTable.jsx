@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import { paginate } from './paginate';
-import Pagination from './Pagination';
-import { Link } from 'react-router-dom';
-function RegiQuests({ datas }) {
+import React, { useState, useEffect } from 'react';
+import Pagination2 from '../../../Component/Pagination/Pagination2';
+import { paginate } from '../../../Component/Pagination/paginate';
+function ParticipateTable({ datas }) {
 	let [quests, setQuests] = useState({
 		data: datas,
 		pageSize: 3,
@@ -12,9 +11,13 @@ function RegiQuests({ datas }) {
 	const { data, pageSize, currentPage } = quests;
 	const pagedQuests = paginate(data, currentPage, pageSize);
 	const { length: count } = quests.data;
+
 	let handlePageChange = (page) => {
 		setQuests({ ...quests, currentPage: page });
 	};
+	useEffect(() => {
+		setQuests({ ...quests, data: datas });
+	}, [datas]);
 	return (
 		<div>
 			<table border={1} width="100%">
@@ -32,38 +35,24 @@ function RegiQuests({ datas }) {
 						? pagedQuests.map((data) => {
 								return (
 									<tr height="100px">
-										{/* <Link to={{ pathname: '/workdetail' }}>
-											<td>
-												<img src={data.img}></img>
-											</td>
-											<td>{data.name}</td>
-											<td>{data.contriNum}</td>
-											<td>{data.inspect}</td>
-											<td>{data.dueDate}</td>{' '}
-										</Link> */}
-										{Object.keys(data).map((keyname) => {
-											console.log('keyname: ', keyname);
-											return (
-												<td>
-													<Link to={{ pathname: '/workdetail' }}>
-														{data[keyname]}
-													</Link>
-												</td>
-											);
-										})}
+										<td>
+											<img src={data.img}></img>
+										</td>
+										<td>{data.name}</td>
+										<td>{data.contriNum}</td>
+										<td>{data.inspect}</td>
+										<td>{data.dueDate}</td>{' '}
 									</tr>
 								);
 						  })
 						: ''}
 				</tbody>
 			</table>
-			<Pagination
-				pageSize={pageSize}
+			<Pagination2
 				itemsCount={count}
-				currentPage={currentPage}
-				onPageChange={handlePageChange}
-			></Pagination>
+				handlePageChange={handlePageChange}
+			></Pagination2>
 		</div>
 	);
 }
-export default RegiQuests;
+export default ParticipateTable;

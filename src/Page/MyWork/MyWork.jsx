@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { MyWorkContainer } from './MyWorkStyled.jsx';
-import Accepter from './tabs/accepter/Accepter.jsx';
-import Quester from './tabs/quester/Quester.jsx';
+import ParticipateTable from './tables/ParticipateTable';
+import RegistTable from './tables/RegistTable.jsx';
+import datas from './sampledatas/sampledataParticipate.js';
+import datas2 from './sampledatas/sampledataRegist.js';
 const obj = {
-	0: <Accepter></Accepter>, //add new props
-	1: <Quester></Quester>, //add new props
+	0: <RegistTable datas={datas2}></RegistTable>, //add new props
+	1: <ParticipateTable datas={datas}></ParticipateTable>, //add new props
 };
 const MyWork = (props) => {
 	let [currentTab, setCurrentTab] = useState(0);
-	let [newAccept, setNewAccept] = useState(false);
-	let [newQuest, setNewQuest] = useState(true);
+	let [newRegistration, setNewAccept] = useState(true);
+	let [newParticipant, setNewQuest] = useState(false);
 
 	let clickHandler = (id) => {
 		setCurrentTab(id);
@@ -19,32 +21,48 @@ const MyWork = (props) => {
 
 	return (
 		<MyWorkContainer>
+			<div className="mywork header">
+				<h1>나의 과제</h1>
+			</div>
 			<div className="mywork wrapper">
-				<ul className="tabs">
-					<li
-						onClick={() => {
-							clickHandler(0);
-						}}
-						style={{ cursor: 'pointer' }}
-					>
-						<fieldset>
-							{newAccept ? <legend>new</legend> : undefined}
-							Accepter
-						</fieldset>
-						{/* <span>{newAccept ? 'new' : ''}</span> */}
-					</li>
-					<li
-						onClick={() => {
-							clickHandler(1);
-						}}
-						style={{ cursor: 'pointer' }}
-					>
-						<fieldset>
-							{newQuest ? <legend>new</legend> : undefined}
-							Quester
-						</fieldset>
-					</li>
-				</ul>
+				<span
+					onClick={() => {
+						clickHandler(0);
+					}}
+					className={
+						(() => {
+							if (currentTab === 0) {
+								return 'selected';
+							} else {
+								return 'unselected';
+							}
+						})() +
+						' ' +
+						'tab'
+					}
+				>
+					등록 프로젝트
+					{newRegistration ? <span className={'newAlert'}>new</span> : ''}
+				</span>
+				<span
+					onClick={() => {
+						clickHandler(1);
+					}}
+					className={
+						(() => {
+							if (currentTab === 1) {
+								return 'selected';
+							} else {
+								return 'unselected';
+							}
+						})() +
+						' ' +
+						'tab'
+					}
+				>
+					참여 프로젝트
+					{newParticipant ? <span className={'newAlert'}>new</span> : ''}
+				</span>
 			</div>
 			<div className="contentes">{obj[currentTab]}</div>
 		</MyWorkContainer>
