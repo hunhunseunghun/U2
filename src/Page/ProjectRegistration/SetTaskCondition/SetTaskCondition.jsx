@@ -261,38 +261,6 @@ const SetTaskCondition = ({ history }) => {
           <div className="menu">* 시상 종류</div>
           <div className="inputInfo chooseDate">
             <div className="inputStart">
-              <ThemeProvider theme={materialTheme}>
-                <DateTimePicker
-                  className="dtPicker"
-                  label="시작 날짜 선택"
-                  inputVariant="outlined"
-                  value={startDate}
-                  onChange={date => setStartDate(date)}
-                  format="yyyy/MM/dd hh:mm a"
-                  disablePast={true}
-                  minDate={new Date()}
-                  minDateMessage={false}
-                  // minDateMessage="현 시각 이후부터 가능합니다"
-                  strictCompareDates={true}
-                />
-              </ThemeProvider>
-              <div>프로젝트 게시 시작일을 입력해주십시오</div>
-            </div>
-            <div className="inputFinish">
-              <ThemeProvider theme={materialTheme}>
-                <DateTimePicker
-                  className="dtPicker"
-                  label="종료 날짜 선택"
-                  inputVariant="outlined"
-                  value={finishDate}
-                  onChange={date => setFinishDate(date)}
-                  format="yyyy/MM/dd hh:mm a"
-                  disablePast={true}
-                  minDate={startDate}
-                  minDateMessage={false}
-                  strictCompareDates={true}
-                />
-              </ThemeProvider>
               <div>프로젝트 게시 종료일을 입력해주십시오</div>
             </div>
           </div>
