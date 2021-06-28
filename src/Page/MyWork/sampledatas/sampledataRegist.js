@@ -3,6 +3,7 @@ let datas = [
 		id: 1,
 		img: 'test.url',
 		name: 'test1',
+		category: '공모전',
 		contriNum: 0,
 		inspect: 0,
 		dueDate: '123123',
@@ -13,6 +14,8 @@ let datas = [
 		id: 2,
 		img: 'test.url',
 		name: 'test2',
+		category: '공모전',
+
 		contriNum: 0,
 		inspect: 0,
 		dueDate: '123123',
@@ -23,6 +26,8 @@ let datas = [
 		id: 3,
 		img: 'test.url',
 		name: 'test1',
+		category: '공모전',
+
 		contriNum: 0,
 		inspect: 0,
 		dueDate: '123123',
@@ -33,6 +38,8 @@ let datas = [
 		id: 4,
 		img: 'test.url',
 		name: 'test2',
+		category: '강사채용',
+
 		contriNum: 0,
 		inspect: 0,
 		dueDate: '123123',
@@ -43,6 +50,8 @@ let datas = [
 		id: 5,
 		img: 'test.url',
 		name: 'test1',
+		category: '공모전',
+
 		contriNum: 0,
 		inspect: 0,
 		dueDate: '123123',
@@ -53,6 +62,8 @@ let datas = [
 		id: 5,
 		img: 'test.url',
 		name: 'test2',
+		category: '강사채용',
+
 		contriNum: 0,
 		inspect: 0,
 		dueDate: '123123',
@@ -63,6 +74,8 @@ let datas = [
 		id: 6,
 		img: 'test.url',
 		name: 'test1',
+		category: '공모전',
+
 		contriNum: 0,
 		inspect: 0,
 		dueDate: '123123',
@@ -73,6 +86,8 @@ let datas = [
 		id: 7,
 		img: 'test.url',
 		name: 'test2',
+		category: '강사채용',
+
 		contriNum: 0,
 		inspect: 0,
 		dueDate: '123123',
@@ -83,6 +98,8 @@ let datas = [
 		id: 8,
 		img: 'test.url',
 		name: 'test1',
+		category: '공모전',
+
 		contriNum: 0,
 		inspect: 0,
 		dueDate: '123123',
@@ -93,6 +110,8 @@ let datas = [
 		id: 9,
 		img: 'test.url',
 		name: 'test2',
+		category: '공모전',
+
 		contriNum: 0,
 		inspect: 0,
 		dueDate: '123123',

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Pagination2 from '../../../Component/Pagination/Pagination2';
 import { paginate } from '../../../Component/Pagination/paginate';
+import { ParticipateTableContainer } from './ParticipateTableStyled';
 function ParticipateTable({ datas }) {
 	let [quests, setQuests] = useState({
 		data: datas,
@@ -19,29 +20,39 @@ function ParticipateTable({ datas }) {
 		setQuests({ ...quests, data: datas });
 	}, [datas]);
 	return (
-		<div>
-			<table border={1} width="100%">
-				<thead height="50px">
+		<ParticipateTableContainer>
+			<table>
+				<thead>
 					<tr>
 						<th key={'image'}>이미지</th>
-						<th key={'name'}>과제명</th>
-						<th key={'contriNum'}>참여자수</th>
-						<th key={'inspection'}>검수대상</th>
+						<th key={'category'}>카테고리</th>
+						<th key={'name'}>프로젝트명</th>
+						<th key={'status'}>상태</th>
+						<th key={'presentation'}>제출자료</th>
+						<th key={'feedback'}>피드백</th>
+						<th key={'requestDate'}>신청일</th>
 						<th key={'dueDate'}>마감일</th>
 					</tr>
 				</thead>
-				<tbody align="center" style={{ borderColor: 'blue' }}>
+				<tbody>
 					{pagedQuests
 						? pagedQuests.map((data) => {
 								return (
-									<tr height="100px">
+									<tr>
 										<td>
-											<img src={data.img}></img>
+											{data.img !== '' ? (
+												<img src={data.img}></img>
+											) : (
+												'no image'
+											)}
 										</td>
+										<td>{data.category}</td>
 										<td>{data.name}</td>
-										<td>{data.contriNum}</td>
-										<td>{data.inspect}</td>
-										<td>{data.dueDate}</td>{' '}
+										<td>{data.status}</td>
+										<td>{data.presentation}</td>
+										<td>{data.feedback ? <button>피드백</button> : ''}</td>
+										<td>{data.requestDate}</td>
+										<td>{data.dueDate}</td>
 									</tr>
 								);
 						  })
@@ -52,7 +63,7 @@ function ParticipateTable({ datas }) {
 				itemsCount={count}
 				handlePageChange={handlePageChange}
 			></Pagination2>
-		</div>
+		</ParticipateTableContainer>
 	);
 }
 export default ParticipateTable;

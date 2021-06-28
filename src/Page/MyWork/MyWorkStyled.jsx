@@ -36,4 +36,16 @@ export const MyWorkContainer = styled.div`
 		background-size: 25 10;
 		background-color: red;
 	}
+	.regi-project {
+		color: black;
+		padding: 10px;
+		overflow: hidden;
+		margin-left: calc(100% - 180px);
+		margin-bottom: 50px;
+		border: 1px solid black;
+		text-decoration: unset;
+	}
+	.contents {
+		margin-top: 20px;
+	}
 `;
