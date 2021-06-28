@@ -37,7 +37,7 @@ export const RegiContainer = styled.div`
     width: 300px;
     background-color: #dfdfdf;
     height: 30px;
-    padding: 5px 0 5px 20px;
+    padding: 5px 0 0 20px;
     &:hover {
       cursor: pointer;
       background-color: #c7c7c7;

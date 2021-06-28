@@ -45,7 +45,7 @@ const CompetitionRegi = () => {
       </section>
 
       <section className="ele">
-        <div className="menu">* 공모전명</div>
+        <div className="menu">* 주최사</div>
         <div className="inputInfo competitionName">
           <div
             className="defaultCompetition"

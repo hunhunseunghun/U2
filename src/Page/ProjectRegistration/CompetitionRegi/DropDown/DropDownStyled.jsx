@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   position: absolute;
   width: 360px;
-  top: -10px;
+  top: -8px;
   left: -30px;
   z-index: 3;
 
@@ -44,7 +44,7 @@ export const Container = styled.div`
     font-family: 'Roboto', 'Noto Sans KR', 'Noto Sans', sans-serif;
   }
   .modal > section {
-    width: 90%;
+    width: 80%;
     max-width: 450px;
     margin: 0 auto;
     border-radius: 0.3rem;
@@ -84,6 +84,10 @@ export const Container = styled.div`
     background-color: #6c757d;
     border-radius: 5px;
     font-size: 13px;
+
+    &:hover {
+      background-color: #4b5157;
+    }
   }
   .modal.openModal {
     display: flex;
@@ -107,5 +111,12 @@ export const Container = styled.div`
     to {
       opacity: 1;
     }
+  }
+
+  .selectForm {
+    display: flex;
+  }
+  .competitionName {
+    width: 200px;
   }
 `;
