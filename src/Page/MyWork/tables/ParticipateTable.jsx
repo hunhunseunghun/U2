@@ -12,11 +12,13 @@ function ParticipateTable({ datas }) {
 	const { data, pageSize, currentPage } = quests;
 	const pagedQuests = paginate(data, currentPage, pageSize);
 	const { length: count } = quests.data;
-
+	console.log('datas: ', datas);
 	let handlePageChange = (page) => {
 		setQuests({ ...quests, currentPage: page });
 	};
 	useEffect(() => {
+		console.log('datas:');
+		console.log(datas);
 		setQuests({ ...quests, data: datas });
 	}, [datas]);
 	return (
@@ -59,10 +61,12 @@ function ParticipateTable({ datas }) {
 						: ''}
 				</tbody>
 			</table>
-			<Pagination2
-				itemsCount={count}
-				handlePageChange={handlePageChange}
-			></Pagination2>
+			<div className="pagination">
+				<Pagination2
+					itemsCount={count}
+					handlePageChange={handlePageChange}
+				></Pagination2>
+			</div>
 		</ParticipateTableContainer>
 	);
 }
