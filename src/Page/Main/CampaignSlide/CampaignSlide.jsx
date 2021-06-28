@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import axios from "axios";
 import { CampSliContainer } from "./CampaignSlideStyled.jsx";
 import Slider from "react-slick";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
@@ -11,7 +12,16 @@ const dummy = [campSlidImg,campSlidImg,campSlidImg,campSlidImg,campSlidImg,campS
   
 ];
 const dummyThum = [campSlidImg,campSlidImg, campSlidImg, campSlidImg,campSlidImg, campSlidImg,campSlidImg,campSlidImg];
+
+
+
 const CampaignSlide = () => {
+
+
+ 
+
+
+
   const [imageIndex, setImageIndex] = useState(0);
   const NextArrow = ({ onClick }) => {
     return (

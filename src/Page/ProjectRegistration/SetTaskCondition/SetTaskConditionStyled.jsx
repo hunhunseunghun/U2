@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const TcContainer = styled.div`
   width: 100%;
@@ -90,5 +90,37 @@ export const TcContainer = styled.div`
         align-items: center;
       }
     }
+  }
+
+  .chooseDate {
+    display: flex;
+    flex-wrap: wrap;
+    height: 60px;
+  }
+  .inputStart,
+  .inputFinish {
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    div {
+      margin-left: 10px;
+      min-width: 270px;
+    }
+  }
+  .MuiFormControl-root {
+    min-width: 185px;
+  }
+  .MuiOutlinedInput-root {
+  }
+  .MuiInputBase-input {
+    padding: none;
+    height: 0.3em;
+  }
+  .MuiFormLabel-root,
+  .MuiFormHelperText-root,
+  .MuiInputBase-root {
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'Roboto', 'Noto Sans KR', 'Noto Sans', sans-serif;
   }
 `;

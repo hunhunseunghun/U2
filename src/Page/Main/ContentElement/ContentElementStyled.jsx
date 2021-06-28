@@ -49,7 +49,7 @@ export const EleContainer = styled.div`
       font-size: 12px;
       line-height: 18px;
       font-weight: 600;
-      /* color: #f50057; */
+      color: #f50057;
 
       div {
         margin-right: 22px;
@@ -59,7 +59,7 @@ export const EleContainer = styled.div`
     .progressBar {
       width: 100%;
       height: 21px;
-      /* background-color: #faa49e; */
+      background-color: #faa49e;
       border-radius: 3px;
       margin-top: 5px;
     }

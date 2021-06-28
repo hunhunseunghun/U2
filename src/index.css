@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  font-weight: 500;
   font-family: "Roboto", "Noto Sans KR", "Noto Sans", sans-serif;
   color: #181818;
   text-rendering: optimizeLegibility;
