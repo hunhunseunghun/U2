@@ -173,8 +173,9 @@ const VidCreatorRegi = () => {
         <section className="ele">
           <div className="menu"> 파일 업로드</div>
           <div className="inputPrjUpload">
-            <div>프로젝트 관련한 자료를 업로드 해주세요</div>
-            <div className="uploadTextArea"></div>
+            <div className="uploadTextArea">
+              프로젝트 관련한 자료를 업로드 해주세요
+            </div>
             <input
               type="text"
               className="fileRoute"

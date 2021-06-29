@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 const Modal = ({ modalOpen, handleOpenModal, handleCloseModal, header }) => {
   const [columnText, setColumnText] = useState('개인');
+
   const handleColumnText = e => {
     setColumnText(e.target.value);
   };
