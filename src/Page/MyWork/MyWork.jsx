@@ -6,6 +6,7 @@ import RegistTable from './tables/RegistTable.jsx';
 import participateDatas from './sampledatas/sampledataParticipate.js';
 import registDatas from './sampledatas/sampledataRegist.js';
 import { GrAdd } from 'react-icons/gr';
+import axios from 'axios';
 const table = {
 	0: <RegistTable datas={registDatas}></RegistTable>, //add new props
 	1: <ParticipateTable datas={participateDatas}></ParticipateTable>, //add new props
@@ -25,6 +26,16 @@ const MyWork = (props) => {
 		setCurrentTab(id);
 	};
 	//axios.get --> setNewAccept / setNewQuest
+	axios
+		.get('https://u2-rest-dev.azurewebsites.net/api/Campaign/challenge/3')
+		.then((response) => {
+			console.log('response:');
+			console.log(response.data);
+		})
+		.catch((err) => {
+			console.log('response error:');
+			console.log(err);
+		});
 	console.log(props.location.state);
 
 	return (

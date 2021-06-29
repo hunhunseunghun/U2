@@ -32,9 +32,4 @@ export const WorkDetailContainer = styled.div`
 		text-align: start;
 		font-weight: bold;
 	}
-
-	/* .tabs{
-		display: flex;
-		flex-direction: row;
-	} */
 `;
