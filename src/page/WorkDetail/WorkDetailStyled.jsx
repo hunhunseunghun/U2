@@ -21,8 +21,14 @@ export const WorkDetailContainer = styled.div`
 		width: 500px;
 	}
 	.tab-contents {
-		border: solid;
-		border-color: grey;
+		cursor: pointer;
+		margin: 10px;
+		background-color: grey;
+		border: solid black;
+	}
+	.tab-contents.selected {
+		color: white;
+		background-color: black;
 	}
 	.project-name {
 		border: solid;
@@ -31,5 +37,8 @@ export const WorkDetailContainer = styled.div`
 	.project-info.spec {
 		text-align: start;
 		font-weight: bold;
+	}
+	hr {
+		width: inherit;
 	}
 `;

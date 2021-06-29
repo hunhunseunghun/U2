@@ -40,7 +40,9 @@ function WorkDetail(props) {
 				</section>
 				<div className="tabs">
 					<span
-						className="tab-contents"
+						className={
+							'tab-contents' + ' ' + (currentTab === 0 ? 'selected' : '')
+						}
 						onClick={() => {
 							handleTabClick(0);
 						}}
@@ -48,7 +50,9 @@ function WorkDetail(props) {
 						챌린지 대상자
 					</span>
 					<span
-						className="tab-contents"
+						className={
+							'tab-contents' + ' ' + (currentTab === 1 ? 'selected' : '')
+						}
 						onClick={() => {
 							handleTabClick(1);
 						}}

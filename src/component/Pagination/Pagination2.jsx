@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { usePagination } from '@material-ui/lab/Pagination';
 import { makeStyles } from '@material-ui/core/styles';
 import _ from 'lodash';
@@ -12,11 +12,9 @@ const useStyles = makeStyles({
 		display: 'flex',
 	},
 });
-function Pagination2({ itemsCount, handlePageChange }) {
-	const pageSize = 3;
+function Pagination2({ itemsCount, pageSize, handlePageChange }) {
 	const classes = useStyles();
 	const pageCount = Math.ceil(itemsCount / pageSize); // 몇 페이지가 필요한지 계산
-	// if (pageCount === 1) return null; // 1페이지 뿐이라면 페이지 수를 보여주지 않음
 
 	// const pages = _.range(1, pageCount + 1);
 	const { items } = usePagination({
@@ -26,6 +24,7 @@ function Pagination2({ itemsCount, handlePageChange }) {
 		siblingCount: 3,
 		boundaryCount: 1,
 	});
+	if (pageCount === 1) return null; // 1페이지 뿐이라면 페이지 수를 보여주지 않음
 
 	return (
 		<Pagination2Styled>
