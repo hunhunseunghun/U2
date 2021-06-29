@@ -25,6 +25,13 @@ import VideoPost from './page/post/VideoPost';
 import CreatorMarket from './page/CreatorMarket/CreatorMarket';
 import MyWork from './page/MyWork/MyWork.jsx';
 import WorkDetail from './page/WorkDetail/WorkDetail.jsx';
+import MyWork from './Page/MyWork/MyWork.jsx';
+import SetTaskCondition from './Page/ProjectRegistration/SetTaskCondition/SetTaskCondition.jsx';
+import WorkDetail from './Page/WorkDetail/WorkDetail';
+import CompetitionRegi from './Page/ProjectRegistration/CompetitionRegi/CompetitionRegi.jsx';
+import VidCreatorRegi from './Page/ProjectRegistration/VidCreatorRegi/VidCreatorRegi.jsx';
+import VidEditorRegi from './Page/ProjectRegistration/VidEditorRegi/VidEditorRegi.jsx';
+import IRRegi from './Page/ProjectRegistration/IRRegi/IRRegi.jsx';
 const Middlewares = [penderMiddleware()];
 const isDev = process.env.NODE_ENV === 'development';
 const devTools = isDev && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
@@ -49,9 +56,49 @@ function App() {
           <Route exact path="/post/select" component={SnsSelect} />
           <Route exact path="/post/select/channel_add" component={ChannelAdd} />
           <Route exact path="/post/post" component={VideoPost} />
-          <Route exact path="/creatormarket" component={CreatorMarket} />
-          <Route exact path="/mywork" component={MyWork} />
-          <Route exact path="/workdetail" component={WorkDetail} />
+          <Route
+            exact
+            path="/creatormarket"
+            render={() => <CreatorMarket history={history} />}
+          />
+          <Route
+            exact
+            path="/prjregi"
+            render={() => <ProjectRegi history={history} />}
+          />
+          <Route
+            exact
+            path="/setTc"
+            render={() => <SetTaskCondition history={history} />}
+          />
+          <Route
+            exact
+            path="/mywork"
+            render={props => <MyWork history={history} {...props} />}
+          />
+          <Route
+            exact
+            path="/workdetail"
+            render={props => (
+              <WorkDetail history={history} {...props}></WorkDetail>
+            )}
+          />
+          <Route
+            exact
+            path="/competiton"
+            render={() => <CompetitionRegi history={history} />}
+          />
+          <Route
+            exact
+            path="/vidcreator"
+            render={() => <VidCreatorRegi history={history} />}
+          />
+          <Route
+            exact
+            path="/videditor"
+            render={() => <VidEditorRegi history={history} />}
+          />
+          <Route exact path="/ir" render={() => <IRRegi history={history} />} />
           <Footer></Footer>
         </div>
       </Provider>
