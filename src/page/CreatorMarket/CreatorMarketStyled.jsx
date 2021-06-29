@@ -1,17 +1,15 @@
-import styled from "styled-components";
-
+import styled from 'styled-components';
 
 export const MainContainer = styled.div`
-  padding: 90px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  .entireWrapper {
+  padding: 40px 45px 100px;
+  background-color: #fafafa;
+
+  .creatormarket_section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 1400px;
-    
+    max-width: 1100px;
+    margin: 0 auto 100px;
   }
 
   .topWrap {
@@ -33,15 +31,12 @@ export const MainContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height:632px;
-    margin-top:200px;
+    height: 632px;
+    margin-top: 200px;
     background-color: #e0e0e0;
-    
-    
 
     .campListWrap {
       text-align: center;
-    
 
       .campTitle_top {
         font-size: 1rem;
@@ -61,11 +56,10 @@ export const MainContainer = styled.div`
       }
     }
 
-    .campSlideWrap{
+    .campSlideWrap {
       width: 698px;
     }
   }
-
 
   .applyBanner {
     position: relative;

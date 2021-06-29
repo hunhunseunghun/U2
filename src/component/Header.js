@@ -155,16 +155,17 @@ function Header(props) {
           <li
             className={
               location.pathname.indexOf('/creatormarket') >= 0
-                ? 'active tab_vidmarket'
-                : 'tab_vidmarket'
+                ? 'active tab_creatorMarket'
+                : 'tab_creatorMarket'
             }
           >
             <Link to={'/creatormarket'}>크리에이터 마켓</Link>
-            <div className="vidmarket_dorpdown">
-              <Link to={'/prjregi'} className="dropdown_prjapply">
+
+            <div className="creatorMarket_dropdown">
+              <Link to={'/prjregi'} className="dropdown_ele">
                 프로젝트 등록
               </Link>
-              <div className="dropdown_currprj">진행중인 프로젝트</div>
+              <Link className="dropdown_ele">진행중인 프로젝트</Link>
             </div>
           </li>
           {!userInfo.email && (
@@ -191,6 +192,8 @@ function Header(props) {
                 <div className={'pop_sub profile_pop'}>
                   <ul>
                     <li>나의 프로젝트</li>
+                  </ul>
+                  <ul>
                     <li
                       onClick={() => {
                         logOutClick();

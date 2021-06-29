@@ -21,7 +21,7 @@ const Main = () => {
   // }, [])
   return (
     <MainContainer>
-      <div className="entireWrapper">
+      <div className="creatormarket_section">
         <section className="topWrap">
           <TopView />
           <TopAds />
