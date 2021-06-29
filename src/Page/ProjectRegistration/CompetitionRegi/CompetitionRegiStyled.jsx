@@ -37,7 +37,7 @@ export const RegiContainer = styled.div`
     width: 300px;
     background-color: #dfdfdf;
     height: 30px;
-    padding: 5px 0 5px 20px;
+    padding: 5px 0 0 20px;
     &:hover {
       cursor: pointer;
       background-color: #c7c7c7;
@@ -70,6 +70,18 @@ export const RegiContainer = styled.div`
     border-top: 1px solid #00000023;
     padding: 0 10px;
   }
+
+  // 파일 업로더 css ----------------------------
+  .infoPoster,
+  .infoFiles {
+    font-size: 14px;
+    display: block;
+
+    div {
+      margin: 10px 0;
+    }
+  }
+  // --------------------------------------------
   .radioWrap {
     display: flex;
 
@@ -78,4 +90,91 @@ export const RegiContainer = styled.div`
       margin-right: 10px;
     }
   }
+  // tabale css ------------------------------------
+
+  .receptionInfo {
+    width: 100%;
+  }
+  .topForm {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    border-top: 1px solid #c2c2c28b;
+
+    .checkArea {
+      width: 20px;
+    }
+
+    section {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 5px;
+      border-right: 1px solid #c2c2c28b;
+      height: 100%;
+    }
+  }
+
+  /* .receptionInfo {
+    white-space: nowrap;
+    width: 100%;
+    padding: 0;
+  }
+  .receptionForm {
+    width: 100%;
+    border-collapse: collapse;
+
+    td {
+      padding: 5px;
+      border: 1px solid #c2c2c28b;
+    }
+
+    td:first-child {
+      border-left: 0;
+      width: 40px;
+    }
+
+    td:nth-child(2) {
+      max-width: 100px;
+    }
+    td:nth-child(3) {
+      width: 275px;
+    }
+
+    td:last-child {
+      border-right: 0;
+    }
+
+    section {
+      display: flex;
+      align-items: center;
+
+      div {
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+      }
+      input {
+        margin-left: 2px;
+      }
+      label {
+        margin-left: 2px;
+      }
+    }
+
+    .checkArea,
+    .receptionTitle {
+    }
+    .checkArea {
+      display: flex;
+      justify-content: center;
+      width: 40px;
+    }
+    .receptionTitle {
+      display: flex;
+      justify-content: center;
+      width: 100px;
+    }
+  } */
+
+  //-----------------------------------------------
 `;
