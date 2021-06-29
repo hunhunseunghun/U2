@@ -51,6 +51,8 @@ function RegistTable({ datas }) {
 														pathname: '/workdetail',
 														state: {
 															projectId: data.id,
+															isContriClicked: false,
+															isInspectClicked: false,
 														},
 													}}
 												>
@@ -63,6 +65,8 @@ function RegistTable({ datas }) {
 														pathname: '/workdetail',
 														state: {
 															projectId: data.id,
+															isContriClicked: true,
+															isInspectClicked: false,
 														},
 													}}
 												>
@@ -80,6 +84,8 @@ function RegistTable({ datas }) {
 														pathname: '/workdetail',
 														state: {
 															projectId: data.id,
+															isContriClicked: true,
+															isInspectClicked: false,
 														},
 													}}
 												>
