@@ -1,109 +1,150 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const EleContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 328px;
-  height: 504px;
-  margin-right: 5px;
-  margin-bottom: 5px;
-  margin-top: 19px;
-  padding:2px 1px;
-  border: 1px solid #ECECEC;
+  display: inline-block;
+  vertical-align: top;
+  width: calc(33.3% - 30px);
+  margin: 25px 15px 25px 15px;
+  position: relative;
+  cursor: pointer;
+  text-align: left;
+  background-color: #fff;
 
-  .eleImgArea {
-    width: 319px;
-    height: 179px;
+  .challenge_img_area {
+    width: 100%;
+    min-height: 100px;
+    background-size: cover;
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .eleImg {
+  .challenge_img {
     width: 100%;
   }
-  .eleDescArea {
-    width: 271px;
+  .challenge_contents {
+    padding: 16px 25px;
+    box-sizing: border-box;
+    border: 1px solid #eee;
+    border-top: none;
+    height: 200px;
   }
-  .eleDesTitle {
-    height: 48px;
-    font-size: 21px;
-    line-height: 24px;
+  .challenge_title {
+    font-size: 18px;
+    line-height: 26px;
     font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  .eleDesc {
-    width: 256px;
-    font-size: 12px;
-    line-height: 15px;
-    color: #5a5a5a;
-    font-weight:500;
+  .challenge_sub {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #989898;
+    font-weight: 500;
   }
 
-  .eleFunc {
-    padding-top: 20px;
+  .challenge_bottom {
+    display: flex;
+    flex-direction: column;
+    bottom: 20px;
+    left: 0px;
+    width: 100%;
+    padding: 5px 5px;
+    box-sizing: border-box;
+    justify-items: center;
+    justify-content: space-between;
+    align-items: center;
   }
 
-  .progressArea {
-    width: 282px;
+  .challenge_progress_area {
+    margin-top: 20px;
+    width: 90%;
 
-    .progressText {
+    .challenge_progress_text {
       display: flex;
       font-size: 12px;
       line-height: 18px;
       font-weight: 600;
-      color: #f50057;
+      color: #ff1405;
 
       div {
         margin-right: 22px;
       }
     }
 
-    .progressBar {
+    .challenge_progressBar {
       width: 100%;
-      height: 21px;
-      background-color: #faa49e;
+      height: 18px;
+      background-color: #ffafa9;
       border-radius: 3px;
       margin-top: 5px;
     }
   }
 
-  .infoTop{
-    
-    margin-top:22px;
-    display:grid;
+  .challenge_info_top {
+    width: 100%;
+    margin-top: 22px;
+    display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     place-items: center;
+    font-weight: 600;
+    font-size: 14px;
 
-    div{
-      display:grid;
+    div {
+      display: grid;
       place-items: center;
+    }
+
+    input {
+      width: 1.3em;
+      height: 1.3em;
+      background-color: white;
+      border-radius: 50%;
+      vertical-align: middle;
+      border: 1px solid #ddd;
+      -webkit-appearance: none;
+      outline: none;
     }
   }
 
-  
-  .infoBottom{
-    margin-top:22px;
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    place-items: center;
+  .challenge_info_bot {
+    width: 100%;
+    margin: 22px 0 10px 22px;
+    display: flex;
+    font-weight: 500;
+
+    font-size: 14px;
   }
 
-  .cmntValArea {
+  .challenge_cmtval_area {
     display: flex;
+    align-items: center;
+    img {
+      width: 15px;
+      height: 15px;
+    }
 
     .cmntIcon {
       width: 20px;
-      margin-right:20px;
+      margin-right: 5px;
     }
   }
 
-  .shareValArea {
+  .challenge_shareval_area {
     display: flex;
+    align-items: center;
+    margin-left: 10px;
+
+    img {
+      width: 15px;
+      height: 15px;
+    }
 
     .shareIcon {
       width: 20px;
-      margin-right:20px;
+      margin-right: 5px;
     }
   }
-
-
-  
 `;

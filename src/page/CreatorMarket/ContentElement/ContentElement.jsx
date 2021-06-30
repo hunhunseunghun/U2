@@ -1,44 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import { EleContainer } from './ContentElementStyled.jsx';
+import { LinearProgress } from '@material-ui/core';
+import ceImg from '../../../Img/ceImg.png';
 
-import { EleContainer } from "./ContentElementStyled.jsx";
-import { LinearProgress } from "@material-ui/core";
-import dummyImg from "../../../Img/topviewEX.png";
-import ceImg from "../../../Img/ceImg.png";
-
-const ContentElement = ({ data }) => {
-  const [progressValue, setProgressValue] = useState(60);
-  const [commentValue, setcommentValue] = useState(5);
-  const [shareValue, setShareValue] = useState(78);
-
+const ContentElement = ({ challenge }) => {
   return (
     <EleContainer>
-      <div className="eleImgArea">
-        <img src={ceImg} alt={ceImg} className="eleImg" />
+      <div className="challenge_img_area">
+        <img src={ceImg} alt={ceImg} className="challenge_img" />
+        {/* {tItem.bannerImage === null && (
+          <div className={'no_img'}>
+            <img src={'/img/no_image.png'} />
+            <span className={'not_contents'}>Image not found</span>
+          </div>
+        )} */}
       </div>
-      <div className="eleDescArea">
-        <h1 className="eleDesTitle">{data !== null ? data[0].title : ""}</h1>
-        <div className="eleDesc">{data !== null ? data[0].subtitle : ""}</div>
+      <div className="challenge_contents">
+        <h1 className="challenge_title">{challenge.title}</h1>
+        <div className="challenge_sub">{challenge.subtitle}</div>
       </div>
-      <div className="eleFunc">
-        <div className="progressArea">
-          <div className="progressText">
+      <div className="challenge_bottom">
+        <div className="challenge_progress_area">
+          <div className="challenge_progress_text">
             {/* <button className="paticipantBtn">+</button> */}
-            {/* <div>참가자</div> <div>{`${progressValue}`}</div> */}
+            <div>참가자</div> <div>{`${challenge.challengerCount}`}</div>
           </div>
           <LinearProgress
-            className="progressBar"
+            className="challenge_progressBar"
             variant="determinate"
             color="secondary"
-            value={progressValue}
+            value={challenge.challengerCount}
           />
         </div>
-        <section className="infoTop">
+        <section className="challenge_info_top">
           <div className="meetArea">
             <input type="checkbox" name="chk_info" value="HTML" />
             <div className="meetText">OFF 미팅</div>
           </div>
           <div className="budgetArea">
-            <div className="budget">3천만원</div>
+            <div className="budget">
+              {challenge.reward !== null ? challenge.reward : '--'}
+            </div>
             <div className="bugetText">예산금액</div>
           </div>
           <div className="remainDateArea">
@@ -47,21 +49,21 @@ const ContentElement = ({ data }) => {
           </div>
         </section>
 
-        <section className="infoBottom">
-          <div className="cmntValArea">
+        <section className="challenge_info_bot">
+          <div className="challenge_cmtval_area">
             <img
-              src={require("../../../Img/comment.svg").default}
+              src={require('../../../Img/comment.svg').default}
               className="cmntIcon"
             />
-            <div className="cmntVal">{commentValue}</div>
+            <div className="cmntVal">{challenge.commentCount}</div>
           </div>
 
-          <div className="shareValArea">
+          <div className="challenge_shareval_area">
             <img
-              src={require("../../../Img/share.svg").default}
+              src={require('../../../Img/share.svg').default}
               className="shareIcon"
             />
-            <div className="shareVal">{shareValue}</div>
+            <div className="shareVal">{challenge.shareCount}</div>
           </div>
         </section>
       </div>

@@ -1,28 +1,43 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const TopViewContainer = styled.div`
-  @import "~slick-carousel/slick/slick.css";
-  @import "~slick-carousel/slick/slick-theme.css";
+  @import '~slick-carousel/slick/slick.css';
+  @import '~slick-carousel/slick/slick-theme.css';
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80%;
+  height: 100%;
+
+  .slick-slider {
+    -webkit-tap-highlight-color: none;
+  }
 
   .slideWrap {
+    border: 0;
     position: relative;
-    width: 1058px;
-    height: 515px;
+    width: 100%;
+    height: 100%;
   }
 
   .slide {
-    height: 515px;
+    width: 100%;
+    height: 100%;
+
     transform: scale(1);
     transition: transform 0.3s;
   }
   .slick-dots {
     position: absolute;
-    bottom: 20px;
+
+    bottom: 20%;
   }
   .slick-dots li button {
     color: white;
   }
   .slide img {
+    border: 0;
     width: 100%;
     height: 100%;
   }

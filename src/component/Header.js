@@ -14,6 +14,7 @@ function Header(props) {
   const [windowAppYn, setWindowAppYn] = useState(false);
   const [headerYn, setHeaderYn] = useState(true);
   const [profilePopYn, setProfilePopYn] = useState(false);
+
   const location = useLocation();
   const dispatch = useDispatch();
   const userInfo = useSelector(state => state.userInfo);
@@ -151,8 +152,21 @@ function Header(props) {
           >
             <Link to={'/price'}>요금제</Link>
           </li>
-          <li>
-            <Link to="/creatormarket">영상 마켓</Link>
+          <li
+            className={
+              location.pathname.indexOf('/creatormarket') >= 0
+                ? 'active tab_creatorMarket'
+                : 'tab_creatorMarket'
+            }
+          >
+            <Link to={'/creatormarket'}>크리에이터 마켓</Link>
+
+            <div className="creatorMarket_dropdown">
+              <Link to={'/prjregi'} className="dropdown_ele">
+                프로젝트 등록
+              </Link>
+              <Link className="dropdown_ele">진행중인 프로젝트</Link>
+            </div>
           </li>
           {!userInfo.email && (
             <li>
@@ -178,6 +192,8 @@ function Header(props) {
                 <div className={'pop_sub profile_pop'}>
                   <ul>
                     <li>나의 프로젝트</li>
+                  </ul>
+                  <ul>
                     <li
                       onClick={() => {
                         logOutClick();
