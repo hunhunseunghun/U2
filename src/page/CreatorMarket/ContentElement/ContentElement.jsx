@@ -62,7 +62,7 @@ const ContentElement = ({ data }) => {
         </section>
 
         <section className="challange_info_bot">
-          <div className="cmntValArea">
+          <div className="challange_cmtval_area">
             <img
               src={require('../../../Img/comment.svg').default}
               className="cmntIcon"
@@ -70,7 +70,7 @@ const ContentElement = ({ data }) => {
             <div className="cmntVal">{commentValue}</div>
           </div>
 
-          <div className="shareValArea">
+          <div className="challange_shareval_area">
             <img
               src={require('../../../Img/share.svg').default}
               className="shareIcon"

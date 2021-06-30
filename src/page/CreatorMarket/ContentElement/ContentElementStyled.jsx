@@ -89,7 +89,8 @@ export const EleContainer = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     place-items: center;
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 14px;
 
     div {
       display: grid;
@@ -110,29 +111,40 @@ export const EleContainer = styled.div`
 
   .challange_info_bot {
     width: 100%;
-    margin-top: 22px;
-    margin-bottom: 10px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    place-items: center;
+    margin: 22px 0 10px 22px;
+    display: flex;
     font-weight: 500;
+
+    font-size: 14px;
   }
 
-  .cmntValArea {
+  .challange_cmtval_area {
     display: flex;
+    align-items: center;
+    img {
+      width: 15px;
+      height: 15px;
+    }
 
     .cmntIcon {
       width: 20px;
-      margin-right: 20px;
+      margin-right: 5px;
     }
   }
 
-  .shareValArea {
+  .challange_shareval_area {
     display: flex;
+    align-items: center;
+    margin-left: 10px;
+
+    img {
+      width: 15px;
+      height: 15px;
+    }
 
     .shareIcon {
       width: 20px;
-      margin-right: 20px;
+      margin-right: 5px;
     }
   }
 `;
