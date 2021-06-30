@@ -15,8 +15,8 @@ const useStyles = makeStyles({
 function Pagination2({ itemsCount, pageSize, handlePageChange }) {
 	const classes = useStyles();
 	const pageCount = Math.ceil(itemsCount / pageSize); // 몇 페이지가 필요한지 계산
-	console.log('pagination2 caleld');
-	console.log('pageSize: ', pageSize);
+	// console.log('pagination2 caleld');
+	// console.log('pageSize: ', pageSize);
 
 	// const pages = _.range(1, pageCount + 1);
 	let { items } = usePagination({
@@ -58,11 +58,6 @@ function Pagination2({ itemsCount, pageSize, handlePageChange }) {
 			<ul className={classes.ul}>
 				{items.map(({ page, type, selected, ...item }, index) => {
 					let children = null;
-					if (selected) {
-						console.log(page);
-						console.log(type);
-						console.log(index);
-					}
 					switch (type) {
 						case 'start-ellipsis':
 						case 'end-ellipsis':

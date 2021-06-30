@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import Pagination2 from '../../../Component/Pagination/Pagination2';
 import { paginate } from '../../../Component/Pagination/paginate';
 import { ChallengeTableContainer } from './ChallengeStyled';
@@ -25,8 +24,6 @@ function ChallengeTable({ datas }) {
 		setPagedSubjects(paginate(data, 1, pageSize));
 	};
 	useEffect(() => {
-		console.log('datas:');
-		console.log(datas);
 		setSubjects({ ...subjects, data: datas });
 	}, [datas]);
 	return (

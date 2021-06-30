@@ -18,7 +18,7 @@ export const WorkDetailContainer = styled.div`
 		border-color: black;
 		/* display: flex;
 		flex-direction: row; */
-		width: 500px;
+		width: 800px;
 	}
 	.tab-contents {
 		cursor: pointer;
