@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { MainContainer } from './CreatorMarketStyled.jsx';
 import TopView from './TopView/TopView.jsx';
 import TopAds from './TopAds/TopAds.jsx';
-import ContentTap from './ContentTap/ContentTab.jsx';
+// import ContentTap from './ContentTap/ContentTab.jsx';
 import ContentElement from './ContentElement/ContentElement.jsx';
-import CampaignSlide from './CampaignSlide/CampaignSlide.jsx';
-import Slider3 from '../../Img/slider3.jpeg';
+import bannerImg from '../../Img/cmBannerImage.png';
+import bannerIcon from '../../Img/cmBannerIcon.png';
 
 const server = process.env.REACT_APP_U2_DB_HOST;
 
 const Main = () => {
   const [tabActive, setTabActive] = useState('entire'); // 탭 선택 소팅
   const [challenges, setChallengs] = useState(null); // 챌린지 데이터
-  const [moreState, setMoreState] = useState(false);
+  const [moreActive, setMoreActive] = useState(false);
 
   // useEffect(()=>{
   //   axios.get(`${server}/api/Campaign/challengemaster`).then(res=>{
@@ -101,17 +102,48 @@ const Main = () => {
           <div className="challange_ele">
             {challenges === null && <div>""</div>}
             {challenges !== null &&
-              challenges.map((ele, idx) => {
-                return (
-                  <ContentElement challenge={ele} key={`${ele.challengeIdx}`} />
-                );
-              })}
+              (moreActive
+                ? challenges.slice(0, 3).map((ele, idx) => {
+                    return (
+                      <ContentElement
+                        challenge={ele}
+                        key={`${ele.challengeIdx}`}
+                      />
+                    );
+                  })
+                : challenges.map((ele, idx) => {
+                    return (
+                      <ContentElement
+                        challenge={ele}
+                        key={`${ele.challengeIdx}`}
+                      />
+                    );
+                  }))}
           </div>
         </section>
         <section className="challenge_more_btn_area">
           {' '}
-          <button className="challange_more_btn">+ 더보기</button>
+          <button
+            className="challange_more_btn"
+            onClick={() => {
+              setMoreActive(!moreActive);
+            }}
+          >
+            {moreActive ? '+ 더보기' : '- 더보기'}
+          </button>
         </section>
+        <div className="challenge_banner_area">
+          <img
+            src={bannerImg}
+            alt={bannerImg}
+            className="challenge_banner_img"
+          />
+          <div className="challenge_banner_btn_wrap">
+            <button className="challenge_banner_btn">
+              <Link to="/prjregi">프로젝트 등록</Link>
+            </button>
+          </div>
+        </div>
       </div>
     </MainContainer>
   );
@@ -131,14 +163,3 @@ export default Main;
 
 //           <div className="campSlideWrap">{ <CampaignSlide />}</div>
 //         </section>
-{
-  /* <div className="applyBanner">
-          <img src={Slider3} alt={Slider3} className="applyBannerImg" />
-          <div className="applyBtnWrap">
-            <button className="applyBtn">
-              <div>프로젝트</div>
-              <div>등록</div>
-            </button>
-          </div>
-        </div> */
-}

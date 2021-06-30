@@ -98,34 +98,6 @@ export const MainContainer = styled.div`
     }
   }
 
-  .applyBanner {
-    position: relative;
-    margin-bottom: 5rem;
-  }
-  .applyBannerImg {
-    width: 100%;
-    height: 150px;
-  }
-
-  .applyBtnWrap {
-    position: absolute;
-    right: 20px;
-    bottom: 30px;
-  }
-
-  .applyBtn {
-    all: unset;
-    text-align: center;
-    width: 100px;
-    height: 100px;
-    border-radius: 100px;
-    background-color: black;
-    color: white;
-  }
-  .applyBtn:hover {
-    cursor: pointer;
-  }
-
   .challenge_more_btn_area {
     width: 100%;
     display: flex;
@@ -149,6 +121,40 @@ export const MainContainer = styled.div`
       color: black;
       border-color: #898989;
     }
+  }
+  .challenge_banner_area {
+    margin-top: 40px;
+    position: relative;
+    margin-bottom: 5rem;
+  }
+  .challenge_banner_img {
+    width: 100%;
+    height: 150px;
+  }
+
+  .challenge_banner_btn_wrap {
+    position: absolute;
+    right: 20px;
+    bottom: 30px;
+  }
+
+  .challenge_banner_btn {
+    border: 1px solid #ddd;
+    width: 100%;
+    padding: 10px 30px;
+    height: 52px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ddd;
+    transition-duration: 0.2s;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .challenge_banner_btn:hover {
+    cursor: pointer;
   }
 
   @media only screen and (max-width: 1500px) and (min-width: 1350px) {

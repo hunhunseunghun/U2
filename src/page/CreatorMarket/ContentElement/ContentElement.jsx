@@ -40,7 +40,9 @@ const ContentElement = ({ challenge }) => {
             <div className="meetText">OFF 미팅</div>
           </div>
           <div className="budgetArea">
-            <div className="budget">{challenge.reward}</div>
+            <div className="budget">
+              {challenge.reward !== null ? challenge.reward : '--'}
+            </div>
             <div className="bugetText">예산금액</div>
           </div>
           <div className="remainDateArea">
