@@ -21,13 +21,50 @@ export const MainContainer = styled.div`
     display: flex;
   }
 
-  .contentWrap {
+  .challange_wrap {
+  }
+  .challange_tab {
+    margin-top: 76px;
+    max-width: 465px;
+    height: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    place-items: center;
+    border: 1px solid #eee;
+    /* border-right: none; */
+    background-color: #f6f6f6;
+    color: #aaa;
+
+    div {
+      display: grid;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 24px;
+      /* border-right: 1px solid #e2e2e2; */
+
+      &:hover {
+        cursor: pointer;
+        background-color: #ebebeb;
+        color: #0c0c0c;
+      }
+    }
+
+    .tab_active {
+      background-color: #ebebeb;
+      color: #0c0c0c;
+    }
   }
 
-  .contentEle {
-    max-width: 1100px;
+  .challange_ele {
+    width: 100%;
+
     height: 504px;
     display: flex;
+    flex-wrap: wrap;
   }
 
   .campArea {
@@ -94,7 +131,7 @@ export const MainContainer = styled.div`
   }
 
   @media only screen and (max-width: 1500px) and (min-width: 1350px) {
-    padding: 40px 0px 100px;
+    padding: 40px 20px 100px;
     /* .contents_wrap {
       .filter_section {
         align-items: flex-start;
@@ -116,7 +153,7 @@ export const MainContainer = styled.div`
     } */
   }
   @media only screen and (max-width: 1350px) and (min-width: 500px) {
-    padding: 40px 0px 100px;
+    padding: 40px 10px 100px;
     .header {
       .search_section {
         input {

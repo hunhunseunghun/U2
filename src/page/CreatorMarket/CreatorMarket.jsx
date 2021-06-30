@@ -12,6 +12,7 @@ const server = process.env.REACT_APP_U2_DB_HOST;
 
 const Main = () => {
   const [data, setData] = useState(null);
+  const [tabActive, setTabActive] = useState('entire');
 
   // useEffect(()=>{
   //   axios.get(`${server}/api/Campaign/challengemaster`).then(res=>{
@@ -26,9 +27,68 @@ const Main = () => {
           <TopView />
           <TopAds />
         </section>
-        <section className="contentWrap">
-          <ContentTap />
-          <div className="contentEle">
+        <section className="challange_wrap">
+          <section className="challange_tab">
+            <div
+              className={
+                tabActive === 'entire' ? 'tab_entire tab_active' : 'tab_entire'
+              }
+              onClick={() => {
+                setTabActive('entire');
+              }}
+            >
+              <span>전체</span>
+            </div>
+            <div
+              className={
+                tabActive === 'compte' ? 'tab_compte tab_active' : 'tab_compte'
+              }
+              onClick={() => {
+                setTabActive('compte');
+              }}
+            >
+              <span>공모전</span>
+            </div>
+            <div
+              className={
+                tabActive === 'promo' ? 'tab_promo tab_active' : 'tab_promo'
+              }
+              onClick={() => {
+                setTabActive('promo');
+              }}
+            >
+              <span>광고/홍보</span>
+            </div>
+            <div
+              className={tabActive === 'cv' ? 'tab_cv tab_active' : 'tab_cv'}
+              onClick={() => {
+                setTabActive('cv');
+              }}
+            >
+              <span>창작영상</span>
+            </div>
+            <div
+              className={tabActive === 've' ? 'tab_ve tab_active' : 'tab_ve'}
+              onClick={() => {
+                setTabActive('ve');
+              }}
+            >
+              <span>영상편집</span>
+            </div>
+            <div
+              className={tabActive === 'ir' ? 'tab_ir tab_active' : 'tab_ir'}
+              onClick={() => {
+                setTabActive('ir');
+              }}
+            >
+              <span>강사모집</span>
+            </div>
+          </section>
+
+          <div className="challange_ele">
+            <ContentElement data={data} />
+            <ContentElement data={data} />
+            <ContentElement data={data} />
             <ContentElement data={data} />
             <ContentElement data={data} />
             <ContentElement data={data} />
