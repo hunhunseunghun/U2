@@ -20,7 +20,7 @@ const Main = () => {
   //   )
   // }, [])
   return (
-    <MainContainer>
+    <MainContainer className="contents_wrap">
       <div className="creatormarket_section">
         <section className="topWrap">
           <TopView />
@@ -45,9 +45,7 @@ const Main = () => {
             <div className="campList"></div>
           </div>
 
-          <div className="campSlideWrap">
-            <CampaignSlide />
-          </div>
+          <div className="campSlideWrap">{/* <CampaignSlide /> */}</div>
         </section>
         <div className="applyBanner">
           <img src={Slider3} alt={Slider3} className="applyBannerImg" />
