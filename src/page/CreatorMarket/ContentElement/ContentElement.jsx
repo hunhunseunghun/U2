@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
 import { EleContainer } from './ContentElementStyled.jsx';
 import { LinearProgress } from '@material-ui/core';
-import dummyImg from '../../../Img/topviewEX.png';
 import ceImg from '../../../Img/ceImg.png';
 
 const ContentElement = ({ challenge }) => {

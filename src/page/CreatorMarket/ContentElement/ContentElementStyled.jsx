@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const EleContainer = styled.div`
   display: inline-block;
   vertical-align: top;
-  width: calc(31% - 10px);
+  width: calc(31% - 5px);
   margin: 20px 15px 20px 0;
   position: relative;
   cursor: pointer;
@@ -132,7 +132,7 @@ export const EleContainer = styled.div`
     }
   }
 
-  .challenge_shareval_area {
+  .challange_shareval_area {
     display: flex;
     align-items: center;
     margin-left: 10px;

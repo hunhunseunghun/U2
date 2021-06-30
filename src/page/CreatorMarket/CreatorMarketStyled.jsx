@@ -63,41 +63,6 @@ export const MainContainer = styled.div`
     width: 100%;
   }
 
-  .campArea {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 632px;
-    margin-top: 200px;
-    background-color: #e0e0e0;
-
-    .campListWrap {
-      text-align: center;
-
-      .campTitle_top {
-        font-size: 1rem;
-      }
-      .campTitle_bottom {
-        font-size: 2.2rem;
-      }
-    }
-
-    .campList {
-      .campEle {
-        display: flex;
-      }
-
-      .campEle:hover {
-        cursor: pointer;
-      }
-    }
-
-    .campSlideWrap {
-      width: 698px;
-    }
-  }
-
   .challenge_more_btn_area {
     width: 100%;
     display: flex;
@@ -123,19 +88,24 @@ export const MainContainer = styled.div`
     }
   }
   .challenge_banner_area {
-    margin-top: 40px;
+    margin-top: 60px;
     position: relative;
     margin-bottom: 5rem;
   }
   .challenge_banner_img {
     width: 100%;
-    height: 150px;
+  }
+  .challenge_banner_Icon {
+    position: absolute;
+    height: 80%;
+    left: 15%;
+    bottom: 10%;
   }
 
   .challenge_banner_btn_wrap {
     position: absolute;
-    right: 20px;
-    bottom: 30px;
+    right: 10%;
+    bottom: 33%;
   }
 
   .challenge_banner_btn {
@@ -151,6 +121,7 @@ export const MainContainer = styled.div`
 
     &:hover {
       cursor: pointer;
+      background-color: #ffffff34;
     }
   }
   .challenge_banner_btn:hover {

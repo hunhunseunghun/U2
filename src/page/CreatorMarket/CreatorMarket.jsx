@@ -6,7 +6,7 @@ import TopView from './TopView/TopView.jsx';
 import TopAds from './TopAds/TopAds.jsx';
 // import ContentTap from './ContentTap/ContentTab.jsx';
 import ContentElement from './ContentElement/ContentElement.jsx';
-import bannerImg from '../../Img/cmBannerImage.png';
+import bannerImg from '../../Img/cmBannerImg.png';
 import bannerIcon from '../../Img/cmBannerIcon.png';
 
 const server = process.env.REACT_APP_U2_DB_HOST;
@@ -138,6 +138,7 @@ const Main = () => {
             alt={bannerImg}
             className="challenge_banner_img"
           />
+
           <div className="challenge_banner_btn_wrap">
             <button className="challenge_banner_btn">
               <Link to="/prjregi">프로젝트 등록</Link>
