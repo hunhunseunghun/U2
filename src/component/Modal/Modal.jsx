@@ -1,6 +1,12 @@
-// import React from 'react';
+// import React, { useState } from 'react';
 
-// const Modal = ({ modalOpen, handleCloseModal, header }) => {
+// const Modal = ({ modalOpen, handleOpenModal, handleCloseModal, header }) => {
+//   const [columnText, setColumnText] = useState('개인');
+
+//   const handleColumnText = e => {
+//     setColumnText(e.target.value);
+//   };
+
 //   return (
 //     <div className={modalOpen ? 'openModal modal' : 'modal'}>
 //       {modalOpen ? (

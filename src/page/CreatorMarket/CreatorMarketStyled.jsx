@@ -25,14 +25,15 @@ export const MainContainer = styled.div`
   }
   .challange_tab {
     margin-top: 76px;
-    max-width: 465px;
+    max-width: 100%;
     height: 40px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     place-items: center;
     border: 1px solid #eee;
-    /* border-right: none; */
-    background-color: #f6f6f6;
+    border-right: none;
+    border-left: none;
+    /* background-color: #f6f6f6; */
     color: #aaa;
 
     div {
