@@ -5,15 +5,11 @@ import { LinearProgress } from '@material-ui/core';
 import dummyImg from '../../../Img/topviewEX.png';
 import ceImg from '../../../Img/ceImg.png';
 
-const ContentElement = ({ data }) => {
-  const [progressValue, setProgressValue] = useState(60);
-  const [commentValue, setcommentValue] = useState(5);
-  const [shareValue, setShareValue] = useState(78);
-
+const ContentElement = ({ challenge }) => {
   return (
     <EleContainer>
-      <div className="challange_img_area">
-        <img src={ceImg} alt={ceImg} className="challange_img" />
+      <div className="challenge_img_area">
+        <img src={ceImg} alt={ceImg} className="challenge_img" />
         {/* {tItem.bannerImage === null && (
           <div className={'no_img'}>
             <img src={'/img/no_image.png'} />
@@ -21,38 +17,30 @@ const ContentElement = ({ data }) => {
           </div>
         )} */}
       </div>
-      <div className="challange_contents">
-        <h1 className="challange_title">
-          Aespa "Forever (약속)" 앨범 발매기념 챌린지
-          {data !== null ? data[0].title : ''}
-        </h1>
-        <div className="challange_sub">
-          글로벌 슈퍼 루키 '에스파, 싱글 'Forever' 2월 5일 기념 이벤트! U2(가칭)
-          서비스에서 에스파 'Forever(약속)' 테마 다운받고, 약속 메시지가 담긴
-          뮤직비디오를 제작하세요
-          {data !== null ? data[0].subtitle : ''}
-        </div>
+      <div className="challenge_contents">
+        <h1 className="challenge_title">{challenge.title}</h1>
+        <div className="challenge_sub">{challenge.subtitle}</div>
       </div>
-      <div className="challange_bottom">
-        <div className="challange_progress_area">
-          <div className="challange_progress_text">
+      <div className="challenge_bottom">
+        <div className="challenge_progress_area">
+          <div className="challenge_progress_text">
             {/* <button className="paticipantBtn">+</button> */}
-            <div>참가자</div> <div>{`${progressValue}`}</div>
+            <div>참가자</div> <div>{`${challenge.challengerCount}`}</div>
           </div>
           <LinearProgress
-            className="challange_progressBar"
+            className="challenge_progressBar"
             variant="determinate"
             color="secondary"
-            value={progressValue}
+            value={challenge.challengerCount}
           />
         </div>
-        <section className="challange_info_top">
+        <section className="challenge_info_top">
           <div className="meetArea">
             <input type="checkbox" name="chk_info" value="HTML" />
             <div className="meetText">OFF 미팅</div>
           </div>
           <div className="budgetArea">
-            <div className="budget">3천만원</div>
+            <div className="budget">{challenge.reward}</div>
             <div className="bugetText">예산금액</div>
           </div>
           <div className="remainDateArea">
@@ -61,21 +49,21 @@ const ContentElement = ({ data }) => {
           </div>
         </section>
 
-        <section className="challange_info_bot">
-          <div className="challange_cmtval_area">
+        <section className="challenge_info_bot">
+          <div className="challenge_cmtval_area">
             <img
               src={require('../../../Img/comment.svg').default}
               className="cmntIcon"
             />
-            <div className="cmntVal">{commentValue}</div>
+            <div className="cmntVal">{challenge.commentCount}</div>
           </div>
 
-          <div className="challange_shareval_area">
+          <div className="challenge_shareval_area">
             <img
               src={require('../../../Img/share.svg').default}
               className="shareIcon"
             />
-            <div className="shareVal">{shareValue}</div>
+            <div className="shareVal">{challenge.shareCount}</div>
           </div>
         </section>
       </div>

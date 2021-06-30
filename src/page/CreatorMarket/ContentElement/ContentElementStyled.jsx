@@ -4,13 +4,13 @@ export const EleContainer = styled.div`
   display: inline-block;
   vertical-align: top;
   width: calc(31% - 10px);
-  margin: 10px 15px 40px 0;
+  margin: 20px 15px 20px 0;
   position: relative;
   cursor: pointer;
   text-align: left;
   background-color: #fff;
 
-  .challange_img_area {
+  .challenge_img_area {
     width: 100%;
     min-height: 100px;
     background-size: cover;
@@ -19,17 +19,17 @@ export const EleContainer = styled.div`
     align-items: center;
     justify-content: center;
   }
-  .challange_img {
+  .challenge_img {
     width: 100%;
   }
-  .challange_contents {
+  .challenge_contents {
     padding: 16px 25px;
     box-sizing: border-box;
     border: 1px solid #eee;
     border-top: none;
     height: 200px;
   }
-  .challange_title {
+  .challenge_title {
     font-size: 18px;
     line-height: 26px;
     font-weight: 600;
@@ -38,14 +38,14 @@ export const EleContainer = styled.div`
     text-overflow: ellipsis;
   }
 
-  .challange_sub {
+  .challenge_sub {
     margin-top: 8px;
     font-size: 14px;
     color: #989898;
     font-weight: 500;
   }
 
-  .challange_bottom {
+  .challenge_bottom {
     display: flex;
     flex-direction: column;
     bottom: 20px;
@@ -58,11 +58,11 @@ export const EleContainer = styled.div`
     align-items: center;
   }
 
-  .challange_progress_area {
+  .challenge_progress_area {
     margin-top: 20px;
     width: 90%;
 
-    .challange_progress_text {
+    .challenge_progress_text {
       display: flex;
       font-size: 12px;
       line-height: 18px;
@@ -74,7 +74,7 @@ export const EleContainer = styled.div`
       }
     }
 
-    .challange_progressBar {
+    .challenge_progressBar {
       width: 100%;
       height: 18px;
       background-color: #ffafa9;
@@ -83,7 +83,7 @@ export const EleContainer = styled.div`
     }
   }
 
-  .challange_info_top {
+  .challenge_info_top {
     width: 100%;
     margin-top: 22px;
     display: grid;
@@ -109,7 +109,7 @@ export const EleContainer = styled.div`
     }
   }
 
-  .challange_info_bot {
+  .challenge_info_bot {
     width: 100%;
     margin: 22px 0 10px 22px;
     display: flex;
@@ -118,7 +118,7 @@ export const EleContainer = styled.div`
     font-size: 14px;
   }
 
-  .challange_cmtval_area {
+  .challenge_cmtval_area {
     display: flex;
     align-items: center;
     img {
@@ -132,7 +132,7 @@ export const EleContainer = styled.div`
     }
   }
 
-  .challange_shareval_area {
+  .challenge_shareval_area {
     display: flex;
     align-items: center;
     margin-left: 10px;
