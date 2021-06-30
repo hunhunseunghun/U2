@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { ModalContainer } from './SubmitModalStyled';
-const ReactModal = require('react-modal');
 // ReactModal.setAppElement('#root');
 function SubmitModal({ open, data, handleModalClose }) {
 	console.log('data: ', data);
