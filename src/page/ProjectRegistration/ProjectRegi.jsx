@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Ads from './Select/Ads.jsx';
 import CreateVid from './Select/CreateVid.jsx';
 import EditVid from './Select/EditVid.jsx';
@@ -8,7 +9,8 @@ import { PrjRegiContainer } from './ProjectRegiStyled.jsx';
 import logo from '../../Img/logo.svg';
 import { IoMdArrowDropright } from 'react-icons/io';
 
-const ProjectRegi = ({ history }) => {
+const ProjectRegi = () => {
+  let history = useHistory();
   const [pathRegi, setPathRegi] = useState(null); // 페이지네이션 관리
 
   const handleRadioChange = e => {

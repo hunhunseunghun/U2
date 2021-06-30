@@ -144,25 +144,30 @@ const CompetitionRegi = () => {
             </section>
             <section>
               <div>
-                <input type="checkbox" value="youtube" />
+                <input type="checkbox" defaultValue="youtube" />
                 <label>Youtube</label>
               </div>
               <div>
-                <input type="checkbox" value="Tiktok" />
+                <input type="checkbox" defaultValue="Tiktok" />
                 <label>Tiktok</label>
               </div>
               <div>
-                <input type="checkbox" value="Vimeo" />
+                <input type="checkbox" defaultValue="Vimeo" />
                 <label>Vimeo</label>
               </div>
             </section>
             <section>
               <div>
-                <input type="radio" name="snsRequired" value="필수" checked />
+                <input
+                  type="radio"
+                  name="snsRequired"
+                  defaultValue="필수"
+                  defaultChecked
+                />
                 <label>필수</label>
               </div>
               <div>
-                <input type="radio" name="snsRequired" value="필수" />
+                <input type="radio" name="snsRequired" defaultValue="필수" />
                 <label>선택사항</label>
               </div>
             </section>
@@ -181,15 +186,15 @@ const CompetitionRegi = () => {
                   {' '}
                   <section>
                     <div>
-                      <input type="checkbox" value="youtube" />
+                      <input type="checkbox" defaultValue="youtube" />
                       <label>Youtube</label>
                     </div>
                     <div>
-                      <input type="checkbox" value="Tiktok" />
+                      <input type="checkbox" defaultValue="Tiktok" />
                       <label>Tiktok</label>
                     </div>
                     <div>
-                      <input type="checkbox" value="Vimeo" />
+                      <input type="checkbox" defaultValue="Vimeo" />
                       <label>Vimeo</label>
                     </div>
                   </section>
@@ -200,13 +205,13 @@ const CompetitionRegi = () => {
                       <input
                         type="radio"
                         name="snsRequired"
-                        value="필수"
+                        defaultValue="필수"
                         checked
                       />
                       <label>필수</label>
                     </div>
                     <div>
-                      <input type="radio" name="snsRequired" value="필수" />
+                      <input type="radio" name="snsRequired" defaultValue="필수" />
                       <label>선택사항</label>
                     </div>
                   </section>
@@ -229,13 +234,13 @@ const CompetitionRegi = () => {
                       <input
                         type="radio"
                         name="vidReception"
-                        value="파일업로드"
+                        defaultValue="파일업로드"
                         checked
                       />
                       <label>파일 업로드</label>
                     </div>
                     <div>
-                      <input type="radio" name="vidReception" value="URL공유" />
+                      <input type="radio" name="vidReception" defaultValue="URL공유" />
                       <label>URL 공유</label>
                     </div>
                   </section>
@@ -246,13 +251,13 @@ const CompetitionRegi = () => {
                       <input
                         type="radio"
                         name="vidRequired"
-                        value="필수"
+                        defaultValue="필수"
                         checked
                       />
                       <label>필수</label>
                     </div>
                     <div>
-                      <input type="radio" name="vidRequired" value="선택사항" />
+                      <input type="radio" name="vidRequired" defaultValue="선택사항" />
                       <label>선택사항</label>
                     </div>
                   </section>
@@ -275,23 +280,32 @@ const CompetitionRegi = () => {
                 <input
                   type="radio"
                   name="vidReception"
-                  value="파일업로드"
-                  checked
+                  defaultValue="파일업로드"
+                  defaultChecked
                 />
                 <label>파일 업로드</label>
               </div>
               <div>
-                <input type="radio" name="vidReception" value="URL공유" />
+                <input
+                  type="radio"
+                  name="vidReception"
+                  defaultValue="URL공유"
+                />
                 <label>URL 공유</label>
               </div>
             </section>
             <section>
               <div>
-                <input type="radio" name="vidRequired" value="필수" checked />
+                <input
+                  type="radio"
+                  name="vidRequired"
+                  defaultValue="필수"
+                  defaultChecked
+                />
                 <label>필수</label>
               </div>
               <div>
-                <input type="radio" name="vidRequired" value="필수" />
+                <input type="radio" name="vidRequired" defaultValue="필수" />
                 <label>선택사항</label>
               </div>
             </section>
@@ -320,13 +334,17 @@ const CompetitionRegi = () => {
                       <input
                         type="radio"
                         name="emailRequired"
-                        value="필수"
-                        checked
+                        defaultValue="필수"
+                        defaultChecked
                       />
                       <label>필수</label>
                     </div>
                     <div>
-                      <input type="radio" name="emailRequired" value="필수" />
+                      <input
+                        type="radio"
+                        name="emailRequired"
+                        defaultValue="필수"
+                      />
                       <label>선택사항</label>
                     </div>
                   </section>
@@ -349,8 +367,8 @@ const CompetitionRegi = () => {
                       <input
                         type="radio"
                         name="phoneNumberRequired"
-                        value="필수"
-                        checked
+                        defaultValue="필수"
+                        defaultChecked
                       />
                       <label>필수</label>
                     </div>
@@ -358,7 +376,7 @@ const CompetitionRegi = () => {
                       <input
                         type="radio"
                         name="phoneNumberRequired"
-                        value="선택사항"
+                        defaultValue="선택사항"
                       />
                       <label>선택사항</label>
                     </div>
