@@ -6,8 +6,6 @@ import ceImg from '../../../Img/ceImg.png';
 import { calcRemainDays } from '../../../library/timeSetting.js';
 
 const ContentElement = ({ challenge }) => {
-	console.log('challnege: ', challenge);
-
 	return (
 		<EleContainer>
 			<div className="challenge_img_area">
