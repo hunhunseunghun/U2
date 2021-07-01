@@ -2,27 +2,43 @@ import React, { useState, useEffect } from 'react';
 import Pagination2 from '../../../Component/Pagination/Pagination2';
 import { paginate } from '../../../Component/Pagination/paginate';
 import { ParticipateTableContainer } from './ParticipateTableStyled';
+import FeedbackModal from '../modal/feedbackModal';
 function ParticipateTable({ datas }) {
-	let [quests, setQuests] = useState({
+	const [quests, setQuests] = useState({
 		data: datas,
 		pageSize: 3,
 		currentPage: 1,
 	});
-	// console.log('datas: ', datas);
 	const { data, pageSize, currentPage } = quests;
 	const pagedQuests = paginate(data, currentPage, pageSize);
 	const { length: count } = quests.data;
-	console.log('datas: ', datas);
-	let handlePageChange = (page) => {
+
+	const [feedbackProps, setFeedbackProps] = useState({
+		open: false,
+		data: null,
+	});
+
+	const handlePageChange = (page) => {
 		setQuests({ ...quests, currentPage: page });
 	};
+	const handleOpenFeedback = (feedback) => {
+		setFeedbackProps({ open: true, data: feedback });
+	};
+	const handleFeedbackClose = () => {
+		setFeedbackProps({ ...feedbackProps, open: false });
+	};
 	useEffect(() => {
-		console.log('datas:');
-		console.log(datas);
 		setQuests({ ...quests, data: datas });
 	}, [datas]);
 	return (
 		<ParticipateTableContainer>
+			<FeedbackModal
+				open={feedbackProps.open}
+				data={feedbackProps.data}
+				handleModalClose={() => {
+					handleFeedbackClose();
+				}}
+			/>
 			<table>
 				<thead>
 					<tr>
@@ -52,7 +68,20 @@ function ParticipateTable({ datas }) {
 										<td>{data.name}</td>
 										<td>{data.status}</td>
 										<td>{data.presentation}</td>
-										<td>{data.feedback ? <button>피드백</button> : ''}</td>
+										<td>
+											{data.feedback ? (
+												<button
+													className="feedback-button"
+													onClick={() => {
+														handleOpenFeedback(data.feedback);
+													}}
+												>
+													보기
+												</button>
+											) : (
+												'-'
+											)}
+										</td>
 										<td>{data.requestDate}</td>
 										<td>{data.dueDate}</td>
 									</tr>

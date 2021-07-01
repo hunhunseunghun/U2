@@ -27,4 +27,13 @@ export const ParticipateTableContainer = styled.div`
 	hr.row-line {
 		/* width: 100px; */
 	}
+	button.feedback-button {
+		cursor: pointer;
+		width: 50px;
+		border: solid 1px grey;
+		border-radius: 10px;
+	}
+	button.feedback-button:hover {
+		background-color: grey;
+	}
 `;
