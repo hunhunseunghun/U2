@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import PosterUploader from './PosterUploader/PosterUploader.jsx';
 import FileUploader from './FileUploader/FileUploader.jsx';
 import { RegiContainer } from './CompetitionRegiStyled.jsx';
@@ -10,30 +11,8 @@ import { createMuiTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 
 const CompetitionRegi = () => {
-  const localNumber = [
-    '02',
-    '031',
-    '032',
-    '033',
-    '041',
-    '043',
-    '042',
-    '044',
-    '051',
-    '052',
-    '053',
-    '054',
-    '055',
-    '061',
-    '062',
-    '063',
-    '064',
-    '010',
-    '011',
-    '016',
-    '017',
-    '019',
-  ];
+  let history = useHistory();
+
   // posterfile upload handle---------------------------------
   const [posterFile, setPosterFile] = useState(null); //포스터 파일, fileList 객체 -> 배열로 변환 후 -> posterfile에 할당
   const [posterFilePath, setPosterFilePath] = useState('Choose file to upload'); //포스터 파일 업로드 파일패스 , placholder 값
@@ -596,6 +575,21 @@ const CompetitionRegi = () => {
               </div>
             </section>
           </section>
+        </section>
+        <section className="compeitiionregi_btn_area">
+          {' '}
+          <button
+            className="default_bt compeitiionregi_btn"
+            onClick={() => {
+              history.push('/prjregi');
+            }}
+          >{`< 이전`}</button>
+          <button
+            className="default_bt compeitiionregi_btn"
+            onClick={() => {
+              history.push('/prjregi');
+            }}
+          >{`등록하기`}</button>
         </section>
       </div>
 

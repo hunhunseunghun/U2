@@ -309,6 +309,29 @@ export const RegiContainer = styled.div`
     }
   }
 
+  // prev next button css ---------------------
+  .compeitiionregi_btn_area {
+    width: 100%;
+    display: flex;
+    padding: 40px 0;
+    justify-content: center;
+  }
+
+  .compeitiionregi_btn {
+    border: 1px solid #d1d1d1;
+    padding: 0 40px;
+    margin: 0 15px;
+    height: 52px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #898989;
+    &:hover {
+      color: black;
+      border-color: #898989;
+    }
+  }
+
   @media only screen and (max-width: 648px) {
     .notice_editor_form {
       padding: 0 0 65px 0;
