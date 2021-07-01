@@ -48,13 +48,11 @@ export const RegiContainer = styled.div`
   }
 
   .defaultCompetition {
-    width: 300px;
-    background-color: #dfdfdf;
-    height: 30px;
-    padding: 5px 0 0 20px;
+    background-color: #ebebeb;
+    padding: 5px 10px;
     &:hover {
       cursor: pointer;
-      background-color: #c7c7c7;
+      background-color: #e2e2e2;
     }
   }
 
@@ -76,6 +74,7 @@ export const RegiContainer = styled.div`
     background-color: #f3f3f3;
     padding-left: 10px;
     min-height: 50px;
+    font-size: 15px;
   }
   .inputInfo {
     display: flex;
@@ -83,6 +82,7 @@ export const RegiContainer = styled.div`
     width: 100%;
     border-top: 1px solid #00000023;
     padding: 0 10px;
+    font-size: 12px;
   }
 
   // 파일 업로더 css ----------------------------
@@ -107,7 +107,7 @@ export const RegiContainer = styled.div`
   // tabale css ------------------------------------
 
   .reception_info {
-    font-size: 14px;
+    font-size: 12px;
     padding: 0;
     width: 100%;
     border-top: 0;
@@ -120,6 +120,7 @@ export const RegiContainer = styled.div`
       }
 
       .table_checkarea {
+        width: 40.5px;
         display: grid;
         place-items: center;
       }
@@ -164,7 +165,7 @@ export const RegiContainer = styled.div`
       }
       label {
         margin-left: 1px;
-        min-width: 65px;
+        min-width: 70px;
         text-align: left;
       }
       .reception_options {
@@ -172,9 +173,171 @@ export const RegiContainer = styled.div`
         justify-content: left;
 
         div {
-          width: 90px;
+          width: 80px;
         }
       }
     }
+  }
+
+  // datetime picker css ---------------
+
+  .chooseDate {
+    display: block;
+    padding: 5px;
+  }
+  .inputStart,
+  .inputFinish {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    .input_sub_text {
+      margin-left: 5px;
+    }
+  }
+  .MuiFormControl-root {
+  }
+  .MuiOutlinedInput-root {
+  }
+  .MuiOutlinedInput-input {
+    padding: 10.5px 10px;
+  }
+  .MuiInputBase-input {
+    padding: none;
+  }
+  .MuiFormLabel-root,
+  .MuiFormHelperText-root,
+  .MuiInputBase-root {
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'Roboto', 'Noto Sans KR', 'Noto Sans', sans-serif;
+  }
+
+  //reward type css --------------------------
+
+  .reward_type {
+  }
+  .reward_type_items {
+    display: inline-block;
+    padding: 5px 0;
+  }
+  .reward_type_title {
+    position: relative;
+    display: inline-block;
+    top: -2px;
+    margin-left: 2px;
+  }
+
+  .reward_type_item_wrap {
+    display: flex;
+    input {
+      margin-left: 10px;
+    }
+  }
+
+  //editor css ----------------------------------
+  .notice_editor_form {
+    padding: 0 0 42px 0;
+  }
+  .notice_editor {
+    width: 100%;
+    height: 300px;
+    border: 0;
+  }
+
+  //reply css -------------------------------------
+  .replyfunc_items {
+    display: inline-block;
+  }
+
+  .replyfunc_item_wrap {
+    display: flex;
+    margin-right: 5px;
+    input {
+      margin-right: 3px;
+    }
+  }
+
+  //mananger css ------------------------------------
+
+  .manager_items {
+    display: inline-block;
+    margin-right: 5px;
+
+    section {
+      display: flex;
+
+      input {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  //phonenumber css---------------------------------
+
+  .phonenumber_items {
+    display: inline-block;
+    margin: 0 5px;
+
+    #areacode {
+      padding: 0 5px;
+      width: 60px;
+      height: 21px;
+      border: 1px solid #d8d8d8;
+    }
+
+    input {
+      width: 34px;
+    }
+
+    section {
+      display: flex;
+    }
+  }
+
+  //email css---------------------------------
+
+  .email_items {
+    display: inline-block;
+    margin-right: 5px;
+
+    section {
+      display: flex;
+
+      input {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  // prev next button css ---------------------
+  .compeitiionregi_btn_area {
+    width: 100%;
+    display: flex;
+    padding: 40px 0;
+    justify-content: center;
+  }
+
+  .compeitiionregi_btn {
+    border: 1px solid #d1d1d1;
+    padding: 0 40px;
+    margin: 0 15px;
+    height: 52px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #898989;
+    &:hover {
+      color: black;
+      border-color: #898989;
+    }
+  }
+
+  @media only screen and (max-width: 648px) {
+    .notice_editor_form {
+      padding: 0 0 65px 0;
+    }
+  }
+  @media only screen and (max-width: 900px) {
+    padding: 40px 0px 50px;
   }
 `;
