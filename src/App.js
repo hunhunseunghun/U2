@@ -1,8 +1,7 @@
-import logo from './logo.svg';
 import './style/common.scss';
 import './style/mobile.scss';
 import { BrowserRouter } from 'react-router-dom';
-import { Route, HashRouter, useHistory } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
 
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
