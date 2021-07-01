@@ -467,6 +467,10 @@ const CompetitionRegi = () => {
               </div>
             </div>
           </section>
+          <section className="ele">
+            <div className="menu">* 시상종류</div>
+            <div className="inputInfo notice_editor_form"></div>
+          </section>
         </section>
       </div>
 
