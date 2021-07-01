@@ -418,9 +418,8 @@ const CompetitionRegi = () => {
             <div className="inputInfo reward_type_from">
               <div className="reward_type_section">
                 <div className="reward_type">
-                  <div className="reward_type_title">
-                    <div>현상공모 : </div>
-                  </div>
+                  <div className="reward_type_title">현상공모:</div>
+
                   <div className="reward_type_items">
                     <div className="reward_type_item_wrap">
                       <input type="checkbox" value="해외탐방" />
@@ -445,24 +444,24 @@ const CompetitionRegi = () => {
                       <div>인턴채용</div>
                     </div>
                   </div>
-                </div>
-                <div className="reward_type_items">
-                  <div className="reward_type_item_wrap">
-                    <input type="checkbox" value="정직원채용" />
-                    <div>정직원채용</div>
+                  <div className="reward_type_items">
+                    <div className="reward_type_item_wrap">
+                      <input type="checkbox" value="정직원채용" />
+                      <div>정직원채용</div>
+                    </div>
                   </div>
-                </div>
-                <div className="reward_type_items">
-                  <div className="reward_type_item_wrap">
-                    <input type="checkbox" value="경품" />
-                    <div>경품</div>
+                  <div className="reward_type_items">
+                    <div className="reward_type_item_wrap">
+                      <input type="checkbox" value="경품" />
+                      <div>경품</div>
+                    </div>
                   </div>
-                </div>
-                <div className="reward_type_items">
-                  <div className="reward_type_item_wrap">
-                    <input type="checkbox" value="직접입력" />
-                    <div>직접입력 :</div>
-                    <input type="text" />
+                  <div className="reward_type_items">
+                    <div className="reward_type_item_wrap">
+                      <input type="checkbox" value="직접입력" />
+                      <div>직접입력 :</div>
+                      <input type="text" />
+                    </div>
                   </div>
                 </div>
               </div>

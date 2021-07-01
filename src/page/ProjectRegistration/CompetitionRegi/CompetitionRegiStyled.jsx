@@ -216,16 +216,23 @@ export const RegiContainer = styled.div`
 
   //reward type css --------------------------
 
-  .reward_type_title,
+  .reward_type {
+  }
   .reward_type_items {
     display: inline-block;
     padding: 5px 0;
+  }
+  .reward_type_title {
+    position: relative;
+    display: inline-block;
+    top: -2px;
+    margin-left: 2px;
   }
 
   .reward_type_item_wrap {
     display: flex;
     input {
-      margin-left: 5px;
+      margin-left: 10px;
     }
   }
 
