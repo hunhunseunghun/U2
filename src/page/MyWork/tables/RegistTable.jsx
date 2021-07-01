@@ -110,6 +110,7 @@ function RegistTable({ datas }) {
 				<Pagination2
 					itemsCount={count}
 					handlePageChange={handlePageChange}
+					pageSize={quests.pageSize}
 				></Pagination2>
 			</div>
 		</RegistTableContainer>

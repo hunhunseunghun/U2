@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const WorkDetailContainer = styled.div`
 	padding-top: 90px;
-	section {
+	.workdetail-section {
 		display: flex;
 		text-align: center;
 		justify-content: center;
@@ -18,11 +18,17 @@ export const WorkDetailContainer = styled.div`
 		border-color: black;
 		/* display: flex;
 		flex-direction: row; */
-		width: 500px;
+		width: 800px;
 	}
 	.tab-contents {
-		border: solid;
-		border-color: grey;
+		cursor: pointer;
+		margin: 10px;
+		background-color: grey;
+		border: solid black;
+	}
+	.tab-contents.selected {
+		color: white;
+		background-color: black;
 	}
 	.project-name {
 		border: solid;
@@ -31,5 +37,8 @@ export const WorkDetailContainer = styled.div`
 	.project-info.spec {
 		text-align: start;
 		font-weight: bold;
+	}
+	hr {
+		width: inherit;
 	}
 `;
