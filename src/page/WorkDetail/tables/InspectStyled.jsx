@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 export const InspectTableContainer = styled.div`
 	width: 600px;
-
-	table {
+	.buttons3 {
+		button {
+			border: solid;
+		}
+	}
+	.inspect-table {
 		button {
 			cursor: pointer;
 			border: solid 1px;

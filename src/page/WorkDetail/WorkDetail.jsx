@@ -40,7 +40,7 @@ function WorkDetail(props) {
 				data={modalProps.data}
 				handleModalClose={handleModalClose}
 			/>
-			<section>
+			<section className="workdetail-section">
 				<section className="section1">
 					<img src="http://ddragon.leagueoflegends.com/cdn/11.13.1/img/champion/Aatrox.png"></img>
 					<div className="project-name">project name</div>

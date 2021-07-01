@@ -8,40 +8,83 @@ function InspectTable({ datas, handlePresentationClick }) {
 		pageSize: 10,
 		currentPage: 1,
 	});
-	const { data, pageSize, currentPage } = subjects;
-	let [pagedSubjects, setPagedSubjects] = useState(
-		paginate(data, currentPage, pageSize),
+	let [allCheckBoxes, setAllCheckBoxes] = useState(
+		new Array(datas.length).fill(false),
 	);
-	// console.log('datas: ', datas);
-	// const pagedQuests = paginate(data, currentPage, pageSize);
+	const { data, pageSize, currentPage } = subjects;
+	const pagedDatas = paginate(data, currentPage, pageSize);
+	const pagedArr = paginate(allCheckBoxes, currentPage, pageSize);
 	const { length: count } = subjects.data;
+	let [pagedSubjects, setPagedSubjects] = useState(pagedDatas);
+	let [pagedCheckboxes, setPagedCheckBoxes] = useState(pagedArr);
+	let [plusIndex, setPlusIndex] = useState(0);
+	console.log('checkboxes: ', allCheckBoxes);
+	console.log('pagedCheckBoxes: ', pagedCheckboxes);
+	console.log('current page: ', currentPage);
 	let handlePageChange = (page) => {
 		setSubjects({ ...subjects, currentPage: page });
 		setPagedSubjects(paginate(data, page, pageSize));
+		setPlusIndex((page - 1) * pageSize);
+		setPagedCheckBoxes(paginate(allCheckBoxes, page, pageSize));
 	};
 	let handleSelectChange = (pageSize) => {
 		setSubjects({ ...subjects, pageSize: pageSize });
 		setPagedSubjects(paginate(data, 1, pageSize));
 	};
+
 	useEffect(() => {
 		setSubjects({ ...subjects, data: datas });
 	}, [datas]);
 	return (
 		<InspectTableContainer>
-			<button>다운로드</button>
-			<select
-				onChange={(e) => {
-					handleSelectChange(e.target.value);
-				}}
-			>
-				<option value={10}>10개씩</option>
-				<option value={15}>15개씩</option>
-				<option value={30}>30개씩</option>
-				<option value={50}>50개씩</option>
-				<option value={100}>100개씩</option>
-			</select>
+			<section className="buttons3">
+				<button>승인</button>
+				<button>반려</button>
+				<button>피드백</button>
+			</section>
+			<section>
+				<button>다운로드</button>
+				<select
+					onChange={(e) => {
+						handleSelectChange(e.target.value);
+					}}
+				>
+					<option value={10}>10개씩</option>
+					<option value={15}>15개씩</option>
+					<option value={30}>30개씩</option>
+					<option value={50}>50개씩</option>
+					<option value={100}>100개씩</option>
+				</select>
+			</section>
+
 			<table className={'inspect-table'}>
 				<tr>
+					<th>
+						<input
+							type={'checkbox'}
+							onChange={(e) => {
+								console.log(e.target.checked);
+								let newarr = allCheckBoxes.map((el, idx) => {
+									if (idx >= plusIndex && idx < plusIndex + pageSize) {
+										return e.target.checked;
+									} else {
+										return el;
+									}
+								});
+								setAllCheckBoxes(newarr);
+								let newarr2 = pagedCheckboxes.map((el) => e.target.checked);
+								setPagedCheckBoxes(newarr2);
+							}}
+							name="isSelectAll"
+							value="selectAll"
+							checked={
+								pagedCheckboxes.filter((el) => el).length ===
+								pagedCheckboxes.length
+									? true
+									: false
+							}
+						></input>
+					</th>
 					<th key="challengeTime">지원 일시</th>
 					<th key="ID">ID</th>
 					<th key="name">성명</th>
@@ -53,10 +96,22 @@ function InspectTable({ datas, handlePresentationClick }) {
 
 				<tbody>
 					{pagedSubjects
-						? pagedSubjects.map((data) => {
+						? pagedSubjects.map((data, index) => {
 								return (
 									<>
 										<tr>
+											<td>
+												<input
+													type="checkbox"
+													onClick={(e) => {
+														allCheckBoxes[index + plusIndex] = e.target.checked;
+														setAllCheckBoxes(allCheckBoxes.slice());
+														pagedCheckboxes[index] = e.target.checked;
+														setPagedCheckBoxes(pagedCheckboxes.slice());
+													}}
+													checked={allCheckBoxes[index + plusIndex]}
+												></input>
+											</td>
 											<td>{data.supportDate}</td>
 											<td>{data.ID}</td>
 											<td>{data.name}</td>

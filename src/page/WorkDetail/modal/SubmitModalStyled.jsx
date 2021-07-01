@@ -1,28 +1,5 @@
 import styled from 'styled-components';
 export const ModalContainer = styled.div`
-	/* div.test {
-		color: red;
-	}
-	.pd-modal {
-		position: absolute;
-		top: 40px;
-		left: 40px;
-		right: 40px;
-		bottom: 40px;
-		background-color: white;
-		button {
-			border: solid black;
-		}
-	} */
-
-	/* .overlay {
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background-color: #7a579c;
-	} */
 	.modal {
 		display: none;
 		position: fixed;
@@ -37,14 +14,16 @@ export const ModalContainer = styled.div`
 		outline: none;
 		cursor: pointer;
 		border: 0;
+		margin-left: 10px;
+		font-weight: 400;
+		font-family: 'Roboto', 'Noto Sans KR', 'Noto Sans', sans-serif;
 	}
 	.modal > section {
-		width: 90%;
+		width: 80%;
 		max-width: 450px;
 		margin: 0 auto;
 		border-radius: 0.3rem;
 		background-color: #fff;
-		/* 팝업이 열릴때 스르륵 열리는 효과 */
 		animation: modal-show 0.3s;
 		overflow: hidden;
 	}
@@ -80,11 +59,14 @@ export const ModalContainer = styled.div`
 		background-color: #6c757d;
 		border-radius: 5px;
 		font-size: 13px;
+
+		&:hover {
+			background-color: #4b5157;
+		}
 	}
 	.modal.openModal {
 		display: flex;
 		align-items: center;
-		/* 팝업이 열릴때 스르륵 열리는 효과 */
 		animation: modal-bg-show 0.3s;
 	}
 	@keyframes modal-show {
