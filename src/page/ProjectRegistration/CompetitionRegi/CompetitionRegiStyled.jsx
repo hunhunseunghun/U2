@@ -212,8 +212,6 @@ export const RegiContainer = styled.div`
     font-family: 'Roboto', 'Noto Sans KR', 'Noto Sans', sans-serif;
   }
 
-  //----------------------------------------
-
   //reward type css --------------------------
 
   .reward_type {
@@ -236,6 +234,86 @@ export const RegiContainer = styled.div`
     }
   }
 
+  //editor css ----------------------------------
+  .notice_editor_form {
+    padding: 0 0 42px 0;
+  }
+  .notice_editor {
+    width: 100%;
+    height: 300px;
+    border: 0;
+  }
+
+  //reply css -------------------------------------
+  .replyfunc_items {
+    display: inline-block;
+  }
+
+  .replyfunc_item_wrap {
+    display: flex;
+    margin-right: 5px;
+    input {
+      margin-right: 3px;
+    }
+  }
+
+  //mananger css ------------------------------------
+
+  .manager_items {
+    display: inline-block;
+    margin-right: 5px;
+
+    section {
+      display: flex;
+
+      input {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  //phonenumber css---------------------------------
+
+  .phonenumber_items {
+    display: inline-block;
+    margin: 0 5px;
+
+    #areacode {
+      padding: 0 5px;
+      width: 60px;
+      height: 21px;
+      border: 1px solid #d8d8d8;
+    }
+
+    input {
+      width: 34px;
+    }
+
+    section {
+      display: flex;
+    }
+  }
+
+  //email css---------------------------------
+
+  .email_items {
+    display: inline-block;
+    margin-right: 5px;
+
+    section {
+      display: flex;
+
+      input {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 648px) {
+    .notice_editor_form {
+      padding: 0 0 65px 0;
+    }
+  }
   @media only screen and (max-width: 900px) {
     padding: 40px 0px 50px;
   }

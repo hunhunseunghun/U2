@@ -1,46 +1,52 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PosterUploader from './PosterUploader/PosterUploader.jsx';
 import FileUploader from './FileUploader/FileUploader.jsx';
 import { RegiContainer } from './CompetitionRegiStyled.jsx';
 import DropDown from './DropDown/DropDown.jsx';
+import QuillTextEditor from './QuillTextEditor/QuillTextEditor.jsx';
 import { TiDeleteOutline } from 'react-icons/ti'; // 파일삭제 버튼 icon
 import { DateTimePicker } from '@material-ui/pickers';
 import { createMuiTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 
 const CompetitionRegi = () => {
-  // posterfile upload handle------------------------------
+  const localNumber = [
+    '02',
+    '031',
+    '032',
+    '033',
+    '041',
+    '043',
+    '042',
+    '044',
+    '051',
+    '052',
+    '053',
+    '054',
+    '055',
+    '061',
+    '062',
+    '063',
+    '064',
+    '010',
+    '011',
+    '016',
+    '017',
+    '019',
+  ];
+  // posterfile upload handle---------------------------------
   const [posterFile, setPosterFile] = useState(null); //포스터 파일, fileList 객체 -> 배열로 변환 후 -> posterfile에 할당
   const [posterFilePath, setPosterFilePath] = useState('Choose file to upload'); //포스터 파일 업로드 파일패스 , placholder 값
   const [etcFile, setEtcFile] = useState(null);
   const [etcFilePath, setEtcFilePath] = useState('Choose file to upload');
-
-  //-------------------------------------------------
-  //handle date --------------------------------
+  //handle date ----------------------------------------------
   const [startDate, setStartDate] = useState(new Date());
   const [finishDate, setFinishDate] = useState(new Date());
   const [noticeStart, setNoticeStart] = useState(new Date());
   const [currency, setCurrency] = useState('KRW');
+  //handle editor ---------------------------------------------
 
-  const materialTheme = createMuiTheme({
-    palette: {
-      primary: {
-        main: '#000000',
-      },
-    },
-  });
-  const handleStartDate = date => {
-    setStartDate(date);
-    setFinishDate(date);
-  };
-
-  const handleCurrency = e => {
-    setCurrency(e.target.value);
-  };
-
-  //--------------------------------------------------
-
-  // handle modal state------------------------------
+  // handle modal state---------------------------------------
   const [isActive, setIsActive] = useState(false);
   const [defaultIdx, setDefaultIdx] = useState(0);
   const [competition, setCompetition] = useState([
@@ -72,7 +78,23 @@ const CompetitionRegi = () => {
       id: 3,
     },
   ]);
-  //--------------------------------------------------
+
+  // handle datetime picker theme------------------------------
+  const materialTheme = createMuiTheme({
+    palette: {
+      primary: {
+        main: '#000000',
+      },
+    },
+  });
+  const handleStartDate = date => {
+    setStartDate(date);
+    setFinishDate(date);
+  };
+
+  const handleCurrency = e => {
+    setCurrency(e.target.value);
+  };
 
   return (
     <RegiContainer className="contents_wrap">
@@ -468,8 +490,111 @@ const CompetitionRegi = () => {
             </div>
           </section>
           <section className="ele">
-            <div className="menu">* 시상종류</div>
-            <div className="inputInfo notice_editor_form"></div>
+            <div className="menu">공모 공지글</div>
+            <div className="inputInfo notice_editor_form">
+              <QuillTextEditor className="notice_editor" />
+            </div>
+          </section>
+          <section className="ele">
+            <div className="menu">* 댓글 기능</div>
+            <section className="inputInfo replyfunc_form">
+              <div className="replyfunc_items">
+                <div className="replyfunc_item_wrap">
+                  <input type="radio" name="replyrequired" value="댓글사용" />
+                  <div>댓글 사용</div>
+                </div>
+              </div>
+              <div className="replyfunc_items">
+                <div className="replyfunc_item_wrap">
+                  {' '}
+                  <input
+                    type="radio"
+                    name="replyrequired"
+                    value="댓글사용안함"
+                  />
+                  <div>댓글 사용 안함</div>
+                </div>
+              </div>
+            </section>
+          </section>
+          <section className="ele">
+            <div className="menu">* 담당자</div>
+            <section className="inputInfo manager_form">
+              <div className="manager_items">
+                <input type="text" />
+              </div>
+              <div className="manager_items manager_noexposure">
+                <section>
+                  <input type="checkbox" name="noexposure" />
+                  <div className="manager_noexposure_text">비노출</div>
+                </section>
+              </div>
+            </section>
+          </section>
+          <section className="ele">
+            <div className="menu">* 연락처</div>
+            <section className="inputInfo phonenumber_form">
+              <div className="phonenumber_items">
+                <select name="areacode" id="areacode">
+                  <option value="goldfish">010</option>
+                  <option value="02">02</option>
+                  <option value="">031</option>
+                  <option value="cat">032</option>
+                  <option value="hamster">033</option>
+                  <option value="parrot">041</option>
+                  <option value="spider">042</option>
+                  <option value="goldfish">043</option>
+                  <option value="">044</option>
+                  <option value="cat">051</option>
+                  <option value="hamster">052</option>
+                  <option value="parrot">053</option>
+                  <option value="spider">054</option>
+                  <option value="goldfish">055</option>
+                  <option value="">061</option>
+                  <option value="cat">062</option>
+                  <option value="hamster">063</option>
+                  <option value="parrot">064</option>
+                </select>
+              </div>
+              -
+              <div className="phonenumber_items">
+                <input
+                  type="tel"
+                  name="phonenumber"
+                  placeholder="0000"
+                  maxlength="4"
+                />
+              </div>
+              -
+              <div className="phonenumber_items">
+                <input
+                  type="tel"
+                  name="phonenumber"
+                  placeholder="0000"
+                  maxlength="4"
+                />
+              </div>
+              <div className="manager_items phonenumber_noexposure">
+                <section>
+                  <input type="checkbox" name="noexposure" />
+                  <div className="manager_noexposure_text">비노출</div>
+                </section>
+              </div>
+            </section>
+          </section>
+          <section className="ele">
+            <div className="menu">* 이메일</div>
+            <section className="inputInfo email_form">
+              <div className="email_items">
+                <input type="text" />
+              </div>
+              <div className="manager_items email_noexposure">
+                <section>
+                  <input type="checkbox" name="email" />
+                  <div className="email_noexposure_text">비노출</div>
+                </section>
+              </div>
+            </section>
           </section>
         </section>
       </div>

@@ -4,6 +4,9 @@ import { LinearProgress } from '@material-ui/core';
 import ceImg from '../../../Img/ceImg.png';
 
 const ContentElement = ({ challenge }) => {
+  const [myRegistration, setMyRegistration] = useState(false);
+  const [mySubmit, setMySubmit] = useState(false);
+
   return (
     <EleContainer>
       <div className="challenge_img_area">
