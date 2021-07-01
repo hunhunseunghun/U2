@@ -48,13 +48,11 @@ export const RegiContainer = styled.div`
   }
 
   .defaultCompetition {
-    width: 300px;
-    background-color: #dfdfdf;
-    height: 30px;
-    padding: 5px 0 0 20px;
+    background-color: #ebebeb;
+    padding: 5px 10px;
     &:hover {
       cursor: pointer;
-      background-color: #c7c7c7;
+      background-color: #e2e2e2;
     }
   }
 
@@ -76,6 +74,7 @@ export const RegiContainer = styled.div`
     background-color: #f3f3f3;
     padding-left: 10px;
     min-height: 50px;
+    font-size: 15px;
   }
   .inputInfo {
     display: flex;
@@ -83,6 +82,7 @@ export const RegiContainer = styled.div`
     width: 100%;
     border-top: 1px solid #00000023;
     padding: 0 10px;
+    font-size: 12px;
   }
 
   // 파일 업로더 css ----------------------------
@@ -107,7 +107,7 @@ export const RegiContainer = styled.div`
   // tabale css ------------------------------------
 
   .reception_info {
-    font-size: 14px;
+    font-size: 12px;
     padding: 0;
     width: 100%;
     border-top: 0;
@@ -120,6 +120,7 @@ export const RegiContainer = styled.div`
       }
 
       .table_checkarea {
+        width: 40.5px;
         display: grid;
         place-items: center;
       }
@@ -164,7 +165,7 @@ export const RegiContainer = styled.div`
       }
       label {
         margin-left: 1px;
-        min-width: 65px;
+        min-width: 70px;
         text-align: left;
       }
       .reception_options {
@@ -172,9 +173,63 @@ export const RegiContainer = styled.div`
         justify-content: left;
 
         div {
-          width: 90px;
+          width: 80px;
         }
       }
     }
+  }
+
+  // datetime picker css ---------------
+
+  .chooseDate {
+    display: block;
+    padding: 5px;
+  }
+  .inputStart,
+  .inputFinish {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    .input_sub_text {
+      margin-left: 5px;
+    }
+  }
+  .MuiFormControl-root {
+  }
+  .MuiOutlinedInput-root {
+  }
+  .MuiOutlinedInput-input {
+    padding: 10.5px 10px;
+  }
+  .MuiInputBase-input {
+    padding: none;
+  }
+  .MuiFormLabel-root,
+  .MuiFormHelperText-root,
+  .MuiInputBase-root {
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'Roboto', 'Noto Sans KR', 'Noto Sans', sans-serif;
+  }
+
+  //----------------------------------------
+
+  //reward type css --------------------------
+
+  .reward_type_title,
+  .reward_type_items {
+    display: inline-block;
+    padding: 5px 0;
+  }
+
+  .reward_type_item_wrap {
+    display: flex;
+    input {
+      margin-left: 5px;
+    }
+  }
+
+  @media only screen and (max-width: 900px) {
+    padding: 40px 0px 50px;
   }
 `;

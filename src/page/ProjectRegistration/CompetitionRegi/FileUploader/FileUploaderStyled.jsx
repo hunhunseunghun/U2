@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   .uploadArea {
-    font-size: 14px;
+    font-size: 12px;
     display: flex;
 
     div {
@@ -24,12 +24,15 @@ export const Container = styled.div`
     width: 75px;
     height: 24px;
     margin-left: 5px;
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   .filePreview {
     div {
-      font-size: 11px;
-      font-weight: 700;
+      font-size: 12px;
+      font-weight: 500;
     }
   }
 

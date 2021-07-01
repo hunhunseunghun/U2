@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   position: absolute;
-  width: 360px;
-  top: -8px;
-  left: -30px;
+  padding: 5px 10px;
+  top: 6px;
+  left: 0;
   z-index: 3;
 
   .inActive {
@@ -16,12 +16,12 @@ export const Container = styled.div`
   }
 
   li {
-    padding: 5px 0 5px 20px;
-    background-color: #dfdfdf;
+    padding: 5px 10px;
+    background-color: #fafafa;
 
     &:hover {
       cursor: pointer;
-      background-color: #c7c7c7;
+      background-color: #e7e7e7;
     }
   }
 
