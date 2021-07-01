@@ -4,10 +4,8 @@ import axios from 'axios';
 import { MainContainer } from './CreatorMarketStyled.jsx';
 import TopView from './TopView/TopView.jsx';
 import TopAds from './TopAds/TopAds.jsx';
-// import ContentTap from './ContentTap/ContentTab.jsx';
 import ContentElement from './ContentElement/ContentElement.jsx';
 import bannerImg from '../../Img/cmBannerImg.png';
-import bannerIcon from '../../Img/cmBannerIcon.png';
 
 const server = process.env.REACT_APP_U2_DB_HOST;
 

@@ -1,14 +1,24 @@
 import styled from 'styled-components';
 
 export const RegiContainer = styled.div`
-  padding-top: 90px;
-  width: 100%;
+  padding: 40px 45px 100px;
+  background-color: #fafafa;
+  display: flex;
+  justify-content: center;
+  font-weight: 500;
+  min-width: 780px;
+
+  .competitionregi_section {
+    width: 100%;
+    max-width: 1100px;
+  }
+
   .titleArea {
     display: flex;
     align-items: center;
     height: 80px;
     padding: 0;
-    border-bottom: 2px solid grey;
+    border-bottom: 1.5px solid grey;
     margin-top: 1rem;
 
     div {
@@ -18,10 +28,14 @@ export const RegiContainer = styled.div`
       align-items: center;
       width: 200px;
       height: 50px;
-      border: 1px solid grey;
+      border: 1px solid #eee;
       font-weight: bold;
       font-size: 1.2rem;
+      background-color: #fff;
     }
+  }
+  .competitionregi_items {
+    background-color: #fff;
   }
 
   //공모전 명---
@@ -57,9 +71,9 @@ export const RegiContainer = styled.div`
     display: flex;
     min-width: 150px;
     align-items: center;
-    border-right: 1px solid #c2c2c28b;
-    border-top: 1px solid #00000023;
-    background-color: #80808054;
+    border-right: 1px solid#d8d8d8;
+    border-top: 1px solid #d8d8d8;
+    background-color: #f3f3f3;
     padding-left: 10px;
     min-height: 50px;
   }
@@ -92,89 +106,75 @@ export const RegiContainer = styled.div`
   }
   // tabale css ------------------------------------
 
-  .receptionInfo {
-    width: 100%;
-  }
-  .topForm {
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-    border-top: 1px solid #c2c2c28b;
-
-    .checkArea {
-      width: 20px;
-    }
-
-    section {
-      display: flex;
-      flex-wrap: wrap;
-      padding: 5px;
-      border-right: 1px solid #c2c2c28b;
-      height: 100%;
-    }
-  }
-
-  /* .receptionInfo {
-    white-space: nowrap;
-    width: 100%;
+  .reception_info {
+    font-size: 14px;
     padding: 0;
-  }
-  .receptionForm {
     width: 100%;
-    border-collapse: collapse;
+    border-top: 0;
 
-    td {
-      padding: 5px;
-      border: 1px solid #c2c2c28b;
-    }
+    .reception_form {
+      width: 100%;
+      .reception_table {
+        width: 100%;
+        border-collapse: collapse;
+      }
 
-    td:first-child {
-      border-left: 0;
-      width: 40px;
-    }
+      .table_checkarea {
+        display: grid;
+        place-items: center;
+      }
+      .table_title {
+        text-align: center;
+        min-width: 90px;
+      }
+      tr {
+        border-top: 1px solid #d8d8d8;
+      }
 
-    td:nth-child(2) {
-      max-width: 100px;
-    }
-    td:nth-child(3) {
-      width: 275px;
-    }
+      td {
+        padding: 10px;
+        border-left: 1px solid #d8d8d8;
+      }
 
-    td:last-child {
-      border-right: 0;
-    }
+      td:first-child {
+        border-left: 0;
+        width: 40px;
+      }
 
-    section {
-      display: flex;
-      align-items: center;
+      td:nth-child(2) {
+        width: 110px;
+      }
 
-      div {
+      th:last-child,
+      td:last-child {
+        border-right: 0;
+      }
+
+      section {
+        width: 100%;
         display: flex;
         align-items: center;
-        margin-left: 10px;
-      }
-      input {
-        margin-left: 2px;
+
+        div {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          text-align: center;
+        }
       }
       label {
-        margin-left: 2px;
+        margin-left: 1px;
+        min-width: 65px;
+        text-align: left;
+      }
+      .reception_options {
+        display: flex;
+        justify-content: left;
+
+        div {
+          width: 90px;
+        }
       }
     }
-
-    .checkArea,
-    .receptionTitle {
-    }
-    .checkArea {
-      display: flex;
-      justify-content: center;
-      width: 40px;
-    }
-    .receptionTitle {
-      display: flex;
-      justify-content: center;
-      width: 100px;
-    }
-  } */
-
-  //-----------------------------------------------
+  }
 `;

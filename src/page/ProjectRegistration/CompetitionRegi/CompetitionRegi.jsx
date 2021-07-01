@@ -51,343 +51,282 @@ const CompetitionRegi = () => {
   //--------------------------------------------------
 
   return (
-    <RegiContainer>
-      <section className="titleArea">
-        <div>과제 등록</div>
-      </section>
+    <RegiContainer className="contents_wrap">
+      <div className="competitionregi_section">
+        <section className="titleArea">
+          <div>과제 등록</div>
+        </section>
 
-      <section className="ele">
-        <div className="menu">* 주최사</div>
-        <div className="inputInfo competitionName">
-          <div
-            className="defaultCompetition"
-            onClick={() => {
-              setIsActive(true);
-            }}
-          >
-            {`${competition[defaultIdx].form} : ${competition[defaultIdx].companyName}`}
-          </div>
-          <DropDown
-            setDefaultIdx={setDefaultIdx}
-            competition={competition}
-            setIsActive={setIsActive}
-            isActive={isActive}
-          />
-        </div>
-      </section>
-      <section className="ele">
-        <div className="menu">* 공모전명</div>
-        <div className="inputInfo">
-          <div className="inputPrjName">
-            <input type="text" className="inputPrjName" />
-          </div>
-        </div>
-      </section>
-      <section className="ele">
-        <div className="menu">주관사</div>
-        <div className="inputInfo">
-          <div className="organizer">
-            <input type="text" className="organizer" />
-          </div>
-        </div>
-      </section>
-      <section className="ele">
-        <div className="menu">후원/협찬사</div>
-        <div className="inputInfo">
-          <div className="sponsor">
-            <input type="text" className="sponsor" />
-          </div>
-        </div>
-      </section>
-      <section className="ele">
-        <div className="menu">홈페이지 URL</div>
-        <div className="inputInfo">
-          <div className="webpageURL">
-            <input type="text" className="webpageURL" />
-          </div>
-        </div>
-      </section>
-      <section className="ele">
-        <div className="menu">포스터</div>
-        <div className="inputInfo infoPoster">
-          <div>공모전의 포스터가 있다면 업로드 해주세요</div>
-          <PosterUploader
-            file={posterFile}
-            setFile={setPosterFile}
-            filePath={posterFilePath}
-            setFilePath={setPosterFilePath}
-          />
-        </div>
-      </section>
-      <section className="ele">
-        <div className="menu">파일</div>
-        <div className="inputInfo infoFiles">
-          <div>공모전에 관련한 자료가 있다면 업로드 해주세요</div>
+        <section className="competitionregi_items">
+          <section className="ele">
+            <div className="menu">* 주최사</div>
+            <div className="inputInfo competitionName">
+              <div
+                className="defaultCompetition"
+                onClick={() => {
+                  setIsActive(true);
+                }}
+              >
+                {`${competition[defaultIdx].form} : ${competition[defaultIdx].companyName}`}
+              </div>
+              <DropDown
+                setDefaultIdx={setDefaultIdx}
+                competition={competition}
+                setIsActive={setIsActive}
+                isActive={isActive}
+              />
+            </div>
+          </section>
+          <section className="ele">
+            <div className="menu">* 공모전명</div>
+            <div className="inputInfo">
+              <div className="inputPrjName">
+                <input type="text" className="inputPrjName" />
+              </div>
+            </div>
+          </section>
+          <section className="ele">
+            <div className="menu">주관사</div>
+            <div className="inputInfo">
+              <div className="organizer">
+                <input type="text" className="organizer" />
+              </div>
+            </div>
+          </section>
+          <section className="ele">
+            <div className="menu">후원/협찬사</div>
+            <div className="inputInfo">
+              <div className="sponsor">
+                <input type="text" className="sponsor" />
+              </div>
+            </div>
+          </section>
+          <section className="ele">
+            <div className="menu">홈페이지 URL</div>
+            <div className="inputInfo">
+              <div className="webpageURL">
+                <input type="text" className="webpageURL" />
+              </div>
+            </div>
+          </section>
+          <section className="ele">
+            <div className="menu">포스터</div>
+            <div className="inputInfo infoPoster">
+              <div>공모전의 포스터가 있다면 업로드 해주세요</div>
+              <PosterUploader
+                file={posterFile}
+                setFile={setPosterFile}
+                filePath={posterFilePath}
+                setFilePath={setPosterFilePath}
+              />
+            </div>
+          </section>
+          <section className="ele">
+            <div className="menu">파일</div>
+            <div className="inputInfo infoFiles">
+              <div>공모전에 관련한 자료가 있다면 업로드 해주세요</div>
 
-          <FileUploader
-            file={etcFile}
-            setFile={setEtcFile}
-            filePath={etcFilePath}
-            setFilePath={setEtcFilePath}
-          />
-        </div>
-      </section>
-      <section className="ele">
-        <div className="menu">* 접수방법</div>
-        <div className="inputinfo receptionInfo">
-          <div className="topForm">
-            <section className="checkArea">
-              <input type="checkbox" />
-            </section>{' '}
-            <section className="receptionTitle">
-              <div>온라인 게시</div>
-            </section>
-            <section>
-              <div>
-                <input type="checkbox" defaultValue="youtube" />
-                <label>Youtube</label>
+              <FileUploader
+                file={etcFile}
+                setFile={setEtcFile}
+                filePath={etcFilePath}
+                setFilePath={setEtcFilePath}
+              />
+            </div>
+          </section>
+          <section className="ele">
+            <div className="menu">* 접수방법</div>
+            <div className="inputInfo reception_info">
+              <div className="reception_form">
+                <table className="reception_table">
+                  <tbody>
+                    <tr>
+                      <td>
+                        {' '}
+                        <div className="table_checkarea">
+                          <input type="checkbox" />
+                        </div>{' '}
+                      </td>
+                      <td>
+                        <div className="table_title">온라인 게시</div>
+                      </td>
+                      <td>
+                        {' '}
+                        <section className="reception_options">
+                          <div>
+                            <input type="checkbox" value="youtube" />
+                            <label>Youtube</label>
+                          </div>
+                          <div>
+                            <input type="checkbox" value="Tiktok" />
+                            <label>Tiktok</label>
+                          </div>
+                          <div>
+                            <input type="checkbox" value="Vimeo" />
+                            <label>Vimeo</label>
+                          </div>
+                        </section>
+                      </td>
+                      <td>
+                        <section className="reception_options">
+                          <div>
+                            <input
+                              type="radio"
+                              name="snsRequired"
+                              value="필수"
+                              defaultChecked
+                            />
+                            <label>필수</label>
+                          </div>
+                          <div>
+                            <input
+                              type="radio"
+                              name="snsRequired"
+                              value="선택"
+                            />
+                            <label>선택사항</label>
+                          </div>
+                        </section>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        {' '}
+                        <div className="table_checkarea">
+                          <input type="checkbox" />
+                        </div>{' '}
+                      </td>
+                      <td>
+                        <div className="table_title">영상 제작 제출</div>
+                      </td>
+                      <td>
+                        {' '}
+                        <section className="reception_options">
+                          <div>
+                            <input
+                              type="radio"
+                              name="vidReception"
+                              value="파일업로드"
+                              defaultChecked
+                            />
+                            <label>파일 업로드</label>
+                          </div>
+                          <div>
+                            <input
+                              type="radio"
+                              name="vidReception"
+                              value="URL공유"
+                            />
+                            <label>URL 공유</label>
+                          </div>
+                        </section>
+                      </td>
+                      <td>
+                        <section className="reception_options">
+                          <div>
+                            <input
+                              type="radio"
+                              name="vidRequired"
+                              value="필수"
+                              defaultChecked
+                            />
+                            <label>필수</label>
+                          </div>
+                          <div>
+                            <input
+                              type="radio"
+                              name="vidRequired"
+                              value="선택"
+                            />
+                            <label>선택사항</label>
+                          </div>
+                        </section>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <div>
-                <input type="checkbox" defaultValue="Tiktok" />
-                <label>Tiktok</label>
+            </div>
+          </section>
+          <section className="ele">
+            <div className="menu">* 제출자 개인정보 수집</div>
+            <div className="inputInfo reception_info">
+              <div className="reception_form">
+                <table className="reception_table">
+                  <tbody>
+                    <tr>
+                      <td>
+                        {' '}
+                        <div className="table_checkarea">
+                          <input type="checkbox" value="emailselected" />
+                        </div>{' '}
+                      </td>
+                      <td>
+                        <div className="table_title">이메일</div>
+                      </td>
+                      <td>
+                        {' '}
+                        <section className="reception_options">
+                          <div>
+                            <input
+                              type="radio"
+                              name="emailRequired"
+                              value="필수"
+                            />
+                            <label>Youtube</label>
+                          </div>
+                          <div>
+                            <input
+                              type="radio"
+                              name="emailRequired"
+                              value="선택"
+                            />
+                            <label>Tiktok</label>
+                          </div>
+                        </section>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        {' '}
+                        <div className="table_checkarea">
+                          <input type="checkbox" value="phoneselected" />
+                        </div>{' '}
+                      </td>
+                      <td>
+                        <div className="table_title">전화번호</div>
+                      </td>
+                      <td>
+                        <section className="reception_options">
+                          <div>
+                            <input
+                              type="radio"
+                              name="phoneRquired"
+                              value="필수"
+                              defaultChecked
+                            />
+                            <label>필수</label>
+                          </div>
+                          <div>
+                            <input
+                              type="radio"
+                              name="phoneRquired"
+                              value="선택"
+                            />
+                            <label>선택사항</label>
+                          </div>
+                        </section>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <div>
-                <input type="checkbox" defaultValue="Vimeo" />
-                <label>Vimeo</label>
-              </div>
-            </section>
-            <section>
-              <div>
-                <input
-                  type="radio"
-                  name="snsRequired"
-                  defaultValue="필수"
-                  defaultChecked
-                />
-                <label>필수</label>
-              </div>
-              <div>
-                <input type="radio" name="snsRequired" defaultValue="필수" />
-                <label>선택사항</label>
-              </div>
-            </section>
-            {/* <tbody>
-              <tr>
-                <td>
-                  {' '}
-                  <div className="checkArea">
-                    <input type="checkbox" />
-                  </div>{' '}
-                </td>
-                <td>
-                  <div className="receptionTitle">온라인 게시</div>
-                </td>
-                <td>
-                  {' '}
-                  <section>
-                    <div>
-                      <input type="checkbox" defaultValue="youtube" />
-                      <label>Youtube</label>
-                    </div>
-                    <div>
-                      <input type="checkbox" defaultValue="Tiktok" />
-                      <label>Tiktok</label>
-                    </div>
-                    <div>
-                      <input type="checkbox" defaultValue="Vimeo" />
-                      <label>Vimeo</label>
-                    </div>
-                  </section>
-                </td>
-                <td>
-                  <section>
-                    <div>
-                      <input
-                        type="radio"
-                        name="snsRequired"
-                        defaultValue="필수"
-                        checked
-                      />
-                      <label>필수</label>
-                    </div>
-                    <div>
-                      <input type="radio" name="snsRequired" defaultValue="필수" />
-                      <label>선택사항</label>
-                    </div>
-                  </section>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  {' '}
-                  <div className="checkArea">
-                    <input type="checkbox" />
-                  </div>
-                </td>
-                <td>
-                  <div className="receptionTitle">영상 제작 제출</div>
-                </td>
-                <td>
-                  {' '}
-                  <section>
-                    <div>
-                      <input
-                        type="radio"
-                        name="vidReception"
-                        defaultValue="파일업로드"
-                        checked
-                      />
-                      <label>파일 업로드</label>
-                    </div>
-                    <div>
-                      <input type="radio" name="vidReception" defaultValue="URL공유" />
-                      <label>URL 공유</label>
-                    </div>
-                  </section>
-                </td>
-                <td>
-                  <section>
-                    <div>
-                      <input
-                        type="radio"
-                        name="vidRequired"
-                        defaultValue="필수"
-                        checked
-                      />
-                      <label>필수</label>
-                    </div>
-                    <div>
-                      <input type="radio" name="vidRequired" defaultValue="선택사항" />
-                      <label>선택사항</label>
-                    </div>
-                  </section>
-                </td>
-                <td>
-                  <section></section>
-                </td>
-              </tr>
-            </tbody> */}
-          </div>
-          <div className="topForm">
-            <section className="checkArea">
-              <input type="checkbox" />
-            </section>{' '}
-            <section className="receptionTitle">
-              <div>온라인 게시</div>
-            </section>
-            <section>
-              <div>
-                <input
-                  type="radio"
-                  name="vidReception"
-                  defaultValue="파일업로드"
-                  defaultChecked
-                />
-                <label>파일 업로드</label>
-              </div>
-              <div>
-                <input
-                  type="radio"
-                  name="vidReception"
-                  defaultValue="URL공유"
-                />
-                <label>URL 공유</label>
-              </div>
-            </section>
-            <section>
-              <div>
-                <input
-                  type="radio"
-                  name="vidRequired"
-                  defaultValue="필수"
-                  defaultChecked
-                />
-                <label>필수</label>
-              </div>
-              <div>
-                <input type="radio" name="vidRequired" defaultValue="필수" />
-                <label>선택사항</label>
-              </div>
-            </section>
-          </div>
-        </div>
-      </section>
-      <section className="ele">
-        <div className="menu">* 제출자 개인정보 수집</div>
-        <div className="inputInfo receptionInfo">
-          <table className="receptionForm">
-            <tbody>
-              <tr>
-                <td>
-                  {' '}
-                  <div className="checkArea">
-                    <input type="checkbox" />
-                  </div>{' '}
-                </td>
-                <td>
-                  <div className="receptionTitle">이메일</div>
-                </td>
+            </div>
+          </section>
+        </section>
+      </div>
 
-                <td>
-                  <section>
-                    <div>
-                      <input
-                        type="radio"
-                        name="emailRequired"
-                        defaultValue="필수"
-                        defaultChecked
-                      />
-                      <label>필수</label>
-                    </div>
-                    <div>
-                      <input
-                        type="radio"
-                        name="emailRequired"
-                        defaultValue="필수"
-                      />
-                      <label>선택사항</label>
-                    </div>
-                  </section>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  {' '}
-                  <div className="checkArea">
-                    <input type="checkbox" />
-                  </div>
-                </td>
-                <td>
-                  <div className="receptionTitle">전화번호</div>
-                </td>
-
-                <td>
-                  <section>
-                    <div>
-                      <input
-                        type="radio"
-                        name="phoneNumberRequired"
-                        defaultValue="필수"
-                        defaultChecked
-                      />
-                      <label>필수</label>
-                    </div>
-                    <div>
-                      <input
-                        type="radio"
-                        name="phoneNumberRequired"
-                        defaultValue="선택사항"
-                      />
-                      <label>선택사항</label>
-                    </div>
-                  </section>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-      <SetTaskCondition />
+      {/* <SetTaskCondition /> */}
     </RegiContainer>
   );
 };
