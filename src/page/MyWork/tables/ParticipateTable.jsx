@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Pagination2 from '../../../Component/Pagination/Pagination2';
-import { paginate } from '../../../Component/Pagination/paginate';
+import Pagination2 from '../../../component/Pagination/Pagination2';
+import { paginate } from '../../../component/Pagination/paginate';
 import { ParticipateTableContainer } from './ParticipateTableStyled';
 function ParticipateTable({ datas }) {
 	let [quests, setQuests] = useState({

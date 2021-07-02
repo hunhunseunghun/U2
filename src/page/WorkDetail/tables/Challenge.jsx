@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Pagination2 from '../../../Component/Pagination/Pagination2';
-import { paginate } from '../../../Component/Pagination/paginate';
+import Pagination2 from '../../../component/Pagination/Pagination2';
+import { paginate } from '../../../component/Pagination/paginate';
 import { ChallengeTableContainer } from './ChallengeStyled';
 function ChallengeTable({ datas }) {
 	let [subjects, setSubjects] = useState({

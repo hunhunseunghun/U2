@@ -10,8 +10,8 @@ import base from './store/base';
 
 import { dispatch } from 'use-bus';
 
-import Header from './Component/Header';
-import Footer from './Component/Footer';
+import Header from './component/Header';
+import Footer from './component/Footer';
 import Main from './page/Main';
 import Login from './page/Login';
 import Tutorial from './page/Tutorial';

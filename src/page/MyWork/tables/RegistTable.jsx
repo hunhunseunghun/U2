@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Pagination2 from '../../../Component/Pagination/Pagination2';
-import { paginate } from '../../../Component/Pagination/paginate';
+import Pagination2 from '../../../component/Pagination/Pagination2';
+import { paginate } from '../../../component/Pagination/paginate';
 import { RegistTableContainer } from './RegistTableStyled';
 function RegistTable({ datas }) {
 	let [quests, setQuests] = useState({
