@@ -67,7 +67,7 @@ function Login(props) {
 				entryTypeCode: data.type,
 			})
 			.then((response) => {
-				//console.log(response);
+				console.log(response);
 				dispatch(
 					baseActions.login({
 						email: response.data.email,

@@ -39,88 +39,88 @@ const isDev = process.env.NODE_ENV === 'development';
 const devTools = isDev && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 const composeEnhancers = devTools || compose;
 const store = createStore(
-  base,
-  composeEnhancers(applyMiddleware(...Middlewares))
+	base,
+	composeEnhancers(applyMiddleware(...Middlewares)),
 );
 
 function App() {
-  const history = useHistory();
-  return (
-    <BrowserRouter>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <Provider store={store}>
-          <div className={'app'} onClick={() => dispatch('@@popup/close')}>
-            <Header></Header>
-            <Route exact path="/" component={Main} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/tutorial" component={Tutorial} />
-            <Route
-              exact
-              path="/tutorial/detail/:id"
-              component={TutorialDetail}
-            />
-            <Route exact path="/price" component={Price} />
-            <Route exact path="/price/detail/:id" component={PriceDetail} />
-            <Route exact path="/post/select" component={SnsSelect} />
-            <Route
-              exact
-              path="/post/select/channel_add"
-              component={ChannelAdd}
-            />
-            <Route exact path="/post/post" component={VideoPost} />
-            <Route
-              exact
-              path="/creatormarket"
-              render={() => <CreatorMarket history={history} />}
-            />
-            <Route
-              exact
-              path="/prjregi"
-              render={() => <ProjectRegi history={history} />}
-            />
-            <Route
-              exact
-              path="/setTc"
-              render={() => <SetTaskCondition history={history} />}
-            />
-            <Route
-              exact
-              path="/mywork"
-              render={props => <MyWork history={history} {...props} />}
-            />
-            <Route
-              exact
-              path="/workdetail"
-              render={props => (
-                <WorkDetail history={history} {...props}></WorkDetail>
-              )}
-            />
-            <Route
-              exact
-              path="/competiton"
-              render={() => <CompetitionRegi history={history} />}
-            />
-            <Route
-              exact
-              path="/vidcreator"
-              render={() => <VidCreatorRegi history={history} />}
-            />
-            <Route
-              exact
-              path="/videditor"
-              render={() => <VidEditorRegi history={history} />}
-            />
-            <Route
-              exact
-              path="/ir"
-              render={() => <IRRegi history={history} />}
-            />
-            <Footer></Footer>
-          </div>
-        </Provider>
-      </MuiPickersUtilsProvider>
-    </BrowserRouter>
-  );
+	const history = useHistory();
+	return (
+		<BrowserRouter>
+			<MuiPickersUtilsProvider utils={DateFnsUtils}>
+				<Provider store={store}>
+					<div className={'app'} onClick={() => dispatch('@@popup/close')}>
+						<Header></Header>
+						<Route exact path="/" component={Main} />
+						<Route exact path="/login" component={Login} />
+						<Route exact path="/tutorial" component={Tutorial} />
+						<Route
+							exact
+							path="/tutorial/detail/:id"
+							component={TutorialDetail}
+						/>
+						<Route exact path="/price" component={Price} />
+						<Route exact path="/price/detail/:id" component={PriceDetail} />
+						<Route exact path="/post/select" component={SnsSelect} />
+						<Route
+							exact
+							path="/post/select/channel_add"
+							component={ChannelAdd}
+						/>
+						<Route exact path="/post/post" component={VideoPost} />
+						<Route
+							exact
+							path="/creatormarket"
+							render={(props) => <CreatorMarket history={history} {...props} />}
+						/>
+						<Route
+							exact
+							path="/prjregi"
+							render={() => <ProjectRegi history={history} />}
+						/>
+						<Route
+							exact
+							path="/setTc"
+							render={() => <SetTaskCondition history={history} />}
+						/>
+						<Route
+							exact
+							path="/mywork"
+							render={(props) => <MyWork history={history} {...props} />}
+						/>
+						<Route
+							exact
+							path="/workdetail"
+							render={(props) => (
+								<WorkDetail history={history} {...props}></WorkDetail>
+							)}
+						/>
+						<Route
+							exact
+							path="/competiton"
+							render={() => <CompetitionRegi history={history} />}
+						/>
+						<Route
+							exact
+							path="/vidcreator"
+							render={() => <VidCreatorRegi history={history} />}
+						/>
+						<Route
+							exact
+							path="/videditor"
+							render={() => <VidEditorRegi history={history} />}
+						/>
+						<Route
+							exact
+							path="/ir"
+							render={() => <IRRegi history={history} />}
+						/>
+						<Footer></Footer>
+					</div>
+				</Provider>
+			</MuiPickersUtilsProvider>
+		</BrowserRouter>
+	);
 }
 
 export default App;
