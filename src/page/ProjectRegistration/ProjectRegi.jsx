@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-
 import { PrjRegiContainer } from './ProjectRegiStyled.jsx';
 import logo from '../../Img/logo.svg';
 import competitionLogo from '../../Img/Icons/trophy-solid.svg';
@@ -9,7 +8,6 @@ import vidEditorLogo from '../../Img/Icons/cut-solid.svg';
 import vidCreatorLogo from '../../Img/Icons/video-solid.svg';
 import irLogo from '../../Img/Icons/chalkboard-teacher-solid.svg';
 import testVid from '../../Img/testVid.mp4';
-
 import testTumb from '../../Img/slider1.jpeg';
 
 const ProjectRegi = () => {
@@ -117,18 +115,15 @@ const ProjectRegi = () => {
                   </p>
                 </div>
                 <div className="contentBot">
-                  {' '}
-                  <div className="projectregi_content_item">
+                  <div className="projectregi_content_item slide_inactive">
                     <video src={testVid} controls poster={testTumb} />
                     <div>10만 구독자 유튜버 XX  ⁠PPL 광고 영상.</div>
                   </div>
-                  <div className="projectregi_content_item">
-                    {' '}
+                  <div className="projectregi_content_item slide_inactive">
                     <video src={testVid} autoplay loop muted playsinline />
                     <div>10만 구독자 유튜버 XX  ⁠PPL 광고 영상.</div>
                   </div>
-                  <div className="projectregi_content_item">
-                    {' '}
+                  <div className="projectregi_content_item slide_inactive">
                     <video src={testVid} controls />
                     <div>10만 구독자 유튜버 XX  ⁠PPL 광고 영상.</div>
                   </div>
@@ -166,16 +161,16 @@ const ProjectRegi = () => {
                   </p>
                 </div>
                 <div className="contentBot">
-                  <div className="projectregi_content_item">
+                  <div className="projectregi_content_item ">
                     <video src={testVid} controls />
                     <div>10만 구독자 유튜버 XX  ⁠PPL 광고 영상.</div>
                   </div>
-                  <div className="projectregi_content_item">
+                  <div className="projectregi_content_item ">
                     {' '}
                     <video src={testVid} autoplay loop muted playsinline />
                     <div>10만 구독자 유튜버 XX  ⁠PPL 광고 영상.</div>
                   </div>
-                  <div className="projectregi_content_item">
+                  <div className="projectregi_content_item ">
                     {' '}
                     <video src={testVid} controls />
                     <div>10만 구독자 유튜버 XX  ⁠PPL 광고 영상.</div>
@@ -198,7 +193,7 @@ const ProjectRegi = () => {
                     chekced={false}
                   />
                 </div>
-                <div className="projectregi_checkbox_bot">
+                <div className="projectregi_checkbox_bot ">
                   <img src={vidCreatorLogo} alt={logo} className="ckIcon" />
                   <div className="projectregi_checkbox_creatorText">
                     <div>영상 크리에이터{<br />} 인플루언서</div>
@@ -215,16 +210,16 @@ const ProjectRegi = () => {
                   </p>
                 </div>
                 <div className="contentBot">
-                  <div className="projectregi_content_item">
+                  <div className="projectregi_content_item slide_inactive">
                     <video src={testVid} controls />
                     <div>10만 구독자 유튜버 XX  ⁠PPL 광고 영상.</div>
                   </div>
-                  <div className="projectregi_content_item">
+                  <div className="projectregi_content_item slide_inactive">
                     {' '}
                     <video src={testVid} autoplay loop muted playsinline />
                     <div>10만 구독자 유튜버 XX  ⁠PPL 광고 영상.</div>
                   </div>
-                  <div className="projectregi_content_item">
+                  <div className="projectregi_content_item slide_inactive">
                     {' '}
                     <video src={testVid} controls />
                     <div>10만 구독자 유튜버 XX  ⁠PPL 광고 영상.</div>
@@ -234,7 +229,7 @@ const ProjectRegi = () => {
             </div>
           </section>
 
-          <section className="projectregi_item">
+          <section className="projectregi_item projectregi_item_ir">
             <div className="projectregi_item_innerwrap">
               <section className="projectregi_checkbox_area">
                 <div className="projectregi_checkbox_top">
