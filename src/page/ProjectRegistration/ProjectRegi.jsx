@@ -8,7 +8,9 @@ import competitionLogo from '../../Img/Icons/trophy-solid.svg';
 import vidEditorLogo from '../../Img/Icons/cut-solid.svg';
 import vidCreatorLogo from '../../Img/Icons/video-solid.svg';
 import irLogo from '../../Img/Icons/chalkboard-teacher-solid.svg';
-import { IoMdArrowDropright } from 'react-icons/io';
+import testVid from '../../Img/testVid.mp4';
+
+import testTumb from '../../Img/slider1.jpeg';
 
 const ProjectRegi = () => {
   let history = useHistory();
@@ -100,21 +102,36 @@ const ProjectRegi = () => {
                 </div>
                 <div className="projectregi_checkbox_bot">
                   <img src={competitionLogo} alt={logo} className="ckIcon" />
-                  <div className="ckText">공모전</div>
+                  <div className="projectregi_checkbox_competitionText">
+                    <div>공모전</div>
+                  </div>
                 </div>
               </section>
               <section className="contentArea">
-                <div className="contnetTop">
+                <div className="contentTop">
                   <div className="contentTitle">
-                    <IoMdArrowDropright className="textIcon" />
                     <div>예제 영상</div>
                   </div>
                   <p>
                     {competitionData !== null ? competitionData.codeDesc : null}
                   </p>
                 </div>
-                <div className="contnetBot">
-                  <div>광고영상</div>
+                <div className="contentBot">
+                  {' '}
+                  <div className="projectregi_content_item">
+                    <video src={testVid} controls poster={testTumb} />
+                    <div>10만 구독자 유튜버 XX  ⁠PPL 광고 영상.</div>
+                  </div>
+                  <div className="projectregi_content_item">
+                    {' '}
+                    <video src={testVid} autoplay loop muted playsinline />
+                    <div>10만 구독자 유튜버 XX  ⁠PPL 광고 영상.</div>
+                  </div>
+                  <div className="projectregi_content_item">
+                    {' '}
+                    <video src={testVid} controls />
+                    <div>10만 구독자 유튜버 XX  ⁠PPL 광고 영상.</div>
+                  </div>
                 </div>
               </section>
             </div>
@@ -134,21 +151,35 @@ const ProjectRegi = () => {
                 </div>
                 <div className="projectregi_checkbox_bot">
                   <img src={vidEditorLogo} alt={logo} className="ckIcon" />
-                  <div className="ckText">전문영상 편집자</div>
+                  <div className="projectregi_checkbox_videditorText">
+                    <div>전문영상{<br />}편집자</div>
+                  </div>
                 </div>
               </section>
               <section className="contentArea">
-                <div className="contnetTop">
+                <div className="contentTop">
                   <div className="contentTitle">
-                    <IoMdArrowDropright className="textIcon" />
                     <div>예제 영상</div>
                   </div>
                   <p>
                     {vidEditorData !== null ? vidEditorData.codeDesc : null}
                   </p>
                 </div>
-                <div className="contnetBot">
-                  <div>광고영상</div>
+                <div className="contentBot">
+                  <div className="projectregi_content_item">
+                    <video src={testVid} controls />
+                    <div>10만 구독자 유튜버 XX  ⁠PPL 광고 영상.</div>
+                  </div>
+                  <div className="projectregi_content_item">
+                    {' '}
+                    <video src={testVid} autoplay loop muted playsinline />
+                    <div>10만 구독자 유튜버 XX  ⁠PPL 광고 영상.</div>
+                  </div>
+                  <div className="projectregi_content_item">
+                    {' '}
+                    <video src={testVid} controls />
+                    <div>10만 구독자 유튜버 XX  ⁠PPL 광고 영상.</div>
+                  </div>
                 </div>
               </section>
             </div>
@@ -170,22 +201,34 @@ const ProjectRegi = () => {
                 <div className="projectregi_checkbox_bot">
                   <img src={vidCreatorLogo} alt={logo} className="ckIcon" />
                   <div className="projectregi_checkbox_creatorText">
-                    영상 크리에이터 인플루언서
+                    <div>영상 크리에이터{<br />} 인플루언서</div>
                   </div>
                 </div>
               </section>
               <section className="contentArea">
-                <div className="contnetTop">
+                <div className="contentTop">
                   <div className="contentTitle">
-                    <IoMdArrowDropright className="textIcon" />
                     <div>예제 영상</div>
                   </div>
                   <p>
                     {vidCreatorData !== null ? vidCreatorData.codeDesc : null}
                   </p>
                 </div>
-                <div className="contnetBot">
-                  <div>광고영상</div>
+                <div className="contentBot">
+                  <div className="projectregi_content_item">
+                    <video src={testVid} controls />
+                    <div>10만 구독자 유튜버 XX  ⁠PPL 광고 영상.</div>
+                  </div>
+                  <div className="projectregi_content_item">
+                    {' '}
+                    <video src={testVid} autoplay loop muted playsinline />
+                    <div>10만 구독자 유튜버 XX  ⁠PPL 광고 영상.</div>
+                  </div>
+                  <div className="projectregi_content_item">
+                    {' '}
+                    <video src={testVid} controls />
+                    <div>10만 구독자 유튜버 XX  ⁠PPL 광고 영상.</div>
+                  </div>
                 </div>
               </section>
             </div>
@@ -206,29 +249,38 @@ const ProjectRegi = () => {
                 </div>
                 <div className="projectregi_checkbox_bot">
                   <img src={irLogo} alt={logo} className="ckIcon" />
-                  <div className="ckText">강사 채용</div>
+                  <div className="projectregi_checkbox_irText">강사 채용</div>
                 </div>
               </section>
               <section className="contentArea">
-                <div className="contnetTop">
+                <div className="contentTop">
                   <div className="contentTitle">
-                    <IoMdArrowDropright className="textIcon" />
                     <div>예제 영상</div>
                   </div>
                   <p>{irData !== null ? irData.codeDesc : null}</p>
                 </div>
-                <div className="contnetBot">
-                  <div>광고영상</div>
+                <div className="contentBot">
+                  <div>
+                    영상 촬영에서 편집까지 온/오프라인 강의를 위한 전문 강사를
+                    U2에서 찾아보세요
+                  </div>
                 </div>
               </section>
             </div>
           </section>
         </section>
 
-        <section className="btnArea">
-          <button className="cancleBtn">취소</button>
+        <section className="projectregi_btn_area">
           <button
-            className="nextBtn"
+            className="projectregi_btn"
+            onClick={() => {
+              history.push('/creatormarket');
+            }}
+          >
+            취소
+          </button>
+          <button
+            className="projectregi_btn"
             onClick={() => {
               if (pathRegi === null) {
                 alert('대상을 선택해주세요');

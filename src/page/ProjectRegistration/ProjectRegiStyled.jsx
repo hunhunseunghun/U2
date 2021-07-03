@@ -9,7 +9,7 @@ export const PrjRegiContainer = styled.div`
 
   .projectregi_section {
     width: 100%;
-    max-width: 1500px;
+    max-width: 1800px;
   }
 
   .titleArea {
@@ -35,26 +35,32 @@ export const PrjRegiContainer = styled.div`
   }
 
   .projectregi_items {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
     width: 100%;
   }
   .projectregi_item {
+    width: 100%;
     display: inline-block;
     margin: 10px 10px 10px 0;
-    border: 1px solid black;
+    border: 1px solid #eee;
     background-color: #fff;
-    padding: 5px;
   }
   .projectregi_item_innerwrap {
     display: flex;
+    height: 100%;
   }
 
   .projectregi_checkbox_area {
-    height: 200px;
-    width: 180px;
+    padding: 0px 10px;
+    min-width: 210px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-right: 1px solid #eee;
+
+    /* background-color: #f3f3f3; */
   }
 
   .projectregi_checkbox_top {
@@ -62,7 +68,7 @@ export const PrjRegiContainer = styled.div`
     justify-content: center;
     align-items: center;
 
-    height: 70%;
+    height: 50%;
 
     input {
       width: 60px;
@@ -72,47 +78,292 @@ export const PrjRegiContainer = styled.div`
   }
   .projectregi_checkbox_bot {
     display: flex;
-
     text-align: center;
     font-size: 16px;
     font-weight: 600;
 
-    height: 30%;
+    height: 20%;
 
     .ckIcon {
-      width: 20%;
-      padding: 10px;
+      width: 30px;
+      padding: 5px;
     }
 
     div {
-      width: 80%;
-      padding: 15px 0 0 0;
-      font-size: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 22px;
+    }
+    .projectregi_checkbox_competitionText {
+    }
+    .projectregi_checkbox_videditorText {
+      div {
+        font-size: 20px;
+      }
     }
 
     .projectregi_checkbox_creatorText {
-      font-size: 12px;
+      div {
+        font-size: 18px;
+      }
+    }
+    .projectregi_checkbox_irText {
     }
   }
 
   .contentArea {
-    border: 1px solid grey;
+    padding-left: 20px;
+
+    .contentTitle {
+      padding-top: 10px;
+    }
+    .contentTop {
+      font-size: 20px;
+    }
+    p {
+      all: unset;
+      margin-left: 5px;
+      font-size: 16px;
+      color: #898989;
+    }
+
+    .contentBot {
+      width: 100%;
+      padding: 10px 0px 10px 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .projectregi_content_item {
+        width: 30%;
+        margin: 10px 5px 0px 5px;
+
+        video {
+          width: 100%;
+          min-width: 168px;
+        }
+        div {
+          position: relative;
+          top: -4px;
+          border: 1px solid #eee;
+          font-size: 14px;
+          padding: 8px 10px;
+          line-height: 16px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          color: #898989;
+        }
+      }
+    }
   }
 
   .prjDesc {
     padding: 10px 1px;
   }
-  .btnArea {
+  .projectregi_btn_area {
+    width: 100%;
     display: flex;
+    padding: 40px 0;
     justify-content: center;
-    padding: 20px 0;
+  }
 
-    button {
-      width: 100px;
-      margin: 10px;
+  .projectregi_btn {
+    border: 1px solid #d1d1d1;
+    padding: 0 40px;
+    margin: 0 15px;
+    height: 52px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #898989;
+    &:hover {
+      cursor: pointer;
+      color: black;
+      border-color: #898989;
+    }
+  }
 
+  @media only screen and (max-width: 1180px) {
+    padding: 40px 0px 50px;
+  }
+
+  @media only screen and (max-width: 1080px) {
+    .projectregi_section {
+      width: 100%;
+      max-width: 1800px;
+    }
+
+    .titleArea {
+      display: flex;
+      align-items: center;
+      height: 80px;
+      padding: 0;
+      border-bottom: 1.5px solid grey;
+      margin-top: 1rem;
+
+      div {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        width: 200px;
+        height: 50px;
+        border: 1px solid #eee;
+        font-weight: bold;
+        font-size: 1.2rem;
+        background-color: #fff;
+      }
+    }
+
+    .projectregi_items {
+      display: grid;
+      grid-template-rows: 1fr 1fr 1fr 1fr;
+      width: 100%;
+    }
+    .projectregi_item {
+      width: 100%;
+      display: inline-block;
+      margin: 10px 10px 10px 0;
+      border: 1px solid #eee;
+      background-color: #fff;
+    }
+    .projectregi_item_innerwrap {
+      display: flex;
+      height: 100%;
+    }
+
+    .projectregi_checkbox_area {
+      padding: 0px 10px;
+      min-width: 210px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-right: 1px solid #eee;
+
+      /* background-color: #f3f3f3; */
+    }
+
+    .projectregi_checkbox_top {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      height: 50%;
+
+      input {
+        width: 60px;
+        height: 60px;
+        cursor: pointer;
+      }
+    }
+    .projectregi_checkbox_bot {
+      display: flex;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 600;
+
+      height: 20%;
+
+      .ckIcon {
+        width: 30px;
+        padding: 5px;
+      }
+
+      div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 22px;
+      }
+      .projectregi_checkbox_competitionText {
+      }
+      .projectregi_checkbox_videditorText {
+        div {
+          font-size: 20px;
+        }
+      }
+
+      .projectregi_checkbox_creatorText {
+        div {
+          font-size: 18px;
+        }
+      }
+      .projectregi_checkbox_irText {
+      }
+    }
+
+    .contentArea {
+      padding-left: 20px;
+
+      .contentTitle {
+        padding-top: 10px;
+      }
+      .contentTop {
+        font-size: 20px;
+      }
+      p {
+        all: unset;
+        margin-left: 5px;
+        font-size: 16px;
+        color: #898989;
+      }
+
+      .contentBot {
+        width: 100%;
+        padding: 10px 0px 10px 10px;
+        display: block;
+
+        .projectregi_content_item {
+          display: inline-block;
+          width: 30%;
+          margin: 10px 5px 0px 5px;
+
+          video {
+            width: 100%;
+            min-width: 168px;
+          }
+          div {
+            position: relative;
+            top: -4px;
+            border: 1px solid #eee;
+            font-size: 14px;
+            padding: 8px 10px;
+            line-height: 16px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: #898989;
+          }
+        }
+      }
+    }
+
+    .prjDesc {
+      padding: 10px 1px;
+    }
+    .projectregi_btn_area {
+      width: 100%;
+      display: flex;
+      padding: 40px 0;
+      justify-content: center;
+    }
+
+    .projectregi_btn {
+      border: 1px solid #d1d1d1;
+      padding: 0 40px;
+      margin: 0 15px;
+      height: 52px;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #898989;
       &:hover {
         cursor: pointer;
+        color: black;
+        border-color: #898989;
       }
     }
   }
