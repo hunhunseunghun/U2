@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Pagination2 from '../../../component/Pagination/Pagination2';
 import { paginate } from '../../../component/Pagination/paginate';
 import { ChallengeTableContainer } from './ChallengeStyled';
