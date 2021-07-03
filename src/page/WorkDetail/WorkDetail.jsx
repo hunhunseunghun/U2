@@ -10,7 +10,15 @@ function WorkDetail(props) {
 	let [meeting, setMeeting] = useState('비대면');
 	let [terms, setTerms] = useState(['YouTube', 'TIKTOK', '파일 업로드']);
 	let [prise, setPrise] = useState('10000원');
-	let [currentTab, setCurrentTab] = useState(0); //props에서 현재 탭 가져와 설정
+	let setTab;
+	if (props.location.state.isContriClicked) {
+		setTab = 0;
+	} else if (props.location.state.isInspectClicked) {
+		setTab = 1;
+	} else {
+		setTab = 0;
+	}
+	let [currentTab, setCurrentTab] = useState(setTab); //props에서 현재 탭 가져와 설정
 	let [modalProps, setModalProps] = useState({ open: false });
 	console.log(props);
 

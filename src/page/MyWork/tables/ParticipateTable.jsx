@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Pagination2 from '../../../component/Pagination/Pagination2';
 import { paginate } from '../../../component/Pagination/paginate';
 import { ParticipateTableContainer } from './ParticipateTableStyled';
-import FeedbackModal from '../modal/feedbackModal';
+import FeedbackModal from '../modal/feedback/feedbackModal';
 function ParticipateTable({ datas }) {
 	const [quests, setQuests] = useState({
 		data: datas,
@@ -67,7 +67,33 @@ function ParticipateTable({ datas }) {
 										<td>{data.category}</td>
 										<td>{data.name}</td>
 										<td>{data.status}</td>
-										<td>{data.presentation}</td>
+										{/* <td>{data.presentation}</td> */}
+										<td className="presentation-td">
+											{(() => {
+												switch (data.presentation) {
+													case '지원서': {
+														return (
+															<button
+																className="resume"
+																onClick={() => {
+																	console.log('지원서 clicked');
+																}}
+															>
+																지원서
+															</button>
+														);
+													}
+													case '자료제출': {
+														return (
+															<button className="presentation">자료제출</button>
+														);
+													}
+													default: {
+														return data.presentation;
+													}
+												}
+											})()}
+										</td>
 										<td>
 											{data.feedback ? (
 												<button

@@ -27,7 +27,7 @@ let datas = [
 		category: '전문영상 편집자',
 		name: '의뢰3',
 		status: '승인',
-		presentation: '지원서',
+		presentation: '자료제출',
 		feedback: 'this is feedback 2',
 		requestDate: '2021-01-01',
 		dueDate: '채용시 마감',
