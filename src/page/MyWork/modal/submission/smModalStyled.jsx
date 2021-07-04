@@ -20,7 +20,7 @@ export const ModalContainer = styled.div`
 	}
 	.modal > section {
 		width: 80%;
-		max-width: 450px;
+		max-width: 850px;
 		margin: 0 auto;
 		border-radius: 0.3rem;
 		background-color: #fff;
@@ -29,7 +29,7 @@ export const ModalContainer = styled.div`
 	}
 	.modal > section > header {
 		position: relative;
-		padding: 16px 64px 16px 16px;
+		padding: 5px 54px 5px 16px;
 		background-color: #f1f1f1;
 		font-weight: 700;
 	}
@@ -46,8 +46,34 @@ export const ModalContainer = styled.div`
 	}
 	.modal > section > main {
 		padding: 16px;
+		height: 500px;
+		width: 100%;
 		border-bottom: 1px solid #dee2e6;
 		border-top: 1px solid #dee2e6;
+		section {
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-start;
+			/* align-items: center; */
+		}
+
+		/* div:nth-child(1) {
+			//첫번째 div (category 란)
+			background-color: grey;
+			width: 100px;
+			height: 100%;
+			border-bottom: 1px solid black;
+		} */
+		/* div:nth-child(2) {
+			//두번째 div (input 란)
+			background-color: ivory;
+			width: 00px;
+			max-width: 350px;
+			border-bottom: solid 1px black;
+		} */
+		.auth-btn {
+			border: 1px solid grey;
+		}
 	}
 	.modal > section > footer {
 		padding: 12px 16px;
