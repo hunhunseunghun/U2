@@ -84,8 +84,8 @@ function RegistTable({ datas }) {
 														pathname: '/workdetail',
 														state: {
 															projectId: data.id,
-															isContriClicked: true,
-															isInspectClicked: false,
+															isContriClicked: false,
+															isInspectClicked: true,
 														},
 													}}
 												>

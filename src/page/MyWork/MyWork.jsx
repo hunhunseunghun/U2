@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MyWorkContainer } from './MyWorkStyled.jsx';
 import ParticipateTable from './tables/ParticipateTable';
@@ -8,17 +8,20 @@ import registDatas from './sampledatas/sampledataRegist.js';
 import { GrAdd } from 'react-icons/gr';
 import axios from 'axios';
 const table = {
-	0: <RegistTable datas={registDatas}></RegistTable>, //add new props
-	1: <ParticipateTable datas={participateDatas}></ParticipateTable>, //add new props
+	'등록 프로젝트': <RegistTable datas={registDatas}></RegistTable>, //add new props
+	'참여 프로젝트': (
+		<ParticipateTable datas={participateDatas}></ParticipateTable>
+	), //add new props
 };
-let twoTabs;
-if (participateDatas > registDatas) {
-	twoTabs = ['등록 프로젝트', '참여 프로젝트'];
-} else {
-	twoTabs = ['참여 프로젝트', '등록 프로젝트'];
-}
+
 const MyWork = (props) => {
-	let [currentTab, setCurrentTab] = useState(0);
+	let twoTabs;
+	if (participateDatas.length < registDatas.length) {
+		twoTabs = ['등록 프로젝트', '참여 프로젝트'];
+	} else {
+		twoTabs = ['참여 프로젝트', '등록 프로젝트'];
+	}
+	let [currentTab, setCurrentTab] = useState('등록 프로젝트');
 	let [newRegistration, setNewAccept] = useState(true);
 	let [newParticipant, setNewQuest] = useState(false);
 
@@ -26,16 +29,19 @@ const MyWork = (props) => {
 		setCurrentTab(id);
 	};
 	//axios.get --> setNewAccept / setNewQuest
-	axios
-		.get('https://u2-rest-dev.azurewebsites.net/api/Campaign/challenge/3')
-		.then((response) => {
-			console.log('response:');
-			console.log(response.data);
-		})
-		.catch((err) => {
-			console.log('response error:');
-			console.log(err);
-		});
+
+	useEffect(() => {
+		axios
+			.get('https://u2-rest-dev.azurewebsites.net/api/Campaign/challenge/3')
+			.then((response) => {
+				console.log('response:');
+				console.log(response.data);
+			})
+			.catch((err) => {
+				console.log('response error:');
+				console.log(err);
+			});
+	});
 	console.log(props.location.state);
 
 	return (
@@ -49,11 +55,11 @@ const MyWork = (props) => {
 						<span
 							onClick={() => {
 								console.log('index: ', index);
-								clickHandler(index);
+								clickHandler(tabname);
 							}}
 							className={
 								(() => {
-									if (currentTab === index) {
+									if (currentTab === tabname) {
 										return 'selected';
 									} else {
 										return 'unselected';

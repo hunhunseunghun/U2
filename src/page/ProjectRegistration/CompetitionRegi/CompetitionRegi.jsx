@@ -66,6 +66,7 @@ const CompetitionRegi = () => {
       },
     },
   });
+
   const handleStartDate = date => {
     setStartDate(date);
     setFinishDate(date);
