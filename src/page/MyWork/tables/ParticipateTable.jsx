@@ -3,6 +3,8 @@ import Pagination2 from '../../../component/Pagination/Pagination2';
 import { paginate } from '../../../component/Pagination/paginate';
 import { ParticipateTableContainer } from './ParticipateTableStyled';
 import FeedbackModal from '../modal/feedback/feedbackModal';
+import ResumeModal from '../modal/resume/resumeModal';
+import SubmissionModal from '../modal/submission/submissionModal';
 function ParticipateTable({ datas }) {
 	const [quests, setQuests] = useState({
 		data: datas,
@@ -17,16 +19,47 @@ function ParticipateTable({ datas }) {
 		open: false,
 		data: null,
 	});
+	const [resumeProps, setResumeProps] = useState({ open: false, data: null });
+	const [submissionProps, setSubmissionProps] = useState({
+		open: false,
+		data: null,
+	});
 
 	const handlePageChange = (page) => {
 		setQuests({ ...quests, currentPage: page });
 	};
+
 	const handleOpenFeedback = (feedback) => {
 		setFeedbackProps({ open: true, data: feedback });
 	};
-	const handleFeedbackClose = () => {
-		setFeedbackProps({ ...feedbackProps, open: false });
+	const handleOpenResume = (resume) => {
+		setResumeProps({ open: true, data: resume });
 	};
+	const handleOpenSubmission = (submission) => {
+		setSubmissionProps({ open: true, data: submission });
+	};
+
+	const handleModalClose = (modalType) => {
+		switch (modalType) {
+			case 'feedback': {
+				setFeedbackProps({ ...feedbackProps, open: false });
+				break;
+			}
+			case 'resume': {
+				setResumeProps({ ...resumeProps, open: false });
+				break;
+			}
+			case 'submission': {
+				setSubmissionProps({ ...submissionProps, open: false });
+				break;
+			}
+			default: {
+				console.log('no such case');
+				break;
+			}
+		}
+	};
+
 	useEffect(() => {
 		setQuests({ ...quests, data: datas });
 	}, [datas]);
@@ -35,8 +68,22 @@ function ParticipateTable({ datas }) {
 			<FeedbackModal
 				open={feedbackProps.open}
 				data={feedbackProps.data}
-				handleModalClose={() => {
-					handleFeedbackClose();
+				handleModalClose={(modalType) => {
+					handleModalClose(modalType);
+				}}
+			/>
+			<ResumeModal
+				open={resumeProps.open}
+				data={resumeProps.data}
+				handleModalClose={(modalType) => {
+					handleModalClose(modalType);
+				}}
+			/>
+			<SubmissionModal
+				open={submissionProps.open}
+				data={submissionProps.data}
+				handleModalClose={(modalType) => {
+					handleModalClose(modalType);
 				}}
 			/>
 			<table>
@@ -77,6 +124,7 @@ function ParticipateTable({ datas }) {
 																className="resume"
 																onClick={() => {
 																	console.log('지원서 clicked');
+																	handleOpenResume(data.presentation);
 																}}
 															>
 																지원서
@@ -85,7 +133,14 @@ function ParticipateTable({ datas }) {
 													}
 													case '자료제출': {
 														return (
-															<button className="presentation">자료제출</button>
+															<button
+																className="presentation"
+																onClick={() => {
+																	handleOpenSubmission(data.presentation);
+																}}
+															>
+																자료제출
+															</button>
 														);
 													}
 													default: {

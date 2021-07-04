@@ -15,7 +15,7 @@ function FeedbackModal({ open, data, handleModalClose }) {
 							<button
 								className="close"
 								onClick={() => {
-									handleModalClose();
+									handleModalClose('feedback');
 								}}
 							>
 								{' '}
