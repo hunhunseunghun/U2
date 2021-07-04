@@ -36,4 +36,16 @@ export const ParticipateTableContainer = styled.div`
 	button.feedback-button:hover {
 		background-color: grey;
 	}
+	.presentation-td > button {
+		border: solid 1px grey;
+		border-radius: 10px;
+		background-color: white;
+		padding: 5px;
+		:hover {
+			background-color: grey;
+			cursor: pointer;
+		}
+	}
+	button.resume {
+	}
 `;
