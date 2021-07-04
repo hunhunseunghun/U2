@@ -19,9 +19,8 @@ export const ModalContainer = styled.div`
 		font-family: 'Roboto', 'Noto Sans KR', 'Noto Sans', sans-serif;
 	}
 	.modal > section {
-		width: 100%;
-		max-width: 700px;
-		height: 500px;
+		width: 80%;
+		max-width: 450px;
 		margin: 0 auto;
 		border-radius: 0.3rem;
 		background-color: #fff;
@@ -31,9 +30,8 @@ export const ModalContainer = styled.div`
 	.modal > section > header {
 		position: relative;
 		padding: 16px 64px 16px 16px;
-		background-color: #1b1718;
+		background-color: #f1f1f1;
 		font-weight: 700;
-		color: white;
 	}
 	.modal > section > header button {
 		position: absolute;
@@ -48,16 +46,14 @@ export const ModalContainer = styled.div`
 	}
 	.modal > section > main {
 		padding: 16px;
-		height: 65%;
 		border-bottom: 1px solid #dee2e6;
 		border-top: 1px solid #dee2e6;
 	}
 	.modal > section > footer {
 		padding: 12px 16px;
-		text-align: center;
+		text-align: right;
 	}
 	.modal > section > footer button {
-		width: 90px;
 		padding: 6px 12px;
 		color: #fff;
 		background-color: #6c757d;
@@ -67,24 +63,12 @@ export const ModalContainer = styled.div`
 		&:hover {
 			background-color: #4b5157;
 		}
-		&.okay {
-			background-color: #f84034;
-		}
-		&.close {
-			background-color: white;
-			color: #4b5157;
-			border: solid 1px grey;
-		}
 	}
 	.modal.openModal {
 		display: flex;
 		align-items: center;
 		animation: modal-bg-show 0.3s;
 	}
-	.cate {
-		background-color: grey;
-	}
-
 	@keyframes modal-show {
 		from {
 			opacity: 0;

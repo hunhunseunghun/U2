@@ -1,25 +1,23 @@
-import { useState, useEffect } from 'react';
-import { ModalContainer } from './fbModalStyled';
-function FeedbackModal({ open, data, handleModalClose }) {
-	console.log(open);
+import { useState } from 'react';
+import { ModalContainer } from './smModalStyled';
+function Modal({ open, data, handleModalClose }) {
 	console.log(data);
-
 	return (
 		<ModalContainer>
 			<div className={open ? 'openModal modal' : 'modal'}>
 				{open ? (
 					<section>
-						<header>피드백</header>
-						<main>{data}</main>
+						<header>this is header</header>
+						<main>this is main</main>
 						<footer>
 							<button
 								className="close"
 								onClick={() => {
-									handleModalClose();
+									handleModalClose('submission');
 								}}
 							>
 								{' '}
-								닫기{' '}
+								취소{' '}
 							</button>
 						</footer>
 					</section>
@@ -28,4 +26,4 @@ function FeedbackModal({ open, data, handleModalClose }) {
 		</ModalContainer>
 	);
 }
-export default FeedbackModal;
+export default Modal;
