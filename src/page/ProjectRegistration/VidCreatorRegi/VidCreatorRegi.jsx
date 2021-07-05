@@ -3,7 +3,6 @@ import DropDown from './DropDown/DropDown.jsx';
 import FileUploader from './FileUploader/FileUploader.jsx';
 import QuillTextEditor from './QuillTextEditor/QuillTextEditor.jsx';
 import { RegiConationer } from './VidCreatorRegiStyled.jsx';
-import Registration from '../Registration/Registration.jsx';
 import chatIcon from '../../../Img/chat.svg';
 import offlineChatIcon from '../../../Img/offlinechat.svg';
 import { DateTimePicker } from '@material-ui/pickers';
@@ -47,13 +46,7 @@ const VidCreatorRegi = () => {
   const [etcFile, setEtcFile] = useState(null);
   const [etcFilePath, setEtcFilePath] = useState('Choose file to upload');
   //-----------------------------------------------------
-
-  const selectDom = useRef(0);
   const [onMeet, setOnMeet] = useState(null); //온라인 오프라인 미팅 state 값
-  const [upLoadFile, setUpLoadFile] = useState(null); //업로드 파일 객체
-  const [uploadFilePath, setUploadFilePath] = useState('Choose file to upload'); //업로드 파일패스 , placholder 값
-  const [editFilePath, setEditFilePath] = useState('Choose file to upload'); //편집 대상 파일 패스, placeholder 값
-  const [editFile, setEditFile] = useState(null);
   const myStorage = window.localStorage;
   //handle date ----------------------------------------------
   const [startDate, setStartDate] = useState(new Date());
@@ -81,13 +74,7 @@ const VidCreatorRegi = () => {
   useEffect(() => {
     myStorage.setItem('onMeet', onMeet);
     console.log('useEffect excuted');
-  }, [onMeet, editFile]);
-
-  const handleTest = () => {
-    console.log(myStorage.getItem('onMeet'));
-    console.log(onMeet);
-    console.log(myStorage);
-  };
+  }, [onMeet]);
 
   // on offline meet state handle
   const handleOnline = () => {
@@ -97,70 +84,6 @@ const VidCreatorRegi = () => {
   const handleOffline = () => {
     setOnMeet(false);
   };
-
-  // const [upLoadFileArr, setUploadFileArr] = useState([]); //업로드 파일 배열
-  const fileChangeHandler = e => {
-    let fileNames = [];
-    for (let key in e.target.files) {
-      fileNames[key] = e.target.files[key];
-    }
-    // upLoadFileArr.push(e.target.files[0]);
-    setUpLoadFile(e.target.files);
-    console.log('fileList', e.target.files);
-    console.log(upLoadFile);
-
-    //input placeholder handler
-    if (document.getElementById('fileUpLoader').value) {
-      setUploadFilePath(document.getElementById('fileUpLoader').value);
-    } else {
-      setUploadFilePath('Choose file to upload');
-    }
-    // handleFileNames();
-  };
-
-  const editFileChangeHandler = e => {
-    setEditFile(e.target.files);
-    console.log(editFile);
-    //input placeholder handler
-    if (document.getElementById('editFileUpLoader').value) {
-      setEditFilePath(document.getElementById('editFileUpLoader').value);
-    } else {
-      setEditFilePath('Choose file to upload');
-    }
-    // handleFileNames();
-  };
-
-  // const handleDeleteFile = (thisIdx) => {
-  //   upLoadFileArr.splice(thisIdx, 1);
-  //   selectDom.current.classList.value = "noDisplay";
-  //   console.log("currDom", selectDom.current);
-  //   console.log(selectDom);
-  //   console.log("delete excute : ", thisIdx);
-  //   console.log(upLoadFileArr);
-  // };
-
-  // const handleFileNames = () => {
-  //   console.log("excute handlefileNames");
-  //   if (upLoadFileArr.length !== 0) {
-  //     return upLoadFileArr.map((ele, idx) => {
-  //       console.log(idx);
-  //       let thisIdx = idx;
-  //       return (
-  //         <div
-  //           className={`inputFileNames${thisIdx} file${thisIdx}`}
-  //           ref={selectDom}
-  //         >
-  //           {ele.name}
-  //           <button onClick={() => handleDeleteFile(thisIdx)} key={thisIdx}>
-  //             x
-  //           </button>
-  //         </div>
-  //       );
-  //     });
-  //   } else {
-  //     return null;
-  //   }
-  // };
 
   // 첨부 파일 업로드 로직
   // const uploadFile = async (e) => {
@@ -240,7 +163,7 @@ const VidCreatorRegi = () => {
           </section>
 
           <section className="ele">
-            <div className="menu">파일</div>
+            <div className="menu">파일 업로드</div>
             <div className="inputInfo vidcreator_files_uploader">
               <FileUploader
                 file={etcFile}
