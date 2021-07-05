@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import DropDown from './DropDown/DropDown.jsx';
 import FileUploader from './FileUploader/FileUploader.jsx';
+import QuillTextEditor from './QuillTextEditor/QuillTextEditor.jsx';
 import { RegiConationer } from './VidCreatorRegiStyled.jsx';
 import Registration from '../Registration/Registration.jsx';
 import chatIcon from '../../../Img/chat.svg';
@@ -251,42 +252,44 @@ const VidCreatorRegi = () => {
           </section>
           <section className="ele ">
             <div className="menu">* 프로젝트 미팅 여부</div>
-            <div
-              className={
-                onMeet !== null && onMeet
-                  ? 'vidcreator_onlinemeet onmeet_isactive'
-                  : 'vidcreator_onlinemeet'
-              }
-              onClick={handleOnline}
-            >
-              <img
-                src={chatIcon}
-                width="40px"
-                alt="onlineChat"
-                className="onlineMeetIcon"
-              />
-              <div className="onlineMeetText">
-                <div>비대면 미팅</div>
-                <div>화상채팅을 통해 미팅합니다.</div>
+            <div className="inputInfo project_meet_type">
+              <div
+                className={
+                  onMeet !== null && onMeet
+                    ? 'vidcreator_onlinemeet onmeet_isactive'
+                    : 'vidcreator_onlinemeet'
+                }
+                onClick={handleOnline}
+              >
+                <img
+                  src={chatIcon}
+                  width="40px"
+                  alt="onlineChat"
+                  className="onlineMeetIcon"
+                />
+                <div className="onlineMeetText">
+                  <div>비대면 미팅</div>
+                  <div>화상채팅을 통해 미팅합니다.</div>
+                </div>
               </div>
-            </div>
-            <div
-              className={
-                onMeet !== null && !onMeet
-                  ? 'vidcreaotr_offlinemeet onmeet_isactive'
-                  : 'vidcreaotr_offlinemeet'
-              }
-              onClick={handleOffline}
-            >
-              <img
-                src={offlineChatIcon}
-                alt={offlineChatIcon}
-                className="offlineIcon"
-                width="30px"
-              />
-              <div className="offlineMeetText">
-                <div>오프라인 미팅 필요</div>
-                <div>과제 수행 중 오프라인 미팅이 필요합니다.</div>
+              <div
+                className={
+                  onMeet !== null && !onMeet
+                    ? 'vidcreaotr_offlinemeet onmeet_isactive'
+                    : 'vidcreaotr_offlinemeet'
+                }
+                onClick={handleOffline}
+              >
+                <img
+                  src={offlineChatIcon}
+                  alt={offlineChatIcon}
+                  className="offlineIcon"
+                  width="30px"
+                />
+                <div className="offlineMeetText">
+                  <div>오프라인 미팅 필요</div>
+                  <div>과제 수행 중 오프라인 미팅이 필요합니다.</div>
+                </div>
               </div>
             </div>
           </section>
@@ -555,142 +558,184 @@ const VidCreatorRegi = () => {
               </div>
             </div>
           </section>
-        </section>
-        <section className="contentArea prjRegi">
-          <div className="prjDesc">
-            해당 영상 제작/편집 프리랜서들에게 단 몇분만에 연락을 취해 보실 수
-            있습니다. 프로필 정보나 평가 등급, 포트폴리오 자료, 등을 확인해 보신
-            다음에, 채팅 서비스를 이용하여 얘기도 나눠 보십시오. 작업 결과를
-            받으면, 그 결과를 확인하여 100% 만족하실 때에만 그 보상을 지불해
-            주십시오.
-          </div>
+          <section className="ele">
+            <div className="menu">* 보상 조건</div>
+            <div className="inputInfo vidcreator_rewardtype">
+              <div className="vidcreator_reception_form">
+                <table className="vidcreator_reception_table">
+                  <tbody>
+                    <tr>
+                      <td>
+                        {' '}
+                        <div className="table_checkarea">
+                          <input
+                            type="checkbox"
+                            name="rewardcash"
+                            value="rewardcash"
+                          />
+                        </div>{' '}
+                      </td>
+                      <td>
+                        <div className="table_title">현금 보상</div>
+                      </td>
+                      <td>
+                        {' '}
+                        <section className="reception_options">
+                          <div>
+                            <input
+                              type="text"
+                              name="rewardcash"
+                              placeholder="무료일 경우 0원 입력"
+                            />
 
-          <section className="ele request">
-            <div className="menu" onClick={handleTest}>
-              의뢰 주체
-            </div>
-            <div className="inputInfo">
-              <div className="radioWrap">
-                <input type="radio" name="chk_info" value="indivisual" />
-                <div>개인 : 홍길동 님</div>
-                <input type="radio" name="chk_info" value="business" />
-                <div>비즈니스</div>
+                            <select name="currencyselect">
+                              <option value="krw">KRW</option>
+                            </select>
+                          </div>
+                          <div>
+                            프로젝트 정상 완료시 현금 보상하실 경우 지급할
+                            금액을 입력해 주십시오
+                          </div>
+                        </section>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        {' '}
+                        <div className="table_checkarea">
+                          <input
+                            type="checkbox"
+                            name="rewardproduct"
+                            value="rewardproduct"
+                          />
+                        </div>{' '}
+                      </td>
+                      <td>
+                        <div className="table_title">현물 보상</div>
+                      </td>
+                      <td>
+                        <section className="reception_options">
+                          <div>
+                            <input type="text" name="rewardproduct" />
+                          </div>
+                          <div>
+                            상품, 사은품, 상품권 등 지급할 현물을 입력해
+                            주십시오
+                          </div>
+                        </section>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </section>
           <section className="ele">
-            <div className="menu">* 프로젝트 명</div>
-            <div className="inputInfo">
-              <div className="inputPrjName">
+            <div className="menu">공모 공지글</div>
+            <div className="inputInfo notice_editor_form">
+              <QuillTextEditor className="notice_editor" />
+            </div>
+          </section>
+          <section className="ele">
+            <div className="menu">* 댓글 기능</div>
+            <section className="inputInfo replyfunc_form">
+              <div className="replyfunc_items">
+                <div className="replyfunc_item_wrap">
+                  <input type="radio" name="replyrequired" value="댓글사용" />
+                  <div>댓글 사용</div>
+                </div>
+              </div>
+              <div className="replyfunc_items">
+                <div className="replyfunc_item_wrap">
+                  {' '}
+                  <input
+                    type="radio"
+                    name="replyrequired"
+                    value="댓글사용안함"
+                  />
+                  <div>댓글 사용 안함</div>
+                </div>
+              </div>
+            </section>
+          </section>
+          <section className="ele">
+            <div className="menu">* 담당자</div>
+            <section className="inputInfo manager_form">
+              <div className="manager_items">
+                <input type="text" />
+              </div>
+              <div className="manager_items manager_noexposure">
+                <section>
+                  <input type="checkbox" name="noexposure" />
+                  <div className="manager_noexposure_text">비노출</div>
+                </section>
+              </div>
+            </section>
+          </section>
+          <section className="ele">
+            <div className="menu">* 연락처</div>
+            <section className="inputInfo phonenumber_form">
+              <div className="phonenumber_items">
+                <select name="areacode" id="areacode">
+                  <option value="goldfish">010</option>
+                  <option value="02">02</option>
+                  <option value="">031</option>
+                  <option value="cat">032</option>
+                  <option value="hamster">033</option>
+                  <option value="parrot">041</option>
+                  <option value="spider">042</option>
+                  <option value="goldfish">043</option>
+                  <option value="">044</option>
+                  <option value="cat">051</option>
+                  <option value="hamster">052</option>
+                  <option value="parrot">053</option>
+                  <option value="spider">054</option>
+                  <option value="goldfish">055</option>
+                  <option value="">061</option>
+                  <option value="cat">062</option>
+                  <option value="hamster">063</option>
+                  <option value="parrot">064</option>
+                </select>
+              </div>
+              -
+              <div className="phonenumber_items">
                 <input
-                  type="text"
-                  className="prjName"
-                  placeholder="프로젝트명을 입력해 주십시오"
+                  type="tel"
+                  name="phonenumber"
+                  placeholder="0000"
+                  maxlength="4"
                 />
               </div>
-              <div>프로젝트명을 입력해 주십시오</div>
-            </div>
-          </section>
-          <section className="ele">
-            <div className="menu">* 프로젝트 설명</div>
-            <div className="inputInfo">
-              <div className="inputPrjDesc">
+              -
+              <div className="phonenumber_items">
                 <input
-                  type="text"
-                  className="prjName"
-                  placeholder="U2 서비스 매니저에게 프로젝트에 대하여 좀 더 자세한 내용을 알려주세요"
+                  type="tel"
+                  name="phonenumber"
+                  placeholder="0000"
+                  maxlength="4"
                 />
               </div>
-              <div>프로젝트 설명을 입력해 주십시오</div>
-            </div>
+              <div className="manager_items phonenumber_noexposure">
+                <section>
+                  <input type="checkbox" name="noexposure" />
+                  <div className="manager_noexposure_text">비노출</div>
+                </section>
+              </div>
+            </section>
           </section>
           <section className="ele">
-            <div className="menu"> 파일 업로드</div>
-            <div className="inputPrjUpload">
-              <div className="uploadTextArea">
-                프로젝트 관련한 자료를 업로드 해주세요
+            <div className="menu">* 이메일</div>
+            <section className="inputInfo email_form">
+              <div className="email_items">
+                <input type="text" />
               </div>
-              <input
-                type="text"
-                className="fileRoute"
-                placeholder={uploadFilePath}
-                readOnly
-              />
-              <input
-                type="file"
-                id="fileUpLoader"
-                onChange={fileChangeHandler}
-                multiple
-                className="prjUpload"
-              />
-              {/* <div className="uploadFileArea">
-            {upLoadFileArr !== 0 ? handleFileNames() : null}
-          </div> */}
-            </div>
-          </section>
-          <section className="ele ">
-            <div className="menu">* 프로젝트 미팅 여부</div>
-            <div
-              className={
-                onMeet !== null && onMeet
-                  ? 'onlineMeet onmeet_isactive'
-                  : 'onlineMeet'
-              }
-              onClick={handleOnline}
-            >
-              <img
-                src={chatIcon}
-                width="50px"
-                alt="onlineChat"
-                className="onlineMeetIcon"
-              />
-              <div className="onlineMeetText">
-                <div>비대면 미팅</div>
-                <div>화상채팅을 통해 미팅합니다.</div>
+              <div className="manager_items email_noexposure">
+                <section>
+                  <input type="checkbox" name="email" />
+                  <div className="email_noexposure_text">비노출</div>
+                </section>
               </div>
-            </div>
-            <div
-              className={
-                onMeet !== null && !onMeet
-                  ? 'offlineMeet onmeet_isactive'
-                  : 'offlineMeet'
-              }
-              onClick={handleOffline}
-            >
-              <img
-                src={offlineChatIcon}
-                alt={offlineChatIcon}
-                className="offlineIcon"
-                width="40px"
-              />
-              <div className="offlineMeetText">
-                <div>오프라인 미팅 필요</div>
-                <div>과제 수행 중 오프라인 미팅이 필요합니다.</div>
-              </div>
-            </div>
-          </section>
-          <section className="ele">
-            <div className="menu">편집 대상 파일</div>
-            <div className="inputPrjUpload">
-              <div>프로젝트 관련한 자료를 업로드 해주세요</div>
-              <div className="uploadTextArea">
-                <input type="checkbox" />
-                추후 별도 제출 하겠습니다.{' '}
-              </div>
-              <input
-                type="text"
-                className="fileRoute"
-                placeholder={editFilePath}
-                readOnly
-              />
-              <input
-                type="file"
-                id="editFileUpLoader"
-                onChange={editFileChangeHandler}
-                multiple
-                className="editFileUpLoader"
-              />
-            </div>
+            </section>
           </section>
         </section>
       </div>

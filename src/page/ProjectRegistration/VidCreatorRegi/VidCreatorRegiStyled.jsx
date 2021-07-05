@@ -275,4 +275,175 @@ export const RegiConationer = styled.div`
       }
     }
   }
+
+  // reward type table css ---------------------------------------
+  .vidcreator_rewardtype {
+    font-size: 12px;
+    padding: 0;
+    width: 100%;
+    border-top: 0;
+
+    .vidcreator_reception_form {
+      width: 100%;
+      .vidcreator_reception_table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .table_checkarea {
+        width: 40.5px;
+        display: grid;
+        place-items: center;
+      }
+      .table_title {
+        text-align: center;
+        min-width: 90px;
+      }
+      tr {
+        border-top: 1px solid #d8d8d8;
+      }
+
+      td {
+        padding: 10px;
+        border-left: 1px solid #d8d8d8;
+      }
+
+      td:first-child {
+        border-left: 0;
+        width: 40px;
+      }
+
+      td:nth-child(2) {
+        width: 110px;
+      }
+
+      th:last-child,
+      td:last-child {
+        border-right: 0;
+      }
+
+      section {
+        width: 100%;
+        display: flex;
+        align-items: center;
+
+        div {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          text-align: center;
+        }
+
+        select {
+          padding: 0px 25px 0px 3px;
+          height: 22px;
+          margin-left: 3px;
+        }
+      }
+      label {
+        margin-left: 1px;
+        min-width: 70px;
+        text-align: left;
+      }
+      .reception_options {
+        display: block;
+      }
+    }
+  }
+  //editor css ----------------------------------
+  .notice_editor_form {
+    padding: 0 0 42px 0;
+  }
+  .notice_editor {
+    width: 100%;
+    height: 300px;
+    border: 0;
+  }
+
+  //reply css -------------------------------------
+  .replyfunc_items {
+    display: inline-block;
+  }
+
+  .replyfunc_item_wrap {
+    display: flex;
+    margin-right: 5px;
+    input {
+      margin-right: 3px;
+    }
+  }
+  //mananger css ------------------------------------
+
+  .manager_items {
+    display: inline-block;
+    margin-right: 5px;
+
+    section {
+      display: flex;
+
+      input {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  //phonenumber css---------------------------------
+
+  .phonenumber_items {
+    display: inline-block;
+    margin: 0 5px;
+
+    #areacode {
+      padding: 0 5px;
+      width: 60px;
+      height: 21px;
+      border: 1px solid #d8d8d8;
+    }
+
+    input {
+      width: 34px;
+    }
+
+    section {
+      display: flex;
+    }
+  }
+
+  //email css---------------------------------
+
+  .email_items {
+    display: inline-block;
+    margin-right: 5px;
+
+    section {
+      display: flex;
+
+      input {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  // prev next button css ---------------------
+  .compeitiionregi_btn_area {
+    width: 100%;
+    display: flex;
+    padding: 40px 0;
+    justify-content: center;
+  }
+
+  .compeitiionregi_btn {
+    border: 1px solid #d1d1d1;
+    padding: 0 40px;
+    margin: 0 15px;
+    height: 52px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #898989;
+    &:hover {
+      color: black;
+      border-color: #898989;
+    }
+  }
 `;
