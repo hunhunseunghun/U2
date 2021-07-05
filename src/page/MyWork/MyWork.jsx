@@ -7,6 +7,8 @@ import participateDatas from './sampledatas/sampledataParticipate.js';
 import registDatas from './sampledatas/sampledataRegist.js';
 import { GrAdd } from 'react-icons/gr';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+const server = process.env.REACT_APP_U2_DB_HOST;
 const table = {
 	'등록 프로젝트': <RegistTable datas={registDatas}></RegistTable>, //add new props
 	'참여 프로젝트': (
@@ -21,27 +23,30 @@ const MyWork = (props) => {
 	} else {
 		twoTabs = ['참여 프로젝트', '등록 프로젝트'];
 	}
-	let [currentTab, setCurrentTab] = useState('등록 프로젝트');
-	let [newRegistration, setNewAccept] = useState(true);
-	let [newParticipant, setNewQuest] = useState(false);
+	const [currentTab, setCurrentTab] = useState(twoTabs[0]);
+	const [newRegistration, setNewAccept] = useState(true);
+	const [newParticipant, setNewQuest] = useState(false);
+
+	const userInfo = useSelector((state) => state.userInfo);
+	console.log('userInfo: ', userInfo);
 
 	let clickHandler = (id) => {
 		setCurrentTab(id);
 	};
 	//axios.get --> setNewAccept / setNewQuest
 
-	useEffect(() => {
-		axios
-			.get('https://u2-rest-dev.azurewebsites.net/api/Campaign/challenge/3')
-			.then((response) => {
-				console.log('response:');
-				console.log(response.data);
-			})
-			.catch((err) => {
-				console.log('response error:');
-				console.log(err);
-			});
-	});
+	// useEffect(() => {
+	// 	axios
+	// 		.get('https://u2-rest-dev.azurewebsites.net/api/Campaign/challenge/3')
+	// 		.then((response) => {
+	// 			console.log('response:');
+	// 			console.log(response.data);
+	// 		})
+	// 		.catch((err) => {
+	// 			console.log('response error:');
+	// 			console.log(err);
+	// 		});
+	// });
 	console.log(props.location.state);
 
 	return (
