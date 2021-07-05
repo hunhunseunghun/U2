@@ -21,7 +21,7 @@ export const ModalContainer = styled.div`
 	.modal > section {
 		width: 100%;
 		max-width: 700px;
-		height: 500px;
+		height: relative;
 		margin: 0 auto;
 		border-radius: 0.3rem;
 		background-color: #fff;
@@ -48,7 +48,7 @@ export const ModalContainer = styled.div`
 	}
 	.modal > section > main {
 		padding: 16px;
-		height: 65%;
+		height: 80%;
 		border-bottom: 1px solid #dee2e6;
 		border-top: 1px solid #dee2e6;
 	}
@@ -81,8 +81,30 @@ export const ModalContainer = styled.div`
 		align-items: center;
 		animation: modal-bg-show 0.3s;
 	}
-	.cate {
+	/* .cate {
 		background-color: grey;
+	} */
+	.ele {
+		display: flex;
+	}
+	.menu {
+		display: flex;
+		min-width: 150px;
+		align-items: center;
+		border-right: 1px solid#d8d8d8;
+		border-top: 1px solid #d8d8d8;
+		background-color: #f3f3f3;
+		padding-left: 10px;
+		min-height: 50px;
+		font-size: 15px;
+	}
+	.inputInfo {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		border-top: 1px solid #00000023;
+		padding: 0 10px;
+		font-size: 12px;
 	}
 
 	@keyframes modal-show {
