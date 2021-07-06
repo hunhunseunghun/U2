@@ -80,17 +80,22 @@ export const ParticipateTableContainer = styled.div`
       }
     }
   }
+
   tbody {
     text-align: center;
+
+    tr {
+      border-bottom: 1px solid #eee;
+    }
+
+    td {
+      padding: 10px;
+      height: 100px;
+    }
   }
 
   tbody:last-child {
-    border-bottom: 1px solid #2d2123;
-  }
-
-  td {
-    padding: 10px;
-    height: 100px;
+    border: 0;
   }
 
   hr.row-line {
@@ -98,20 +103,20 @@ export const ParticipateTableContainer = styled.div`
   }
   button.feedback-button {
     cursor: pointer;
-    width: 50px;
-    border: solid 1px grey;
-    border-radius: 10px;
+    padding: 2px 5px;
+    border: 1px solid #eee;
+    border-radius: 5px;
   }
   button.feedback-button:hover {
-    background-color: grey;
+    background-color: #e3e3e3;
   }
   .presentation-td > button {
-    border: solid 1px grey;
-    border-radius: 10px;
+    border: 1px solid #eee;
+    border-radius: 5px;
     background-color: white;
-    padding: 5px;
+    padding: 2px 5px;
     :hover {
-      background-color: grey;
+      background-color: #e3e3e3;
       cursor: pointer;
     }
   }

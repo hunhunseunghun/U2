@@ -81,15 +81,18 @@ export const RegistTableContainer = styled.div`
   }
   tbody {
     text-align: center;
+    tr {
+      border-bottom: 1px solid #eee;
+    }
+
+    td {
+      padding: 10px;
+      height: 100px;
+    }
   }
 
   tbody:last-child {
     border-bottom: 1px solid #2d2123;
-  }
-
-  td {
-    padding: 10px;
-    height: 100px;
   }
 
   hr.row-line {
