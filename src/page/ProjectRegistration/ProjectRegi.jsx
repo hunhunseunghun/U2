@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { PrjRegiContainer } from './ProjectRegiStyled.jsx';
 import logo from '../../Img/logo.svg';
-import competitionLogo from '../../Img/Icons/trophy-solid.svg';
+import headerIcon from '../../Img/Icons/headerIcon.png';
 import vidEditorLogo from '../../Img/Icons/cut-solid.svg';
 import vidCreatorLogo from '../../Img/Icons/video-solid.svg';
 import irLogo from '../../Img/Icons/chalkboard-teacher-solid.svg';
@@ -77,17 +77,22 @@ const ProjectRegi = () => {
   }, []);
 
   return (
-    <PrjRegiContainer className="contents_wrap">
+    <PrjRegiContainer className="projectregi_contents_wrap">
       <section className="projectregi_section">
-        <section className="titleArea">
-          <div>대상 선택</div>
+        <div className="projectregi_title_area">
+          <div>프로젝트 등록</div>
+          <div className="projectregi_title_style"></div>
+        </div>
+        <section className="projectregi_title_sub">
+          <img src={headerIcon} alt="" />
+          <div>대상선택</div>
         </section>
 
         <section className="projectregi_items prjSelect">
           <section className="projectregi_item">
             <div className="projectregi_item_innerwrap">
               <section className="projectregi_checkbox_area">
-                <div className="projectregi_checkbox_top">
+                <div className="projectregi_checkbox">
                   <input
                     id="competition"
                     type="checkbox"
@@ -97,12 +102,7 @@ const ProjectRegi = () => {
                     onChange={handleChekcboxChange}
                     chekced={false}
                   />
-                </div>
-                <div className="projectregi_checkbox_bot">
-                  <img src={competitionLogo} alt={logo} className="ckIcon" />
-                  <div className="projectregi_checkbox_competitionText">
-                    <div>공모전</div>
-                  </div>
+                  <div>공모전</div>
                 </div>
               </section>
               <section className="contentArea">
@@ -135,7 +135,7 @@ const ProjectRegi = () => {
           <section className="projectregi_item">
             <div className="projectregi_item_innerwrap">
               <section className="projectregi_checkbox_area">
-                <div className="projectregi_checkbox_top">
+                <div className="projectregi_checkbox">
                   <input
                     type="checkbox"
                     className="ckBox"
@@ -143,12 +143,7 @@ const ProjectRegi = () => {
                     value="videditor"
                     onChange={handleChekcboxChange}
                   />
-                </div>
-                <div className="projectregi_checkbox_bot">
-                  <img src={vidEditorLogo} alt={logo} className="ckIcon" />
-                  <div className="projectregi_checkbox_videditorText">
-                    <div>전문영상{<br />}편집자</div>
-                  </div>
+                  <div>전문영상{<br />}편집자</div>
                 </div>
               </section>
               <section className="contentArea">
@@ -183,7 +178,7 @@ const ProjectRegi = () => {
           <section className="projectregi_item">
             <div className="projectregi_item_innerwrap">
               <section className="projectregi_checkbox_area">
-                <div className="projectregi_checkbox_top">
+                <div className="projectregi_checkbox projectregi_vidcreator_checkbox">
                   <input
                     type="checkbox"
                     className="ckBox"
@@ -192,12 +187,7 @@ const ProjectRegi = () => {
                     onChange={handleChekcboxChange}
                     chekced={false}
                   />
-                </div>
-                <div className="projectregi_checkbox_bot ">
-                  <img src={vidCreatorLogo} alt={logo} className="ckIcon" />
-                  <div className="projectregi_checkbox_creatorText">
-                    <div>영상 크리에이터{<br />} 인플루언서</div>
-                  </div>
+                  <div>영상 크리에이터{<br />} 인플루언서</div>
                 </div>
               </section>
               <section className="contentArea">
@@ -232,7 +222,7 @@ const ProjectRegi = () => {
           <section className="projectregi_item projectregi_item_ir">
             <div className="projectregi_item_innerwrap">
               <section className="projectregi_checkbox_area">
-                <div className="projectregi_checkbox_top">
+                <div className="projectregi_checkbox ">
                   <input
                     type="checkbox"
                     className="ckBox"
@@ -241,10 +231,7 @@ const ProjectRegi = () => {
                     onChange={handleChekcboxChange}
                     chekced={false}
                   />
-                </div>
-                <div className="projectregi_checkbox_bot">
-                  <img src={irLogo} alt={logo} className="ckIcon" />
-                  <div className="projectregi_checkbox_irText">강사 채용</div>
+                  <div>강사 채용</div>
                 </div>
               </section>
               <section className="contentArea">
@@ -275,7 +262,7 @@ const ProjectRegi = () => {
             취소
           </button>
           <button
-            className="projectregi_btn"
+            className="projectregi_btn projectregi_btn_next"
             onClick={() => {
               if (pathRegi === null) {
                 alert('대상을 선택해주세요');
