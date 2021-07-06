@@ -124,7 +124,7 @@ export const RegiConationer = styled.div`
 
   // onlinemeet section css ---------------
 
-  .vidcreaotr_offlinemeet {
+  .videditor_offlinemeet {
     display: flex;
     justify-content: center;
     align-items: center;

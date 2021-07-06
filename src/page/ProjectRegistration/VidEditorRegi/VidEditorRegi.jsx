@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import DropDown from './DropDown/DropDown.jsx';
 import FileUploader from './FileUploader/FileUploader.jsx';
 import EditFileUploader from './EditFileUploader/EditFileUploader.jsx';
@@ -219,8 +219,8 @@ const VidEditorRegi = () => {
               <div
                 className={
                   onMeet !== null && !onMeet
-                    ? 'vidcreaotr_offlinemeet onmeet_isactive'
-                    : 'vidcreaotr_offlinemeet'
+                    ? 'videditor_offlinemeet onmeet_isactive'
+                    : 'videditor_offlinemeet'
                 }
                 onClick={handleOffline}
               >

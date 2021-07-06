@@ -7,28 +7,6 @@ export const Container = styled.div`
   left: 0;
   z-index: 3;
 
-  .ele {
-    display: flex;
-  }
-  .menu {
-    display: flex;
-    min-width: 150px;
-    align-items: center;
-    border-right: 1px solid#d8d8d8;
-    border-top: 1px solid #d8d8d8;
-    background-color: #f3f3f3;
-    padding-left: 10px;
-    min-height: 50px;
-    font-size: 15px;
-  }
-  .inputInfo {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    border-top: 1px solid #00000023;
-    padding: 0 10px;
-    font-size: 12px;
-  }
   .inActive {
     display: none;
   }
@@ -47,7 +25,6 @@ export const Container = styled.div`
     }
   }
 
-  // handle modal css ---------------------------
   .modal {
     display: none;
     position: fixed;
