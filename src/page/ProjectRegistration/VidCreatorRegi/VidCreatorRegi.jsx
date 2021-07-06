@@ -1,15 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import DropDown from './DropDown/DropDown.jsx';
 import FileUploader from './FileUploader/FileUploader.jsx';
 import QuillTextEditor from './QuillTextEditor/QuillTextEditor.jsx';
 import { RegiConationer } from './VidCreatorRegiStyled.jsx';
-import chatIcon from '../../../Img/chat.svg';
-import offlineChatIcon from '../../../Img/offlinechat.svg';
+import onlineIcon from '../../../Img/Icons/onlineIcon.png';
+import offlineIcon from '../../../Img/Icons/offlineIcon.png';
+import headerIcon from '../../../Img/Icons/headerIcon.png';
+import downArrowIcon from '../../../Img/Icons/sortarrowdown.png';
 import { DateTimePicker } from '@material-ui/pickers';
 import { createMuiTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 
 const VidCreatorRegi = () => {
+  let history = useHistory();
   // handle modal state---------------------------------------
   const [isActive, setIsActive] = useState(false);
   const [defaultIdx, setDefaultIdx] = useState(0);
@@ -103,21 +107,30 @@ const VidCreatorRegi = () => {
   return (
     <RegiConationer className="contents_wrap">
       <div className="vidcreatorregi_section">
-        <section className="titleArea">
+        <div className="vidcreatorregi_title_area">
           <div>프로젝트 등록</div>
+          <div className="vidcreatorregi_title_style"></div>
+        </div>
+        <section className="vidcreatorregi_title_sub">
+          <img src={headerIcon} alt="" />
+          <div>공모전 등록</div>
         </section>
+
         <section className="vidcreatorregi_items">
           <section className="ele">
             <div className="menu">* 주최사</div>
-            <div className="inputInfo profiles_name">
-              <div
-                className="default_profiles"
-                onClick={() => {
-                  setIsActive(true);
-                }}
-              >
-                {`${profiles[defaultIdx].form} : ${profiles[defaultIdx].companyName}`}
+            <div className="inputInfo company_profiles">
+              <div className="default_profile">
+                <div>{`${profiles[defaultIdx].form} : ${profiles[defaultIdx].companyName}`}</div>
+                <img
+                  src={downArrowIcon}
+                  alt=""
+                  onClick={() => {
+                    setIsActive(true);
+                  }}
+                />
               </div>
+
               <DropDown
                 setDefaultIdx={setDefaultIdx}
                 profiles={profiles}
@@ -185,9 +198,9 @@ const VidCreatorRegi = () => {
                 onClick={handleOnline}
               >
                 <img
-                  src={chatIcon}
+                  src={offlineIcon}
                   width="40px"
-                  alt="onlineChat"
+                  alt="offline"
                   className="onlineMeetIcon"
                 />
                 <div className="onlineMeetText">
@@ -204,10 +217,10 @@ const VidCreatorRegi = () => {
                 onClick={handleOffline}
               >
                 <img
-                  src={offlineChatIcon}
-                  alt={offlineChatIcon}
+                  src={onlineIcon}
+                  alt="online"
                   className="offlineIcon"
-                  width="30px"
+                  width="40px"
                 />
                 <div className="offlineMeetText">
                   <div>오프라인 미팅 필요</div>
@@ -660,6 +673,22 @@ const VidCreatorRegi = () => {
               </div>
             </section>
           </section>
+          <div className="vidcreatorregi_bottom_style"></div>
+        </section>
+        <section className="vidcreatorregi_btn_area">
+          {' '}
+          <button
+            className="vidcreatorregi_btn"
+            onClick={() => {
+              history.push('/prjregi');
+            }}
+          >{`취 소`}</button>
+          <button
+            className="vidcreatorregi_btn vidcreatorregi_btn_next"
+            onClick={() => {
+              history.push('/prjregi');
+            }}
+          >{`등록하기`}</button>
         </section>
       </div>
     </RegiConationer>

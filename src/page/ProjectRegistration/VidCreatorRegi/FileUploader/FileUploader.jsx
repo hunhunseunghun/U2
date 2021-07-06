@@ -29,17 +29,19 @@ const FileUploader = ({ file, setFile, filePath, setFilePath }) => {
       return file.map((ele, idx) => {
         return (
           <div key={`${ele}${idx}`}>
-            {ele.name}{' '}
-            <TiDeleteOutline
-              src={TiDeleteOutline}
-              alt={TiDeleteOutline}
-              className="removeFileBtn"
-              onClick={() => {
-                const edit = file.slice();
-                edit.splice(idx, 1);
-                setFile(edit);
-              }}
-            ></TiDeleteOutline>
+            <div className="filepreview_ele">
+              {ele.name}{' '}
+              <TiDeleteOutline
+                src={TiDeleteOutline}
+                alt={TiDeleteOutline}
+                className="removeFileBtn"
+                onClick={() => {
+                  const edit = file.slice();
+                  edit.splice(idx, 1);
+                  setFile(edit);
+                }}
+              ></TiDeleteOutline>
+            </div>
           </div>
         );
       });

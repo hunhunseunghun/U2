@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const RegiContainer = styled.div`
   padding: 40px 45px 100px;
-  background-color: #fafafa;
+  /* background-color: #fafafa; */
   display: flex;
   justify-content: center;
   font-weight: 500;
@@ -63,11 +63,21 @@ export const RegiContainer = styled.div`
   }
 
   .defaultCompetition {
-    background-color: #ebebeb;
-    padding: 5px 10px;
-    &:hover {
-      cursor: pointer;
-      background-color: #e2e2e2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px soild #dddddd;
+    padding: 5px 5px 5px 10px;
+
+    img {
+      position: relative;
+      top: 2px;
+      width: 16px;
+      margin-left: 5px;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 
@@ -98,6 +108,7 @@ export const RegiContainer = styled.div`
     border-top: 1px solid #00000023;
     padding: 0 10px;
     font-size: 12px;
+    color: #747474;
   }
 
   .competition_webpageURL,
@@ -333,6 +344,11 @@ export const RegiContainer = styled.div`
     }
   }
 
+  .competition_bottom_style {
+    background-color: #dddddd;
+    height: 1px;
+  }
+
   // prev next button css ---------------------
   .compeitiionregi_btn_area {
     width: 100%;
@@ -367,8 +383,8 @@ export const RegiContainer = styled.div`
     &:hover {
       cursor: pointer;
       color: #fff;
-      background-color: #ff3d2f;
-      border-color: #f84135;
+      background-color: #ff2a1b;
+      border-color: #ff2a1b;
     }
   }
 

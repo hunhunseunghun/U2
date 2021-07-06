@@ -5,6 +5,7 @@ import FileUploader from './FileUploader/FileUploader.jsx';
 import { RegiContainer } from './CompetitionRegiStyled.jsx';
 import DropDown from './DropDown/DropDown.jsx';
 import headerIcon from '../../../Img/Icons/headerIcon.png';
+import downArrowIcon from '../../../Img/Icons/sortarrowdown.png';
 import QuillTextEditor from './QuillTextEditor/QuillTextEditor.jsx';
 import { TiDeleteOutline } from 'react-icons/ti'; // 파일삭제 버튼 icon
 import { DateTimePicker } from '@material-ui/pickers';
@@ -93,14 +94,17 @@ const CompetitionRegi = () => {
           <section className="ele">
             <div className="menu">* 주최사</div>
             <div className="inputInfo competitionName">
-              <div
-                className="defaultCompetition"
-                onClick={() => {
-                  setIsActive(true);
-                }}
-              >
-                {`${competition[defaultIdx].form} : ${competition[defaultIdx].companyName}`}
+              <div className="defaultCompetition">
+                <div>{`${competition[defaultIdx].form} : ${competition[defaultIdx].companyName}`}</div>
+                <img
+                  src={downArrowIcon}
+                  alt=""
+                  onClick={() => {
+                    setIsActive(true);
+                  }}
+                />
               </div>
+
               <DropDown
                 setDefaultIdx={setDefaultIdx}
                 competition={competition}
@@ -586,6 +590,7 @@ const CompetitionRegi = () => {
               </div>
             </section>
           </section>
+          <div className="competition_bottom_style"></div>
         </section>
         <section className="compeitiionregi_btn_area">
           {' '}
@@ -594,7 +599,7 @@ const CompetitionRegi = () => {
             onClick={() => {
               history.push('/prjregi');
             }}
-          >{`< 이전`}</button>
+          >{`취 소`}</button>
           <button
             className="compeitiionregi_btn compeitiionregi_btn_next"
             onClick={() => {
