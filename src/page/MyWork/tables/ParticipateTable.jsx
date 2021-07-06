@@ -4,7 +4,7 @@ import { paginate } from '../../../component/Pagination/paginate';
 import { ParticipateTableContainer } from './ParticipateTableStyled';
 import FeedbackModal from '../modal/feedback/feedbackModal';
 import ResumeModal from '../modal/resume/resumeModal';
-import SubmissionModal from '../modal/submission/submissionModal';
+import SubmitModal from '../modal/submission/SubmitModal';
 function ParticipateTable({ datas }) {
 	const [quests, setQuests] = useState({
 		data: datas,
@@ -79,7 +79,7 @@ function ParticipateTable({ datas }) {
 					handleModalClose(modalType);
 				}}
 			/>
-			<SubmissionModal
+			<SubmitModal
 				open={submissionProps.open}
 				data={submissionProps.data}
 				handleModalClose={(modalType) => {

@@ -75,6 +75,7 @@ function Login(props) {
 						photo: response.data.photoUrl,
 						token: response.data.token,
 						charge: response.data.chargeApp.chargeIdx,
+						memberIdx: response.data.memberIdx,
 					}),
 				);
 				if (!response.data.chargeApp.chargeIdx) history.push('/price');
