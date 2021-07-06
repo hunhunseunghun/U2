@@ -24,7 +24,14 @@ const RecruitmentAreasModal = ({ modalOpen, handleCloseModal, header }) => {
                 &times;{' '}
               </button>
             </header>
-            <main></main>
+            <main>
+              <section>
+                <div>
+                  <input type="checkbox" name="photoshop" value="photoshop" />
+                  <div>photoshop</div>
+                </div>
+              </section>
+            </main>
             <footer>
               <button className="close" onClick={handleCloseModal}>
                 {' '}
