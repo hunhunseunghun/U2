@@ -2,50 +2,100 @@ import styled from 'styled-components';
 const unselectedTab = require('../../Img/MWunselectedTab.png').default;
 const selectedTab = require('../../Img/MWselectedTab.png').default;
 export const MyWorkContainer = styled.div`
-	padding-top: 90px;
-	/* display: flex;
-	flex-direction: row; */
-	div.wrapper {
-		display: flex;
-		flex-direction: row;
-	}
-	div.header {
-		text-align: center;
-		font-size: 36px;
-	}
-	span.tab {
-		cursor: pointer;
-		text-align: center;
-		align-items: center;
-	}
-	span.selected {
-		color: white;
-		width: 60%;
-		height: 58px;
-		background-image: url(${selectedTab});
-	}
-	span.unselected {
-		color: black;
-		/* Style for "레이어 131 사본" */
-		width: 60%;
-		height: 48px;
-		background-color: #b9b9b9;
-		background-image: url(${unselectedTab});
-	}
-	span.newAlert {
-		background-size: 25 10;
-		background-color: red;
-	}
-	.regi-project {
-		color: black;
-		padding: 10px;
-		overflow: hidden;
-		margin-left: calc(100% - 180px);
-		margin-bottom: 50px;
-		border: 1px solid black;
-		text-decoration: unset;
-	}
-	.contents {
-		margin-top: 20px;
-	}
+  padding: 40px 45px 100px;
+  display: grid;
+  place-items: center;
+  font-weight: 500;
+  background-color: #fafafa;
+  z-index: 1;
+
+  .mywork_section {
+    width: 100%;
+    max-width: 1200px;
+  }
+
+  .mywork_title_area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    padding: 0;
+    margin-top: 1rem;
+    margin-bottom: 20px;
+
+    div {
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      font-weight: 500;
+      font-size: 36px;
+    }
+
+    .mywork_title_style {
+      margin-top: 3px;
+      width: 20px;
+      border: 1px solid #181818;
+    }
+  }
+  .mywork_wrapper {
+    display: flex;
+  }
+
+  span.tab {
+    position: relative;
+    width: 120px;
+    padding: 10px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid #eee;
+    border-bottom: 0;
+    text-align: center;
+    align-items: center;
+    z-index: 10;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .tab_newalert {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+  }
+  span.selected {
+    color: #181818;
+    background-color: #fff;
+    border-bottom: 0;
+  }
+  span.unselected {
+    color: #535353;
+    background-color: #e3e3e3;
+    border-bottom: 1px solid #eee;
+  }
+  span.newAlert {
+    padding: 0 3px;
+    color: #fafafa;
+    background-color: #ff0000;
+  }
+  .regi-project {
+    color: black;
+    margin-left: calc(100% - 180px);
+    margin-bottom: 50px;
+    border: 1px solid black;
+    text-decoration: unset;
+  }
+  .myproject_contents {
+    position: relative;
+    top: -1px;
+    border: 1px solid #eee;
+    background-color: #fff;
+  }
+
+  @media only screen and (max-width: 900px) {
+    padding: 40px 0px 100px;
+    .mywork_title_area {
+    }
+  }
 `;
