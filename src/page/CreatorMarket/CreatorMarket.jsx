@@ -82,7 +82,7 @@ const Main = props => {
                 setTabActive('promo');
               }}
             >
-              <span>광고/홍보</span>
+              <span>영상 크리에이터/인플루언서</span>
             </div>
             <div
               className={tabActive === 'cv' ? 'tab_cv tab_active' : 'tab_cv'}
@@ -90,7 +90,7 @@ const Main = props => {
                 setTabActive('cv');
               }}
             >
-              <span>창작영상</span>
+              <span>전문영상 편집자</span>
             </div>
             <div
               className={tabActive === 've' ? 'tab_ve tab_active' : 'tab_ve'}
@@ -98,7 +98,7 @@ const Main = props => {
                 setTabActive('ve');
               }}
             >
-              <span>영상편집</span>
+              <span>강사채용</span>
             </div>
             <div
               className={tabActive === 'ir' ? 'tab_ir tab_active' : 'tab_ir'}

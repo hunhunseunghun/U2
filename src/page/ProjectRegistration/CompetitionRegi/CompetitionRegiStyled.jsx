@@ -12,28 +12,43 @@ export const RegiContainer = styled.div`
     width: 100%;
     max-width: 1100px;
   }
-
-  .titleArea {
+  .competitionregi_title_area {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     height: 80px;
     padding: 0;
-    border-bottom: 1.5px solid grey;
     margin-top: 1rem;
+    margin-bottom: 20px;
 
     div {
       display: flex;
       text-align: center;
       justify-content: center;
       align-items: center;
-      width: 200px;
-      height: 50px;
-      border: 1px solid #eee;
-      font-weight: bold;
-      font-size: 1.2rem;
-      background-color: #fff;
+      font-weight: 500;
+      font-size: 32px;
+    }
+    .competitionregi_title_style {
+      margin-top: 3px;
+      width: 20px;
+      border: 1px solid #181818;
     }
   }
+
+  .competitionregi_title_sub {
+    display: flex;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 600;
+    color: #3b3b3b;
+    margin-bottom: 10px;
+    img {
+      margin-right: 10px;
+    }
+  }
+
   .competitionregi_items {
     background-color: #fff;
   }
@@ -83,6 +98,15 @@ export const RegiContainer = styled.div`
     border-top: 1px solid #00000023;
     padding: 0 10px;
     font-size: 12px;
+  }
+
+  .competition_webpageURL,
+  .competition_sponsor,
+  .competition_organizer,
+  .competition_name_input {
+    input {
+      width: 280px;
+    }
   }
 
   // 파일 업로더 css ----------------------------
@@ -318,17 +342,33 @@ export const RegiContainer = styled.div`
   }
 
   .compeitiionregi_btn {
+    width: 120px;
     border: 1px solid #d1d1d1;
-    padding: 0 40px;
-    margin: 0 15px;
-    height: 52px;
+    padding: 5px 20px;
+    margin: 0 5px;
     border-radius: 4px;
     font-size: 16px;
     font-weight: 600;
     color: #898989;
     &:hover {
+      cursor: pointer;
       color: black;
       border-color: #898989;
+    }
+  }
+
+  .compeitiionregi_btn_next {
+    border: 1px solid #d1d1d1;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    background-color: #f84135;
+    border-color: #f84135;
+    &:hover {
+      cursor: pointer;
+      color: #fff;
+      background-color: #ff3d2f;
+      border-color: #f84135;
     }
   }
 
@@ -338,6 +378,6 @@ export const RegiContainer = styled.div`
     }
   }
   @media only screen and (max-width: 900px) {
-    padding: 40px 0px 50px;
+    padding: 40px 10px 50px;
   }
 `;

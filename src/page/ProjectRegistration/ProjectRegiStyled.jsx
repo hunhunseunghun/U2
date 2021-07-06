@@ -38,8 +38,10 @@ export const PrjRegiContainer = styled.div`
   .projectregi_title_sub {
     display: flex;
     align-items: center;
-    font-size: 24px;
+    font-size: 22px;
+    font-weight: 600;
     color: #3b3b3b;
+    margin-bottom: 10px;
     img {
       margin-right: 10px;
     }
@@ -171,7 +173,7 @@ export const PrjRegiContainer = styled.div`
   .projectregi_btn_next {
     border: 1px solid #d1d1d1;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 500;
     color: #fff;
     background-color: #f84135;
     border-color: #f84135;

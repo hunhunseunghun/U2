@@ -4,9 +4,6 @@ import axios from 'axios';
 import { PrjRegiContainer } from './ProjectRegiStyled.jsx';
 import logo from '../../Img/logo.svg';
 import headerIcon from '../../Img/Icons/headerIcon.png';
-import vidEditorLogo from '../../Img/Icons/cut-solid.svg';
-import vidCreatorLogo from '../../Img/Icons/video-solid.svg';
-import irLogo from '../../Img/Icons/chalkboard-teacher-solid.svg';
 import testVid from '../../Img/testVid.mp4';
 import testTumb from '../../Img/slider1.jpeg';
 
