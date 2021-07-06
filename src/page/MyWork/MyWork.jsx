@@ -33,20 +33,169 @@ const MyWork = (props) => {
 	let clickHandler = (id) => {
 		setCurrentTab(id);
 	};
-	//axios.get --> setNewAccept / setNewQuest
-
-	// useEffect(() => {
-	// 	axios
-	// 		.get('https://u2-rest-dev.azurewebsites.net/api/Campaign/challenge/3')
-	// 		.then((response) => {
-	// 			console.log('response:');
-	// 			console.log(response.data);
-	// 		})
-	// 		.catch((err) => {
-	// 			console.log('response error:');
-	// 			console.log(err);
-	// 		});
-	// });
+	const token = localStorage.getItem('token');
+	console.log('token in mywork: ', token);
+	var data = JSON.stringify({
+		missions: [
+			{
+				videos: [
+					{
+						challengeIdx: 0,
+						seq: 0,
+						platform: 'string',
+						url: 'string',
+						platformRequired: 0,
+						registMemberIdx: 0,
+						registDate: '2021-07-06T01:35:47.227Z',
+						modifyMemberIdx: 0,
+						modifyDate: '2021-07-06T01:35:47.227Z',
+					},
+				],
+				challengeIdx: 0,
+				seq: 0,
+				missionDesc: 'string',
+				datePub: '2021-07-06T01:35:47.227Z',
+				dateBegin: '2021-07-06T01:35:47.227Z',
+				dateFin: '2021-07-06T01:35:47.227Z',
+				statusCode: 0,
+				shareRequired: 0,
+				filmRequired: 0,
+				emailRequired: 0,
+				contactRequired: 0,
+				addrRequired: 0,
+				imageRequired: 0,
+				noteRequired: 0,
+				registMemberIdx: 0,
+				registDate: '2021-07-06T01:35:47.227Z',
+				modifyMemberIdx: 0,
+				modifyDate: '2021-07-06T01:35:47.227Z',
+			},
+		],
+		hire: {
+			fields: [
+				{
+					challengeIdx: 0,
+					seq: 0,
+					fieldCode: 'string',
+					fieldName: 'string',
+					registMemberIdx: 0,
+					registDate: '2021-07-06T01:35:47.227Z',
+					modifyMemberIdx: 0,
+					modifyDate: '2021-07-06T01:35:47.227Z',
+				},
+			],
+			docs: [
+				{
+					challengeIdx: 0,
+					seq: 0,
+					docCode: 'string',
+					registMemberIdx: 0,
+					registDate: '2021-07-06T01:35:47.227Z',
+					modifyMemberIdx: 0,
+					modifyDate: '2021-07-06T01:35:47.227Z',
+				},
+			],
+			challengeIdx: 1,
+			seq: 0,
+			isOnline: 0,
+			loc: 'string',
+			applyWay: 0,
+			dateBegin: '2021-07-06T01:35:47.227Z',
+			dateFin: '2021-07-06T01:35:47.227Z',
+			deadline: 0,
+			registMemberIdx: 0,
+			registDate: '2021-07-06T01:35:47.227Z',
+			modifyMemberIdx: 0,
+			modifyDate: '2021-07-06T01:35:47.227Z',
+		},
+		applications: [
+			{
+				challengeIdx: 0,
+				missonSeq: 0,
+				memberIdx: 0,
+				urlCat: 'string',
+				url: 'string',
+				contactCode: 0,
+				contact: 'string',
+				email: 'string',
+				postCode: 'string',
+				addr: 'string',
+				photo: 'string',
+				note: 'string',
+				statusCode: 0,
+				checkStatusCode: 0,
+				dateApplied: '2021-07-06T01:35:47.227Z',
+				registMemberIdx: 0,
+				registDate: '2021-07-06T01:35:47.227Z',
+				modifyMemberIdx: 0,
+				modifyDate: '2021-07-06T01:35:47.227Z',
+			},
+		],
+		ownerName: '이호준',
+		rewards: [
+			{
+				challengeIdx: 0,
+				seq: 0,
+				cat: 0,
+				qty: 0,
+				pts: 0,
+				currency: 'string',
+				datePayment: '2021-07-06T01:35:47.227Z',
+				registMemberIdx: 0,
+				registDate: '2021-07-06T01:35:47.227Z',
+				modifyMemberIdx: 0,
+				modifyDate: '2021-07-06T01:35:47.227Z',
+			},
+		],
+		challengerCount: 0,
+		commentCount: 0,
+		shareCount: 0,
+		challengeIdx: 1,
+		title: 'string',
+		subtitle: 'string',
+		ownerIdx: 0,
+		companyA: 'string',
+		companyB: 'string',
+		url: 'string',
+		challengeDesc: 'string',
+		meetCode: 0,
+		challengeTargetCode: 0,
+		datePub: '2021-07-06T01:35:47.227Z',
+		logo: 'string',
+		mainImage: 'string',
+		fileRef: 'string',
+		promoting: 0,
+		commentAllowed: 0,
+		charge: 'string',
+		chargeShown: 0,
+		chargeContact: 'string',
+		chargeContactShown: 0,
+		chargeeMail: 'string',
+		chargeeMailShown: 0,
+		registMemberIdx: 0,
+		registDate: '2021-07-06T01:35:47.227Z',
+		modifyMemberIdx: 0,
+		modifyDate: '2021-07-06T01:35:47.227Z',
+	});
+	const config = {
+		method: 'post',
+		url: 'https://u2-rest-dev.azurewebsites.net/api/Campaign/challenge',
+		headers: {
+			Authorization: 'Bearer ' + token,
+		},
+		data: data,
+	};
+	useEffect(() => {
+		axios(config)
+			.then((response) => {
+				console.log('response:');
+				console.log(response.data);
+			})
+			.catch((err) => {
+				console.log('response error:');
+				console.log(err);
+			});
+	});
 	console.log(props.location.state);
 
 	return (
