@@ -44,45 +44,45 @@ function RegistTable({ datas }) {
 
       <table>
         <thead>
-          {/* <tr> */}
-          <th key={'image'}>
-            <section>
-              <span>이미지</span>
-              <img src={sortarrowdown} alt=""></img>
-            </section>
-          </th>
-          <th key="category">
-            {' '}
-            <section>
-              <span>카테고리</span>
-              <img src={sortarrowdown} alt=""></img>
-            </section>
-          </th>
-          <th key={'name'}>
-            <section>
-              <span>과제명</span>
-              <img src={sortarrowdown} alt=""></img>
-            </section>
-          </th>
-          <th key={'contriNum'}>
-            <section>
-              <span>참여자수</span>
-              <img src={sortarrowdown} alt=""></img>
-            </section>
-          </th>
-          <th key={'inspection'}>
-            <section>
-              <span>검수대상</span>
-              <img src={sortarrowdown} alt=""></img>
-            </section>
-          </th>
-          <th key={'dueDate'}>
-            <section>
-              <span>마감일</span>
-              <img src={sortarrowdown} alt=""></img>
-            </section>
-          </th>
-          {/* </tr> */}
+          <tr>
+            <th key={'image'}>
+              <section>
+                <span>이미지</span>
+                <img src={sortarrowdown} alt=""></img>
+              </section>
+            </th>
+            <th key="category">
+              {' '}
+              <section>
+                <span>카테고리</span>
+                <img src={sortarrowdown} alt=""></img>
+              </section>
+            </th>
+            <th key={'name'}>
+              <section>
+                <span>과제명</span>
+                <img src={sortarrowdown} alt=""></img>
+              </section>
+            </th>
+            <th key={'contriNum'}>
+              <section>
+                <span>참여자수</span>
+                <img src={sortarrowdown} alt=""></img>
+              </section>
+            </th>
+            <th key={'inspection'}>
+              <section>
+                <span>검수대상</span>
+                <img src={sortarrowdown} alt=""></img>
+              </section>
+            </th>
+            <th key={'dueDate'}>
+              <section>
+                <span>마감일</span>
+                <img src={sortarrowdown} alt=""></img>
+              </section>
+            </th>
+          </tr>
         </thead>
         <tbody>
           {pagedQuests

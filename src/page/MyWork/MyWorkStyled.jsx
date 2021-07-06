@@ -30,7 +30,7 @@ export const MyWorkContainer = styled.div`
       justify-content: center;
       align-items: center;
       font-weight: 500;
-      font-size: 36px;
+      font-size: 32px;
     }
 
     .mywork_title_style {
