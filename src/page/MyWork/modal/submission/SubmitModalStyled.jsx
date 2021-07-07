@@ -13,7 +13,7 @@ export const ModalContainer = styled.div`
 	.modal button {
 		outline: none;
 		cursor: pointer;
-		border: 0;
+		border: 1px solid;
 		margin-left: 10px;
 		font-weight: 400;
 		font-family: 'Roboto', 'Noto Sans KR', 'Noto Sans', sans-serif;
@@ -165,6 +165,9 @@ export const ModalContainer = styled.div`
 	.address {
 		display: flex;
 		flex-direction: column;
+		input {
+			width: 100%;
+		}
 	}
 	@keyframes modal-show {
 		from {

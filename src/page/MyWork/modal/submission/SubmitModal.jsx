@@ -7,9 +7,11 @@ import Banks from './banks';
 import { validateEmail } from '../../../../library/validate';
 import axios from 'axios';
 import 'react-phone-number-input/style.css';
+import AddressModal from '../address/AddressModal';
+
 // import 'csshake.min.css';
 const server = process.env.REACT_APP_TEST_API;
-const key = 'devU01TX0FVVEgyMDIxMDcwNzE4MTQzOTExMTM3ODk=';
+const key = process.env.REACT_APP_JUSO_KEY;
 function Modal({ open, data, handleModalClose }) {
 	console.log(data);
 	const userInfo = useSelector((state) => state.userInfo);
@@ -37,6 +39,8 @@ function Modal({ open, data, handleModalClose }) {
 	const [address1, setAddress1] = useState('');
 	const [address2, setAddress2] = useState('');
 	const [address3, setAddress3] = useState('');
+	const [openAddrModal, setOpenAddrModal] = useState(false);
+	const [addrMobile, setAddrMobile] = useState('');
 	//----------------------------handles
 
 	const handleValidateMobile = () => {
@@ -81,19 +85,17 @@ function Modal({ open, data, handleModalClose }) {
 		}
 	};
 	const handleSearchAddress = () => {
-		console.log('address: ', address1);
-		console.log('key: ', key);
+		setOpenAddrModal(true);
+	};
+	const setAddressData = (data) => {
+		console.log('address data: ', data);
+		setAddress1(data.zonecode);
 
-		axios
-			.get(
-				`https://www.juso.go.kr/addrlink/addrLinkApi.do?currentPage=1&countPerPage=10&keyword=${address1}&confmKey=${key}&firstSort=road`,
-			)
-			.then((response) => {
-				console.log(response.data);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		setAddress2(
+			data.address +
+				(data.bname && ' ' + data.bname) +
+				(data.buildingName && ' ' + data.buildingName),
+		);
 	};
 
 	const handleSubmit = () => {
@@ -156,6 +158,13 @@ function Modal({ open, data, handleModalClose }) {
 	return (
 		<ModalContainer>
 			<div className={open ? 'openModal modal' : 'modal'}>
+				<AddressModal
+					open={openAddrModal}
+					handleModalClose={() => {
+						setOpenAddrModal(false);
+					}}
+					setAddressData={setAddressData}
+				/>
 				{open ? (
 					<section>
 						<header>자료 제출</header>
@@ -389,19 +398,18 @@ function Modal({ open, data, handleModalClose }) {
 									<section className="ele">
 										<div className="menu">받으시는 분 연락처</div>
 										<div className="inputInfo">
-											<input></input>
+											<PhoneInput
+												onChange={setAddrMobile}
+												value={addrMobile}
+												placeholder="전화번호를 입력해주십시오"
+											/>
 										</div>
 									</section>
 									<section className="ele">
 										<div className="menu">배송지 주소</div>
 										<div className="inputInfo address">
 											<div>
-												<input
-													value={address1}
-													onChange={(e) => {
-														setAddress1(e.target.value);
-													}}
-												></input>
+												<input value={address1} readOnly></input>
 												<button
 													onClick={() => {
 														handleSearchAddress();
@@ -411,16 +419,16 @@ function Modal({ open, data, handleModalClose }) {
 												</button>
 											</div>
 
-											<input
-												onChange={(e) => {
-													setAddress2(e.target.value);
-												}}
-											></input>
-											<input
-												setAddress3={(e) => {
-													setAddress3(e.target.value);
-												}}
-											></input>
+											<input value={address2} readOnly></input>
+											<div>
+												상세주소:{' '}
+												<input
+													value={address3}
+													onChange={(e) => {
+														setAddress3(e.target.value);
+													}}
+												></input>
+											</div>
 										</div>
 									</section>
 								</div>
@@ -428,7 +436,13 @@ function Modal({ open, data, handleModalClose }) {
 							<section className="ele">
 								<div className="menu">이미지</div>
 								<div className="inputInfo">
-									<input type=""></input>
+									<input
+										type="file"
+										onChange={(e) => {
+											console.log(e.target.files);
+										}}
+										multiple
+									></input>
 								</div>
 							</section>
 							<section className="ele">
