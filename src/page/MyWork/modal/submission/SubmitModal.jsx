@@ -1,13 +1,19 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { ModalContainer } from './SubmitModalStyled';
 import { BsPlusSquareFill, BsDashSquareFill } from 'react-icons/bs';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import Banks from './banks';
 import { validateEmail } from '../../../../library/validate';
+import axios from 'axios';
 import 'react-phone-number-input/style.css';
 // import 'csshake.min.css';
+const server = process.env.REACT_APP_TEST_API;
+const key = 'devU01TX0FVVEgyMDIxMDcwNzE4MTQzOTExMTM3ODk=';
 function Modal({ open, data, handleModalClose }) {
 	console.log(data);
+	const userInfo = useSelector((state) => state.userInfo);
+
 	const [title, setTitle] = useState('');
 
 	const [URLs, setURLS] = useState([]);
@@ -28,6 +34,9 @@ function Modal({ open, data, handleModalClose }) {
 
 	const [bankAccountNum, setBankAccountNum] = useState('');
 
+	const [address1, setAddress1] = useState('');
+	const [address2, setAddress2] = useState('');
+	const [address3, setAddress3] = useState('');
 	//----------------------------handles
 
 	const handleValidateMobile = () => {
@@ -70,6 +79,78 @@ function Modal({ open, data, handleModalClose }) {
 				break;
 			}
 		}
+	};
+	const handleSearchAddress = () => {
+		console.log('address: ', address1);
+		console.log('key: ', key);
+
+		axios
+			.get(
+				`https://www.juso.go.kr/addrlink/addrLinkApi.do?currentPage=1&countPerPage=10&keyword=${address1}&confmKey=${key}&firstSort=road`,
+			)
+			.then((response) => {
+				console.log(response.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
+	const handleSubmit = () => {
+		console.log(userInfo);
+		var data = {
+			videos: [
+				{
+					challengeIdx: 3,
+					missonSeq: 1,
+					memberIdx: userInfo.memberIdx, //50
+					seq: 1,
+					platform: 'YU',
+					videoId: 'string',
+					registMemberIdx: userInfo.memberIdx, //50
+					registDate: '2021-07-07T06:27:06.067Z',
+					modifyMemberIdx: 0,
+					modifyDate: '2021-07-07T06:27:06.067Z',
+				},
+			],
+			challengeIdx: 3,
+			missonSeq: 1,
+			memberIdx: userInfo.memberIdx,
+			contactCode: 0,
+			contact: mobileNum, //"+821033117871"
+			email: email, //"dlghwns0314@naver.com"
+			postCode: 'string',
+			addr: 'string',
+			photo: 'string',
+			note: 'string',
+			statusCode: 0,
+			checkStatusCode: 0,
+			dateApplied: '2021-07-07T06:27:06.067Z',
+			registMemberIdx: userInfo.memberIdx,
+			registDate: '2021-07-07T06:27:06.067Z',
+			modifyMemberIdx: 0,
+			modifyDate: '2021-07-07T06:27:06.067Z',
+		};
+		var config = {
+			method: 'get',
+			// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmit
+			url: server + '/Campaign/challengesubmit',
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+			data: data,
+		};
+		console.log('server: ', server);
+		console.log('token: ', localStorage.getItem('token'));
+		axios(config)
+			.then((response) => {
+				console.log('response: ');
+				console.log(response.data);
+			})
+			.catch((err) => {
+				console.log('err: ', err);
+			});
 	};
 
 	return (
@@ -313,8 +394,33 @@ function Modal({ open, data, handleModalClose }) {
 									</section>
 									<section className="ele">
 										<div className="menu">배송지 주소</div>
-										<div className="inputInfo">
-											<input></input>
+										<div className="inputInfo address">
+											<div>
+												<input
+													value={address1}
+													onChange={(e) => {
+														setAddress1(e.target.value);
+													}}
+												></input>
+												<button
+													onClick={() => {
+														handleSearchAddress();
+													}}
+												>
+													주소 찾기
+												</button>
+											</div>
+
+											<input
+												onChange={(e) => {
+													setAddress2(e.target.value);
+												}}
+											></input>
+											<input
+												setAddress3={(e) => {
+													setAddress3(e.target.value);
+												}}
+											></input>
 										</div>
 									</section>
 								</div>
@@ -322,7 +428,7 @@ function Modal({ open, data, handleModalClose }) {
 							<section className="ele">
 								<div className="menu">이미지</div>
 								<div className="inputInfo">
-									<input></input>
+									<input type=""></input>
 								</div>
 							</section>
 							<section className="ele">
@@ -333,6 +439,14 @@ function Modal({ open, data, handleModalClose }) {
 							</section>
 						</main>
 						<footer>
+							<button
+								className="submit-btn"
+								onClick={() => {
+									handleSubmit();
+								}}
+							>
+								제출
+							</button>
 							<button
 								className="close"
 								onClick={() => {

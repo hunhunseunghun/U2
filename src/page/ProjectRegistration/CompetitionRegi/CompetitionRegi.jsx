@@ -4,6 +4,8 @@ import PosterUploader from './PosterUploader/PosterUploader.jsx';
 import FileUploader from './FileUploader/FileUploader.jsx';
 import { RegiContainer } from './CompetitionRegiStyled.jsx';
 import DropDown from './DropDown/DropDown.jsx';
+import headerIcon from '../../../Img/Icons/headerIcon.png';
+import downArrowIcon from '../../../Img/Icons/sortarrowdown.png';
 import QuillTextEditor from './QuillTextEditor/QuillTextEditor.jsx';
 import { TiDeleteOutline } from 'react-icons/ti'; // 파일삭제 버튼 icon
 import { DateTimePicker } from '@material-ui/pickers';
@@ -77,24 +79,32 @@ const CompetitionRegi = () => {
   };
 
   return (
-    <RegiContainer className="contents_wrap">
+    <RegiContainer className="competitionregi_contents_wrap">
       <div className="competitionregi_section">
-        <section className="titleArea">
-          <div>과제 등록</div>
+        <div className="competitionregi_title_area">
+          <div>프로젝트 등록</div>
+          <div className="competitionregi_title_style"></div>
+        </div>
+        <section className="competitionregi_title_sub">
+          <img src={headerIcon} alt="" />
+          <div>공모전 등록</div>
         </section>
 
         <section className="competitionregi_items">
           <section className="ele">
             <div className="menu">* 주최사</div>
             <div className="inputInfo competitionName">
-              <div
-                className="defaultCompetition"
-                onClick={() => {
-                  setIsActive(true);
-                }}
-              >
-                {`${competition[defaultIdx].form} : ${competition[defaultIdx].companyName}`}
+              <div className="defaultCompetition">
+                <div>{`${competition[defaultIdx].form} : ${competition[defaultIdx].companyName}`}</div>
+                <img
+                  src={downArrowIcon}
+                  alt=""
+                  onClick={() => {
+                    setIsActive(true);
+                  }}
+                />
               </div>
+
               <DropDown
                 setDefaultIdx={setDefaultIdx}
                 competition={competition}
@@ -106,15 +116,19 @@ const CompetitionRegi = () => {
           <section className="ele">
             <div className="menu">* 공모전명</div>
             <div className="inputInfo">
-              <div className="inputPrjName">
-                <input type="text" className="inputPrjName" />
+              <div className="competition_name">
+                <input
+                  type="text"
+                  className="competition_name_input"
+                  style={{ width: '280px' }}
+                />
               </div>
             </div>
           </section>
           <section className="ele">
             <div className="menu">주관사</div>
             <div className="inputInfo">
-              <div className="organizer">
+              <div className="competition_organizer">
                 <input type="text" className="organizer" />
               </div>
             </div>
@@ -122,7 +136,7 @@ const CompetitionRegi = () => {
           <section className="ele">
             <div className="menu">후원/협찬사</div>
             <div className="inputInfo">
-              <div className="sponsor">
+              <div className="competition_sponsor">
                 <input type="text" className="sponsor" />
               </div>
             </div>
@@ -130,7 +144,7 @@ const CompetitionRegi = () => {
           <section className="ele">
             <div className="menu">홈페이지 URL</div>
             <div className="inputInfo">
-              <div className="webpageURL">
+              <div className="competition_webpageURL">
                 <input type="text" className="webpageURL" />
               </div>
             </div>
@@ -576,17 +590,18 @@ const CompetitionRegi = () => {
               </div>
             </section>
           </section>
+          <div className="competition_bottom_style"></div>
         </section>
         <section className="compeitiionregi_btn_area">
           {' '}
           <button
-            className="default_bt compeitiionregi_btn"
+            className="compeitiionregi_btn"
             onClick={() => {
               history.push('/prjregi');
             }}
           >{`< 이전`}</button>
           <button
-            className="default_bt compeitiionregi_btn"
+            className="compeitiionregi_btn compeitiionregi_btn_next"
             onClick={() => {
               history.push('/prjregi');
             }}

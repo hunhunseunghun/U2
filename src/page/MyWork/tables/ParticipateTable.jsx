@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import Pagination2 from '../../../component/Pagination/Pagination2';
 import { paginate } from '../../../component/Pagination/paginate';
 import { ParticipateTableContainer } from './ParticipateTableStyled';
 import FeedbackModal from '../modal/feedback/feedbackModal';
 import ResumeModal from '../modal/resume/resumeModal';
+
 import SubmitModal from '../modal/submission/SubmitModal';
+import sortarrowdown from '../../../Img/Icons/sortarrowdown.png';
+
 function ParticipateTable({ datas }) {
+	const history = useHistory();
 	const [quests, setQuests] = useState({
 		data: datas,
 		pageSize: 3,
@@ -86,17 +91,70 @@ function ParticipateTable({ datas }) {
 					handleModalClose(modalType);
 				}}
 			/>
+			<section className="prjregi_btn_area">
+				{' '}
+				<div
+					className="prjregi_btn"
+					onClick={() => {
+						history.push('/prjregi');
+					}}
+				>
+					{' '}
+					<div className="prjregi_btn_plusicon">+</div>
+					<div className="prjregi_btn_text">프로젝트 등록</div>
+				</div>
+			</section>
 			<table>
 				<thead>
 					<tr>
-						<th key={'image'}>이미지</th>
-						<th key={'category'}>카테고리</th>
-						<th key={'name'}>프로젝트명</th>
-						<th key={'status'}>상태</th>
-						<th key={'presentation'}>제출자료</th>
-						<th key={'feedback'}>피드백</th>
-						<th key={'requestDate'}>신청일</th>
-						<th key={'dueDate'}>마감일</th>
+						<th key={'image'}>
+							<section>
+								<span>이미지</span>
+								<img src={sortarrowdown} alt=""></img>
+							</section>
+						</th>
+						<th key={'category'}>
+							<section>
+								<span>카테고리</span>
+								<img src={sortarrowdown} alt=""></img>
+							</section>
+						</th>
+						<th key={'name'}>
+							<section>
+								<span>프로젝트명</span>
+								<img src={sortarrowdown} alt=""></img>
+							</section>
+						</th>
+						<th key={'status'}>
+							<section>
+								<span>상태</span>
+								<img src={sortarrowdown} alt=""></img>
+							</section>
+						</th>
+						<th key={'presentation'}>
+							<section>
+								<span>검제출자료수대상</span>
+								<img src={sortarrowdown} alt=""></img>
+							</section>
+						</th>
+						<th key={'feedback'}>
+							<section>
+								<span>피드백</span>
+								<img src={sortarrowdown} alt=""></img>
+							</section>
+						</th>
+						<th key={'requestDate'}>
+							<section>
+								<span>신청일</span>
+								<img src={sortarrowdown} alt=""></img>
+							</section>
+						</th>
+						<th key={'dueDate'}>
+							<section>
+								<span>마감일</span>
+								<img src={sortarrowdown} alt=""></img>
+							</section>
+						</th>
 					</tr>
 				</thead>
 				<tbody>
