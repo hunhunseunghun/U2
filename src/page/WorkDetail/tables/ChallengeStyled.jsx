@@ -1,2 +1,4 @@
 import styled from 'styled-components';
-export const ChallengeTableContainer = styled.div``;
+export const ChallengeTableContainer = styled.div`
+  min-height: 670px;
+`;

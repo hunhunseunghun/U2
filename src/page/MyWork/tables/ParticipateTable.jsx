@@ -5,7 +5,6 @@ import { paginate } from '../../../component/Pagination/paginate';
 import { ParticipateTableContainer } from './ParticipateTableStyled';
 import FeedbackModal from '../modal/feedback/feedbackModal';
 import ResumeModal from '../modal/resume/resumeModal';
-
 import SubmitModal from '../modal/submission/SubmitModal';
 import sortarrowdown from '../../../Img/Icons/sortarrowdown.png';
 
