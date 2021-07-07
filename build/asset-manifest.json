@@ -1,0 +1,43 @@
+{
+  "files": {
+    "main.css": "/static/css/main.1f504d64.chunk.css",
+    "main.js": "/static/js/main.555f1b38.chunk.js",
+    "main.js.map": "/static/js/main.555f1b38.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.a4a40158.js",
+    "runtime-main.js.map": "/static/js/runtime-main.a4a40158.js.map",
+    "static/css/2.086ec6e4.chunk.css": "/static/css/2.086ec6e4.chunk.css",
+    "static/js/2.6a5b10ff.chunk.js": "/static/js/2.6a5b10ff.chunk.js",
+    "static/js/2.6a5b10ff.chunk.js.map": "/static/js/2.6a5b10ff.chunk.js.map",
+    "static/js/3.86f54957.chunk.js": "/static/js/3.86f54957.chunk.js",
+    "static/js/3.86f54957.chunk.js.map": "/static/js/3.86f54957.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.086ec6e4.chunk.css.map": "/static/css/2.086ec6e4.chunk.css.map",
+    "static/css/main.1f504d64.chunk.css.map": "/static/css/main.1f504d64.chunk.css.map",
+    "static/js/2.6a5b10ff.chunk.js.LICENSE.txt": "/static/js/2.6a5b10ff.chunk.js.LICENSE.txt",
+    "static/media/adsPr.efba5ff2.png": "/static/media/adsPr.efba5ff2.png",
+    "static/media/ceImg.44f3c9b1.png": "/static/media/ceImg.44f3c9b1.png",
+    "static/media/chalkboard-teacher-solid.0f70027a.svg": "/static/media/chalkboard-teacher-solid.0f70027a.svg",
+    "static/media/chat.d8d53cfe.svg": "/static/media/chat.d8d53cfe.svg",
+    "static/media/cmBannerImg.4d76e2ae.png": "/static/media/cmBannerImg.4d76e2ae.png",
+    "static/media/comment.svg": "/static/media/comment.c11482d5.svg",
+    "static/media/cut-solid.2c7c09a1.svg": "/static/media/cut-solid.2c7c09a1.svg",
+    "static/media/common.scss": "/static/media/ic_arrow_down.5dfd23e1.svg",
+    "static/media/logo.0b168cb1.svg": "/static/media/logo.0b168cb1.svg",
+    "static/media/offlinechat.d9fe5579.svg": "/static/media/offlinechat.d9fe5579.svg",
+    "static/media/share.svg": "/static/media/share.53bceae8.svg",
+    "static/media/slider1.2a964a18.jpeg": "/static/media/slider1.2a964a18.jpeg",
+    "static/media/slider2.3becfa2f.jpeg": "/static/media/slider2.3becfa2f.jpeg",
+    "static/media/slider3.b06937a9.jpeg": "/static/media/slider3.b06937a9.jpeg",
+    "static/media/testVid.9f0c5519.mp4": "/static/media/testVid.9f0c5519.mp4",
+    "static/media/topviewEX.922a3b16.png": "/static/media/topviewEX.922a3b16.png",
+    "static/media/trophy-solid.02e1d3c9.svg": "/static/media/trophy-solid.02e1d3c9.svg",
+    "static/media/video-solid.6bb6cff1.svg": "/static/media/video-solid.6bb6cff1.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a4a40158.js",
+    "static/css/2.086ec6e4.chunk.css",
+    "static/js/2.6a5b10ff.chunk.js",
+    "static/css/main.1f504d64.chunk.css",
+    "static/js/main.555f1b38.chunk.js"
+  ]
+}

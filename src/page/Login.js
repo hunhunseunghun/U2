@@ -6,6 +6,7 @@ import { API_URL, HOST_URL } from '../const/URL';
 import GoogleLogin from 'react-google-login';
 import { useDispatch } from 'react-redux';
 import * as baseActions from '../store/base';
+const newAPI = process.env.REACT_APP_TEST_API;
 
 window.fbAsyncInit = function () {
 	window.FB.init({
@@ -25,7 +26,6 @@ function Login(props) {
 	let kakaoToken;
 	const dispatch = useDispatch();
 	const history = useHistory();
-
 	useEffect(() => {
 		params = new URLSearchParams(location.search);
 		if (window.innerWidth < 900) {
@@ -59,8 +59,9 @@ function Login(props) {
 
 	const ourLogin = (data) => {
 		//console.log(data);
+		console.log('newAPI: ', newAPI);
 		axios
-			.post(API_URL + '/member/login', {
+			.post(newAPI + '/member/login', {
 				email: data.email,
 				fullName: data.name,
 				photoUrl: data.photo,
@@ -75,6 +76,7 @@ function Login(props) {
 						photo: response.data.photoUrl,
 						token: response.data.token,
 						charge: response.data.chargeApp.chargeIdx,
+						memberIdx: response.data.memberIdx,
 					}),
 				);
 				if (!response.data.chargeApp.chargeIdx) history.push('/price');
@@ -125,7 +127,7 @@ function Login(props) {
 				//기존: 298115075163-hlqv6f9barc61674b385qats4j1gqgup.apps.googleusercontent.com
 				//신규: 954387501984-2bifnk88paakq2l6jcp63nr34jkha8ap.apps.googleusercontent.com
 				const CLIENT_ID =
-					'954387501984-2bifnk88paakq2l6jcp63nr34jkha8ap.apps.googleusercontent.com';
+					'298115075163-hlqv6f9barc61674b385qats4j1gqgup.apps.googleusercontent.com';
 				const AUTHORIZE_URI = 'https://accounts.google.com/o/oauth2/v2/auth';
 				const queryStr = qs.stringify({
 					client_id: CLIENT_ID,

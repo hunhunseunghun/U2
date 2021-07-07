@@ -4,7 +4,7 @@ import ChallengeTable from './tables/Challenge';
 import InspectTable from './tables/Inspect';
 import challenges from './sampledatas/challenges';
 import inspects from './sampledatas/inspects';
-import SubmitModal from './modal/SubmitModal';
+import SubmissionModal from './modal/SubmissionModal';
 function WorkDetail(props) {
 	let [subject, setSubject] = useState('광고/홍보');
 	let [meeting, setMeeting] = useState('비대면');
@@ -43,7 +43,7 @@ function WorkDetail(props) {
 	};
 	return (
 		<WorkDetailContainer id="workdetail-root">
-			<SubmitModal
+			<SubmissionModal
 				open={modalProps.open}
 				data={modalProps.data}
 				handleModalClose={handleModalClose}
