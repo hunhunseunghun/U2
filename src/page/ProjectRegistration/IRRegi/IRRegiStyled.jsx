@@ -2,32 +2,51 @@ import styled from 'styled-components';
 
 export const RegiConationer = styled.div`
   padding: 40px 45px 100px;
-  background-color: #fafafa;
+  /* background-color: #fafafa; */
   display: flex;
   justify-content: center;
   font-weight: 500;
   min-width: 780px;
-  .titleArea {
+  .irregi_section {
+    width: 100%;
+    max-width: 1100px;
+  }
+  .irregi_title_area {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     height: 80px;
     padding: 0;
-    border-bottom: 1.5px solid grey;
     margin-top: 1rem;
+    margin-bottom: 20px;
 
     div {
       display: flex;
       text-align: center;
       justify-content: center;
       align-items: center;
-      width: 200px;
-      height: 50px;
-      border: 1px solid #eee;
-      font-weight: bold;
-      font-size: 1.2rem;
-      background-color: #fff;
+      font-weight: 500;
+      font-size: 32px;
+    }
+    .irregi_title_style {
+      margin-top: 3px;
+      width: 20px;
+      border: 1px solid #181818;
     }
   }
+  .irregi_title_sub {
+    display: flex;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 600;
+    color: #3b3b3b;
+    margin-bottom: 10px;
+    img {
+      margin-right: 10px;
+    }
+  }
+
   .irregi_section {
     width: 100%;
     max-width: 1100px;
@@ -49,6 +68,31 @@ export const RegiConationer = styled.div`
     &:hover {
       cursor: pointer;
       background-color: #e2e2e2;
+    }
+  }
+
+  //handle profiles---
+
+  .company_profiles {
+    position: relative;
+  }
+
+  .default_profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px soild #dddddd;
+    padding: 5px 5px 5px 10px;
+
+    img {
+      position: relative;
+      top: 2px;
+      width: 16px;
+      margin-left: 5px;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 

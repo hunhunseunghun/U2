@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import DropDown from './DropDown/DropDown.jsx';
 import RecruitmentAreasModal from './RecruitmentAreasModal/RecruitmentAreasModal.jsx';
 import QuillTextEditor from './QuillTextEditor/QuillTextEditor.jsx';
+import onlineIcon from '../../../Img/Icons/onlineIcon.png';
+import offlineIcon from '../../../Img/Icons/offlineIcon.png';
+import headerIcon from '../../../Img/Icons/headerIcon.png';
+import downArrowIcon from '../../../Img/Icons/sortarrowdown.png';
 import { RegiConationer } from './IRRegiStyled.jsx';
 import { DateTimePicker } from '@material-ui/pickers';
 import { createMuiTheme } from '@material-ui/core';
@@ -98,20 +102,28 @@ const IRRegi = () => {
   return (
     <RegiConationer className="contents_wrap">
       <div className="irregi_section">
-        <section className="titleArea">
+        <div className="irregi_title_area">
+          <div>프로젝트 등록</div>
+          <div className="irregi_title_style"></div>
+        </div>
+        <section className="irregi_title_sub">
+          <img src={headerIcon} alt="" />
           <div>강사 채용</div>
         </section>
+
         <section className="irregi_items">
           <section className="ele">
             <div className="menu">* 의뢰주체</div>
-            <div className="inputInfo profiles_name">
-              <div
-                className="default_profiles"
-                onClick={() => {
-                  setIsActive(true);
-                }}
-              >
-                {`${profiles[defaultIdx].form} : ${profiles[defaultIdx].companyName}`}
+            <div className="inputInfo company_profiles">
+              <div className="default_profile">
+                <div>{`${profiles[defaultIdx].form} : ${profiles[defaultIdx].companyName}`}</div>
+                <img
+                  src={downArrowIcon}
+                  alt=""
+                  onClick={() => {
+                    setIsActive(true);
+                  }}
+                />
               </div>
               <DropDown
                 setDefaultIdx={setDefaultIdx}
