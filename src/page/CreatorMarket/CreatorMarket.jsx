@@ -12,7 +12,6 @@ import Pagination2 from '../../component/Pagination/Pagination2.jsx';
 import { paginate } from '../../component/Pagination/paginate.js';
 const server = process.env.REACT_APP_U2_DB_HOST;
 
-
 const Main = (props) => {
 	const [tabActive, setTabActive] = useState(0); // 탭 선택 소팅
 	//0: 전체, 1: 공모전, 2: 전문영상 편집자 , 3: 영상 크리에이터/언플루언서, 4: 강사채용
@@ -113,9 +112,8 @@ const Main = (props) => {
 						</div>
 					</section>
 
-
-          <div className="challange_ele">
-            {/* {isLoadingChallenges === null && <div>"no data"</div>}
+					<div className="challange_ele">
+						{/* {isLoadingChallenges === null && <div>"no data"</div>}
 						{isLoadingChallenges === false
 							? moreActive
 								? challenges.slice(0, 3).map((ele, idx) => {
@@ -135,7 +133,7 @@ const Main = (props) => {
 										);
 								  })
 							: 'loading'} */}
-            {/* {(() => {
+						{(() => {
 							switch (isLoadingChallenges) {
 								case true: {
 									return <BiLoader className="BiLoader" />;
@@ -188,7 +186,6 @@ const Main = (props) => {
 									break;
 								}
 							}
-
 						})()}
 						{!moreActive && isLoadingChallenges === false && (
 							<Pagination2
@@ -223,16 +220,15 @@ const Main = (props) => {
 						className="challenge_banner_img"
 					/>
 
-
-          <div className="challenge_banner_btn_wrap">
-            <button className="challenge_banner_btn">
-              <Link to="/prjregi">프로젝트 등록</Link>
-            </button>
-          </div>
-        </div>
-      </div>
-    </MainContainer>
-  );
+					<div className="challenge_banner_btn_wrap">
+						<button className="challenge_banner_btn">
+							<Link to="/prjregi">프로젝트 등록</Link>
+						</button>
+					</div>
+				</div>
+			</div>
+		</MainContainer>
+	);
 };
 
 export default Main;
