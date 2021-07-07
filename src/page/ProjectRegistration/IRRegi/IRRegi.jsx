@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import DropDown from './DropDown/DropDown.jsx';
 import RecruitmentAreasModal from './RecruitmentAreasModal/RecruitmentAreasModal.jsx';
 import QuillTextEditor from './QuillTextEditor/QuillTextEditor.jsx';
@@ -11,6 +12,7 @@ import { DateTimePicker } from '@material-ui/pickers';
 import { createMuiTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 const IRRegi = () => {
+  let history = useHistory();
   // handle modal state---------------------------------------
   const [isActive, setIsActive] = useState(false);
   const [defaultIdx, setDefaultIdx] = useState(0);
@@ -401,6 +403,22 @@ const IRRegi = () => {
                 </section>
               </div>
             </section>
+          </section>
+          <div className="irregi_bottom_style"></div>
+          <section className="irregi_btn_area">
+            {' '}
+            <button
+              className="irregi_btn"
+              onClick={() => {
+                history.push('/prjregi');
+              }}
+            >{`< 이전`}</button>
+            <button
+              className="irregi_btn irregi_btn_next"
+              onClick={() => {
+                history.push('/prjregi');
+              }}
+            >{`등록하기`}</button>
           </section>
         </section>
       </div>

@@ -250,9 +250,12 @@ const VidEditorRegi = () => {
             </div>
           </section>
           <section className="ele">
-            <div className="menu">* 접수방법</div>
-            <div className="inputInfo videditor_reception_info">
+            <div className="menu">* 프로젝트 완료 조건</div>
+            <div className="inputInfo videditor_reception_info videditor_reception_condition">
               <div className="videditor_reception_form">
+                <div className="videditor_reception_title">
+                  접수자 연락처 정보
+                </div>
                 <table className="videditor_reception_table">
                   <tbody>
                     <tr>
@@ -361,12 +364,8 @@ const VidEditorRegi = () => {
                   </tbody>
                 </table>
               </div>
-            </div>
-          </section>
-          <section className="ele">
-            <div className="menu">* 제출자 개인정보 수집</div>
-            <div className="inputInfo videditor_reception_info">
               <div className="videditor_reception_form">
+                <div className="videditor_reception_title">접수방법</div>
                 <table className="videditor_reception_table">
                   <tbody>
                     <tr>
@@ -438,6 +437,7 @@ const VidEditorRegi = () => {
               </div>
             </div>
           </section>
+
           <section className="ele">
             <div className="menu">* 프로젝트 공시 게시 기한</div>
             <div className="inputInfo chooseDate">
@@ -702,7 +702,7 @@ const VidEditorRegi = () => {
             onClick={() => {
               history.push('/prjregi');
             }}
-          >{`취 소`}</button>
+          >{`< 이전`}</button>
           <button
             className="videditorregi_btn videditorregi_btn_next"
             onClick={() => {

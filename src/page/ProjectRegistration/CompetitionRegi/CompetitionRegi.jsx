@@ -599,7 +599,7 @@ const CompetitionRegi = () => {
             onClick={() => {
               history.push('/prjregi');
             }}
-          >{`취 소`}</button>
+          >{`< 이전`}</button>
           <button
             className="compeitiionregi_btn compeitiionregi_btn_next"
             onClick={() => {

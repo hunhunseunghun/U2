@@ -682,7 +682,7 @@ const VidCreatorRegi = () => {
             onClick={() => {
               history.push('/prjregi');
             }}
-          >{`취 소`}</button>
+          >{`< 이전`}</button>
           <button
             className="vidcreatorregi_btn vidcreatorregi_btn_next"
             onClick={() => {

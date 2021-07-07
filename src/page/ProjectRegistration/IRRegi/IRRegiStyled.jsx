@@ -517,26 +517,47 @@ export const RegiConationer = styled.div`
     }
   }
 
+  .irregi_bottom_style {
+    background-color: #dddddd;
+    height: 1px;
+  }
+
   // prev next button css ---------------------
-  .compeitiionregi_btn_area {
+  .irregi_btn_area {
     width: 100%;
     display: flex;
     padding: 40px 0;
     justify-content: center;
   }
 
-  .compeitiionregi_btn {
+  .irregi_btn {
+    width: 120px;
     border: 1px solid #d1d1d1;
-    padding: 0 40px;
-    margin: 0 15px;
-    height: 52px;
+    padding: 5px 20px;
+    margin: 0 5px;
     border-radius: 4px;
     font-size: 16px;
     font-weight: 600;
     color: #898989;
     &:hover {
+      cursor: pointer;
       color: black;
       border-color: #898989;
+    }
+  }
+
+  .irregi_btn_next {
+    border: 1px solid #d1d1d1;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    background-color: #f84135;
+    border-color: #f84135;
+    &:hover {
+      cursor: pointer;
+      color: #fff;
+      background-color: #ff2a1b;
+      border-color: #ff2a1b;
     }
   }
 `;

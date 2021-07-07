@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const RegiConationer = styled.div`
   padding: 40px 45px 100px;
-  background-color: #fafafa;
+  /* background-color: #fafafa; */
   display: flex;
   justify-content: center;
   font-weight: 500;
@@ -202,6 +202,7 @@ export const RegiConationer = styled.div`
   // tabale css ------------------------------------
 
   .videditor_reception_info {
+    display: block;
     font-size: 12px;
     padding: 0;
     width: 100%;
@@ -209,6 +210,12 @@ export const RegiConationer = styled.div`
 
     .videditor_reception_form {
       width: 100%;
+
+      .videditor_reception_title {
+        padding: 3px 0;
+        text-align: center;
+        background-color: #ebebeb;
+      }
       .videditor_reception_table {
         width: 100%;
         border-collapse: collapse;
