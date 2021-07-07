@@ -5,10 +5,8 @@ import { paginate } from '../../../component/Pagination/paginate';
 import { ParticipateTableContainer } from './ParticipateTableStyled';
 import FeedbackModal from '../modal/feedback/feedbackModal';
 import ResumeModal from '../modal/resume/resumeModal';
-
-import SubmitModal from '../modal/submission/SubmitModal';
+import SubmissionModal from '../modal/submission/SubmitModal';
 import sortarrowdown from '../../../Img/Icons/sortarrowdown.png';
-
 
 function ParticipateTable({ datas }) {
   const history = useHistory();
@@ -65,7 +63,6 @@ function ParticipateTable({ datas }) {
       }
     }
   };
-
 
   useEffect(() => {
     setQuests({ ...quests, data: datas });
@@ -240,6 +237,5 @@ function ParticipateTable({ datas }) {
       </div>
     </ParticipateTableContainer>
   );
-
 }
 export default ParticipateTable;
