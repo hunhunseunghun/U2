@@ -13,7 +13,6 @@ export const WorkDetailContainer = styled.div`
     grid-gap: 3px;
   }
   .section1 {
-    height: 100%;
     width: 224px;
     border: 1px solid #eee;
     display: flex;
@@ -104,11 +103,10 @@ export const WorkDetailContainer = styled.div`
     }
 
     .contents-table {
-      height: 100%;
       position: relative;
       top: -1px;
       border: 1px solid #eee;
-      box-shadow: 1px 1px 1px #eee;
+      box-shadow: 1px 2px 1px #eee;
     }
     hr {
       width: inherit;
