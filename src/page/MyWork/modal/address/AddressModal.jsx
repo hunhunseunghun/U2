@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { ModalContainer } from './AddressStyled';
-import '../../../../style/addrlink.css';
 import DaumPostcode from 'react-daum-postcode';
 const postCodeStyle = {
 	display: 'block',
@@ -24,6 +23,13 @@ function Modal({ open, handleModalClose, setAddressData }) {
 						}}
 					></DaumPostcode>
 				) : null}
+				<button
+					onClick={() => {
+						handleModalClose();
+					}}
+				>
+					close
+				</button>
 			</div>
 		</ModalContainer>
 	);

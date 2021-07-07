@@ -10,7 +10,10 @@ export const ModalContainer = styled.div`
 		z-index: 99;
 		background-color: rgba(0, 0, 0, 0.6);
 	}
-
+	.modal > button {
+		top: 25%;
+		background-color: white;
+	}
 	.modal.openModal {
 		display: flex;
 		align-items: center;
