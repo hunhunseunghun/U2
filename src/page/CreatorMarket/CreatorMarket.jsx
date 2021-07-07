@@ -17,7 +17,7 @@ const Main = (props) => {
 	//0: 전체, 1: 공모전, 2: 전문영상 편집자 , 3: 영상 크리에이터/언플루언서, 4: 강사채용
 	const [challenges, setChallengs] = useState(null); // 챌린지 데이터
 	const [isLoadingChallenges, setIsLoadingChallenges] = useState(null);
-	const [moreActive, setMoreActive] = useState(false);
+	const [moreActive, setMoreActive] = useState(true);
 	const userInfo = useSelector((state) => state.userInfo);
 
 	const [currentPage, setCurrentPage] = useState(1);
