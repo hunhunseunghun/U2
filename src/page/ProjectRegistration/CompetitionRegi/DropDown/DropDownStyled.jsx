@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   position: absolute;
   padding: 5px 10px;
-  top: 6px;
+  top: 7px;
   left: 0;
   z-index: 3;
 
@@ -16,7 +16,7 @@ export const Container = styled.div`
     align-items: center;
     border-right: 1px solid#d8d8d8;
     border-top: 1px solid #d8d8d8;
-    background-color: #f3f3f3;
+    background-color: #eee;
     padding-left: 10px;
     min-height: 50px;
     font-size: 15px;
@@ -39,11 +39,11 @@ export const Container = styled.div`
 
   li {
     padding: 5px 10px;
-    background-color: #fafafa;
+    background-color: #ffffff;
 
     &:hover {
       cursor: pointer;
-      background-color: #e7e7e7;
+      background-color: #eee;
     }
   }
 

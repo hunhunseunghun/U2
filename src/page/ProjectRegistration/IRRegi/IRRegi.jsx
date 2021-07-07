@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import DropDown from './DropDown/DropDown.jsx';
 import RecruitmentAreasModal from './RecruitmentAreasModal/RecruitmentAreasModal.jsx';
 import QuillTextEditor from './QuillTextEditor/QuillTextEditor.jsx';
+import onlineIcon from '../../../Img/Icons/onlineIcon.png';
+import offlineIcon from '../../../Img/Icons/offlineIcon.png';
+import headerIcon from '../../../Img/Icons/headerIcon.png';
+import downArrowIcon from '../../../Img/Icons/sortarrowdown.png';
 import { RegiConationer } from './IRRegiStyled.jsx';
 import { DateTimePicker } from '@material-ui/pickers';
 import { createMuiTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 const IRRegi = () => {
+  let history = useHistory();
   // handle modal state---------------------------------------
   const [isActive, setIsActive] = useState(false);
   const [defaultIdx, setDefaultIdx] = useState(0);
@@ -98,20 +104,28 @@ const IRRegi = () => {
   return (
     <RegiConationer className="contents_wrap">
       <div className="irregi_section">
-        <section className="titleArea">
+        <div className="irregi_title_area">
+          <div>프로젝트 등록</div>
+          <div className="irregi_title_style"></div>
+        </div>
+        <section className="irregi_title_sub">
+          <img src={headerIcon} alt="" />
           <div>강사 채용</div>
         </section>
+
         <section className="irregi_items">
           <section className="ele">
             <div className="menu">* 의뢰주체</div>
-            <div className="inputInfo profiles_name">
-              <div
-                className="default_profiles"
-                onClick={() => {
-                  setIsActive(true);
-                }}
-              >
-                {`${profiles[defaultIdx].form} : ${profiles[defaultIdx].companyName}`}
+            <div className="inputInfo company_profiles">
+              <div className="default_profile">
+                <div>{`${profiles[defaultIdx].form} : ${profiles[defaultIdx].companyName}`}</div>
+                <img
+                  src={downArrowIcon}
+                  alt=""
+                  onClick={() => {
+                    setIsActive(true);
+                  }}
+                />
               </div>
               <DropDown
                 setDefaultIdx={setDefaultIdx}
@@ -389,6 +403,22 @@ const IRRegi = () => {
                 </section>
               </div>
             </section>
+          </section>
+          <div className="irregi_bottom_style"></div>
+          <section className="irregi_btn_area">
+            {' '}
+            <button
+              className="irregi_btn"
+              onClick={() => {
+                history.push('/prjregi');
+              }}
+            >{`< 이전`}</button>
+            <button
+              className="irregi_btn irregi_btn_next"
+              onClick={() => {
+                history.push('/prjregi');
+              }}
+            >{`등록하기`}</button>
           </section>
         </section>
       </div>

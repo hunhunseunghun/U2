@@ -2,30 +2,48 @@ import styled from 'styled-components';
 
 export const RegiConationer = styled.div`
   padding: 40px 45px 100px;
-  background-color: #fafafa;
+  /* background-color: #fafafa; */
   display: flex;
   justify-content: center;
   font-weight: 500;
   min-width: 780px;
-  .titleArea {
+  .vidcreatorregi_section {
+    width: 100%;
+    max-width: 1100px;
+  }
+  .vidcreatorregi_title_area {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     height: 80px;
     padding: 0;
-    border-bottom: 1.5px solid grey;
     margin-top: 1rem;
+    margin-bottom: 20px;
 
     div {
       display: flex;
       text-align: center;
       justify-content: center;
       align-items: center;
-      width: 200px;
-      height: 50px;
-      border: 1px solid #eee;
-      font-weight: bold;
-      font-size: 1.2rem;
-      background-color: #fff;
+      font-weight: 500;
+      font-size: 32px;
+    }
+    .vidcreatorregi_title_style {
+      margin-top: 3px;
+      width: 20px;
+      border: 1px solid #181818;
+    }
+  }
+  .vidcreatorregi_title_sub {
+    display: flex;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 600;
+    color: #3b3b3b;
+    margin-bottom: 10px;
+    img {
+      margin-right: 10px;
     }
   }
 
@@ -35,16 +53,26 @@ export const RegiConationer = styled.div`
 
   //handle profiles---
 
-  .profiles_name {
+  .company_profiles {
     position: relative;
   }
 
-  .default_profiles {
-    background-color: #ebebeb;
-    padding: 5px 10px;
-    &:hover {
-      cursor: pointer;
-      background-color: #e2e2e2;
+  .default_profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px soild #dddddd;
+    padding: 5px 5px 5px 10px;
+
+    img {
+      position: relative;
+      top: 2px;
+      width: 16px;
+      margin-left: 5px;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 
@@ -75,8 +103,23 @@ export const RegiConationer = styled.div`
     border-top: 1px solid #00000023;
     padding: 0 10px;
     font-size: 12px;
+    color: #747474;
   }
 
+  .vidcreator_files_uploader {
+    font-size: 14px;
+    display: block;
+
+    div {
+      margin: 10px 0;
+    }
+  }
+  .vidcreator_project_name,
+  .vidcreator_reference_url {
+    input {
+      width: 280px;
+    }
+  }
   .vidcreator_reference_url {
     display: block;
     padding: 10px 10px;
@@ -129,7 +172,7 @@ export const RegiConationer = styled.div`
     }
 
     &:hover {
-      border: 1px solid #898989;
+      border: 1px solid #7a7a7a;
       cursor: pointer;
       transform: scale(1.01);
     }
@@ -141,7 +184,7 @@ export const RegiConationer = styled.div`
 
   //when click select meet tag isActive on-------------
   .onmeet_isactive {
-    border: 1px solid #898989;
+    border: 1px solid #6d6d6d;
     transform: scale(1.01);
   }
 
@@ -424,26 +467,47 @@ export const RegiConationer = styled.div`
     }
   }
 
+  .vidcreatorregi_bottom_style {
+    background-color: #dddddd;
+    height: 1px;
+  }
+
   // prev next button css ---------------------
-  .compeitiionregi_btn_area {
+  .vidcreatorregi_btn_area {
     width: 100%;
     display: flex;
     padding: 40px 0;
     justify-content: center;
   }
 
-  .compeitiionregi_btn {
+  .vidcreatorregi_btn {
+    width: 120px;
     border: 1px solid #d1d1d1;
-    padding: 0 40px;
-    margin: 0 15px;
-    height: 52px;
+    padding: 5px 20px;
+    margin: 0 5px;
     border-radius: 4px;
     font-size: 16px;
     font-weight: 600;
     color: #898989;
     &:hover {
+      cursor: pointer;
       color: black;
       border-color: #898989;
+    }
+  }
+
+  .vidcreatorregi_btn_next {
+    border: 1px solid #d1d1d1;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    background-color: #f84135;
+    border-color: #f84135;
+    &:hover {
+      cursor: pointer;
+      color: #fff;
+      background-color: #ff2a1b;
+      border-color: #ff2a1b;
     }
   }
 `;

@@ -10,11 +10,12 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 const server = process.env.REACT_APP_U2_DB_HOST;
 const table = {
-	'등록 프로젝트': <RegistTable datas={registDatas}></RegistTable>, //add new props
-	'참여 프로젝트': (
-		<ParticipateTable datas={participateDatas}></ParticipateTable>
-	), //add new props
+  '등록 프로젝트': <RegistTable datas={registDatas}></RegistTable>, //add new props
+  '참여 프로젝트': (
+    <ParticipateTable datas={participateDatas}></ParticipateTable>
+  ), //add new props
 };
+
 
 const MyWork = (props) => {
 	let twoTabs;
@@ -197,58 +198,62 @@ const MyWork = (props) => {
 		// 	});
 	});
 
-	return (
-		<MyWorkContainer>
-			<div className="mywork header">
-				<h4>나의 과제</h4>
-			</div>
-			<div className="mywork wrapper">
-				{twoTabs.map((tabname, index) => {
-					return (
-						<span
-							onClick={() => {
-								console.log('index: ', index);
-								clickHandler(tabname);
-							}}
-							className={
-								(() => {
-									if (currentTab === tabname) {
-										return 'selected';
-									} else {
-										return 'unselected';
-									}
-								})() +
-								' ' +
-								'tab'
-							}
-						>
-							{tabname}
-							{(() => {
-								if (index === 0) {
-									return newRegistration;
-								} else if (index === 1) {
-									return newParticipant;
-								}
-							})() ? (
-								<span className={'newAlert'}>new</span>
-							) : (
-								''
-							)}
-						</span>
-					);
-				})}
-			</div>
-			{currentTab === 0 ? (
-				<Link to={{ pathname: '/prjregi' }} className="regi-project">
-					<GrAdd />
-					신규 프로젝트 등록
-				</Link>
-			) : (
-				''
-			)}
-			<div className="contentes">{table[currentTab]}</div>
-		</MyWorkContainer>
-	);
+
+  return (
+    <MyWorkContainer className="mywork_contents_wrap">
+      <section className="mywork_section">
+        <div className="mywork_title_area">
+          <div>나의 프로젝트</div>
+          <div className="mywork_title_style"></div>
+        </div>
+        <div className="mywork_wrapper">
+          {twoTabs.map((tabname, index) => {
+            return (
+              <span
+                onClick={() => {
+                  console.log('index: ', index);
+                  clickHandler(tabname);
+                }}
+                className={
+                  (() => {
+                    if (currentTab === tabname) {
+                      return 'selected';
+                    } else {
+                      return 'unselected';
+                    }
+                  })() +
+                  ' ' +
+                  'tab'
+                }
+              >
+                {tabname}
+                {(() => {
+                  if (index === 0) {
+                    return newRegistration;
+                  } else if (index === 1) {
+                    return newParticipant;
+                  }
+                })() ? (
+                  <span className={'newAlert tab_newalert'}>new</span>
+                ) : (
+                  ''
+                )}
+              </span>
+            );
+          })}
+        </div>
+        {currentTab === 0 ? (
+          <Link to={{ pathname: '/prjregi' }} className="regi-project">
+            <GrAdd />
+            신규 프로젝트 등록
+          </Link>
+        ) : (
+          ''
+        )}
+        <div className="myproject_contents">{table[currentTab]}</div>
+      </section>
+    </MyWorkContainer>
+  );
 };
 
 export default MyWork;
