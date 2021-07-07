@@ -186,17 +186,16 @@ const MyWork = (props) => {
 		data: data,
 	};
 	useEffect(() => {
-		axios(config)
-			.then((response) => {
-				console.log('response:');
-				console.log(response.data);
-			})
-			.catch((err) => {
-				console.log('response error:');
-				console.log(err);
-			});
+		// axios(config)
+		// 	.then((response) => {
+		// 		console.log('response:');
+		// 		console.log(response.data);
+		// 	})
+		// 	.catch((err) => {
+		// 		console.log('response error:');
+		// 		console.log(err);
+		// 	});
 	});
-	console.log(props.location.state);
 
 	return (
 		<MyWorkContainer>

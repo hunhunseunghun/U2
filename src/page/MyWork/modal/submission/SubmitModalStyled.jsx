@@ -162,7 +162,10 @@ export const ModalContainer = styled.div`
 	.Address {
 		display: block;
 	}
-
+	.address {
+		display: flex;
+		flex-direction: column;
+	}
 	@keyframes modal-show {
 		from {
 			opacity: 0;

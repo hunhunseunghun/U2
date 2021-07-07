@@ -6,6 +6,7 @@ import { API_URL, HOST_URL } from '../const/URL';
 import GoogleLogin from 'react-google-login';
 import { useDispatch } from 'react-redux';
 import * as baseActions from '../store/base';
+const newAPI = process.env.REACT_APP_TEST_API;
 
 window.fbAsyncInit = function () {
 	window.FB.init({
@@ -25,7 +26,6 @@ function Login(props) {
 	let kakaoToken;
 	const dispatch = useDispatch();
 	const history = useHistory();
-
 	useEffect(() => {
 		params = new URLSearchParams(location.search);
 		if (window.innerWidth < 900) {
@@ -59,8 +59,9 @@ function Login(props) {
 
 	const ourLogin = (data) => {
 		//console.log(data);
+		console.log('newAPI: ', newAPI);
 		axios
-			.post(API_URL + '/member/login', {
+			.post(newAPI + '/member/login', {
 				email: data.email,
 				fullName: data.name,
 				photoUrl: data.photo,

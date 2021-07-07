@@ -8,14 +8,21 @@ import ContentElement from './ContentElement/ContentElement.jsx';
 import bannerImg from '../../Img/cmBannerImg.png';
 import { useSelector } from 'react-redux';
 import { BiLoader } from 'react-icons/bi';
+import Pagination2 from '../../component/Pagination/Pagination2.jsx';
+import { paginate } from '../../component/Pagination/paginate.js';
 const server = process.env.REACT_APP_U2_DB_HOST;
 
 const Main = (props) => {
-	const [tabActive, setTabActive] = useState('entire'); // 탭 선택 소팅
+	const [tabActive, setTabActive] = useState(0); // 탭 선택 소팅
+	//0: 전체, 1: 공모전, 2: 전문영상 편집자 , 3: 영상 크리에이터/언플루언서, 4: 강사채용
 	const [challenges, setChallengs] = useState(null); // 챌린지 데이터
 	const [isLoadingChallenges, setIsLoadingChallenges] = useState(null);
 	const [moreActive, setMoreActive] = useState(false);
 	const userInfo = useSelector((state) => state.userInfo);
+
+	const [currentPage, setCurrentPage] = useState(1);
+	const pageSize = 4; //테스트를 위해 한페이지당 4개만 보여줌. 데이터가 많아지면 4단 * 4 = 16개씩 보여줘야함
+	const pagedChallenges = paginate(challenges, currentPage, pageSize);
 	// useEffect(()=>{
 	//   axios.get(`${server}/api/Campaign/challengemaster`).then(res=>{
 	//     setData(res.data)
@@ -31,10 +38,15 @@ const Main = (props) => {
 		}
 	};
 
+	const handlePageChange = (page) => {
+		setCurrentPage(page);
+	};
+
 	useEffect(() => {
 		setIsLoadingChallenges(true);
+		console.log('server: ', server);
 		axios
-			.get(`https://u2-rest-dev.azurewebsites.net/api/Campaign/challenge`)
+			.get(server + `/Campaign/challenge`)
 			.then((res) => {
 				console.log(res.data);
 				setChallengs(res.data);
@@ -56,57 +68,47 @@ const Main = (props) => {
 					<section className="challange_tab">
 						<div
 							className={
-								tabActive === 'entire' ? 'tab_entire tab_active' : 'tab_entire'
+								tabActive === 0 ? 'tab_entire tab_active' : 'tab_entire'
 							}
 							onClick={() => {
-								setTabActive('entire');
+								setTabActive(0);
 							}}
 						>
 							<span>전체</span>
 						</div>
 						<div
 							className={
-								tabActive === 'compte' ? 'tab_compte tab_active' : 'tab_compte'
+								tabActive === 1 ? 'tab_compte tab_active' : 'tab_compte'
 							}
 							onClick={() => {
-								setTabActive('compte');
+								setTabActive(1);
 							}}
 						>
 							<span>공모전</span>
 						</div>
 						<div
-							className={
-								tabActive === 'promo' ? 'tab_promo tab_active' : 'tab_promo'
-							}
+							className={tabActive === 3 ? 'tab_cv tab_active' : 'tab_cv'}
 							onClick={() => {
-								setTabActive('promo');
+								setTabActive(3);
 							}}
 						>
-							<span>광고/홍보</span>
+							<span>영상크리에이터 / 인플루언서</span>
 						</div>
 						<div
-							className={tabActive === 'cv' ? 'tab_cv tab_active' : 'tab_cv'}
+							className={tabActive === 2 ? 'tab_ve tab_active' : 'tab_ve'}
 							onClick={() => {
-								setTabActive('cv');
+								setTabActive(2);
 							}}
 						>
-							<span>창작영상</span>
+							<span>전문영상 편집자</span>
 						</div>
 						<div
-							className={tabActive === 've' ? 'tab_ve tab_active' : 'tab_ve'}
+							className={tabActive === 4 ? 'tab_ir tab_active' : 'tab_ir'}
 							onClick={() => {
-								setTabActive('ve');
+								setTabActive(4);
 							}}
 						>
-							<span>영상편집</span>
-						</div>
-						<div
-							className={tabActive === 'ir' ? 'tab_ir tab_active' : 'tab_ir'}
-							onClick={() => {
-								setTabActive('ir');
-							}}
-						>
-							<span>강사모집</span>
+							<span>강사채용</span>
 						</div>
 					</section>
 
@@ -139,20 +141,42 @@ const Main = (props) => {
 								case false: {
 									return moreActive
 										? challenges.slice(0, 3).map((ele, idx) => {
-												return (
-													<ContentElement
-														challenge={ele}
-														key={`${ele.challengeIdx}`}
-													/>
-												);
+												// console.log('ele: ', ele);
+												if (tabActive === 0) {
+													return (
+														<ContentElement
+															challenge={ele}
+															key={`${ele.challengeIdx}`}
+														/>
+													);
+												}
+												if (ele.challengeTargetCode === tabActive) {
+													return (
+														<ContentElement
+															challenge={ele}
+															key={`${ele.challengeIdx}`}
+														/>
+													);
+												}
 										  })
-										: challenges.map((ele, idx) => {
-												return (
-													<ContentElement
-														challenge={ele}
-														key={`${ele.challengeIdx}`}
-													/>
-												);
+										: pagedChallenges.map((ele, idx) => {
+												// console.log('ele: ', ele);
+												if (tabActive === 0) {
+													return (
+														<ContentElement
+															challenge={ele}
+															key={`${ele.challengeIdx}`}
+														/>
+													);
+												}
+												if (ele.challengeTargetCode === tabActive) {
+													return (
+														<ContentElement
+															challenge={ele}
+															key={`${ele.challengeIdx}`}
+														/>
+													);
+												}
 										  });
 								}
 								case null: {
@@ -163,6 +187,19 @@ const Main = (props) => {
 								}
 							}
 						})()}
+						{!moreActive && isLoadingChallenges === false && (
+							<Pagination2
+								itemsCount={
+									challenges.filter(
+										(challenge) =>
+											challenge.challengeTargetCode === tabActive ||
+											tabActive === 0,
+									).length
+								}
+								pageSize={pageSize}
+								handlePageChange={handlePageChange}
+							></Pagination2>
+						)}
 					</div>
 				</section>
 				<section className="challenge_more_btn_area">
