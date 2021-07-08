@@ -23,6 +23,7 @@ function Modal({ open, data, handleModalClose }) {
 
 	const [mobileNum, setMobileNum] = useState('');
 	const [mobileErr, setMobileErr] = useState('');
+	const [mobileErrShake, setMobileErrShake] = useState(false);
 	const [toggleMobileAuthInput, setToggleMobileAuthInput] = useState(false);
 	const [mobileAuthInput, setMobileAuthInput] = useState('');
 	const [mobileAuthorized, setMobileAuthorized] = useState(null);
@@ -35,6 +36,9 @@ function Modal({ open, data, handleModalClose }) {
 	const [emailAuthorized, setEmailAuthorized] = useState(null);
 
 	const [bankAccountNum, setBankAccountNum] = useState('');
+	const [bankAccountErr, setBankAccountErr] = useState('');
+	const [BaErrShake, setBaErrShake] = useState(false);
+	const [bankAuthorized, setBankAuthorized] = useState(false);
 
 	const [address1, setAddress1] = useState('');
 	const [address2, setAddress2] = useState('');
@@ -47,16 +51,27 @@ function Modal({ open, data, handleModalClose }) {
 		if (mobileNum) {
 			if (isValidPhoneNumber(mobileNum)) {
 				setMobileErr(null);
-				setToggleMobileAuthInput(true);
+				//인증 구현 ----------------------
+				// setToggleMobileAuthInput(true);
+
+				//인증 미구현----------------
+				setMobileAuthorized(true);
 			} else {
+				handleShake('mobile');
 				setMobileErr('옳바른 전화번호 형식이 아닙니다.');
 			}
 		} else {
+			handleShake('mobile');
 			setMobileErr('전화번호를 입력해주세요.');
 		}
 	};
+
 	const handleAuthMobile = () => {
 		setMobileAuthorized(mobileAuthInput === '0314');
+	};
+	const handleMobileChange = (e) => {
+		setMobileNum(e);
+		setMobileAuthorized(false);
 	};
 
 	const handleValidateEmail = () => {
@@ -70,6 +85,16 @@ function Modal({ open, data, handleModalClose }) {
 		}
 	};
 
+	const handleValidateBank = () => {
+		if (bankAccountNum) {
+			const replaced = bankAccountNum.replace(/[^0-9]/gi, '');
+			setBankAccountNum(replaced);
+			setBankAuthorized(true);
+		} else {
+			setBankAccountErr('계좌번호를 입력해주세요.');
+		}
+	};
+
 	const handleShake = (inputType) => {
 		switch (inputType) {
 			case 'email': {
@@ -78,6 +103,18 @@ function Modal({ open, data, handleModalClose }) {
 					setEmailErrShake(false);
 				}, 1000);
 				break;
+			}
+			case 'mobile': {
+				setMobileErrShake(true);
+				setTimeout(() => {
+					setMobileErrShake(false);
+				}, 1000);
+			}
+			case 'bank': {
+				setBaErrShake(true);
+				setTimeout(() => {
+					setMobileErrShake(false);
+				}, 1000);
 			}
 			default: {
 				break;
@@ -232,20 +269,30 @@ function Modal({ open, data, handleModalClose }) {
 									<div className="MobileContainer">
 										<PhoneInput
 											placeholder="휴대전화 번호를 입력해 주십시오"
-											onChange={setMobileNum}
+											onChange={handleMobileChange}
 											value={mobileNum}
 											className="phoneInput"
 										></PhoneInput>
+										{mobileAuthorized ? (
+											<button className="auth-btn complete">인증완료</button>
+										) : (
+											<button //휴대폰 validation check 버튼
+												className="auth-btn"
+												onClick={() => {
+													handleValidateMobile();
+												}}
+											>
+												인증하기
+											</button>
+										)}
 
-										<button //휴대폰 validation check 버튼
-											className="auth-btn"
-											onClick={() => {
-												handleValidateMobile();
-											}}
+										<div
+											className={
+												'errorMessage' + (mobileErrShake ? ' shake' : '')
+											}
 										>
-											인증하기
-										</button>
-										{mobileErr}
+											{mobileErr}
+										</div>
 									</div>
 									<div>
 										{toggleMobileAuthInput && (
@@ -307,18 +354,27 @@ function Modal({ open, data, handleModalClose }) {
 												handleValidateEmail();
 											}}
 										></input>
-										<button
-											className="auth-btn"
-											onClick={() => {
-												if (emailErr === null) {
-													setToggleEmailAuthInput(true);
-												} else {
-													handleShake('email');
-												}
-											}}
-										>
-											인증번호 받기
-										</button>
+										{emailAuthorized ? (
+											<button className="auth-btn complete">인증완료</button>
+										) : (
+											<button
+												className="auth-btn"
+												onClick={() => {
+													if (emailErr === null) {
+														//인증 구현
+														//setToggleEmailAuthInput(true);
+
+														//인증 미구현
+														setEmailAuthorized(true);
+													} else {
+														handleShake('email');
+													}
+												}}
+											>
+												인증번호 받기
+											</button>
+										)}
+
 										{toggleEmailAuthInput && ( //validation error 가 없고 버튼이 눌렸을 때
 											<div className="auth-input">
 												인증번호 입력:{' '}
@@ -381,9 +437,21 @@ function Modal({ open, data, handleModalClose }) {
 										value={bankAccountNum}
 										onChange={(e) => {
 											setBankAccountNum(e.target.value);
+											setBankAuthorized(false);
 										}}
 									></input>
-									<button className="auth-btn">계좌 인증</button>
+									{bankAuthorized ? (
+										<button className="auth-btn complete">인증완료</button>
+									) : (
+										<button
+											className="auth-btn"
+											onClick={() => {
+												handleValidateBank();
+											}}
+										>
+											계좌인증
+										</button>
+									)}
 								</div>
 							</section>
 							<section className="ele">

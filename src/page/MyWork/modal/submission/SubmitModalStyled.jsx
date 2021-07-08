@@ -132,6 +132,10 @@ export const ModalContainer = styled.div`
 			margin-left: 2px;
 			height: 100%;
 		}
+		.complete {
+			background-color: darkgrey;
+			cursor: default;
+		}
 		.authorized {
 			color: green;
 		}
