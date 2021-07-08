@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Pagination2 from '../../../component/Pagination/Pagination2';
 import { paginate } from '../../../component/Pagination/paginate';
 import { InspectTableContainer } from './InspectStyled';
+import excelIcon from '../../../Img/Icons/excelIcon.png';
 function InspectTable({ datas, handlePresentationClick }) {
   let [subjects, setSubjects] = useState({
     data: datas,
@@ -37,62 +38,70 @@ function InspectTable({ datas, handlePresentationClick }) {
   }, [datas]);
   return (
     <InspectTableContainer>
-      <section className="buttons3">
-        <button>승인</button>
-        <button>반려</button>
-        <button>피드백</button>
-      </section>
-      <section>
-        <button>다운로드</button>
-        <select
-          onChange={e => {
-            handleSelectChange(e.target.value);
-          }}
-        >
-          <option value={10}>10개씩</option>
-          <option value={15}>15개씩</option>
-          <option value={30}>30개씩</option>
-          <option value={50}>50개씩</option>
-          <option value={100}>100개씩</option>
-        </select>
+      <section className="inspect_table_header">
+        <section className="inspect_table_header_left">
+          <button>승인</button>
+          <button>반려</button>
+          <button>피드백</button>
+        </section>
+        <section className="inspect_table_header_right">
+          <div className="inspect_download_btn">
+            <img src={excelIcon} alt="" />
+            <div>다운로드</div>
+          </div>
+
+          <select
+            onChange={e => {
+              handleSelectChange(e.target.value);
+            }}
+          >
+            <option value={10}>10개씩</option>
+            <option value={15}>15개씩</option>
+            <option value={30}>30개씩</option>
+            <option value={50}>50개씩</option>
+            <option value={100}>100개씩</option>
+          </select>
+        </section>
       </section>
 
-      <table className={'inspect-table'}>
-        <tr>
-          <th>
-            <input
-              type={'checkbox'}
-              onChange={e => {
-                console.log(e.target.checked);
-                let newarr = allCheckBoxes.map((el, idx) => {
-                  if (idx >= plusIndex && idx < plusIndex + pageSize) {
-                    return e.target.checked;
-                  } else {
-                    return el;
-                  }
-                });
-                setAllCheckBoxes(newarr);
-                let newarr2 = pagedCheckboxes.map(el => e.target.checked);
-                setPagedCheckBoxes(newarr2);
-              }}
-              name="isSelectAll"
-              value="selectAll"
-              checked={
-                pagedCheckboxes.filter(el => el).length ===
-                pagedCheckboxes.length
-                  ? true
-                  : false
-              }
-            ></input>
-          </th>
-          <th key="challengeTime">지원 일시</th>
-          <th key="ID">ID</th>
-          <th key="name">성명</th>
-          <th key="category">카테고리</th>
-          <th key="presentation">제출자료</th>
-          <th key="status">검수 상태</th>
-          <th>프로젝트 검수하기</th>
-        </tr>
+      <table className={'inspect_table'}>
+        <thead>
+          <tr>
+            <th>
+              <input
+                type={'checkbox'}
+                onChange={e => {
+                  console.log(e.target.checked);
+                  let newarr = allCheckBoxes.map((el, idx) => {
+                    if (idx >= plusIndex && idx < plusIndex + pageSize) {
+                      return e.target.checked;
+                    } else {
+                      return el;
+                    }
+                  });
+                  setAllCheckBoxes(newarr);
+                  let newarr2 = pagedCheckboxes.map(el => e.target.checked);
+                  setPagedCheckBoxes(newarr2);
+                }}
+                name="isSelectAll"
+                value="selectAll"
+                checked={
+                  pagedCheckboxes.filter(el => el).length ===
+                  pagedCheckboxes.length
+                    ? true
+                    : false
+                }
+              ></input>
+            </th>
+            <th key="challengeTime">지원 일시</th>
+            <th key="ID">ID</th>
+            <th key="name">성명</th>
+            <th key="category">카테고리</th>
+            <th key="presentation">제출자료</th>
+            <th key="status">검수 상태</th>
+            <th>프로젝트 검수하기</th>
+          </tr>
+        </thead>
 
         <tbody>
           {pagedSubjects
@@ -131,7 +140,7 @@ function InspectTable({ datas, handlePresentationClick }) {
                         )}
                       </td>
                       <td>{data.status}</td>
-                      <td className="inspect-project">
+                      <td className="inspect_project">
                         <select>
                           <option value="okay">승인</option>
                           <option value="return">반려</option>
@@ -140,7 +149,6 @@ function InspectTable({ datas, handlePresentationClick }) {
                         <button>확인</button>
                       </td>
                     </tr>
-                    <hr />
                   </>
                 );
               })
@@ -155,7 +163,9 @@ function InspectTable({ datas, handlePresentationClick }) {
           pageSize={subjects.pageSize}
         ></Pagination2>
       </div>
-      <button className="bt-list">목록</button>
+      <div className="bt_list">
+        <button>목록</button>
+      </div>
     </InspectTableContainer>
   );
 }
