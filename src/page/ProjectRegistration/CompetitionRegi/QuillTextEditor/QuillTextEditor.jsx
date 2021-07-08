@@ -40,6 +40,38 @@ const QuillTextEditor = () => {
     'color',
   ];
 
+  // 이미지 데이터 html로 표현시 스트링 길이 부담, formdata 객체 담아 서버 전송; (DB부담시 필요)
+
+  // const editorModule = {
+  //   toolbar:{
+  //     container: "#toolbar",
+  //     handlers: {
+  //       image: handleImageData,
+  //     }
+  //   }
+  // }
+
+  // const handleImageData = () =>{
+  //   const input =document.createElemnet("input")
+
+  //   input.setAttribute("type", "file")
+  //   input.setAttribute("aceept", "image/*")
+  //   input.click();
+
+  //   input.onchange = async () => {
+  //     if(input.files){
+  //       let file: any = input.files[0]
+  //       let formData = new FormData();
+
+  //       fomrData.append("image", file)
+
+  //       let fileName = file.name;
+
+  //       console.log(fromData)
+  //     }
+  //   }
+  // }
+
   return (
     <ReactQuill
       className="notice_editor"
