@@ -6,6 +6,7 @@ import * as baseActions from '../store/base';
 import useBus from 'use-bus';
 import axios from 'axios';
 import DdProfile from './DropDown/DdProfile.jsx';
+const newAPI = process.env.REACT_APP_TEST_API;
 function Header(props) {
 	const [mobileYn, setMobileYn] = useState(false);
 	const [whiteFix, setWhiteFix] = useState(false);
@@ -42,6 +43,7 @@ function Header(props) {
 		if (!userInfo.email) {
 			const token = localStorage.getItem('token');
 			console.log(token);
+			console.log('newAPI: ', newAPI);
 			if (token) {
 				axios
 					.get(API_URL + '/member/profile', {

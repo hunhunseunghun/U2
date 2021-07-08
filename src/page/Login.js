@@ -59,9 +59,10 @@ function Login(props) {
 
 	const ourLogin = (data) => {
 		//console.log(data);
+		console.log('our login: ');
 		console.log('newAPI: ', newAPI);
 		axios
-			.post(newAPI + '/member/login', {
+			.post(API_URL + '/member/login', {
 				email: data.email,
 				fullName: data.name,
 				photoUrl: data.photo,

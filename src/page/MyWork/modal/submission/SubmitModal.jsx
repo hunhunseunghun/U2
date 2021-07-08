@@ -7,9 +7,11 @@ import Banks from './banks';
 import { validateEmail } from '../../../../library/validate';
 import axios from 'axios';
 import 'react-phone-number-input/style.css';
+import AddressModal from '../address/AddressModal';
+
 // import 'csshake.min.css';
 const server = process.env.REACT_APP_TEST_API;
-const key = 'devU01TX0FVVEgyMDIxMDcwNzE4MTQzOTExMTM3ODk=';
+const key = process.env.REACT_APP_JUSO_KEY;
 function Modal({ open, data, handleModalClose }) {
 	console.log(data);
 	const userInfo = useSelector((state) => state.userInfo);
@@ -21,6 +23,7 @@ function Modal({ open, data, handleModalClose }) {
 
 	const [mobileNum, setMobileNum] = useState('');
 	const [mobileErr, setMobileErr] = useState('');
+	const [mobileErrShake, setMobileErrShake] = useState(false);
 	const [toggleMobileAuthInput, setToggleMobileAuthInput] = useState(false);
 	const [mobileAuthInput, setMobileAuthInput] = useState('');
 	const [mobileAuthorized, setMobileAuthorized] = useState(null);
@@ -33,26 +36,42 @@ function Modal({ open, data, handleModalClose }) {
 	const [emailAuthorized, setEmailAuthorized] = useState(null);
 
 	const [bankAccountNum, setBankAccountNum] = useState('');
+	const [bankAccountErr, setBankAccountErr] = useState('');
+	const [BaErrShake, setBaErrShake] = useState(false);
+	const [bankAuthorized, setBankAuthorized] = useState(false);
 
 	const [address1, setAddress1] = useState('');
 	const [address2, setAddress2] = useState('');
 	const [address3, setAddress3] = useState('');
+	const [openAddrModal, setOpenAddrModal] = useState(false);
+	const [addrMobile, setAddrMobile] = useState('');
 	//----------------------------handles
 
 	const handleValidateMobile = () => {
 		if (mobileNum) {
 			if (isValidPhoneNumber(mobileNum)) {
 				setMobileErr(null);
-				setToggleMobileAuthInput(true);
+				//인증 구현 ----------------------
+				// setToggleMobileAuthInput(true);
+
+				//인증 미구현----------------
+				setMobileAuthorized(true);
 			} else {
+				handleShake('mobile');
 				setMobileErr('옳바른 전화번호 형식이 아닙니다.');
 			}
 		} else {
+			handleShake('mobile');
 			setMobileErr('전화번호를 입력해주세요.');
 		}
 	};
+
 	const handleAuthMobile = () => {
 		setMobileAuthorized(mobileAuthInput === '0314');
+	};
+	const handleMobileChange = (e) => {
+		setMobileNum(e);
+		setMobileAuthorized(false);
 	};
 
 	const handleValidateEmail = () => {
@@ -66,6 +85,16 @@ function Modal({ open, data, handleModalClose }) {
 		}
 	};
 
+	const handleValidateBank = () => {
+		if (bankAccountNum) {
+			const replaced = bankAccountNum.replace(/[^0-9]/gi, '');
+			setBankAccountNum(replaced);
+			setBankAuthorized(true);
+		} else {
+			setBankAccountErr('계좌번호를 입력해주세요.');
+		}
+	};
+
 	const handleShake = (inputType) => {
 		switch (inputType) {
 			case 'email': {
@@ -75,25 +104,35 @@ function Modal({ open, data, handleModalClose }) {
 				}, 1000);
 				break;
 			}
+			case 'mobile': {
+				setMobileErrShake(true);
+				setTimeout(() => {
+					setMobileErrShake(false);
+				}, 1000);
+			}
+			case 'bank': {
+				setBaErrShake(true);
+				setTimeout(() => {
+					setMobileErrShake(false);
+				}, 1000);
+			}
 			default: {
 				break;
 			}
 		}
 	};
 	const handleSearchAddress = () => {
-		console.log('address: ', address1);
-		console.log('key: ', key);
+		setOpenAddrModal(true);
+	};
+	const setAddressData = (data) => {
+		console.log('address data: ', data);
+		setAddress1(data.zonecode);
 
-		axios
-			.get(
-				`https://www.juso.go.kr/addrlink/addrLinkApi.do?currentPage=1&countPerPage=10&keyword=${address1}&confmKey=${key}&firstSort=road`,
-			)
-			.then((response) => {
-				console.log(response.data);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		setAddress2(
+			data.address +
+				(data.bname && ' ' + data.bname) +
+				(data.buildingName && ' ' + data.buildingName),
+		);
 	};
 
 	const handleSubmit = () => {
@@ -156,6 +195,13 @@ function Modal({ open, data, handleModalClose }) {
 	return (
 		<ModalContainer>
 			<div className={open ? 'openModal modal' : 'modal'}>
+				<AddressModal
+					open={openAddrModal}
+					handleModalClose={() => {
+						setOpenAddrModal(false);
+					}}
+					setAddressData={setAddressData}
+				/>
 				{open ? (
 					<section>
 						<header>자료 제출</header>
@@ -223,20 +269,30 @@ function Modal({ open, data, handleModalClose }) {
 									<div className="MobileContainer">
 										<PhoneInput
 											placeholder="휴대전화 번호를 입력해 주십시오"
-											onChange={setMobileNum}
+											onChange={handleMobileChange}
 											value={mobileNum}
 											className="phoneInput"
 										></PhoneInput>
+										{mobileAuthorized ? (
+											<button className="auth-btn complete">인증완료</button>
+										) : (
+											<button //휴대폰 validation check 버튼
+												className="auth-btn"
+												onClick={() => {
+													handleValidateMobile();
+												}}
+											>
+												인증하기
+											</button>
+										)}
 
-										<button //휴대폰 validation check 버튼
-											className="auth-btn"
-											onClick={() => {
-												handleValidateMobile();
-											}}
+										<div
+											className={
+												'errorMessage' + (mobileErrShake ? ' shake' : '')
+											}
 										>
-											인증하기
-										</button>
-										{mobileErr}
+											{mobileErr}
+										</div>
 									</div>
 									<div>
 										{toggleMobileAuthInput && (
@@ -298,18 +354,27 @@ function Modal({ open, data, handleModalClose }) {
 												handleValidateEmail();
 											}}
 										></input>
-										<button
-											className="auth-btn"
-											onClick={() => {
-												if (emailErr === null) {
-													setToggleEmailAuthInput(true);
-												} else {
-													handleShake('email');
-												}
-											}}
-										>
-											인증번호 받기
-										</button>
+										{emailAuthorized ? (
+											<button className="auth-btn complete">인증완료</button>
+										) : (
+											<button
+												className="auth-btn"
+												onClick={() => {
+													if (emailErr === null) {
+														//인증 구현
+														//setToggleEmailAuthInput(true);
+
+														//인증 미구현
+														setEmailAuthorized(true);
+													} else {
+														handleShake('email');
+													}
+												}}
+											>
+												인증번호 받기
+											</button>
+										)}
+
 										{toggleEmailAuthInput && ( //validation error 가 없고 버튼이 눌렸을 때
 											<div className="auth-input">
 												인증번호 입력:{' '}
@@ -372,9 +437,21 @@ function Modal({ open, data, handleModalClose }) {
 										value={bankAccountNum}
 										onChange={(e) => {
 											setBankAccountNum(e.target.value);
+											setBankAuthorized(false);
 										}}
 									></input>
-									<button className="auth-btn">계좌 인증</button>
+									{bankAuthorized ? (
+										<button className="auth-btn complete">인증완료</button>
+									) : (
+										<button
+											className="auth-btn"
+											onClick={() => {
+												handleValidateBank();
+											}}
+										>
+											계좌인증
+										</button>
+									)}
 								</div>
 							</section>
 							<section className="ele">
@@ -389,19 +466,18 @@ function Modal({ open, data, handleModalClose }) {
 									<section className="ele">
 										<div className="menu">받으시는 분 연락처</div>
 										<div className="inputInfo">
-											<input></input>
+											<PhoneInput
+												onChange={setAddrMobile}
+												value={addrMobile}
+												placeholder="전화번호를 입력해주십시오"
+											/>
 										</div>
 									</section>
 									<section className="ele">
 										<div className="menu">배송지 주소</div>
 										<div className="inputInfo address">
 											<div>
-												<input
-													value={address1}
-													onChange={(e) => {
-														setAddress1(e.target.value);
-													}}
-												></input>
+												<input value={address1} readOnly></input>
 												<button
 													onClick={() => {
 														handleSearchAddress();
@@ -411,16 +487,16 @@ function Modal({ open, data, handleModalClose }) {
 												</button>
 											</div>
 
-											<input
-												onChange={(e) => {
-													setAddress2(e.target.value);
-												}}
-											></input>
-											<input
-												setAddress3={(e) => {
-													setAddress3(e.target.value);
-												}}
-											></input>
+											<input value={address2} readOnly></input>
+											<div>
+												상세주소:{' '}
+												<input
+													value={address3}
+													onChange={(e) => {
+														setAddress3(e.target.value);
+													}}
+												></input>
+											</div>
 										</div>
 									</section>
 								</div>
@@ -428,13 +504,24 @@ function Modal({ open, data, handleModalClose }) {
 							<section className="ele">
 								<div className="menu">이미지</div>
 								<div className="inputInfo">
-									<input type=""></input>
+									<input
+										type="file"
+										onChange={(e) => {
+											console.log(e.target.files);
+										}}
+										multiple
+									></input>
 								</div>
 							</section>
 							<section className="ele">
 								<div className="menu">비고</div>
 								<div className="inputInfo">
-									<input></input>
+									<textarea
+										className="note-textarea"
+										maxLength={800}
+										placeholder="800자 내 프로젝트에 대한 코멘트를 남겨 주세요"
+										aria-setsize="false"
+									></textarea>
 								</div>
 							</section>
 						</main>

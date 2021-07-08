@@ -13,7 +13,7 @@ export const ModalContainer = styled.div`
 	.modal button {
 		outline: none;
 		cursor: pointer;
-		border: 0;
+		border: 1px solid;
 		margin-left: 10px;
 		font-weight: 400;
 		font-family: 'Roboto', 'Noto Sans KR', 'Noto Sans', sans-serif;
@@ -132,6 +132,10 @@ export const ModalContainer = styled.div`
 			margin-left: 2px;
 			height: 100%;
 		}
+		.complete {
+			background-color: darkgrey;
+			cursor: default;
+		}
 		.authorized {
 			color: green;
 		}
@@ -141,6 +145,9 @@ export const ModalContainer = styled.div`
 		}
 		.MobileContainer {
 			display: flex;
+		}
+		.note-textarea {
+			max-height: 100px;
 		}
 	}
 	.URLs {
@@ -165,6 +172,9 @@ export const ModalContainer = styled.div`
 	.address {
 		display: flex;
 		flex-direction: column;
+		input {
+			width: 100%;
+		}
 	}
 	@keyframes modal-show {
 		from {
