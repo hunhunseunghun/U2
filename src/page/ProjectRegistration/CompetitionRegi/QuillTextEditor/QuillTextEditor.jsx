@@ -1,5 +1,8 @@
-import ReactQuill from 'react-quill';
 import React, { useState } from 'react';
+import ReactQuill from 'react-quill';
+// import Quill from 'quill';
+// import ImageResize from '@looop/quill-image-resize-module-react';
+// Quill.register('modules/ImageResize', ImageResize);
 
 const QuillTextEditor = () => {
   const [editorText, setEditorText] = useState(
@@ -20,6 +23,9 @@ const QuillTextEditor = () => {
       [{ align: [] }, { color: [] }],
       ['clean'],
     ],
+    // ImageResize: {
+    //   modules: ['Resize'],
+    // },
   };
   const editorFormats = [
     'header',
