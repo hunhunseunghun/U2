@@ -448,7 +448,12 @@ function Modal({ open, data, handleModalClose }) {
 							<section className="ele">
 								<div className="menu">비고</div>
 								<div className="inputInfo">
-									<input></input>
+									<textarea
+										className="note-textarea"
+										maxLength={800}
+										placeholder="800자 내 프로젝트에 대한 코멘트를 남겨 주세요"
+										aria-setsize="false"
+									></textarea>
 								</div>
 							</section>
 						</main>
