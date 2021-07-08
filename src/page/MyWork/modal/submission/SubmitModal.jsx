@@ -41,7 +41,7 @@ const initialState = {
 	note: '',
 };
 function Modal({ open, data, handleModalClose }) {
-	console.log(data);
+	// console.log(data);
 	const userInfo = useSelector((state) => state.userInfo);
 
 	const [
