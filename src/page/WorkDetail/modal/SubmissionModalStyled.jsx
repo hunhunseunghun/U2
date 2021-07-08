@@ -54,7 +54,7 @@ export const ModalContainer = styled.div`
   }
 
   .modal > section > footer {
-    padding: 12px 16px;
+    padding: 12px 16px 30px 16px;
     text-align: center;
 
     button {

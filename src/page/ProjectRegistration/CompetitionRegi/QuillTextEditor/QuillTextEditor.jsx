@@ -16,6 +16,7 @@ const QuillTextEditor = () => {
         { indent: '-1' },
         { indent: '+1' },
       ],
+      ['image'],
       [{ align: [] }, { color: [] }],
       ['clean'],
     ],
@@ -28,6 +29,7 @@ const QuillTextEditor = () => {
     'list',
     'bullet',
     'indent',
+    'image',
     'align',
     'color',
   ];
