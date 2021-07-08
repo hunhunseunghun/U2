@@ -142,6 +142,9 @@ export const ModalContainer = styled.div`
 		.MobileContainer {
 			display: flex;
 		}
+		.note-textarea {
+			max-height: 100px;
+		}
 	}
 	.URLs {
 		max-height: 100px;
