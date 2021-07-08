@@ -87,6 +87,9 @@ export const WorkDetailContainer = styled.div`
       background-color: #e3e3e3;
       border-bottom: 1px solid #eee;
       z-index: 2;
+      &:hover {
+        cursor: pointer;
+      }
     }
     .tab-contents.selected {
       color: #181818;
