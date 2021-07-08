@@ -30,6 +30,7 @@ import CompetitionRegi from './page/ProjectRegistration/CompetitionRegi/Competit
 import VidCreatorRegi from './page/ProjectRegistration/VidCreatorRegi/VidCreatorRegi.jsx';
 import VidEditorRegi from './page/ProjectRegistration/VidEditorRegi/VidEditorRegi.jsx';
 import IRRegi from './page/ProjectRegistration/IRRegi/IRRegi.jsx';
+import ProjectDetail from './page/ProjectDetail/ProjectDetail';
 
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
@@ -114,6 +115,11 @@ function App() {
 							exact
 							path="/ir"
 							render={() => <IRRegi history={history} />}
+						/>
+						<Route
+							exact
+							path="/prjdetail"
+							render={(props) => <ProjectDetail history={history} {...props} />}
 						/>
 						<Footer></Footer>
 					</div>

@@ -5,13 +5,21 @@ import { LinearProgress } from '@material-ui/core';
 import ceImg from '../../../Img/ceImg.png';
 import { calcRemainDays } from '../../../library/timeSetting.js';
 
-const ContentElement = ({ challenge }) => {
+const ContentElement = (props) => {
 	const [myRegistration, setMyRegistration] = useState(false);
 	const [mySubmit, setMySubmit] = useState(false);
-
+	const challenge = props.challenge;
 	return (
 		<EleContainer>
-			<div className="challenge_img_area">
+			<div
+				className="challenge_img_area"
+				onClick={() => {
+					props.history.push({
+						pathname: '/prjdetail',
+						state: { challenge: challenge },
+					});
+				}}
+			>
 				<img src={ceImg} alt={ceImg} className="challenge_img" />
 				{/* {tItem.bannerImage === null && (
           <div className={'no_img'}>

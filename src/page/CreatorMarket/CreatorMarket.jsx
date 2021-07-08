@@ -147,6 +147,7 @@ const Main = (props) => {
 														<ContentElement
 															challenge={ele}
 															key={`${ele.challengeIdx}`}
+															history={props.history}
 														/>
 													);
 												}
@@ -155,6 +156,7 @@ const Main = (props) => {
 														<ContentElement
 															challenge={ele}
 															key={`${ele.challengeIdx}`}
+															history={props.history}
 														/>
 													);
 												}
@@ -166,6 +168,7 @@ const Main = (props) => {
 														<ContentElement
 															challenge={ele}
 															key={`${ele.challengeIdx}`}
+															history={props.history}
 														/>
 													);
 												}
@@ -174,6 +177,7 @@ const Main = (props) => {
 														<ContentElement
 															challenge={ele}
 															key={`${ele.challengeIdx}`}
+															history={props.history}
 														/>
 													);
 												}
