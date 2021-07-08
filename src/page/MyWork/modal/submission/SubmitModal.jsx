@@ -11,109 +11,240 @@ import AddressModal from '../address/AddressModal';
 
 // import 'csshake.min.css';
 const server = process.env.REACT_APP_TEST_API;
-const key = process.env.REACT_APP_JUSO_KEY;
+const initialState = {
+	title: '',
+	URLs: [],
+	URLinput: '',
+	mobileNum: '',
+	mobileErr: '',
+	mobileErrShake: false,
+	toggleMobileAuthInput: false,
+	mobileAuthInput: '',
+	mobileAuthorized: null,
+	email: null,
+	emailErr: '',
+	emailErrShake: false,
+	toggleEmailAuthInput: false,
+	emailAuthInput: '',
+	emailAuthorized: null,
+	bankAccountNum: '',
+	bankCode: 0,
+	bankAccountErr: '',
+	BaErrShake: false,
+	bankAuthorized: false,
+	address1: '',
+	address2: '',
+	address3: '',
+	openAddrModal: false,
+	addrMobile: '',
+	image: '',
+	note: '',
+};
 function Modal({ open, data, handleModalClose }) {
 	console.log(data);
 	const userInfo = useSelector((state) => state.userInfo);
 
-	const [title, setTitle] = useState('');
+	const [
+		{
+			title,
+			URLs,
+			URLinput,
+			mobileNum,
+			mobileErr,
+			mobileErrShake,
+			toggleMobileAuthInput,
+			mobileAuthInput,
+			mobileAuthorized,
+			email,
+			emailErr,
+			emailErrShake,
+			toggleEmailAuthInput,
+			emailAuthInput,
+			emailAuthorized,
+			bankAccountNum,
+			bankCode,
+			bankAccountErr,
+			BaErrShake,
+			bankAuthorized,
+			address1,
+			address2,
+			address3,
+			openAddrModal,
+			addrMobile,
+			image,
+			note,
+		},
+		setState,
+	] = useState({ ...initialState });
+	const clearState = () => {
+		setState({ ...initialState });
+	};
+	// const [title, setTitle] = useState('');
 
-	const [URLs, setURLS] = useState([]);
-	const [URLinput, setURLinput] = useState('');
+	// const [URLs, setURLS] = useState([]);
+	// const [URLinput, setURLinput] = useState('');
 
-	const [mobileNum, setMobileNum] = useState('');
-	const [mobileErr, setMobileErr] = useState('');
-	const [mobileErrShake, setMobileErrShake] = useState(false);
-	const [toggleMobileAuthInput, setToggleMobileAuthInput] = useState(false);
-	const [mobileAuthInput, setMobileAuthInput] = useState('');
-	const [mobileAuthorized, setMobileAuthorized] = useState(null);
+	// const [mobileNum, setMobileNum] = useState('');
+	// const [mobileErr, setMobileErr] = useState('');
+	// const [mobileErrShake, setMobileErrShake] = useState(false);
+	// const [toggleMobileAuthInput, setToggleMobileAuthInput] = useState(false);
+	// const [mobileAuthInput, setMobileAuthInput] = useState('');
+	// const [mobileAuthorized, setMobileAuthorized] = useState(null);
 
-	const [email, setEmail] = useState(null);
-	const [emailErr, setEmailErr] = useState('');
-	const [emailErrShake, setEmailErrShake] = useState(false);
-	const [toggleEmailAuthInput, setToggleEmailAuthInput] = useState(false);
-	const [emailAuthInput, setEmailAuthInput] = useState('');
-	const [emailAuthorized, setEmailAuthorized] = useState(null);
+	// const [email, setEmail] = useState(null);
+	// const [emailErr, setEmailErr] = useState('');
+	// const [emailErrShake, setEmailErrShake] = useState(false);
+	// const [toggleEmailAuthInput, setToggleEmailAuthInput] = useState(false);
+	// const [emailAuthInput, setEmailAuthInput] = useState('');
+	// const [emailAuthorized, setEmailAuthorized] = useState(null);
 
-	const [bankAccountNum, setBankAccountNum] = useState('');
-	const [bankAccountErr, setBankAccountErr] = useState('');
-	const [BaErrShake, setBaErrShake] = useState(false);
-	const [bankAuthorized, setBankAuthorized] = useState(false);
+	// const [bankAccountNum, setBankAccountNum] = useState('');
+	// const [bankCode, setBankCode] = useState(0);
+	// const [bankAccountErr, setBankAccountErr] = useState('');
+	// const [BaErrShake, setBaErrShake] = useState(false);
+	// const [bankAuthorized, setBankAuthorized] = useState(false);
 
-	const [address1, setAddress1] = useState('');
-	const [address2, setAddress2] = useState('');
-	const [address3, setAddress3] = useState('');
-	const [openAddrModal, setOpenAddrModal] = useState(false);
-	const [addrMobile, setAddrMobile] = useState('');
+	// const [address1, setAddress1] = useState('');
+	// const [address2, setAddress2] = useState('');
+	// const [address3, setAddress3] = useState('');
+	// const [openAddrModal, setOpenAddrModal] = useState(false);
+	// const [addrMobile, setAddrMobile] = useState('');
+
+	// // const [images, setImages] = useState([])
+	// const [image, setImage] = useState('');
+
+	// const [note, setNote] = useState('');
 	//----------------------------handles
-
+	/////////////////////////////////////////////////////////////////////setState(preState=>({...preState,}))
 	const handleValidateMobile = () => {
 		if (mobileNum) {
 			if (isValidPhoneNumber(mobileNum)) {
-				setMobileErr(null);
+				// setMobileErr(null);
+				setState((preState) => ({ ...preState, mobileErr: null }));
 				//인증 구현 ----------------------
 				// setToggleMobileAuthInput(true);
 
 				//인증 미구현----------------
-				setMobileAuthorized(true);
+				// setMobileAuthorized(true);
+				setState((preState) => ({ ...preState, mobileAuthorized: true }));
 			} else {
 				handleShake('mobile');
-				setMobileErr('옳바른 전화번호 형식이 아닙니다.');
+				// setMobileErr('옳바른 전화번호 형식이 아닙니다.');
+				setState((preState) => ({
+					...preState,
+					mobileErr: '옳바른 전화번호 형식이 아닙니다.',
+				}));
 			}
 		} else {
 			handleShake('mobile');
-			setMobileErr('전화번호를 입력해주세요.');
+			// setMobileErr('전화번호를 입력해주세요.');
+			setState((preState) => ({
+				...preState,
+				mobileErr: '전화번호를 입력해주세요',
+			}));
 		}
 	};
 
 	const handleAuthMobile = () => {
-		setMobileAuthorized(mobileAuthInput === '0314');
+		// setMobileAuthorized(mobileAuthInput === '0314');
+		setState((preState) => ({
+			...preState,
+			mobileAuthorized: mobileAuthInput === '0314',
+		}));
 	};
 	const handleMobileChange = (e) => {
-		setMobileNum(e);
-		setMobileAuthorized(false);
+		// setMobileNum(e);
+		// setMobileAuthorized(false);
+		setState((preState) => ({
+			...preState,
+			mobileNum: e,
+			mobileAuthorized: false,
+		}));
 	};
 
 	const handleValidateEmail = () => {
 		const { isValid, error } = validateEmail(email);
 		if (!isValid) {
-			setEmailErr(error);
-			setToggleEmailAuthInput(false);
-			setEmailAuthorized(null);
+			// setEmailErr(error);
+			// setToggleEmailAuthInput(false);
+			// setEmailAuthorized(null);
+			setState((preState) => ({
+				...preState,
+				emailErr: error,
+				toggleEmailAuthInput: false,
+				emailAuthorized: null,
+			}));
 		} else {
-			setEmailErr(null);
+			// setEmailErr(null);
+			setState((preState) => ({ ...preState, emailErr: null }));
 		}
 	};
 
 	const handleValidateBank = () => {
 		if (bankAccountNum) {
 			const replaced = bankAccountNum.replace(/[^0-9]/gi, '');
-			setBankAccountNum(replaced);
-			setBankAuthorized(true);
+			// setBankAccountNum(replaced);
+			// setBankAuthorized(true);
+			// setBankAccountErr(null);
+			setState((preState) => ({
+				...preState,
+				bankAccountNum: replaced,
+				bankAuthorized: true,
+				bankAccountErr: null,
+			}));
 		} else {
-			setBankAccountErr('계좌번호를 입력해주세요.');
+			if (bankCode) {
+				// setBankAccountErr('계좌번호를 입력해주세요.');
+				setState((preState) => ({
+					...preState,
+					bankAccountErr: '계좌번호를 입력해주세요.',
+				}));
+				handleShake('bank');
+			} else {
+				// setBankAccountErr('은행을 선택해주세요.');
+				setState((preState) => ({
+					...preState,
+					bankAccountErr: '은행을 선택해주세요.',
+				}));
+				handleShake('bank');
+			}
 		}
 	};
 
+	const handleBankCode = (code) => {
+		// console.log('code: ', code);
+		// setBankCode(code);
+		setState((preState) => ({ ...preState, bankCode: code }));
+	};
+	const handleNote = (note) => {
+		// setNote(note);
+		setState((preState) => ({ ...preState, note: note }));
+	};
 	const handleShake = (inputType) => {
 		switch (inputType) {
 			case 'email': {
-				setEmailErrShake(true);
+				// setEmailErrShake(true);
+				setState((preState) => ({ ...preState, emailErrShake: true }));
 				setTimeout(() => {
-					setEmailErrShake(false);
+					// setEmailErrShake(false);
+					setState((preState) => ({ ...preState, emailErrShake: false }));
 				}, 1000);
 				break;
 			}
 			case 'mobile': {
-				setMobileErrShake(true);
+				// setMobileErrShake(true);
+				setState((preState) => ({ ...preState, mobileErrShake: true }));
 				setTimeout(() => {
-					setMobileErrShake(false);
+					// setMobileErrShake(false);
+					setState((preState) => ({ ...preState, mobileErrShake: false }));
 				}, 1000);
 			}
 			case 'bank': {
-				setBaErrShake(true);
+				// setBaErrShake(true);
+				setState((preState) => ({ ...preState, BaErrShake: true }));
 				setTimeout(() => {
-					setMobileErrShake(false);
+					// setBaErrShake(false);
+					setState((preState) => ({ ...preState, BaErrShake: false }));
 				}, 1000);
 			}
 			default: {
@@ -122,56 +253,103 @@ function Modal({ open, data, handleModalClose }) {
 		}
 	};
 	const handleSearchAddress = () => {
-		setOpenAddrModal(true);
+		// setOpenAddrModal(true);
+		setState((preState) => ({ ...preState, openAddrModal: true }));
 	};
 	const setAddressData = (data) => {
 		console.log('address data: ', data);
-		setAddress1(data.zonecode);
+		// setAddress1(data.zonecode);
+		setState((preState) => ({ ...preState, address1: data.zonecode }));
 
-		setAddress2(
-			data.address +
+		// setAddress2(
+		// 	data.address +
+		// 		(data.bname && ' ' + data.bname) +
+		// 		(data.buildingName && ' ' + data.buildingName),
+		// );
+		setState((preState) => ({
+			...preState,
+			address2:
+				data.address +
 				(data.bname && ' ' + data.bname) +
 				(data.buildingName && ' ' + data.buildingName),
-		);
+		}));
 	};
 
 	const handleSubmit = () => {
+		const confirmSubmit = confirm('제출 하시겠습니까?');
+		if (!confirmSubmit) {
+			return;
+		}
+		if (
+			!title ||
+			mobileErr ||
+			emailErr ||
+			bankAccountErr ||
+			!address1 ||
+			!address2 ||
+			!address3
+		) {
+			alert('모든 항목을 입력해야 합니다.');
+			return;
+		}
 		console.log(userInfo);
 		var data = {
 			videos: [
 				{
 					challengeIdx: 3,
 					missonSeq: 1,
-					memberIdx: userInfo.memberIdx, //50
+					memberIdx: userInfo.memberIdx,
 					seq: 1,
 					platform: 'YU',
 					videoId: 'string',
-					registMemberIdx: userInfo.memberIdx, //50
-					registDate: '2021-07-07T06:27:06.067Z',
-					modifyMemberIdx: 0,
-					modifyDate: '2021-07-07T06:27:06.067Z',
+					registMemberIdx: userInfo.memberIdx,
+					registDate: '2021-07-08T12:43:08.139Z',
+					modifyMemberIdx: userInfo.memberIdx,
+					modifyDate: '2021-07-08T12:43:08.139Z',
 				},
 			],
+			videos2: URLs.map((el) => {
+				return {
+					challengeIdx: 3,
+					missonSeq: 1,
+					memberIdx: userInfo.memberIdx,
+					seq: 1,
+					platform: 'YU',
+					videoId: el,
+					registMemberIdx: userInfo.memberIdx,
+					registDate: '2021-07-08T12:43:08.139Z',
+					modifyMemberIdx: userInfo.memberIdx,
+					modifyDate: '2021-07-08T12:43:08.139Z',
+				};
+			}),
+			postCodeAddr: 'string',
 			challengeIdx: 3,
 			missonSeq: 1,
 			memberIdx: userInfo.memberIdx,
 			contactCode: 0,
-			contact: mobileNum, //"+821033117871"
-			email: email, //"dlghwns0314@naver.com"
-			postCode: 'string',
-			addr: 'string',
-			photo: 'string',
-			note: 'string',
-			statusCode: 0,
-			checkStatusCode: 0,
-			dateApplied: '2021-07-07T06:27:06.067Z',
+			contact: mobileNum,
+			email: email,
+			postCode: address1,
+			addr: address2 + ' ' + address3,
+			bankCode: bankCode,
+			bankAccount: bankAccountNum,
+			photo: image,
+			note: note,
+			statusCode: 8,
+			checkStatusCode: 8,
+			dateApplied: '2021-07-08T12:43:08.139Z',
 			registMemberIdx: userInfo.memberIdx,
-			registDate: '2021-07-07T06:27:06.067Z',
-			modifyMemberIdx: 0,
-			modifyDate: '2021-07-07T06:27:06.067Z',
+			registDate: '2021-07-08T12:43:08.139Z',
+			modifyMemberIdx: userInfo.memberIdx,
+			modifyDate: '2021-07-08T12:43:08.139Z',
 		};
+		//CHECKSTATUS
+		// 1. 승인
+		// 2. 반려
+		// 3. 피드백
+		// 8. 진행중
 		var config = {
-			method: 'get',
+			method: 'post',
 			// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmit
 			url: server + '/Campaign/challengesubmit',
 			headers: {
@@ -186,9 +364,14 @@ function Modal({ open, data, handleModalClose }) {
 			.then((response) => {
 				console.log('response: ');
 				console.log(response.data);
+				if (!alert('제출 완료되었습니다.')) {
+					handleModalClose('submit');
+					clearState();
+				}
 			})
 			.catch((err) => {
 				console.log('err: ', err);
+				alert(err);
 			});
 	};
 
@@ -198,7 +381,8 @@ function Modal({ open, data, handleModalClose }) {
 				<AddressModal
 					open={openAddrModal}
 					handleModalClose={() => {
-						setOpenAddrModal(false);
+						// setOpenAddrModal(false);
+						setState((preState) => ({ ...preState, openAddrModal: false }));
 					}}
 					setAddressData={setAddressData}
 				/>
@@ -213,7 +397,11 @@ function Modal({ open, data, handleModalClose }) {
 										type="text"
 										value={title}
 										onChange={(e) => {
-											setTitle(e.target.value);
+											// setTitle(e.target.value);
+											setState((preState) => ({
+												...preState,
+												title: e.target.value,
+											}));
 										}}
 									></input>
 								</div>
@@ -233,7 +421,11 @@ function Modal({ open, data, handleModalClose }) {
 														onClick={() => {
 															let copyArr = URLs.slice();
 															copyArr.splice(idx, 1);
-															setURLS(copyArr);
+															// setURLS(copyArr);
+															setState((preState) => ({
+																...preState,
+																URLs: copyArr,
+															}));
 														}}
 													/>
 												</li>
@@ -242,7 +434,11 @@ function Modal({ open, data, handleModalClose }) {
 										<li>
 											<input
 												onChange={(e) => {
-													setURLinput(e.target.value);
+													// setURLinput(e.target.value);
+													setState((preState) => ({
+														...preState,
+														URLinput: e.target.value,
+													}));
 												}}
 												value={URLinput}
 											></input>
@@ -253,8 +449,13 @@ function Modal({ open, data, handleModalClose }) {
 														//input이 있을때만
 														let copyArr = URLs.slice();
 														copyArr.push(URLinput);
-														setURLS(copyArr);
-														setURLinput('');
+														// setURLS(copyArr);
+														// setURLinput('');
+														setState((preState) => ({
+															...preState,
+															URLs: copyArr,
+															URLinput: '',
+														}));
 													}
 												}}
 											/>
@@ -269,7 +470,13 @@ function Modal({ open, data, handleModalClose }) {
 									<div className="MobileContainer">
 										<PhoneInput
 											placeholder="휴대전화 번호를 입력해 주십시오"
-											onChange={handleMobileChange}
+											onChange={(value) => {
+												setState((preState) => ({
+													...preState,
+													mobileNum: value,
+													mobileAuthorized: false,
+												}));
+											}}
 											value={mobileNum}
 											className="phoneInput"
 										></PhoneInput>
@@ -301,7 +508,11 @@ function Modal({ open, data, handleModalClose }) {
 												<input
 													placeholder="인증번호를 입력해 주십시오"
 													onChange={(e) => {
-														setMobileAuthInput(e.target.value);
+														// setMobileAuthInput(e.target.value);
+														setState((preState) => ({
+															...preState,
+															mobileAuthInput: e.target.value,
+														}));
 													}}
 												></input>
 												<button //휴대폰 인증번호 확인 버튼
@@ -350,7 +561,11 @@ function Modal({ open, data, handleModalClose }) {
 											className="emailInput"
 											onChange={(e) => {
 												//email validation check per change
-												setEmail(e.target.value);
+												// setEmail(e.target.value);
+												setState((preState) => ({
+													...preState,
+													email: e.target.value,
+												}));
 												handleValidateEmail();
 											}}
 										></input>
@@ -365,7 +580,11 @@ function Modal({ open, data, handleModalClose }) {
 														//setToggleEmailAuthInput(true);
 
 														//인증 미구현
-														setEmailAuthorized(true);
+														// setEmailAuthorized(true);
+														setState((preState) => ({
+															...preState,
+															emailAuthorized: true,
+														}));
 													} else {
 														handleShake('email');
 													}
@@ -381,13 +600,21 @@ function Modal({ open, data, handleModalClose }) {
 												<input
 													placeholder="인증번호를 입력해 주십시오"
 													onChange={(e) => {
-														setEmailAuthInput(e.target.value);
+														// setEmailAuthInput(e.target.value);
+														setState((preState) => ({
+															...preState,
+															emailAuthInput: e.target.value,
+														}));
 													}}
 												></input>
 												<button
 													className="auth-btn"
 													onClick={() => {
-														setEmailAuthorized(emailAuthInput === 'hello');
+														// setEmailAuthorized(emailAuthInput === 'hello');
+														setState((preState) => ({
+															...preState,
+															emailAuthorized: emailAuthInput === 'hello',
+														}));
 													}}
 												>
 													확인
@@ -431,13 +658,21 @@ function Modal({ open, data, handleModalClose }) {
 							<section className="ele">
 								<div className="menu">계좌번호</div>
 								<div className="inputInfo">
-									<Banks className="banks-select" />
+									<Banks
+										className="banks-select"
+										handleBankCode={handleBankCode}
+									/>
 									<input
 										type="number"
 										value={bankAccountNum}
 										onChange={(e) => {
-											setBankAccountNum(e.target.value);
-											setBankAuthorized(false);
+											// setBankAccountNum(e.target.value);
+											// setBankAuthorized(false);
+											setState((preState) => ({
+												...preState,
+												bankAccountNum: e.target.value,
+												bankAuthorized: false,
+											}));
 										}}
 									></input>
 									{bankAuthorized ? (
@@ -451,6 +686,13 @@ function Modal({ open, data, handleModalClose }) {
 										>
 											계좌인증
 										</button>
+									)}
+									{bankAccountErr && (
+										<div
+											className={'errorMessage' + (BaErrShake ? ' shake' : '')}
+										>
+											{bankAccountErr}
+										</div>
 									)}
 								</div>
 							</section>
@@ -467,7 +709,12 @@ function Modal({ open, data, handleModalClose }) {
 										<div className="menu">받으시는 분 연락처</div>
 										<div className="inputInfo">
 											<PhoneInput
-												onChange={setAddrMobile}
+												onChange={(value) => {
+													setState((preState) => ({
+														...preState,
+														addrMobile: value,
+													}));
+												}}
 												value={addrMobile}
 												placeholder="전화번호를 입력해주십시오"
 											/>
@@ -493,7 +740,11 @@ function Modal({ open, data, handleModalClose }) {
 												<input
 													value={address3}
 													onChange={(e) => {
-														setAddress3(e.target.value);
+														// setAddress3(e.target.value);
+														setState((preState) => ({
+															...preState,
+															address3: e.target.value,
+														}));
 													}}
 												></input>
 											</div>
@@ -508,8 +759,13 @@ function Modal({ open, data, handleModalClose }) {
 										type="file"
 										onChange={(e) => {
 											console.log(e.target.files);
+											// setImage(e.target.files[0].name);
+											setState((preState) => ({
+												...preState,
+												image: e.target.files[0].name,
+											}));
 										}}
-										multiple
+										// multiple
 									></input>
 								</div>
 							</section>
@@ -521,6 +777,9 @@ function Modal({ open, data, handleModalClose }) {
 										maxLength={800}
 										placeholder="800자 내 프로젝트에 대한 코멘트를 남겨 주세요"
 										aria-setsize="false"
+										onChange={(e) => {
+											handleNote(e.target.value);
+										}}
 									></textarea>
 								</div>
 							</section>
@@ -537,7 +796,8 @@ function Modal({ open, data, handleModalClose }) {
 							<button
 								className="close"
 								onClick={() => {
-									handleModalClose('submission');
+									clearState();
+									handleModalClose('submit');
 								}}
 							>
 								{' '}

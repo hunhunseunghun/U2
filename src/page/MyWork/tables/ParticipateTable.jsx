@@ -24,7 +24,7 @@ function ParticipateTable({ datas }) {
 		data: null,
 	});
 	const [resumeProps, setResumeProps] = useState({ open: false, data: null });
-	const [submissionProps, setSubmissionProps] = useState({
+	const [submitProps, setSubmitProps] = useState({
 		open: false,
 		data: null,
 	});
@@ -40,7 +40,7 @@ function ParticipateTable({ datas }) {
 		setResumeProps({ open: true, data: resume });
 	};
 	const handleOpenSubmission = (submission) => {
-		setSubmissionProps({ open: true, data: submission });
+		setSubmitProps({ open: true, data: submission });
 	};
 
 	const handleModalClose = (modalType) => {
@@ -53,8 +53,8 @@ function ParticipateTable({ datas }) {
 				setResumeProps({ ...resumeProps, open: false });
 				break;
 			}
-			case 'submission': {
-				setSubmissionProps({ ...submissionProps, open: false });
+			case 'submit': {
+				setSubmitProps({ ...submitProps, open: false });
 				break;
 			}
 			default: {
@@ -84,8 +84,8 @@ function ParticipateTable({ datas }) {
 				}}
 			/>
 			<SubmitModal
-				open={submissionProps.open}
-				data={submissionProps.data}
+				open={submitProps.open}
+				data={submitProps.data}
 				handleModalClose={(modalType) => {
 					handleModalClose(modalType);
 				}}
