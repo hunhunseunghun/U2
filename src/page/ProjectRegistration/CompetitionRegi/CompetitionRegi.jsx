@@ -486,6 +486,8 @@ const CompetitionRegi = () => {
           <section className="ele">
             <div className="menu">공모 공지글</div>
             <div className="inputInfo notice_editor_form">
+              {/* <Ckeditor /> */}
+
               <QuillTextEditor className="notice_editor" />
             </div>
           </section>

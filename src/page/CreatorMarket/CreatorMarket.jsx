@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { BiLoader } from 'react-icons/bi';
 import Pagination2 from '../../component/Pagination/Pagination2.jsx';
 import { paginate } from '../../component/Pagination/paginate.js';
+
 const server = process.env.REACT_APP_U2_DB_HOST;
 
 const Main = props => {
