@@ -23,7 +23,7 @@ export const ModalContainer = styled.div`
   }
   .modal > section {
     width: 100%;
-    max-width: 750px;
+    max-width: 660px;
     min-width: 473px;
     height: relative;
     margin: 0 auto;
@@ -34,9 +34,10 @@ export const ModalContainer = styled.div`
   }
   .modal > section > header {
     position: relative;
-    padding: 5px 54px 5px 16px;
-    background-color: #f1f1f1;
+    padding: 16px 64px 16px 16px;
+    background-color: #1b1718;
     font-weight: 700;
+    color: white;
   }
 
   .modal > section > main {
@@ -51,8 +52,8 @@ export const ModalContainer = styled.div`
     }
   }
   .modal > section > footer {
-    padding: 12px 16px;
-    text-align: right;
+    padding: 12px 16px 30px 16px;
+    text-align: center;
   }
 
   .modal.openModal {
@@ -91,8 +92,7 @@ export const ModalContainer = styled.div`
       width: 50%;
     }
 
-    .phoneInput,
-    .emailInput {
+    .phoneInput {
       width: 250px;
     }
 
@@ -165,7 +165,7 @@ export const ModalContainer = styled.div`
       padding: 0px;
       margin: 0px;
       input {
-        width: 221px;
+        width: 216px;
       }
     }
     .MobileContainer {

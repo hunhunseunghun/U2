@@ -310,7 +310,7 @@ function Modal({ open, data, handleModalClose }) {
                         }
                       }}
                     >
-                      인증번호받기
+                      인증번호 받기
                     </button>
                     {toggleEmailAuthInput && ( //validation error 가 없고 버튼이 눌렸을 때
                       <div className="auth-input">
