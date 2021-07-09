@@ -3,6 +3,7 @@ import { FiCheck, FiX } from 'react-icons/fi';
 import { EleContainer } from './ContentElementStyled.jsx';
 import { LinearProgress } from '@material-ui/core';
 import ceImg from '../../../Img/ceImg.png';
+import paticipateUser from '../../../Img/Icons/user-regular.svg';
 import { calcRemainDays } from '../../../library/timeSetting.js';
 
 const ContentElement = (props) => {
@@ -38,6 +39,7 @@ const ContentElement = (props) => {
 						{/* <button className="paticipantBtn">+</button> */}
 						<div>참가자</div> <div>{`${challenge.challengerCount}`}</div>
 					</div>
+
 					<LinearProgress
 						className="challenge_progressBar"
 						variant="determinate"

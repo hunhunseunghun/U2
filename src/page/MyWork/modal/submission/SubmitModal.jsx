@@ -276,10 +276,10 @@ function Modal({ open, data, handleModalClose }) {
 	};
 
 	const handleSubmit = () => {
-		const confirmSubmit = confirm('제출 하시겠습니까?');
-		if (!confirmSubmit) {
-			return;
-		}
+		// const confirmSubmit = confirm('제출 하시겠습니까?');
+		// if (!confirmSubmit) {
+		// 	return;
+		// }
 		if (
 			!title ||
 			mobileErr ||
@@ -394,6 +394,7 @@ function Modal({ open, data, handleModalClose }) {
 								<div className="menu">작품명</div>
 								<div className="inputInfo">
 									<input
+										className="input_work_title"
 										type="text"
 										value={title}
 										onChange={(e) => {
@@ -469,6 +470,7 @@ function Modal({ open, data, handleModalClose }) {
 								<div className="inputInfo">
 									<div className="MobileContainer">
 										<PhoneInput
+											className="input_mobile_number"
 											placeholder="휴대전화 번호를 입력해 주십시오"
 											onChange={(value) => {
 												setState((preState) => ({
@@ -657,12 +659,10 @@ function Modal({ open, data, handleModalClose }) {
 							</section>
 							<section className="ele">
 								<div className="menu">계좌번호</div>
-								<div className="inputInfo">
-									<Banks
-										className="banks-select"
-										handleBankCode={handleBankCode}
-									/>
+								<div className="inputInfo banks_accout">
+									<Banks handleBankCode={handleBankCode} />
 									<input
+										className="banks_accout_input"
 										type="number"
 										value={bankAccountNum}
 										onChange={(e) => {
@@ -679,7 +679,7 @@ function Modal({ open, data, handleModalClose }) {
 										<button className="auth-btn complete">인증완료</button>
 									) : (
 										<button
-											className="auth-btn"
+											className="auth_btn_account"
 											onClick={() => {
 												handleValidateBank();
 											}}
@@ -699,15 +699,15 @@ function Modal({ open, data, handleModalClose }) {
 							<section className="ele">
 								<div className="menu">주소</div>
 								<div className="inputInfo Address">
-									<section className="ele">
-										<div className="menu">받으시는 분 성함</div>
-										<div className="inputInfo">
+									<section className="address_ele">
+										<div className="address_menu">받으시는 분 성함</div>
+										<div className="address_inputInfo">
 											<input></input>
 										</div>
 									</section>
-									<section className="ele">
-										<div className="menu">받으시는 분 연락처</div>
-										<div className="inputInfo">
+									<section className="address_ele">
+										<div className="address_menu">받으시는 분 연락처</div>
+										<div className="address_inputInfo">
 											<PhoneInput
 												onChange={(value) => {
 													setState((preState) => ({
@@ -720,12 +720,13 @@ function Modal({ open, data, handleModalClose }) {
 											/>
 										</div>
 									</section>
-									<section className="ele">
-										<div className="menu">배송지 주소</div>
-										<div className="inputInfo address">
+									<section className="address_ele">
+										<div className="address_menu">배송지 주소</div>
+										<div className="address_inputInfo address_inputinfo_last">
 											<div>
 												<input value={address1} readOnly></input>
 												<button
+													className="address_find_btn"
 													onClick={() => {
 														handleSearchAddress();
 													}}
@@ -769,7 +770,7 @@ function Modal({ open, data, handleModalClose }) {
 									></input>
 								</div>
 							</section>
-							<section className="ele">
+							<section className="ele submit_modal_ele_last">
 								<div className="menu">비고</div>
 								<div className="inputInfo">
 									<textarea
@@ -786,15 +787,7 @@ function Modal({ open, data, handleModalClose }) {
 						</main>
 						<footer>
 							<button
-								className="submit-btn"
-								onClick={() => {
-									handleSubmit();
-								}}
-							>
-								제출
-							</button>
-							<button
-								className="close"
+								className="close_btn"
 								onClick={() => {
 									clearState();
 									handleModalClose('submit');
@@ -802,6 +795,14 @@ function Modal({ open, data, handleModalClose }) {
 							>
 								{' '}
 								취소{' '}
+							</button>
+							<button
+								className="submit_btn"
+								onClick={() => {
+									handleSubmit();
+								}}
+							>
+								제출
 							</button>
 						</footer>
 					</section>

@@ -1,6 +1,7 @@
 export default function ({ handleBankCode }) {
 	return (
 		<select
+			className="banks_select"
 			name="account_bank_id"
 			onChange={(e) => {
 				handleBankCode(e.target.value);

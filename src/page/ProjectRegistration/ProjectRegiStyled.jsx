@@ -101,6 +101,7 @@ export const PrjRegiContainer = styled.div`
   }
 
   .contentArea {
+    width: 100%;
     padding-left: 15px;
 
     .contentTitle {
@@ -117,6 +118,7 @@ export const PrjRegiContainer = styled.div`
     }
 
     .contentBot {
+      width: 100%;
       padding: 5px 0px 5px 5px;
       display: flex;
       justify-content: center;
@@ -180,8 +182,8 @@ export const PrjRegiContainer = styled.div`
     &:hover {
       cursor: pointer;
       color: #fff;
-      background-color: #ff3d2f;
-      border-color: #f84135;
+      background-color: #ff1100;
+      border-color: #ff1100;
     }
   }
 
@@ -260,106 +262,4 @@ export const PrjRegiContainer = styled.div`
       }
     }
   }
-
-  /* @media only screen and (max-width: 1080px) {
-    .projectregi_items {
-      width: 99.6%;
-    }
-    .projectregi_item {
-      margin: 5px 5px 5px 0;
-    }
-
-    .projectregi_checkbox_area {
-      padding: 0px 5px;
-      min-width: 90px;
-
-    }
-
-    .projectregi_checkbox_top {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      height: 20%;
-
-      input {
-        width: 50px;
-        height: 50px;
-        cursor: pointer;
-      }
-    }
-    .projectregi_checkbox_bot {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-
-      height: 5%;
-
-      .ckIcon {
-        width: 30px;
-        padding: 5px;
-      }
-
-      div {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 18px;
-      }
-
-      .projectregi_checkbox_videditorText {
-        div {
-          font-size: 16px;
-        }
-      }
-
-      .projectregi_checkbox_creatorText {
-        div {
-          font-size: 12px;
-        }
-      }
-    }
-
-    .projectregi_content_item {
-      display: inline-block;
-      min-width: 220px;
-    }
-
-    .contentArea {
-      padding-left: 5px;
-      padding-right: 5px;
-
-      .contentTitle {
-        padding-top: 10px;
-      }
-      .contentTop {
-        font-size: 16px;
-      }
-      p {
-        all: unset;
-        margin-left: 5px;
-        font-size: 14px;
-        color: #898989;
-      }
-
-      .contentBot {
-        padding: 5px 0px 5px 5px;
-        display: block;
-        overflow: hidden;
-        text-align: center;
-      }
-    }
-
-    .projectregi_item_ir {
-      .projectregi_checkbox_top,
-      .projectregi_checkbox_bot {
-        position: relative;
-        top: -15px;
-        left: 0;
-      }
-      .projectregi_checkbox_bot {
-        margin-top: 12px;
-      }
-    }
-  } */
 `;
