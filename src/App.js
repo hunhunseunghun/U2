@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import './style/common.scss';
 import './style/mobile.scss';
 import { BrowserRouter } from 'react-router-dom';
@@ -46,6 +47,15 @@ const store = createStore(
 
 function App() {
 	const history = useHistory();
+	useEffect(() => {
+		const script = document.createElement('script');
+		script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
+		script.async = true;
+		document.body.appendChild(script);
+		return () => {
+			document.body.removeChild(script);
+		};
+	}, []);
 	return (
 		<BrowserRouter>
 			<MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -118,7 +128,7 @@ function App() {
 						/>
 						<Route
 							exact
-							path="/prjdetail"
+							path="/prjdetail/:challengeIdx"
 							render={(props) => <ProjectDetail history={history} {...props} />}
 						/>
 						<Footer></Footer>

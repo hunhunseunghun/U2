@@ -1,11 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ProjectDetailContainer } from './ProjectDetailStyled';
 import ProjectInfo from './PrjInfo/ProjectInfo';
-import { FaShareSquare } from 'react-icons/fa';
+import {
+	FaShareSquare,
+	FaFacebookSquare,
+	FaTwitter,
+	FaLine,
+} from 'react-icons/fa';
+import KakaoShareButton from '../../library/KakaoShareButton';
+import axios from 'axios';
+import {
+	FacebookShareButton,
+	TwitterShareButton,
+	LineShareButton,
+} from 'react-share';
 function ProjectDetail(props) {
 	console.log(props);
-	const challenge = props.location.state.challenge;
+	const challengeIdx = props.match.params.challengeIdx;
+	console.log('challengeIdx: ', challengeIdx);
+	const [challenge, setChallenge] = useState({});
 	console.log('challenge: ', challenge);
+	const [isDataReady, setIsDataReady] = useState(false);
+	useEffect(() => {
+		axios
+			.get(
+				process.env.REACT_APP_U2_DB_HOST + `/Campaign/challenge?keyword=${2}`, //sample data, should be challengeIdx.
+			)
+			.then((response) => {
+				console.log('response.data: ', response.data[0]);
+				setChallenge(response.data[0]);
+				setIsDataReady(true);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+		// axios
+		// 	.get('https://u2-rest-dev.azurewebsites.net/api/Campaign/challengemaster')
+		// 	.then((response) => {
+		// 		setChallenge(response.data[0]); //for sample
+		// 		setIsDataReady(true);
+		// 	})
+		// 	.catch((err) => {
+		// 		console.log('catch: ', err);
+		// 	});
+	}, []);
+	if (!isDataReady) {
+		return <div>no data</div>;
+	}
 	return (
 		<ProjectDetailContainer>
 			<section className="prj-title">{challenge.title}</section>
@@ -23,6 +64,50 @@ function ProjectDetail(props) {
 					<button>자료제출</button>
 				)}
 				<FaShareSquare />
+				<KakaoShareButton
+					challengeTitle={challenge.title}
+					imageUrl={'test'}
+					tags={['#test1', '#test2', '#test3']}
+					social={{
+						likeCount: 10,
+						commentCount: 23,
+						sharedCount: 333,
+					}}
+					buttons={[
+						{
+							title: 'button1',
+							link: {
+								mobileWebUrl: window.location.href,
+								webUrl: window.location.href,
+							},
+						},
+						{
+							title: 'button2',
+							link: {
+								mobileWebUrl: window.location.href,
+								webUrl: window.location.href,
+							},
+						},
+					]}
+				/>
+				<FacebookShareButton
+					title={challenge.title}
+					url={'https://u2-web-dev.azurewebsites.net'}
+				>
+					<FaFacebookSquare />
+				</FacebookShareButton>
+				<TwitterShareButton
+					title={challenge.title}
+					url={'https://u2-web-dev.azurewebsites.net'}
+				>
+					<FaTwitter />
+				</TwitterShareButton>
+				<LineShareButton
+					title={challenge.title}
+					url={'https://u2-web-dev.azurewebsites.net'}
+				>
+					<FaLine />
+				</LineShareButton>
 			</section>
 			<section className="comments"></section>
 		</ProjectDetailContainer>

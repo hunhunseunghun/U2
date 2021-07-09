@@ -16,9 +16,9 @@ function ProjectInfo({ challenge }) {
 							<th>홈페이지</th>
 						</thead>
 						<tbody>
-							<tr>{challenge.ownerName}</tr>
-							<tr>{challenge.companyA}</tr>
-							<tr>{challenge.companyB}</tr>
+							<tr>{challenge.ownerName ? challenge.ownerName : 'no data'}</tr>
+							<tr>{challenge.companyA ? challenge.companyA : 'no data'}</tr>
+							<tr>{challenge.companyB ? challenge.companyB : 'no data'}</tr>
 							<tr>{challenge.url ? challenge.url : 'no data'}</tr>
 						</tbody>
 					</table>
@@ -93,7 +93,7 @@ function ProjectInfo({ challenge }) {
 			);
 		}
 		default: {
-			return;
+			return <div>no data</div>;
 		}
 	}
 }

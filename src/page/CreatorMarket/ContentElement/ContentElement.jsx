@@ -16,8 +16,7 @@ const ContentElement = (props) => {
 				className="challenge_img_area"
 				onClick={() => {
 					props.history.push({
-						pathname: '/prjdetail',
-						state: { challenge: challenge },
+						pathname: `/prjdetail/${challenge.challengeIdx}`,
 					});
 				}}
 			>
