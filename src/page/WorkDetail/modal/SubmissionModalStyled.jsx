@@ -60,7 +60,6 @@ export const ModalContainer = styled.div`
     button {
       padding: 6px 15px;
       color: #fff;
-      border-radius: 5px;
       font-size: 12px;
       border: 1px solid #d1d1d1;
       margin: 0 5px;
