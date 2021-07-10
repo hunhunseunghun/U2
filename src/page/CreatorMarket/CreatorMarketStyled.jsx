@@ -133,9 +133,9 @@ export const MainContainer = styled.div`
     height: 100px;
   }
   @media only screen and (max-width: 1500px) and (min-width: 1350px) {
-    padding: 40px 20px 100px;
+    padding: 40px 45px 100px;
   }
   @media only screen and (max-width: 1350px) and (min-width: 500px) {
-    padding: 40px 10px 100px;
+    padding: 40px 45px 100px;
   }
 `;
