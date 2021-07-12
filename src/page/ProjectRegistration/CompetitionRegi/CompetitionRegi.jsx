@@ -93,35 +93,7 @@ const CompetitionRegi = () => {
 	// handle modal state---------------------------------------
 	const [isActive, setIsActive] = useState(false);
 	const [defaultIdx, setDefaultIdx] = useState(0);
-	const [competition, setCompetition] = useState([
-		{
-			form: '개인',
-			companyName: '홍길동',
-			logo: '',
-			email: '',
-			phoneNumber: '',
-			snsId: '',
-			id: 1,
-		},
-		{
-			form: '비즈프로필',
-			companyName: 'abc입니다.test입니다.',
-			logo: '',
-			email: 'abc@gmail.com',
-			phoneNumber: '023333333',
-			snsId: 'abcCompany',
-			id: 2,
-		},
-		{
-			form: '비즈프로필',
-			companyName: 'U2',
-			logo: '',
-			email: '',
-			phoneNumber: '',
-			snsId: '',
-			id: 3,
-		},
-	]);
+	const [competition, setCompetition] = useState(null);
 
 	// handle datetime picker theme------------------------------
 	const materialTheme = createMuiTheme({
@@ -196,15 +168,20 @@ const CompetitionRegi = () => {
 		script5.async = true;
 		document.body.appendChild(script5);
 		console.log(userInfo);
-		// axios
-		// 	.get(process.env.REACT_APP_U2_DB_HOST + '/Campaign/challengeowner', {
-		// 		headers: 'Bearer ' + localStorage.getItem('token'),
-		// 	})
-		// 	.then((response) => {
-		// 		console.log('challenge owner');
-		// 		console.log(response.data);
-		// 	})
-		// 	.catch((err) => console.log(err));
+		var config = {
+			method: 'get',
+			url: process.env.REACT_APP_U2_DB_HOST + '/Campaign/challengeowners',
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+		};
+		axios(config)
+			.then((response) => {
+				console.log('challenge owner');
+				console.log(response.data);
+			})
+			.catch((err) => console.log(err));
 	}, []);
 	return (
 		<RegiContainer className="competitionregi_contents_wrap">
@@ -223,7 +200,10 @@ const CompetitionRegi = () => {
 						<div className="menu">* 주최사</div>
 						<div className="inputInfo competitionName">
 							<div className="defaultCompetition">
-								<div>{`${competition[defaultIdx].form} : ${competition[defaultIdx].companyName}`}</div>
+								<div>
+									{competition &&
+										`${competition[defaultIdx].form} : ${competition[defaultIdx].companyName}`}
+								</div>
 								<img
 									src={downArrowIcon}
 									alt=""

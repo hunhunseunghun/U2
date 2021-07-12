@@ -6,7 +6,6 @@ import { API_URL, HOST_URL } from '../const/URL';
 import GoogleLogin from 'react-google-login';
 import { useDispatch } from 'react-redux';
 import * as baseActions from '../store/base';
-const newAPI = process.env.REACT_APP_API_URL;
 
 window.fbAsyncInit = function () {
 	window.FB.init({
@@ -59,8 +58,6 @@ function Login(props) {
 
 	const ourLogin = (data) => {
 		//console.log(data);
-		console.log('our login: ');
-		console.log('newAPI: ', newAPI);
 		axios
 			.post(process.env.REACT_APP_API_URL + '/member/login', {
 				email: data.email,
@@ -127,8 +124,7 @@ function Login(props) {
 			case 'google': {
 				//기존: 298115075163-hlqv6f9barc61674b385qats4j1gqgup.apps.googleusercontent.com
 				//신규: 954387501984-2bifnk88paakq2l6jcp63nr34jkha8ap.apps.googleusercontent.com
-				const CLIENT_ID =
-					'954387501984-2bifnk88paakq2l6jcp63nr34jkha8ap.apps.googleusercontent.com';
+				const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENTID;
 				const AUTHORIZE_URI = 'https://accounts.google.com/o/oauth2/v2/auth';
 				const queryStr = qs.stringify({
 					client_id: CLIENT_ID,

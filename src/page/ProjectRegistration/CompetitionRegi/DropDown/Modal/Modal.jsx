@@ -46,7 +46,7 @@ const Modal = ({ modalOpen, handleOpenModal, handleCloseModal, header }) => {
 		);
 		var config = {
 			method: 'post',
-			url: process.env.REACT_APP_U2_DB_HOST + '/Campaign/challenge',
+			url: process.env.REACT_APP_U2_DB_HOST + '/Campaign/challengeowner',
 			headers: {
 				Authorization: 'Bearer ' + localStorage.getItem('token'),
 				'Content-Type': 'application/json',
