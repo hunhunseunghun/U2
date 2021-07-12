@@ -14,6 +14,7 @@ import {
   TwitterShareButton,
   LineShareButton,
 } from 'react-share';
+import topviewEx from '../../Img/topviewEX.png';
 function ProjectDetail(props) {
   console.log(props);
   const challengeIdx = props.match.params.challengeIdx;
@@ -56,17 +57,34 @@ function ProjectDetail(props) {
       <section className="prj-info">
         <ProjectInfo challenge={challenge}></ProjectInfo>
       </section>
+      <section className="prj_topview_area">
+        <img src={topviewEx} alt="image" />
+      </section>
       <section className="prj-detail">{challenge.challengeDesc}</section>
-      <section className="prj-control">
-        <div className="more-prj">{challenge.ownerName}의 프로젝트 더 보기</div>
-        <button>목록</button>
-        <button>챌린지</button>
-        {challenge.challengeTargetCode === 4 ? (
-          <button>지원하기</button>
-        ) : (
-          <button>자료제출</button>
-        )}
-        <FaShareSquare />
+      <section className="prj_control">
+        <section className="prj_control_left">
+          <div className="more_prj">
+            {challenge.ownerName}의 프로젝트 더 보기
+          </div>
+        </section>
+        <section className="prj_control_middle">
+          <button>돌아가기</button>
+          <button>챌린지</button>
+          {challenge.challengeTargetCode === 4 ? (
+            <button>지원하기</button>
+          ) : (
+            <button>자료제출</button>
+          )}
+        </section>
+
+        <section className="prj_control_right">
+          <FaShareSquare />
+          <span>공 유</span>
+        </section>
+      </section>
+
+      <section>
+        {' '}
         <KakaoShareButton
           challengeTitle={challenge.title}
           imageUrl={'test'}

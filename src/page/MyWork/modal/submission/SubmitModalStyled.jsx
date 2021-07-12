@@ -319,7 +319,7 @@ export const ModalContainer = styled.div`
       font-weight: 500;
       color: #fff;
       padding: 6px 15px;
-      border-radius: 5px;
+
       border-radius: 4px;
       background-color: #f84135;
       border-color: #f84135;
