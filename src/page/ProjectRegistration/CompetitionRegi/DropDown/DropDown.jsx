@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import { Container } from './DropDownStyled.jsx';
 import Modal from './Modal/Modal.jsx';
 
-const DropDown = ({ setDefaultIdx, competition, isActive, setIsActive }) => {
+const DropDown = ({
+	setDefaultIdx,
+	setOwnerIdx,
+	competition,
+	isActive,
+	setIsActive,
+	handleNewData,
+}) => {
 	const [modalOpen, setModalOpen] = useState(false);
 	const handleOpenModal = () => {
 		setModalOpen(true);
@@ -31,6 +38,7 @@ const DropDown = ({ setDefaultIdx, competition, isActive, setIsActive }) => {
 								value={idx}
 								onClick={() => {
 									setIsActive(false);
+									setOwnerIdx(ele.ownerIdx);
 									setDefaultIdx(idx);
 								}}
 							>
@@ -50,6 +58,7 @@ const DropDown = ({ setDefaultIdx, competition, isActive, setIsActive }) => {
 				handleCloseModal={handleCloseModal}
 				modalOpen={modalOpen}
 				header="신규 프로필"
+				handleNewData={handleNewData}
 			/>
 		</Container>
 	);

@@ -18,6 +18,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import { validateEmail } from '../../../library/validate.js';
 import axios from 'axios';
 import requestBodyGenerator from '../../../library/requestBodyGenerator.js';
+import fi from 'date-fns/esm/locale/fi/index.js';
 const CompetitionRegi = () => {
 	let history = useHistory();
 	const userInfo = useSelector((state) => state.userInfo);
@@ -90,11 +91,43 @@ const CompetitionRegi = () => {
 	const [emailErr, setEmailErr] = useState('');
 	const [emailExposure, setEmailExposure] = useState(false);
 
+	//ownerIdx for API
+	const [ownerIdx, setOwnerIdx] = useState(0);
+
 	// handle modal state---------------------------------------
 	const [isActive, setIsActive] = useState(false);
 	const [defaultIdx, setDefaultIdx] = useState(0);
 	const [competition, setCompetition] = useState(null);
 
+	// const [competition, setCompetition] = useState([
+	// 	{
+	// 		form: '개인',
+	// 		companyName: '홍길동',
+	// 		logo: '',
+	// 		email: '',
+	// 		phoneNumber: '',
+	// 		snsId: '',
+	// 		id: 1,
+	// 	},
+	// 	{
+	// 		form: '비즈프로필',
+	// 		companyName: 'abc입니다.test입니다.',
+	// 		logo: '',
+	// 		email: 'abc@gmail.com',
+	// 		phoneNumber: '023333333',
+	// 		snsId: 'abcCompany',
+	// 		id: 2,
+	// 	},
+	// 	{
+	// 		form: '비즈프로필',
+	// 		companyName: 'U2',
+	// 		logo: '',
+	// 		email: '',
+	// 		phoneNumber: '',
+	// 		snsId: '',
+	// 		id: 3,
+	// 	},
+	// ]);
 	// handle datetime picker theme------------------------------
 	const materialTheme = createMuiTheme({
 		palette: {
@@ -125,38 +158,126 @@ const CompetitionRegi = () => {
 		}
 	};
 
-	const handleSubmit = () => {
-		console.log(isOnline);
-		console.log(isYoutube);
-		console.log(isTiktok);
-		console.log(isVimeo);
-		// console.log(quillText);
-		// history.push('/prjregi');
-		const token = localStorage.getItem('token');
-		console.log('token: ', token);
-		// const config = {
-		console.log(viewRef.current.getAttribute('content_data'));
+	const handleNewData = (datas) => {
+		var newForm = datas.map((el) => {
+			return {
+				form: el.ownerCat ? '비즈프로필' : '개인',
+				cat: el.ownerCat,
+				companyName: el.company,
+				email: el.email,
+				phoneNumber: el.contact,
+				snsId: el.socialMediaId,
+				snsType: el.socialMediaCode,
+				id: el.ownerIdx,
+			};
+		});
+		setCompetition(newForm);
+	};
+	const checkRequiredField = () => {
+		// if(competition && title && (isOnline || isVideoProduction) && (isEmail || isMobile) && )
+		if (!(competition.length > 0)) return alert('주최사를 선택해주십시오');
+		if (!title) return alert('공모전명을 입력해주십시오');
+		if (!(isOnline || isVideoProduction))
+			return alert('접수방법을 선택해주십시오');
+		if (!(isEmail || isMobile))
+			return alert('제출자 개인정보 수집을 선택해주십시오');
+		// if (!(startDate > new Date()))
+		// 	return alert('정확한 접수기간을 입력해주십시오');
+		if (!(startDate < finishDate))
+			return alert('접수 종료 기간을 입력해주십시오');
+		if (!(noticeStart > new Date()))
+			return alert('공지 시작일을 선택해주십시오');
+		if (
+			!(
+				contest ||
+				overseas ||
+				camp ||
+				scatterPoint ||
+				intern ||
+				full_time ||
+				prize ||
+				(toggleDirect && directInput)
+			)
+		)
+			return alert('시상 종류를 선택해주십시오');
+		if (!admin) return alert('담당자명을 입력해주십시오');
+		if (!(mobile1 && mobile2 && mobile3))
+			return alert('연락처를 입력해주십시오');
+		if (!email) return alert('이메일을 입력해 주십시오');
+		return true;
+	};
 
-		// }
+	const handleSubmit = () => {
 		console.log('userInfo: ', userInfo);
+		var rewards = [];
+		contest && rewards.push({ cat: 1 });
+		overseas && rewards.push({ cat: 2 });
+		camp && rewards.push({ cat: 3 });
+		scatterPoint && rewards.push({ cat: 4 });
+		intern && rewards.push({ cat: 5 });
+		full_time && rewards.push({ cat: 6 });
+		prize && rewards.push({ cat: 7 });
+		toggleDirect && rewards.push({ cat: 99, qty: directInput });
+
+		var videos = [];
+		isYoutube && videos.push({ platform: 'YU' });
+		isTiktok && videos.push({ platform: 'TT' });
+		isVimeo && videos.push({ platform: 'VM' });
+
 		const body = requestBodyGenerator({
+			memberIdx: userInfo.memberIdx,
 			title: title,
-			ownerIdx: userInfo.memberIdx,
+			ownerIdx: ownerIdx,
+			ownerName: competition[defaultIdx].companyName,
+			ownerCat: competition[defaultIdx].cat,
+			company: competition[defaultIdx].companyName,
 			companyA: organizer,
 			companyB: sponsor,
 			url: webpageURL,
-			challengeDesc: viewRef.current.getAttribute('content_data'),
 			mainImage: posterFile,
 			fileRef: etcFile,
+			shareRequired: isOnline ? (isSnsRequired ? 2 : 1) : 0,
+			filmRequired: isVideoProduction ? (isVidRequired ? 2 : 1) : 0,
+			emailRequired: isEmail ? (emailRequired ? 2 : 1) : 0,
+			contactRequired: isMobile ? (mobileRequired ? 2 : 1) : 0,
+			dateBegin: startDate,
+			dateFin: finishDate,
+			datePub: noticeStart,
+			rewards: rewards,
+			challengeDesc: viewRef.current.getAttribute('content_data'),
+			commentAllowed: isComment,
+			charge: admin,
+			chargeShown: adminExposure,
+			chargeContact: `${mobile1}-${mobile2}-${mobile3}`,
+			chargeContactShown: mobileExposure,
+			chargeeMail: email,
+			chargeeMailShown: emailExposure,
 		});
-
-		// axios.post(process.env.REACT_APP_U2_DB_HOST + '/Campaign/challenge', {
-		//   headers: {
-		//     Authorization: 'Bearer ' + token
-		//   }
-		// })
+		var config = {
+			method: 'post',
+			url: process.env.REACT_APP_U2_DB_HOST + '/Campaign/challenge',
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+			data: body,
+		};
+		let isConfirmed = window.confirm('등록하시겠습니까?');
+		if (isConfirmed) {
+			if (checkRequiredField() === true) {
+				axios(config)
+					.then((response) => {
+						console.log(response.data);
+					})
+					.catch((err) => {
+						console.log(err);
+						alert('공모전 등록에 실패했습니다.');
+					});
+			}
+		}
 	};
 	useEffect(() => {
+		//summernote config---------------------------
 		const script5 = document.createElement('script');
 		script5.innerHTML = `$(document).ready(function () {
 		$('#summernote').summernote()
@@ -167,6 +288,9 @@ const CompetitionRegi = () => {
 		});`;
 		script5.async = true;
 		document.body.appendChild(script5);
+		//summernote config--------------------------- end
+
+		//competition data -----------------------------
 		console.log(userInfo);
 		var config = {
 			method: 'get',
@@ -178,10 +302,25 @@ const CompetitionRegi = () => {
 		};
 		axios(config)
 			.then((response) => {
-				console.log('challenge owner');
-				console.log(response.data);
+				// console.log('challenge owner');
+				// console.log(response.data);
+				var data = response.data;
+				var newForm = data.map((el) => {
+					return {
+						form: el.ownerCat ? '비즈프로필' : '개인',
+						cat: el.ownerCat,
+						companyName: el.company,
+						email: el.email,
+						phoneNumber: el.contact,
+						snsId: el.socialMediaId,
+						snsType: el.socialMediaCode,
+						id: el.ownerIdx,
+					};
+				});
+				setCompetition(newForm);
 			})
 			.catch((err) => console.log(err));
+		//competition data ----------------------------- end
 	}, []);
 	return (
 		<RegiContainer className="competitionregi_contents_wrap">
@@ -215,9 +354,11 @@ const CompetitionRegi = () => {
 
 							<DropDown
 								setDefaultIdx={setDefaultIdx}
+								setOwnerIdx={setOwnerIdx}
 								competition={competition}
 								setIsActive={setIsActive}
 								isActive={isActive}
+								handleNewData={handleNewData}
 							/>
 						</div>
 					</section>
@@ -792,7 +933,7 @@ const CompetitionRegi = () => {
 						</div>
 					</section>
 					<section className="ele">
-						<div className="menu">* 댓글 기능</div>
+						<div className="menu">댓글 기능</div>
 						<section className="inputInfo replyfunc_form">
 							<div className="replyfunc_items">
 								<div className="replyfunc_item_wrap">

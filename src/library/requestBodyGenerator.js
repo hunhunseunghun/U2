@@ -21,29 +21,36 @@ export default function (params, type) {
 				missions: [
 					// 템플릿
 					{
-						videos: [
-							{
+						videos: params.videos.map((el) => {
+							return {
 								// "challengeIdx": 0,
 								seq: 1, //seq는 무조건 1
-								platform: 'YU', //객체
-								platformRequired: params.platformRequired,
-							},
-						],
+								platform: el.platform, //객체
+								platformRequired: 1,
+							};
+						}),
+						// {
+						// 	// "challengeIdx": 0,
+						// 	seq: 1, //seq는 무조건 1
+						// 	platform: 'YU', //객체
+						// 	platformRequired: params.platformRequired,
+						// },
+
 						seq: 1, //무조건 1
 						missionDesc: 'string',
 						datePub: params.datePub, //공지 시작일
 						dateBegin: params.dateBegin, //접수 시작
 						dateFin: params.dateFin, // 접수 종료
-						shareRequired: params.shareRequired ? 1 : 0, //온라인 게시 필수제출시 2
-						filmRequired: params.filmRequired ? 1 : 0, //영상 제작 제출 필수제출시 2
-						emailRequired: params.emailRequired ? 1 : 0, //제출자 개인 정보 수집  이메일
-						contactRequired: params.contactRequired ? 1 : 0, //제출자 개인 정보 수집 전화번호
+						shareRequired: params.shareRequired, //온라인 게시 필수제출시 2
+						filmRequired: params.filmRequired, //영상 제작 제출 필수제출시 2
+						emailRequired: params.emailRequired, //제출자 개인 정보 수집  이메일
+						contactRequired: params.contactRequired, //제출자 개인 정보 수집 전화번호
 					},
 				],
 
 				ownerName: params.ownerName, //userInfo. name
 				memberIdx: params.memberIdx, // userInfo . memberidx
-				rewards: [
+				rewards:
 					//   {
 					//     "seq": 1,
 					//     "cat": 0,
@@ -60,7 +67,7 @@ export default function (params, type) {
 							currency: el.currency,
 						};
 					}),
-				],
+
 				// "challengerCount": 0, //?
 				// "commentCount": 0,
 				// "shareCount": 0,

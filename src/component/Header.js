@@ -60,6 +60,7 @@ function Header(props) {
 								photo: result.data.photoUrl,
 								token: result.data.token,
 								charge: result.data.chargeApp.chargeIdx,
+								memberIdx: result.data.memberIdx,
 							}),
 						);
 					});

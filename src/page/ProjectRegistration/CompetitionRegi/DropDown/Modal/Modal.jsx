@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import requestBodyGenerator from '../../../../../library/requestBodyGenerator';
 import { useSelector } from 'react-redux';
-const Modal = ({ modalOpen, handleOpenModal, handleCloseModal, header }) => {
+const Modal = ({
+	modalOpen,
+	handleOpenModal,
+	handleCloseModal,
+	header,
+	handleNewData,
+}) => {
 	const userInfo = useSelector((state) => state.userInfo);
 	const [ownerCat, setOwnerCat] = useState(0); // 0: 개인 , 1: 비지니스
 	const [company, setCompany] = useState('');
@@ -56,6 +62,7 @@ const Modal = ({ modalOpen, handleOpenModal, handleCloseModal, header }) => {
 		axios(config)
 			.then((response) => {
 				console.log(response.data);
+				handleNewData(response.data);
 				handleCloseModal();
 			})
 			.catch((err) => {
