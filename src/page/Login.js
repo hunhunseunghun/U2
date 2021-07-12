@@ -128,7 +128,7 @@ function Login(props) {
 				//기존: 298115075163-hlqv6f9barc61674b385qats4j1gqgup.apps.googleusercontent.com
 				//신규: 954387501984-2bifnk88paakq2l6jcp63nr34jkha8ap.apps.googleusercontent.com
 				const CLIENT_ID =
-					'298115075163-hlqv6f9barc61674b385qats4j1gqgup.apps.googleusercontent.com';
+					'954387501984-2bifnk88paakq2l6jcp63nr34jkha8ap.apps.googleusercontent.com';
 				const AUTHORIZE_URI = 'https://accounts.google.com/o/oauth2/v2/auth';
 				const queryStr = qs.stringify({
 					client_id: CLIENT_ID,
