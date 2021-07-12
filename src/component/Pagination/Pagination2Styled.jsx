@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Pagination2Styled = styled.nav`
   /* position: absolute; */
   width: 100%;
+
   ul {
     width: 100%;
     display: flex;
@@ -14,6 +15,7 @@ export const Pagination2Styled = styled.nav`
     /* width: 30px; */
     margin: 0 1px;
     background-color: white;
+    color: #747474;
   }
   button:hover {
     cursor: pointer;

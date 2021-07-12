@@ -104,18 +104,17 @@ export const ParticipateTableContainer = styled.div`
   button.feedback-button {
     cursor: pointer;
     padding: 2px 5px;
-    background: linear-gradient(#ffff, #d6d6d6);
+    background: linear-gradient(#fff, #f2f2f2);
     border: 1px solid #eee;
-    border-radius: 5px;
   }
   button.feedback-button:hover {
     background-color: #e3e3e3;
   }
   .presentation-td > button {
+    background: linear-gradient(#fff, #f2f2f2);
     border: 1px solid #eee;
-    border-radius: 5px;
-    background: linear-gradient(#ffff, #d6d6d6);
     padding: 2px 5px;
+
     :hover {
       background-color: #e3e3e3;
       cursor: pointer;

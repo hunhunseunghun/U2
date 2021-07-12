@@ -6,7 +6,7 @@ export const MyWorkContainer = styled.div`
   display: grid;
   place-items: center;
   font-weight: 500;
-  background-color: #fafafa;
+  /* background-color: #fafafa; */
   z-index: 1;
 
   .mywork_section {

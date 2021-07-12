@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { BiLoader } from 'react-icons/bi';
 import Pagination2 from '../../component/Pagination/Pagination2.jsx';
 import { paginate } from '../../component/Pagination/paginate.js';
+
 const server = process.env.REACT_APP_U2_DB_HOST;
 
 const Main = (props) => {
@@ -30,7 +31,7 @@ const Main = (props) => {
 	//   )
 	// }, [])
 	const handleRequestClick = (data) => {
-		console.log(props);
+		// console.log(props);
 		if (!userInfo.email) {
 			props.history.push('/login');
 		} else {
@@ -44,11 +45,11 @@ const Main = (props) => {
 
 	useEffect(() => {
 		setIsLoadingChallenges(true);
-		console.log('server: ', server);
+		// console.log('server: ', server);
 		axios
 			.get(server + `/Campaign/challenge`)
 			.then((res) => {
-				console.log(res.data);
+				// console.log(res.data);
 				setChallengs(res.data);
 				setIsLoadingChallenges(false);
 			})
@@ -56,6 +57,25 @@ const Main = (props) => {
 				setIsLoadingChallenges(null);
 				throw err;
 			});
+
+		console.log('.env 설정: ');
+		console.log(
+			'process.env.REACT_APP_U2_DB_HOST: ',
+			process.env.REACT_APP_U2_DB_HOST,
+		);
+		console.log(
+			'process.env.REACT_APP_HOST_URL: ',
+			process.env.REACT_APP_HOST_URL,
+		);
+		console.log(
+			'process.env.REACT_APP_API_URL: ',
+			process.env.REACT_APP_API_URL,
+		);
+
+		console.log(
+			'process.env.REACT_APP_GOOGLE_CLIENTID: ',
+			process.env.REACT_APP_GOOGLE_CLIENTID,
+		);
 	}, []);
 	return (
 		<MainContainer className="contents_wrap">
@@ -147,6 +167,7 @@ const Main = (props) => {
 														<ContentElement
 															challenge={ele}
 															key={`${ele.challengeIdx}`}
+															history={props.history}
 														/>
 													);
 												}
@@ -155,6 +176,7 @@ const Main = (props) => {
 														<ContentElement
 															challenge={ele}
 															key={`${ele.challengeIdx}`}
+															history={props.history}
 														/>
 													);
 												}
@@ -166,6 +188,7 @@ const Main = (props) => {
 														<ContentElement
 															challenge={ele}
 															key={`${ele.challengeIdx}`}
+															history={props.history}
 														/>
 													);
 												}
@@ -174,6 +197,7 @@ const Main = (props) => {
 														<ContentElement
 															challenge={ele}
 															key={`${ele.challengeIdx}`}
+															history={props.history}
 														/>
 													);
 												}

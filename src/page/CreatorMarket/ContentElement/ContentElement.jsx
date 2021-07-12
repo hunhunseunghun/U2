@@ -3,15 +3,23 @@ import { FiCheck, FiX } from 'react-icons/fi';
 import { EleContainer } from './ContentElementStyled.jsx';
 import { LinearProgress } from '@material-ui/core';
 import ceImg from '../../../Img/ceImg.png';
+import paticipateUser from '../../../Img/Icons/user-regular.svg';
 import { calcRemainDays } from '../../../library/timeSetting.js';
 
-const ContentElement = ({ challenge }) => {
+const ContentElement = (props) => {
 	const [myRegistration, setMyRegistration] = useState(false);
 	const [mySubmit, setMySubmit] = useState(false);
-
+	const challenge = props.challenge;
 	return (
 		<EleContainer>
-			<div className="challenge_img_area">
+			<div
+				className="challenge_img_area"
+				onClick={() => {
+					props.history.push({
+						pathname: `/prjdetail/${challenge.challengeIdx}`,
+					});
+				}}
+			>
 				<img src={ceImg} alt={ceImg} className="challenge_img" />
 				{/* {tItem.bannerImage === null && (
           <div className={'no_img'}>
@@ -30,6 +38,7 @@ const ContentElement = ({ challenge }) => {
 						{/* <button className="paticipantBtn">+</button> */}
 						<div>참가자</div> <div>{`${challenge.challengerCount}`}</div>
 					</div>
+
 					<LinearProgress
 						className="challenge_progressBar"
 						variant="determinate"

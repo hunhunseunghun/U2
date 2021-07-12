@@ -1,6 +1,12 @@
-export default function () {
+export default function ({ handleBankCode }) {
 	return (
-		<select name="account_bank_id">
+		<select
+			className="banks_select"
+			name="account_bank_id"
+			onChange={(e) => {
+				handleBankCode(e.target.value);
+			}}
+		>
 			<option value="">은행 선택</option>
 			<option value="35">경남은행</option>
 			<option value="29">광주은행</option>

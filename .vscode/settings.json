@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/887de2e4-a5ed-4c02-93d6-ac074fa03da8/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/U2Market",
+    "appService.deploySubpath": "build"
+}

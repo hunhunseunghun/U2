@@ -6,6 +6,7 @@ import * as baseActions from '../store/base';
 import useBus from 'use-bus';
 import axios from 'axios';
 import DdProfile from './DropDown/DdProfile.jsx';
+const newAPI = process.env.REACT_APP_TEST_API;
 function Header(props) {
 	const [mobileYn, setMobileYn] = useState(false);
 	const [whiteFix, setWhiteFix] = useState(false);
@@ -42,9 +43,10 @@ function Header(props) {
 		if (!userInfo.email) {
 			const token = localStorage.getItem('token');
 			console.log(token);
+			console.log('newAPI: ', newAPI);
 			if (token) {
 				axios
-					.get(API_URL + '/member/profile', {
+					.get(process.env.REACT_APP_API_URL + '/member/profile', {
 						headers: {
 							Authorization: 'Bearer ' + token,
 						},
@@ -58,6 +60,7 @@ function Header(props) {
 								photo: result.data.photoUrl,
 								token: result.data.token,
 								charge: result.data.chargeApp.chargeIdx,
+								memberIdx: result.data.memberIdx,
 							}),
 						);
 					});

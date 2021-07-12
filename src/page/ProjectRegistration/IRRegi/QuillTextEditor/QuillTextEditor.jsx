@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 
 const QuillTextEditor = () => {
   const [editorText, setEditorText] = useState('');
-
   const editorModule = {
     toolbar: [
       [{ header: [1, 2, false] }],
@@ -14,6 +13,7 @@ const QuillTextEditor = () => {
         { indent: '-1' },
         { indent: '+1' },
       ],
+      ['image'],
       [{ align: [] }, { color: [] }],
       ['clean'],
     ],
@@ -26,6 +26,7 @@ const QuillTextEditor = () => {
     'list',
     'bullet',
     'indent',
+    'image',
     'align',
     'color',
   ];

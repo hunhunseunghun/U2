@@ -52,13 +52,14 @@ export const AdsContainer = styled.div`
     width: 80%;
     height: 38px;
     font-weight: 600;
-    background-color: #ff4438;
+    /* background-color: #ff4438; */
+    background: linear-gradient(#ff5e52, #ff1100);
     color: #fff;
     border-radius: 4px;
 
     &:hover {
       cursor: pointer;
-      background-color: #ff1405;
+      background: linear-gradient(#ff1100, #ff1100);
     }
   }
   @media only screen and (max-width: 1500px) and (min-width: 1350px) {
@@ -94,13 +95,13 @@ export const AdsContainer = styled.div`
       width: 80%;
       height: 38px;
       font-weight: 600;
-      background-color: #ff4438;
+      background: linear-gradient(#ff5e52, #ff1100);
       color: #fff;
       border-radius: 4px;
 
       &:hover {
         cursor: pointer;
-        background-color: #ff1405;
+        background: linear-gradient(#ff1100, #ff1100);
       }
     }
   }
@@ -141,13 +142,13 @@ export const AdsContainer = styled.div`
       width: 80%;
       height: 38px;
       font-weight: 600;
-      background-color: #ff4438;
+      background: linear-gradient(#ff5e52, #ff1100);
       color: #fff;
       border-radius: 4px;
 
       &:hover {
         cursor: pointer;
-        background-color: #ff1405;
+        background: linear-gradient(#ff1100, #ff1100);
       }
     }
   }

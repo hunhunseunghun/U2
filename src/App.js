@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import './style/common.scss';
 import './style/mobile.scss';
 import { BrowserRouter } from 'react-router-dom';
@@ -30,6 +31,8 @@ import CompetitionRegi from './page/ProjectRegistration/CompetitionRegi/Competit
 import VidCreatorRegi from './page/ProjectRegistration/VidCreatorRegi/VidCreatorRegi.jsx';
 import VidEditorRegi from './page/ProjectRegistration/VidEditorRegi/VidEditorRegi.jsx';
 import IRRegi from './page/ProjectRegistration/IRRegi/IRRegi.jsx';
+import ProjectDetail from './page/ProjectDetail/ProjectDetail';
+import ErrorPage from './page/ErrorPage/ErrorPage.jsx';
 
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
@@ -45,6 +48,40 @@ const store = createStore(
 
 function App() {
 	const history = useHistory();
+	useEffect(() => {
+		const script = document.createElement('script');
+		script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
+		script.async = true;
+		document.body.appendChild(script);
+		const script3 = document.createElement('script');
+		script3.src =
+			'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js';
+		script3.async = true;
+
+		const script4 = document.createElement('script');
+		script4.src =
+			'https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js';
+		script4.async = true;
+
+		const link1 = document.createElement('link');
+		link1.href =
+			'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css';
+		link1.rel = 'stylesheet';
+		link1.async = true;
+
+		const link2 = document.createElement('link');
+		link2.href =
+			'https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css';
+		link2.rel = 'stylesheet';
+		link2.async = true;
+		document.body.appendChild(script3);
+		document.body.appendChild(script4);
+		document.body.appendChild(link1);
+		document.body.appendChild(link2);
+		return () => {
+			document.body.removeChild(script);
+		};
+	}, []);
 	return (
 		<BrowserRouter>
 			<MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -115,6 +152,12 @@ function App() {
 							path="/ir"
 							render={() => <IRRegi history={history} />}
 						/>
+						<Route
+							exact
+							path="/prjdetail/:challengeIdx"
+							render={(props) => <ProjectDetail history={history} {...props} />}
+						/>
+						<Route excat path="/errorpage" component={ErrorPage} />
 						<Footer></Footer>
 					</div>
 				</Provider>
