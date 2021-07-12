@@ -194,8 +194,17 @@ const CompetitionRegi = () => {
 		  });
 		});`;
 		script5.async = true;
-
 		document.body.appendChild(script5);
+		console.log(userInfo);
+		// axios
+		// 	.get(process.env.REACT_APP_U2_DB_HOST + '/Campaign/challengeowner', {
+		// 		headers: 'Bearer ' + localStorage.getItem('token'),
+		// 	})
+		// 	.then((response) => {
+		// 		console.log('challenge owner');
+		// 		console.log(response.data);
+		// 	})
+		// 	.catch((err) => console.log(err));
 	}, []);
 	return (
 		<RegiContainer className="competitionregi_contents_wrap">

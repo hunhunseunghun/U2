@@ -6,7 +6,7 @@ import { API_URL, HOST_URL } from '../const/URL';
 import GoogleLogin from 'react-google-login';
 import { useDispatch } from 'react-redux';
 import * as baseActions from '../store/base';
-const newAPI = process.env.REACT_APP_TEST_API;
+const newAPI = process.env.REACT_APP_API_URL;
 
 window.fbAsyncInit = function () {
 	window.FB.init({
@@ -62,7 +62,7 @@ function Login(props) {
 		console.log('our login: ');
 		console.log('newAPI: ', newAPI);
 		axios
-			.post(API_URL + '/member/login', {
+			.post(process.env.REACT_APP_API_URL + '/member/login', {
 				email: data.email,
 				fullName: data.name,
 				photoUrl: data.photo,

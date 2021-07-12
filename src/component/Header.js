@@ -46,7 +46,7 @@ function Header(props) {
 			console.log('newAPI: ', newAPI);
 			if (token) {
 				axios
-					.get(API_URL + '/member/profile', {
+					.get(process.env.REACT_APP_API_URL + '/member/profile', {
 						headers: {
 							Authorization: 'Bearer ' + token,
 						},

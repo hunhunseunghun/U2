@@ -1,5 +1,21 @@
 export default function (params, type) {
 	switch (type) {
+		case 'challengeowner': {
+			return {
+				// ownerIdx: params.ownerIdx,
+				memberIdx: params.memberIdx,
+				ownerCat: params.ownerCat,
+				company: params.company,
+				email: params.email,
+				contact: params.contact,
+				socialMediaCode: params.socialMediaCode,
+				socialMediaId: params.socialMediaId,
+				// "registMemberIdx": 0,
+				// "registDate": "2021-07-12T11:42:54.308Z",
+				// "modifyMemberIdx": 0,
+				// "modifyDate": "2021-07-12T11:42:54.308Z"
+			};
+		}
 		case '공모전': {
 			return {
 				missions: [
