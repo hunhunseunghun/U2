@@ -72,11 +72,11 @@ const CompetitionRegi = () => {
 	const [toggleDirect, setToggleDirect] = useState(false);
 	const [directInput, setDirectInput] = useState('');
 	//공모 공지글
-	// const [quillText, setQuillText] = useState(
-	// 	'<ul><li>제목 :</li></ul><p><br></p><ul><li>응모 자격 :</li></ul><p><br></p><ul><li>응모 주제 :</li></ul><p><br></p><ul><li>시상 내역 :</li></ul><p><br></p><ul><li>응모 일정 : </li></ul><p><br></p><ul><li>제출 방법 :</li></ul><p><br></p><ul><li>접수 방법 :</li></ul><p><br></p><ul><li>심사 방법 :</li></ul><p><br></p><ul><li>유의 사항 :</li></ul><p><br></p><ul><li>문의 사항:</li></ul>',
-	// );
+	const [quillText, setQuillText] = useState(
+		'<ul><li>제목 :</li></ul><p><br></p><ul><li>응모 자격 :</li></ul><p><br></p><ul><li>응모 주제 :</li></ul><p><br></p><ul><li>시상 내역 :</li></ul><p><br></p><ul><li>응모 일정 : </li></ul><p><br></p><ul><li>제출 방법 :</li></ul><p><br></p><ul><li>접수 방법 :</li></ul><p><br></p><ul><li>심사 방법 :</li></ul><p><br></p><ul><li>유의 사항 :</li></ul><p><br></p><ul><li>문의 사항:</li></ul>',
+	);
 	//summernote
-	const viewRef = useRef(null);
+	// const viewRef = useRef(null);
 	//댓글 기능
 	const [isComment, setIsComment] = useState(true);
 
@@ -147,10 +147,10 @@ const CompetitionRegi = () => {
 	const handleCurrency = (e) => {
 		setCurrency(e.target.value);
 	};
-	// const handleQuillText = (text) => {
-	// 	console.log(text);
-	// 	setQuillText(text);
-	// };
+	const handleQuillText = (text) => {
+		console.log(text);
+		setQuillText(text);
+	};
 	const handleEmailValidation = (email) => {
 		const { isValid, error } = validateEmail(email);
 		if (!isValid) {
@@ -249,7 +249,8 @@ const CompetitionRegi = () => {
 				datePub: noticeStart,
 				rewards: rewards,
 				videos: videos,
-				challengeDesc: viewRef.current.getAttribute('content_data'),
+				// challengeDesc: viewRef.current.getAttribute('content_data'),
+				challengeDesc: quillText,
 				commentAllowed: isComment,
 				charge: admin,
 				chargeShown: adminExposure,
@@ -287,6 +288,7 @@ const CompetitionRegi = () => {
 					.then((response) => {
 						console.log(response.data);
 						alert('공모전 등록에 성공했습니다.');
+						history.push('/creatormarket');
 					})
 					.catch((err) => {
 						console.log(err);
@@ -933,12 +935,12 @@ const CompetitionRegi = () => {
 						<div className="inputInfo notice_editor_form">
 							{/* <Ckeditor /> */}
 
-							{/* <QuillTextEditor
+							<QuillTextEditor
 								className="notice_editor"
 								handleText={handleQuillText}
-							/> */}
+							/>
 							{/* <Summernote viewRef={viewRef} placeHolder={placeHolder} /> */}
-							<div id="summernote">
+							{/* <div id="summernote">
 								제목: <br />
 								응모 자격: <br />
 								응모 주제: <br />
@@ -950,7 +952,7 @@ const CompetitionRegi = () => {
 								유의 사항: <br />
 								문의 사항: <br />
 							</div>
-							<div id="view" ref={viewRef}></div>
+							<div id="view" ref={viewRef}></div> */}
 						</div>
 					</section>
 					<section className="ele">

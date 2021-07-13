@@ -53,31 +53,31 @@ function App() {
 		script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
 		script.async = true;
 		document.body.appendChild(script);
-		const script3 = document.createElement('script');
-		script3.src =
-			'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js';
-		script3.async = true;
+		// const script3 = document.createElement('script');
+		// script3.src =
+		// 	'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js';
+		// script3.async = true;
 
-		const script4 = document.createElement('script');
-		script4.src =
-			'https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js';
-		script4.async = true;
+		// const script4 = document.createElement('script');
+		// script4.src =
+		// 	'https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js';
+		// script4.async = true;
 
-		const link1 = document.createElement('link');
-		link1.href =
-			'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css';
-		link1.rel = 'stylesheet';
-		link1.async = true;
+		// const link1 = document.createElement('link');
+		// link1.href =
+		// 	'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css';
+		// link1.rel = 'stylesheet';
+		// link1.async = true;
 
-		const link2 = document.createElement('link');
-		link2.href =
-			'https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css';
-		link2.rel = 'stylesheet';
-		link2.async = true;
-		document.body.appendChild(script3);
-		document.body.appendChild(script4);
-		document.body.appendChild(link1);
-		document.body.appendChild(link2);
+		// const link2 = document.createElement('link');
+		// link2.href =
+		// 	'https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css';
+		// link2.rel = 'stylesheet';
+		// link2.async = true;
+		// document.body.appendChild(script3);
+		// document.body.appendChild(script4);
+		// document.body.appendChild(link1);
+		// document.body.appendChild(link2);
 		return () => {
 			document.body.removeChild(script);
 		};
