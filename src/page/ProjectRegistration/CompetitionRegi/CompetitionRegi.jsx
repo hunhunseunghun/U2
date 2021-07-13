@@ -18,13 +18,15 @@ import { ThemeProvider } from '@material-ui/styles';
 import { validateEmail } from '../../../library/validate.js';
 import axios from 'axios';
 import requestBodyGenerator from '../../../library/requestBodyGenerator.js';
-import fi from 'date-fns/esm/locale/fi/index.js';
+
+// import writeJsonFile from 'write-json-file';
+
 const CompetitionRegi = () => {
 	let history = useHistory();
 	const userInfo = useSelector((state) => state.userInfo);
 
 	// posterfile upload handle---------------------------------
-	const [posterFile, setPosterFile] = useState(null); //포스터 파일, fileList 객체 -> 배열로 변환 후 -> posterfile에 할당
+	const [posterFile, setPosterFile] = useState([]); //포스터 파일, fileList 객체 -> 배열로 변환 후 -> posterfile에 할당
 	const [posterFilePath, setPosterFilePath] = useState('Choose file to upload'); //포스터 파일 업로드 파일패스 , placholder 값
 	const [etcFile, setEtcFile] = useState(null);
 	const [etcFilePath, setEtcFilePath] = useState('Choose file to upload');
@@ -154,6 +156,7 @@ const CompetitionRegi = () => {
 		if (!isValid) {
 			setEmailErr(error);
 		} else {
+			setEmail(email);
 			setEmailErr(null);
 		}
 	};
@@ -217,42 +220,46 @@ const CompetitionRegi = () => {
 		intern && rewards.push({ cat: 5 });
 		full_time && rewards.push({ cat: 6 });
 		prize && rewards.push({ cat: 7 });
-		toggleDirect && rewards.push({ cat: 99, qty: directInput });
+		toggleDirect && rewards.push({ cat: 99, rewarddesc: directInput });
 
 		var videos = [];
 		isYoutube && videos.push({ platform: 'YU' });
 		isTiktok && videos.push({ platform: 'TT' });
 		isVimeo && videos.push({ platform: 'VM' });
 
-		const body = requestBodyGenerator({
-			memberIdx: userInfo.memberIdx,
-			title: title,
-			ownerIdx: ownerIdx,
-			ownerName: competition[defaultIdx].companyName,
-			ownerCat: competition[defaultIdx].cat,
-			company: competition[defaultIdx].companyName,
-			companyA: organizer,
-			companyB: sponsor,
-			url: webpageURL,
-			mainImage: posterFile,
-			fileRef: etcFile,
-			shareRequired: isOnline ? (isSnsRequired ? 2 : 1) : 0,
-			filmRequired: isVideoProduction ? (isVidRequired ? 2 : 1) : 0,
-			emailRequired: isEmail ? (emailRequired ? 2 : 1) : 0,
-			contactRequired: isMobile ? (mobileRequired ? 2 : 1) : 0,
-			dateBegin: startDate,
-			dateFin: finishDate,
-			datePub: noticeStart,
-			rewards: rewards,
-			challengeDesc: viewRef.current.getAttribute('content_data'),
-			commentAllowed: isComment,
-			charge: admin,
-			chargeShown: adminExposure,
-			chargeContact: `${mobile1}-${mobile2}-${mobile3}`,
-			chargeContactShown: mobileExposure,
-			chargeeMail: email,
-			chargeeMailShown: emailExposure,
-		});
+		const body = requestBodyGenerator(
+			{
+				memberIdx: userInfo.memberIdx,
+				title: title,
+				ownerIdx: ownerIdx,
+				ownerName: competition[defaultIdx].companyName,
+				ownerCat: competition[defaultIdx].cat,
+				company: competition[defaultIdx].companyName,
+				companyA: organizer,
+				companyB: sponsor,
+				url: webpageURL,
+				mainImage: posterFile.length > 0 ? posterFile[0].name : null,
+				fileRef: etcFile,
+				shareRequired: isOnline ? (isSnsRequired ? 2 : 1) : 0,
+				filmRequired: isVideoProduction ? (isVidRequired ? 2 : 1) : 0,
+				emailRequired: isEmail ? (emailRequired ? 2 : 1) : 0,
+				contactRequired: isMobile ? (mobileRequired ? 2 : 1) : 0,
+				dateBegin: startDate,
+				dateFin: finishDate,
+				datePub: noticeStart,
+				rewards: rewards,
+				videos: videos,
+				challengeDesc: viewRef.current.getAttribute('content_data'),
+				commentAllowed: isComment,
+				charge: admin,
+				chargeShown: adminExposure,
+				chargeContact: `${mobile1}-${mobile2}-${mobile3}`,
+				chargeContactShown: mobileExposure,
+				chargeeMail: email,
+				chargeeMailShown: emailExposure,
+			},
+			'공모전',
+		);
 		var config = {
 			method: 'post',
 			url: process.env.REACT_APP_U2_DB_HOST + '/Campaign/challenge',
@@ -262,12 +269,24 @@ const CompetitionRegi = () => {
 			},
 			data: body,
 		};
+
+		let TextFile = () => {
+			const element = document.createElement('a');
+			const textFile = new Blob([JSON.stringify(body)], { type: 'text/plain' }); //pass data from localStorage API to blob
+			element.href = URL.createObjectURL(textFile);
+			element.download = 'userFile.txt';
+			document.body.appendChild(element);
+			element.click();
+		};
+		// TextFile();
+		console.log('body: ', body);
 		let isConfirmed = window.confirm('등록하시겠습니까?');
 		if (isConfirmed) {
 			if (checkRequiredField() === true) {
 				axios(config)
 					.then((response) => {
 						console.log(response.data);
+						alert('공모전 등록에 성공했습니다.');
 					})
 					.catch((err) => {
 						console.log(err);
@@ -305,6 +324,7 @@ const CompetitionRegi = () => {
 				// console.log('challenge owner');
 				// console.log(response.data);
 				var data = response.data;
+				console.log('profile data: ', data);
 				var newForm = data.map((el) => {
 					return {
 						form: el.ownerCat ? '비즈프로필' : '개인',
@@ -317,6 +337,7 @@ const CompetitionRegi = () => {
 						id: el.ownerIdx,
 					};
 				});
+				setOwnerIdx(data[0].ownerIdx);
 				setCompetition(newForm);
 			})
 			.catch((err) => console.log(err));

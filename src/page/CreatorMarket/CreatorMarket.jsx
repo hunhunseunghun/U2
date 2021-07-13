@@ -11,8 +11,6 @@ import { BiLoader } from 'react-icons/bi';
 import Pagination2 from '../../component/Pagination/Pagination2.jsx';
 import { paginate } from '../../component/Pagination/paginate.js';
 
-const server = process.env.REACT_APP_U2_DB_HOST;
-
 const Main = (props) => {
 	const [tabActive, setTabActive] = useState(0); // 탭 선택 소팅
 	//0: 전체, 1: 공모전, 2: 전문영상 편집자 , 3: 영상 크리에이터/언플루언서, 4: 강사채용
@@ -47,7 +45,7 @@ const Main = (props) => {
 		setIsLoadingChallenges(true);
 		// console.log('server: ', server);
 		axios
-			.get(server + `/Campaign/challenge`)
+			.get(process.env.REACT_APP_U2_DB_HOST + `/Campaign/challenge`)
 			.then((res) => {
 				// console.log(res.data);
 				setChallengs(res.data);

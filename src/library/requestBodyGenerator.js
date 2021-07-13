@@ -21,10 +21,10 @@ export default function (params, type) {
 				missions: [
 					// 템플릿
 					{
-						videos: params.videos.map((el) => {
+						videos: params.videos.map((el, idx) => {
 							return {
 								// "challengeIdx": 0,
-								seq: 1, //seq는 무조건 1
+								seq: idx + 1, //seq는 무조건 1
 								platform: el.platform, //객체
 								platformRequired: 1,
 							};
@@ -58,16 +58,41 @@ export default function (params, type) {
 					//     "pts": 0,
 					//     "currency": "string",
 					//   }
-					params.rewards.map((el) => {
+					params.rewards.map((el, idx) => {
 						return {
-							seq: 1,
+							seq: idx + 1,
 							cat: el.cat,
-							qty: el.qty,
-							pts: el.pts,
-							currency: el.currency,
+							qty: el.qty ? el.qty : 0,
+							pts: el.pts ? el.pts : 0,
+							currency: el.currency ? el.currency : null,
+							rewarddesc: el.rewarddesc ? el.rewarddesc : null,
 						};
 					}),
-
+				// hire: {
+				// 	fields: [
+				// 		{
+				// 			challengeIdx: 1,
+				// 			seq: 1,
+				// 			fieldCode: 'string',
+				// 			fieldName: 'string',
+				// 			// registMemberIdx: 0,
+				// 			// registDate: '2021-07-13T04:46:40.915Z',
+				// 			// modifyMemberIdx: 0,
+				// 			// modifyDate: '2021-07-13T04:46:40.915Z',
+				// 		},
+				// 	],
+				// 	docs: [
+				// 		{
+				// 			challengeIdx: 1,
+				// 			seq: 1,
+				// 			docCode: 'string',
+				// 			// registMemberIdx: 0,
+				// 			// registDate: '2021-07-13T04:46:40.915Z',
+				// 			// modifyMemberIdx: 0,
+				// 			// modifyDate: '2021-07-13T04:46:40.915Z',
+				// 		},
+				// 	],
+				// },
 				// "challengerCount": 0, //?
 				// "commentCount": 0,
 				// "shareCount": 0,
