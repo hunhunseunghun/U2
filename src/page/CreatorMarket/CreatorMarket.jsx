@@ -47,7 +47,7 @@ const Main = (props) => {
 		axios
 			.get(process.env.REACT_APP_U2_DB_HOST + `/Campaign/challenge`)
 			.then((res) => {
-				// console.log(res.data);
+				console.log(res.data);
 				setChallengs(res.data);
 				setIsLoadingChallenges(false);
 			})

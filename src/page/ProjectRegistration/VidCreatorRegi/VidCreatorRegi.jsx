@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import DropDown from './DropDown/DropDown.jsx';
 import FileUploader from './FileUploader/FileUploader.jsx';
@@ -11,41 +12,44 @@ import downArrowIcon from '../../../Img/Icons/sortarrowdown.png';
 import { DateTimePicker } from '@material-ui/pickers';
 import { createMuiTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
-
+import axios from 'axios';
 const VidCreatorRegi = () => {
 	let history = useHistory();
+	const userInfo = useSelector((state) => state.userInfo);
 	// handle modal state---------------------------------------
 	const [isActive, setIsActive] = useState(false);
 	const [defaultIdx, setDefaultIdx] = useState(0);
-	const [profiles, setProfiles] = useState([
-		{
-			form: '개인',
-			companyName: '홍길동',
-			logo: '',
-			email: '',
-			phoneNumber: '',
-			snsId: '',
-			id: 1,
-		},
-		{
-			form: '비즈프로필',
-			companyName: 'abc입니다.test입니다.',
-			logo: '',
-			email: 'abc@gmail.com',
-			phoneNumber: '023333333',
-			snsId: 'abcCompany',
-			id: 2,
-		},
-		{
-			form: '비즈프로필',
-			companyName: 'U2',
-			logo: '',
-			email: '',
-			phoneNumber: '',
-			snsId: '',
-			id: 3,
-		},
-	]);
+	const [profiles, setProfiles] = useState(null);
+	const [ownerIdx, setOwnerIdx] = useState(0);
+	// const [profiles, setProfiles] = useState([
+	// 	{
+	// 		form: '개인',
+	// 		companyName: '홍길동',
+	// 		logo: '',
+	// 		email: '',
+	// 		phoneNumber: '',
+	// 		snsId: '',
+	// 		id: 1,
+	// 	},
+	// 	{
+	// 		form: '비즈프로필',
+	// 		companyName: 'abc입니다.test입니다.',
+	// 		logo: '',
+	// 		email: 'abc@gmail.com',
+	// 		phoneNumber: '023333333',
+	// 		snsId: 'abcCompany',
+	// 		id: 2,
+	// 	},
+	// 	{
+	// 		form: '비즈프로필',
+	// 		companyName: 'U2',
+	// 		logo: '',
+	// 		email: '',
+	// 		phoneNumber: '',
+	// 		snsId: '',
+	// 		id: 3,
+	// 	},
+	// ]);
 	// file uploade ---------------------------------------
 	const [etcFile, setEtcFile] = useState(null);
 	const [etcFilePath, setEtcFilePath] = useState('Choose file to upload');
@@ -69,10 +73,58 @@ const VidCreatorRegi = () => {
 		setStartDate(date);
 		setFinishDate(date);
 	};
+	const handleNewData = (data) => {
+		var newForm = {
+			form: data.ownerCat ? '비즈프로필' : '개인',
+			cat: data.ownerCat,
+			companyName: data.company,
+			email: data.email,
+			phoneNumber: data.contact,
+			snsId: data.socialMediaId,
+			snsType: data.socialMediaCode,
+			id: data.ownerIdx,
+		};
+
+		setProfiles([...profiles, newForm]);
+	};
 
 	//window.localstorage에 state 저장 페이지 새로고침시 state값 유지 목적
 	useEffect(() => {
 		setOnMeet(JSON.parse(myStorage.getItem('onMeet')));
+
+		//competition data -----------------------------
+		console.log(userInfo);
+		var config = {
+			method: 'get',
+			url: process.env.REACT_APP_U2_DB_HOST + '/Campaign/challengeowners',
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+		};
+		axios(config)
+			.then((response) => {
+				// console.log('challenge owner');
+				// console.log(response.data);
+				var data = response.data;
+				console.log('profile data: ', data);
+				var newForm = data.map((el) => {
+					return {
+						form: el.ownerCat ? '비즈프로필' : '개인',
+						cat: el.ownerCat,
+						companyName: el.company,
+						email: el.email,
+						phoneNumber: el.contact,
+						snsId: el.socialMediaId,
+						snsType: el.socialMediaCode,
+						id: el.ownerIdx,
+					};
+				});
+				setOwnerIdx(data[0].ownerIdx);
+				setProfiles(newForm);
+			})
+			.catch((err) => console.log(err));
+		//competition data ----------------------------- end
 	}, []);
 
 	useEffect(() => {
@@ -104,12 +156,14 @@ const VidCreatorRegi = () => {
 	//     console.log(ex);
 	//   }
 	// };
+
 	return (
 		<RegiConationer className="contents_wrap">
 			<div className="vidcreatorregi_section">
 				<div className="vidcreatorregi_title_area">
 					<div>프로젝트 등록</div>
 					<div className="vidcreatorregi_title_style"></div>
+					<h3>영상 크리에이터 / 인플루언서</h3>
 				</div>
 				<section className="vidcreatorregi_title_sub">
 					<img src={headerIcon} alt="" />
@@ -121,7 +175,10 @@ const VidCreatorRegi = () => {
 						<div className="menu">* 주최사</div>
 						<div className="inputInfo company_profiles">
 							<div className="default_profile">
-								<div>{`${profiles[defaultIdx].form} : ${profiles[defaultIdx].companyName}`}</div>
+								<div>
+									{profiles &&
+										`${profiles[defaultIdx].form} : ${profiles[defaultIdx].companyName}`}
+								</div>
 								<img
 									src={downArrowIcon}
 									alt=""
@@ -133,9 +190,11 @@ const VidCreatorRegi = () => {
 
 							<DropDown
 								setDefaultIdx={setDefaultIdx}
+								setOwnerIdx={setOwnerIdx}
 								profiles={profiles}
 								setIsActive={setIsActive}
 								isActive={isActive}
+								handleNewData={handleNewData}
 							/>
 						</div>
 					</section>

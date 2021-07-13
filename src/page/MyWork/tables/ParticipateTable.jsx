@@ -7,7 +7,7 @@ import FeedbackModal from '../modal/feedback/feedbackModal';
 import ResumeModal from '../modal/resume/resumeModal';
 import SubmitModal from '../modal/submission/SubmitModal';
 import sortarrowdown from '../../../Img/Icons/sortarrowdown.png';
-
+import axios from 'axios';
 function ParticipateTable({ datas }) {
 	const history = useHistory();
 	const [quests, setQuests] = useState({
@@ -64,6 +64,21 @@ function ParticipateTable({ datas }) {
 		}
 	};
 
+	useEffect(() => {
+		var config = {
+			method: 'get',
+			url:
+				process.env.REACT_APP_U2_DB_HOST +
+				'/Campaign/challengeowned?p=1&size=10',
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+		};
+		axios(config).then((response) => {
+			console.log(response.data);
+		});
+	}, []);
 	useEffect(() => {
 		setQuests({ ...quests, data: datas });
 	}, [datas]);

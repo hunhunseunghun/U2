@@ -161,20 +161,19 @@ const CompetitionRegi = () => {
 		}
 	};
 
-	const handleNewData = (datas) => {
-		var newForm = datas.map((el) => {
-			return {
-				form: el.ownerCat ? '비즈프로필' : '개인',
-				cat: el.ownerCat,
-				companyName: el.company,
-				email: el.email,
-				phoneNumber: el.contact,
-				snsId: el.socialMediaId,
-				snsType: el.socialMediaCode,
-				id: el.ownerIdx,
-			};
-		});
-		setCompetition(newForm);
+	const handleNewData = (data) => {
+		var newForm = {
+			form: data.ownerCat ? '비즈프로필' : '개인',
+			cat: data.ownerCat,
+			companyName: data.company,
+			email: data.email,
+			phoneNumber: data.contact,
+			snsId: data.socialMediaId,
+			snsType: data.socialMediaCode,
+			id: data.ownerIdx,
+		};
+
+		setCompetition([...competition, newForm]);
 	};
 	const checkRequiredField = () => {
 		// if(competition && title && (isOnline || isVideoProduction) && (isEmail || isMobile) && )

@@ -37,8 +37,9 @@ const DropDown = ({
 								key={`${ele.form}${idx}`}
 								value={idx}
 								onClick={() => {
+									console.log('ele.id: ', ele.id);
 									setIsActive(false);
-									setOwnerIdx(ele.ownerIdx);
+									setOwnerIdx(ele.id);
 									setDefaultIdx(idx);
 								}}
 							>
