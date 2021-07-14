@@ -16,14 +16,83 @@ import {
 } from 'react-share';
 import topviewEx from '../../Img/topviewEX.png';
 import ReactHtmlParser from 'react-html-parser';
-
+import SubmitModal from './Modal/SubmitModal';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 function ProjectDetail(props) {
-	console.log(props);
+	const history = useHistory();
+	const userInfo = useSelector((state) => state.userInfo);
 	const challengeIdx = props.match.params.challengeIdx;
-	console.log('challengeIdx: ', challengeIdx);
 	const [challenge, setChallenge] = useState({});
-	console.log('challenge: ', challenge);
 	const [isDataReady, setIsDataReady] = useState(false);
+
+	//자료제출 모달
+	const [isSubmitOpen, setSubmitOpen] = useState(false);
+	// console.log('challengeIdx: ', challengeIdx);
+	// console.log('challenge: ', challenge);
+	// console.log(props);
+
+	const handleChallenge = () => {
+		var data = {
+			challengeIdx: challengeIdx,
+			missonSeq: 1,
+			memberIdx: userInfo.memberIdx,
+			statusCode: 3,
+			checkStatusCode: 4,
+			dateApplied: new Date(),
+		};
+		//checkStatusCode
+		// 1. 승인
+		// 2. 반려
+		// 3. 피드백
+		//4. 챌린지
+		// 8. 진행중
+		//statusCode
+		//1. 제출완료
+		//2. 지원완료
+		//3. 미제출
+		//4. 미지원
+		var config = {
+			method: 'post',
+			// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmit
+			url: process.env.REACT_APP_U2_DB_HOST + '/Campaign/challengesubmit',
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+			data: data,
+		};
+
+		axios(config)
+			.then((response) => {
+				console.log('response: ');
+				console.log(response.data);
+				if (!alert('챌린지 목록에 추가되었습니다.')) {
+				}
+			})
+			.catch((err) => {
+				console.log('err: ', err);
+				alert(err);
+			});
+	};
+
+	const handleSubmit = () => {
+		setSubmitOpen(true);
+	};
+	const handleApply = () => {};
+	const handleModalClose = (modalType) => {
+		switch (modalType) {
+			case 'submit': {
+				setSubmitOpen(false);
+				break;
+			}
+			default: {
+				console.log('no such case');
+				break;
+			}
+		}
+	};
+
 	useEffect(() => {
 		axios
 			.get(
@@ -53,9 +122,18 @@ function ProjectDetail(props) {
 	}
 	return (
 		<ProjectDetailContainer>
+			<SubmitModal
+				open={isSubmitOpen}
+				challenge={challenge}
+				handleModalClose={(modalType) => {
+					handleModalClose(modalType);
+				}}
+			/>
 			<section className="prj_title_area">
 				<div className="prj_title">{challenge.title}</div>
-				<div className="prj_term">2021.01.01 ~ 2021.01.31 (미정)</div>
+				<div className="prj_term">
+					{challenge.missions[0].dateBegin} ~ {challenge.missions[0].dateFin}
+				</div>
 			</section>
 			<section className="prj-info">
 				<ProjectInfo challenge={challenge}></ProjectInfo>
@@ -73,12 +151,42 @@ function ProjectDetail(props) {
 					</div>
 				</section>
 				<section className="prj_control_middle">
-					<button>돌아가기</button>
-					<button>챌린지</button>
+					<button
+						onClick={() => {
+							history.push('/creatormarket');
+						}}
+					>
+						돌아가기
+					</button>
+					<button
+						onClick={() => {
+							if (userInfo.memberIdx) {
+								handleChallenge();
+							} else {
+								if (window.confirm('로그인이 필요합니다.')) {
+									history.push('/login');
+								}
+							}
+						}}
+					>
+						챌린지
+					</button>
 					{challenge.challengeTargetCode === 4 ? (
-						<button>지원하기</button>
+						<button
+							onClick={() => {
+								handleApply();
+							}}
+						>
+							지원하기
+						</button>
 					) : (
-						<button>자료제출</button>
+						<button
+							onClick={() => {
+								handleSubmit();
+							}}
+						>
+							자료제출
+						</button>
 					)}
 				</section>
 

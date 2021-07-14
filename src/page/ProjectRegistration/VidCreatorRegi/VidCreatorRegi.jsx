@@ -96,7 +96,9 @@ const VidCreatorRegi = () => {
 		console.log(userInfo);
 		var config = {
 			method: 'get',
-			url: process.env.REACT_APP_U2_DB_HOST + '/Campaign/challengeowners',
+			url:
+				process.env.REACT_APP_U2_DB_HOST +
+				`/Campaign/challengeowners/${userInfo.memberIdx}`,
 			headers: {
 				Authorization: 'Bearer ' + localStorage.getItem('token'),
 				'Content-Type': 'application/json',

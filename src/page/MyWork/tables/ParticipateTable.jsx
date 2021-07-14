@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Pagination2 from '../../../component/Pagination/Pagination2';
 import { paginate } from '../../../component/Pagination/paginate';
@@ -9,10 +10,11 @@ import SubmitModal from '../modal/submission/SubmitModal';
 import sortarrowdown from '../../../Img/Icons/sortarrowdown.png';
 import axios from 'axios';
 function ParticipateTable({ datas }) {
+	const userInfo = useSelector((state) => state.userInfo);
 	const history = useHistory();
 	const [quests, setQuests] = useState({
 		data: datas,
-		pageSize: 3,
+		pageSize: 10,
 		currentPage: 1,
 	});
 	const { data, pageSize, currentPage } = quests;
@@ -69,15 +71,95 @@ function ParticipateTable({ datas }) {
 			method: 'get',
 			url:
 				process.env.REACT_APP_U2_DB_HOST +
-				'/Campaign/challengeowned?p=1&size=10',
+				`/Campaign/challengeinvolved?p=${quests.currentPage}&size=${quests.pageSize}`,
 			headers: {
 				Authorization: 'Bearer ' + localStorage.getItem('token'),
 				'Content-Type': 'application/json',
 			},
 		};
-		axios(config).then((response) => {
-			console.log(response.data);
-		});
+		axios(config)
+			.then((response) => {
+				console.log(response.data);
+				var datas = response.data.entities;
+
+				var formedData = datas.map((el) => {
+					return {
+						img: el.mainImage,
+						category: (() => {
+							switch (el.challengeTargetCode) {
+								case 1: {
+									return '공모전';
+								}
+								case 2: {
+									return '전문영상 편집자';
+								}
+								case 3: {
+									return '영상크리에이터 / 인플루언서';
+								}
+								case 4: {
+									return '강사채용';
+								}
+								default: {
+									return null;
+								}
+							}
+						})(),
+						name: el.title,
+						status: (() => {
+							var me = el.applications.filter(
+								(el) => el.memberIdx === userInfo.memberIdx,
+							)[0];
+							switch (me.checkStatusCode) {
+								case 1: {
+									return '승인';
+								}
+								case 2: {
+									return '반려';
+								}
+								case 3: {
+									return '피드백';
+								}
+								case 8: {
+									return '진행중';
+								}
+								default: {
+									return null;
+								}
+							}
+						})(),
+						presentation: (() => {
+							var me = el.applications.filter(
+								(el) => el.memberIdx === userInfo.memberIdx,
+							)[0];
+							switch (me.checkStatusCode) {
+								case 1: {
+									//승인
+									return '내자료';
+								}
+								case 2: {
+									//반려
+									return '반려';
+								}
+								case 3: {
+									//피드백
+									return '피드백';
+								}
+								case 8: {
+									//진행중
+									return '자료제출';
+								}
+								default: {
+									return null;
+								}
+							}
+						})(),
+					};
+				});
+				// setQuests({...quests, data : response.data.entities})
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	}, []);
 	useEffect(() => {
 		setQuests({ ...quests, data: datas });
@@ -147,7 +229,7 @@ function ParticipateTable({ datas }) {
 						</th>
 						<th key={'presentation'}>
 							<section>
-								<span>검제출자료수대상</span>
+								<span>제출자료</span>
 								<img src={sortarrowdown} alt=""></img>
 							</section>
 						</th>
@@ -216,7 +298,7 @@ function ParticipateTable({ datas }) {
 														);
 													}
 													default: {
-														return data.presentation;
+														return data.presentation ? data.presentation : '-';
 													}
 												}
 											})()}

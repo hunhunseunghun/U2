@@ -20,7 +20,7 @@ const Main = (props) => {
 	const userInfo = useSelector((state) => state.userInfo);
 
 	const [currentPage, setCurrentPage] = useState(1);
-	const pageSize = 4; //테스트를 위해 한페이지당 4개만 보여줌. 데이터가 많아지면 4단 * 4 = 16개씩 보여줘야함
+	const pageSize = 6; //테스트를 위해 한페이지당 4개만 보여줌. 데이터가 많아지면 3단 * 2 = 6개씩 보여줘야함
 	const pagedChallenges = paginate(challenges, currentPage, pageSize);
 	// useEffect(()=>{
 	//   axios.get(`${server}/api/Campaign/challengemaster`).then(res=>{

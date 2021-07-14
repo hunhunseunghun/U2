@@ -100,8 +100,8 @@ export default function (params, type) {
 				title: params.title, //공모전 명
 				// "subtitle": "string", //preview로 할려했는데 일단 보류
 				ownerIdx: params.ownerIdx, //userinfo.member idx
-				companyA: params.companyA, //주관사
-				companyB: params.companyB, //후원사
+				companya: params.companyA, //주관사
+				companyb: params.companyB, //후원사
 				url: params.url, //홈페이지 URL
 				challengeDesc: params.challengeDesc, //공모 공지글
 				// "meetCode": 0, //?
