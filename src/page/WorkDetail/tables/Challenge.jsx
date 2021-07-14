@@ -6,7 +6,6 @@ import { ChallengeTableContainer } from './ChallengeStyled';
 import excelIcon from '../../../Img/Icons/excelIcon.png';
 import moment from 'moment';
 function ChallengeTable({ datas }) {
-  console.log('데이터스', datas);
   let [subjects, setSubjects] = useState({
     data: datas.entities,
     pageSize: 10,
@@ -75,7 +74,7 @@ function ChallengeTable({ datas }) {
                           'YYYY-MM-DD'
                         )} ${moment(data.registDate).format('hh:mm:ss')}`}
                       </td>
-                      <td>{data.ID}</td>
+                      <td>{data.memberIdx}</td>
                       <td>{data.name}</td>
                       <td>{data.mobileNum}</td>
                       <td>{data.email}</td>

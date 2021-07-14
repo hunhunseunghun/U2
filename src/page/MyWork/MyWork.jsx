@@ -34,7 +34,6 @@ const MyWork = props => {
     setCurrentTab(id);
   };
   const token = localStorage.getItem('token');
-  console.log('token in mywork: ', token);
   var data = JSON.stringify({
     missions: [
       {
@@ -189,7 +188,7 @@ const MyWork = props => {
   useEffect(() => {
     axios(config)
       .then(response => {
-        console.log('response:');
+        console.log('mywork response:');
         console.log(response.data);
       })
       .catch(err => {

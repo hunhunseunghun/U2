@@ -26,7 +26,7 @@ function WorkDetail(props) {
   let [currentTab, setCurrentTab] = useState(setTab); //props에서 현재 탭 가져와 설정
   let [modalProps, setModalProps] = useState({ open: false });
   const [isLoading, setIsLoading] = useState(false);
-  console.log('로딩', isLoading);
+
   useEffect(() => {
     axios
       .get(
@@ -34,10 +34,11 @@ function WorkDetail(props) {
           `/Campaign/challenge/${props.location.state.projectId}` //sample data, should be challengeIdx.
       )
       .then(response => {
-        console.log('response.data: ', response.data);
+        console.log('workDetail response.data: ', response.data);
         let data = response.data;
         let challengeTarget = '';
         let contactRequired = '비대면';
+        let missionRequired = [];
 
         if (data.challengeTargetCode === 1) {
           challengeTarget = '공모전';
@@ -52,13 +53,27 @@ function WorkDetail(props) {
         if (data.missions[0].contactRequired === 1) {
           contactRequired = '비대면';
         } else if (data.missions[0].contactRequired === 2) {
-          contactRequired = '대면';
+          contactRequired = '오프라인';
         }
 
         setProjectTitle(data.title);
         setSubject(challengeTarget);
         setMeeting(contactRequired);
         setMainImage(data.mainImage);
+
+        data.missions[0].videos.forEach(ele => {
+          let result;
+          if (ele.platform === 'YU') {
+            result = 'YouTube';
+          } else if (ele.platform === 'TT') {
+            result = 'TIKTOK';
+          } else if (ele.platfrom === 'VM') {
+            result = 'Vimeo';
+          }
+          missionRequired.push(result);
+        });
+
+        setTerms(missionRequired);
       })
       .catch(err => {
         console.log(err);
@@ -79,8 +94,7 @@ function WorkDetail(props) {
   useEffect(() => {
     axios(challengesConfig)
       .then(res => {
-        console.log('workdetail response:');
-        console.log(res);
+        console.log('challengeidx response:');
         // if(res.data.entities.contactCode === 0){
         //   setMeeting("비대면")
         // } else if(res.data.entities.contactCode ===1){

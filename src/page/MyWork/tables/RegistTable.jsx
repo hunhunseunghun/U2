@@ -7,7 +7,7 @@ import { paginate } from '../../../component/Pagination/paginate';
 import { RegistTableContainer } from './RegistTableStyled';
 import sortarrowdown from '../../../Img/Icons/sortarrowdown.png';
 import moment from 'moment';
-function RegistTable({ datas }) {
+function RegistTable() {
   const history = useHistory();
   // let [quests, setQuests] = useState({
   //   data: datas,
@@ -24,24 +24,24 @@ function RegistTable({ datas }) {
   const pagedQuests = paginate(data, currentPage, pageSize);
   // const { length: count } = quests.data;
   const [count, setCount] = useState(0);
-  console.log('datas: ', datas);
+  // console.log('datas: ', datas);
 
   let handlePageChange = page => {
     setQuests({ ...quests, currentPage: page });
-    axios(config)
-      .then(response => {
-        console.log('response:');
-        console.log(response.data);
-        setQuests({
-          ...quests,
-          data: response.data.entities,
-        });
-        setCount(response.data.total);
-      })
-      .catch(err => {
-        console.log('response error:');
-        console.log(err);
-      });
+    // axios(config)
+    //   .then(response => {
+    //     console.log('레지스트테이블 response:');
+    //     console.log(response.data);
+    //     setQuests({
+    //       ...quests,
+    //       data: response.data.entities,
+    //     });
+    //     setCount(response.data.total);
+    //   })
+    //   .catch(err => {
+    //     console.log('response error:');
+    //     console.log(err);
+    //   });
   };
 
   var config = {
@@ -58,7 +58,7 @@ function RegistTable({ datas }) {
   useEffect(() => {
     axios(config)
       .then(response => {
-        console.log('response:');
+        console.log('레지스트 테이블 response:');
         console.log(response.data);
         setQuests({
           ...quests,
@@ -75,11 +75,11 @@ function RegistTable({ datas }) {
     console.log('카운트', count);
   }, []);
 
-  useEffect(() => {
-    console.log('datas:');
-    console.log(datas);
-    setQuests({ ...quests, data: datas });
-  }, [datas]);
+  // useEffect(() => {
+  //   console.log('datas:');
+  //   console.log(datas);
+  //   setQuests({ ...quests, data: datas });
+  // }, [datas]);
 
   return (
     <RegistTableContainer>
@@ -213,9 +213,11 @@ function RegistTable({ datas }) {
                         </Link>
                       </td>
                       <td>
-                        {`${moment(data.registDate).format(
+                        {`${moment(data.missions[0].dateFin).format(
                           'YYYY-MM-DD'
-                        )} ${moment(data.registDate).format('hh:mm:ss')}`}
+                        )} ${moment(data.missions[0].dateFin).format(
+                          'hh:mm:ss'
+                        )}`}
                       </td>
                       {/* <td>{data.missions[0].dateFin}</td> */}
                     </tr>
