@@ -13,6 +13,8 @@ function WorkDetail(props) {
   let [terms, setTerms] = useState(['YouTube', 'TIKTOK', '파일 업로드']);
   let [prise, setPrise] = useState('10000원');
   let [projectTitle, setProjectTitle] = useState('');
+  let [mainImage, setMainImage] = useState(null);
+  let [currChallenges, setCurrChallenges] = useState(null);
   let setTab;
   if (props.location.state.isContriClicked) {
     setTab = 0;
@@ -23,7 +25,8 @@ function WorkDetail(props) {
   }
   let [currentTab, setCurrentTab] = useState(setTab); //props에서 현재 탭 가져와 설정
   let [modalProps, setModalProps] = useState({ open: false });
-
+  const [isLoading, setIsLoading] = useState(false);
+  console.log('로딩', isLoading);
   useEffect(() => {
     axios
       .get(
@@ -34,6 +37,7 @@ function WorkDetail(props) {
         console.log('response.data: ', response.data);
         let data = response.data;
         let challengeTarget = '';
+        let contactRequired = '비대면';
 
         if (data.challengeTargetCode === 1) {
           challengeTarget = '공모전';
@@ -45,8 +49,16 @@ function WorkDetail(props) {
           challengeTarget = '강사 채용';
         }
 
+        if (data.missions[0].contactRequired === 1) {
+          contactRequired = '비대면';
+        } else if (data.missions[0].contactRequired === 2) {
+          contactRequired = '대면';
+        }
+
         setProjectTitle(data.title);
         setSubject(challengeTarget);
+        setMeeting(contactRequired);
+        setMainImage(data.mainImage);
       })
       .catch(err => {
         console.log(err);
@@ -76,6 +88,8 @@ function WorkDetail(props) {
         // }
 
         // setTerms([])
+        setCurrChallenges(res.data);
+        setIsLoading(true);
       })
       .catch(err => {
         console.log('workdetail error');
@@ -96,7 +110,7 @@ function WorkDetail(props) {
     setModalProps({ ...modalProps, open: false });
   };
   const tables = {
-    0: <ChallengeTable datas={challenges}></ChallengeTable>,
+    0: <ChallengeTable datas={currChallenges}></ChallengeTable>,
     1: (
       <InspectTable
         datas={inspects}
@@ -114,10 +128,11 @@ function WorkDetail(props) {
       <section className="workdetail-section">
         <section className="section1">
           <div className="workdetail_img_wrap">
-            <img
-              src="http://ddragon.leagueoflegends.com/cdn/11.13.1/img/champion/Aatrox.png"
-              alt="image"
-            ></img>
+            {mainImage !== null ? (
+              <img src={mainImage} alt="image"></img>
+            ) : (
+              'No Image'
+            )}
 
             <div className="project_name_wrap">
               <div className="project_name_sub">프로젝트명</div>
@@ -173,7 +188,11 @@ function WorkDetail(props) {
               검수 대상자
             </div>
           </div>
-          <div className="contents-table">{tables[currentTab]}</div>
+          {isLoading ? (
+            <div className="contents-table">{tables[currentTab]}</div>
+          ) : (
+            ''
+          )}
         </section>
       </section>
     </WorkDetailContainer>
