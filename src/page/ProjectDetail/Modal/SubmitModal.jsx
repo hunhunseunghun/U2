@@ -3,12 +3,12 @@ import { useSelector } from 'react-redux';
 import { ModalContainer } from './SubmitModalStyled';
 import { BsPlusSquareFill, BsDashSquareFill } from 'react-icons/bs';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
-import Banks from './banks';
-import { validateEmail } from '../../../library/validate';
 import axios from 'axios';
 import 'react-phone-number-input/style.css';
-import AddressModal from './address/AddressModal';
-
+import Banks from '../../../component/banks';
+import { validateEmail } from '../../../library/validate';
+import AddressModal from '../../../component/address/AddressModal';
+import { TextFile } from '../../../library/getJson';
 // import 'csshake.min.css'
 const server = process.env.REACT_APP_U2_DB_HOST;
 const initialState = {
@@ -251,11 +251,7 @@ function Modal({ open, challenge, handleModalClose }) {
 		}));
 	};
 
-	const handleSubmit = () => {
-		// const confirmSubmit = confirm('제출 하시겠습니까?');
-		// if (!confirmSubmit) {
-		// 	return;
-		// }
+	const checkSubmit = () => {
 		if (
 			!title ||
 			mobileErr ||
@@ -265,9 +261,13 @@ function Modal({ open, challenge, handleModalClose }) {
 			!address2 ||
 			!address3
 		) {
-			alert('모든 항목을 입력해야 합니다.');
+			alert('모든 필수 항목을 입력해야 합니다.');
 			return;
 		}
+	};
+	const handleSubmit = () => {
+		checkSubmit();
+
 		console.log(userInfo);
 		var data = {
 			videos: URLs.map((el, idx) => {
@@ -315,15 +315,7 @@ function Modal({ open, challenge, handleModalClose }) {
 		//1. 제출할때
 		//0. 챌린지
 		console.log('body: ', data);
-		let TextFile = () => {
-			const element = document.createElement('a');
-			const textFile = new Blob([JSON.stringify(data)], { type: 'text/plain' }); //pass data from localStorage API to blob
-			element.href = URL.createObjectURL(textFile);
-			element.download = 'userFile.txt';
-			document.body.appendChild(element);
-			element.click();
-		};
-		TextFile();
+		// TextFile(data);
 		console.log('token: ', localStorage.getItem('token'));
 		var config = {
 			method: 'post',

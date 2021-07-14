@@ -6,7 +6,7 @@ import { paginate } from '../../../component/Pagination/paginate';
 import { ParticipateTableContainer } from './ParticipateTableStyled';
 import FeedbackModal from '../modal/feedback/feedbackModal';
 import ResumeModal from '../modal/resume/resumeModal';
-import SubmitModal from '../modal/submission/SubmitModal';
+import SubmitModal from '../modal/submit/SubmitModal';
 import sortarrowdown from '../../../Img/Icons/sortarrowdown.png';
 import axios from 'axios';
 function ParticipateTable({ datas }) {
@@ -41,8 +41,8 @@ function ParticipateTable({ datas }) {
 	const handleOpenResume = (resume) => {
 		setResumeProps({ open: true, data: resume });
 	};
-	const handleOpenSubmission = (submission) => {
-		setSubmitProps({ open: true, data: submission });
+	const handleOpenSubmit = (data) => {
+		setSubmitProps({ open: true, data: data });
 	};
 
 	const handleModalClose = (modalType) => {
@@ -172,14 +172,14 @@ function ParticipateTable({ datas }) {
 		<ParticipateTableContainer>
 			<FeedbackModal
 				open={feedbackProps.open}
-				data={feedbackProps.data}
+				challenge={feedbackProps.data}
 				handleModalClose={(modalType) => {
 					handleModalClose(modalType);
 				}}
 			/>
 			<ResumeModal
 				open={resumeProps.open}
-				data={resumeProps.data}
+				challenge={resumeProps.data}
 				handleModalClose={(modalType) => {
 					handleModalClose(modalType);
 				}}
@@ -282,10 +282,10 @@ function ParticipateTable({ datas }) {
 																className="resume"
 																onClick={() => {
 																	console.log('지원서 clicked');
-																	handleOpenResume(data.presentation);
+																	handleOpenResume(data);
 																}}
 															>
-																지원서
+																지원하기
 															</button>
 														);
 													}
@@ -294,7 +294,7 @@ function ParticipateTable({ datas }) {
 															<button
 																className="presentation"
 																onClick={() => {
-																	handleOpenSubmission(data.presentation);
+																	handleOpenSubmit(data); //should have challengeIdx,
 																}}
 															>
 																자료제출
