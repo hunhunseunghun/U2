@@ -122,6 +122,9 @@ function ParticipateTable({ datas }) {
 								case 8: {
 									return '진행중';
 								}
+								case 0: {
+									return '챌린지';
+								}
 								default: {
 									return null;
 								}
@@ -153,6 +156,7 @@ function ParticipateTable({ datas }) {
 								}
 							}
 						})(),
+						// feedback:
 					};
 				});
 				// setQuests({...quests, data : response.data.entities})

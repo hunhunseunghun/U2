@@ -15,8 +15,11 @@ const initialState = {
 	title: '',
 	URLs: [],
 	YUinput: '',
+	YUarr: [],
 	TTinput: '',
+	TTarr: [],
 	VMinput: '',
+	VMarr: [],
 	mobileNum: '',
 	mobileErr: '',
 	mobileErrShake: false,
@@ -52,8 +55,11 @@ function Modal({ open, challenge, handleModalClose }) {
 			title,
 			URLs,
 			YUinput,
+			YUarr,
 			TTinput,
+			TTarr,
 			VMinput,
+			VMarr,
 			mobileNum,
 			mobileErr,
 			mobileErrShake,
@@ -399,7 +405,7 @@ function Modal({ open, challenge, handleModalClose }) {
 								<div className="inputInfo URLs">
 									{challenge.missions[0].videos.map((video) => {
 										return (
-											<>
+											<div>
 												<span className="youtubeURL">
 													{(() => {
 														switch (video.platform) {
@@ -421,7 +427,46 @@ function Modal({ open, challenge, handleModalClose }) {
 												</span>
 												<ul className="ul-URLs">
 													{/* show inputs */}
-													{URLs.map((el, idx) => {
+													{(() => {
+														let urls = [];
+														switch (video.platform) {
+															case 'YU': {
+																urls = YUarr;
+																break;
+															}
+															case 'TT': {
+																urls = TTarr;
+																break;
+															}
+															case 'VM': {
+																urls = VMarr;
+																break;
+															}
+															default: {
+																break;
+															}
+														}
+														return urls.map((el, idx) => {
+															return (
+																<li key={idx} className="li-url">
+																	<input value={el.url} readOnly></input>
+																	<BsDashSquareFill
+																		className="plusMinus"
+																		onClick={() => {
+																			let copyArr = URLs.slice();
+																			copyArr.splice(idx, 1);
+																			// setURLS(copyArr);
+																			setState((preState) => ({
+																				...preState,
+																				URLs: copyArr,
+																			}));
+																		}}
+																	/>
+																</li>
+															);
+														});
+													})()}
+													{/* {URLs.map((el, idx) => {
 														return (
 															<li key={idx} className="li-url">
 																<input value={el.url} readOnly></input>
@@ -439,7 +484,7 @@ function Modal({ open, challenge, handleModalClose }) {
 																/>
 															</li>
 														);
-													})}
+													})} */}
 													<li>
 														<input
 															onChange={(e) => {
@@ -534,10 +579,13 @@ function Modal({ open, challenge, handleModalClose }) {
 																			copyArr.push(obj);
 																			// setURLS(copyArr);
 																			// setURLinput('');
+																			let copyYU = YUarr.slice();
+																			copyYU.push(obj);
 																			setState((preState) => ({
 																				...preState,
 																				URLs: copyArr,
 																				YUinput: '',
+																				YUarr: copyYU,
 																			}));
 																			break;
 																		}
@@ -545,10 +593,13 @@ function Modal({ open, challenge, handleModalClose }) {
 																			copyArr.push(obj);
 																			// setURLS(copyArr);
 																			// setURLinput('');
+																			let copyTT = TTarr.slice();
+																			copyTT.push(obj);
 																			setState((preState) => ({
 																				...preState,
 																				URLs: copyArr,
 																				TTinput: '',
+																				TTarr: copyTT,
 																			}));
 																			break;
 																		}
@@ -556,10 +607,13 @@ function Modal({ open, challenge, handleModalClose }) {
 																			copyArr.push(obj);
 																			// setURLS(copyArr);
 																			// setURLinput('');
+																			let copyVM = VMarr.slice();
+																			copyVM.push(obj);
 																			setState((preState) => ({
 																				...preState,
 																				URLs: copyArr,
 																				VMinput: '',
+																				VMarr: copyVM,
 																			}));
 																			break;
 																		}
@@ -572,7 +626,7 @@ function Modal({ open, challenge, handleModalClose }) {
 														/>
 													</li>
 												</ul>
-											</>
+											</div>
 										);
 									})}
 

@@ -99,7 +99,7 @@ const CompetitionRegi = () => {
 	// handle modal state---------------------------------------
 	const [isActive, setIsActive] = useState(false);
 	const [defaultIdx, setDefaultIdx] = useState(0);
-	const [competition, setCompetition] = useState(null);
+	const [competition, setCompetition] = useState([]);
 
 	// const [competition, setCompetition] = useState([
 	// 	{
@@ -364,7 +364,7 @@ const CompetitionRegi = () => {
 						<div className="inputInfo competitionName">
 							<div className="defaultCompetition">
 								<div>
-									{competition &&
+									{competition.length > 0 &&
 										`${competition[defaultIdx].form} : ${competition[defaultIdx].companyName}`}
 								</div>
 								<img

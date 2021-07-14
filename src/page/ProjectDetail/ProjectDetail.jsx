@@ -31,16 +31,9 @@ function ProjectDetail(props) {
 	// console.log('challengeIdx: ', challengeIdx);
 	// console.log('challenge: ', challenge);
 	// console.log(props);
-
+	const [comments, setComments] = useState([]);
+	const [inputComment, setInputComment] = useState('');
 	const handleChallenge = () => {
-		var data = {
-			challengeIdx: challengeIdx,
-			missonSeq: 1,
-			memberIdx: userInfo.memberIdx,
-			statusCode: 3,
-			checkStatusCode: 4,
-			dateApplied: new Date(),
-		};
 		//checkStatusCode
 		// 1. 승인
 		// 2. 반려
@@ -55,24 +48,24 @@ function ProjectDetail(props) {
 		var config = {
 			method: 'post',
 			// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmit
-			url: process.env.REACT_APP_U2_DB_HOST + '/Campaign/challengesubmit',
+			url:
+				process.env.REACT_APP_U2_DB_HOST +
+				`/Campaign/challengewished/${challengeIdx}`,
 			headers: {
 				Authorization: 'Bearer ' + localStorage.getItem('token'),
 				'Content-Type': 'application/json',
 			},
-			data: data,
 		};
 
 		axios(config)
 			.then((response) => {
 				console.log('response: ');
 				console.log(response.data);
-				if (!alert('챌린지 목록에 추가되었습니다.')) {
-				}
+				alert('챌린지 목록에 추가되었습니다.');
 			})
 			.catch((err) => {
 				console.log('err: ', err);
-				alert(err);
+				alert('이미 챌린지한 프로젝트입니다.');
 			});
 	};
 
@@ -93,6 +86,47 @@ function ProjectDetail(props) {
 		}
 	};
 
+	const handleComment = () => {
+		if (userInfo.email) {
+			var body = {
+				commentIdx: 0,
+				challengeIdx: challengeIdx,
+				seq: 1,
+				seqx: 1,
+				memberIdx: userInfo.memberIdx,
+				comment: inputComment,
+				statusCode: 1,
+				// "registMemberIdx": 0,
+				// "registDate": "2021-07-14T11:00:22.230Z",
+				// "modifyMemberIdx": 0,
+				// "modifyDate": "2021-07-14T11:00:22.230Z"
+			};
+			var config = {
+				method: 'post',
+				url: process.env.REACT_APP_U2_DB_HOST + `/Campaign/challengecomment`,
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+					'Content-Type': 'application/json',
+				},
+				data: body,
+			};
+			axios(config)
+				.then((response) => {
+					console.log('new comment: ', response.data);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		} else {
+			if (
+				window.confirm(`로그인이 필요합니다. 
+			로그인 하시겠습니까?`)
+			) {
+				history.push('/login');
+			}
+		}
+	};
+
 	useEffect(() => {
 		axios
 			.get(
@@ -107,15 +141,15 @@ function ProjectDetail(props) {
 			.catch((err) => {
 				console.log(err);
 			});
-		// axios
-		// 	.get('https://u2-rest-dev.azurewebsites.net/api/Campaign/challengemaster')
-		// 	.then((response) => {
-		// 		setChallenge(response.data[0]); //for sample
-		// 		setIsDataReady(true);
-		// 	})
-		// 	.catch((err) => {
-		// 		console.log('catch: ', err);
-		// 	});
+		axios
+			.get(
+				process.env.REACT_APP_U2_DB_HOST +
+					`/Campaign/challengecomments/${challengeIdx}`,
+			)
+			.then((response) => {
+				console.log('comments: ', response.data);
+				setComments(response.data);
+			});
 	}, []);
 	if (!isDataReady) {
 		return <div>no data</div>;
@@ -243,7 +277,32 @@ function ProjectDetail(props) {
 					<FaLine />
 				</LineShareButton>
 			</section>
-			<section className="comments"></section>
+			<section className="comments">
+				{comments.map((el, idx) => {
+					return (
+						<div>
+							<div>{el.memberIdx}</div>
+							<div>{el.comment}</div>
+							<button>답글 달기</button>
+						</div>
+					);
+				})}
+			</section>
+			<section className="commentInput">
+				<input
+					type="text"
+					onChange={(e) => {
+						setInputComment(e.target.value);
+					}}
+				></input>
+				<button
+					onClick={() => {
+						handleComment();
+					}}
+				>
+					등록하기
+				</button>
+			</section>
 		</ProjectDetailContainer>
 	);
 }
