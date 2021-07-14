@@ -1,15 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { WorkDetailContainer } from './WorkDetailStyled';
 import ChallengeTable from './tables/Challenge';
 import InspectTable from './tables/Inspect';
 import challenges from './sampledatas/challenges';
 import inspects from './sampledatas/inspects';
 import SubmissionModal from './modal/SubmissionModal';
+import { set } from 'lodash';
 function WorkDetail(props) {
   let [subject, setSubject] = useState('광고/홍보');
   let [meeting, setMeeting] = useState('비대면');
   let [terms, setTerms] = useState(['YouTube', 'TIKTOK', '파일 업로드']);
   let [prise, setPrise] = useState('10000원');
+  let [projectTitle, setProjectTitle] = useState('');
   let setTab;
   if (props.location.state.isContriClicked) {
     setTab = 0;
@@ -20,7 +23,67 @@ function WorkDetail(props) {
   }
   let [currentTab, setCurrentTab] = useState(setTab); //props에서 현재 탭 가져와 설정
   let [modalProps, setModalProps] = useState({ open: false });
-  console.log(props);
+
+  useEffect(() => {
+    axios
+      .get(
+        process.env.REACT_APP_U2_DB_HOST +
+          `/Campaign/challenge/${props.location.state.projectId}` //sample data, should be challengeIdx.
+      )
+      .then(response => {
+        console.log('response.data: ', response.data);
+        let data = response.data;
+        let challengeTarget = '';
+
+        if (data.challengeTargetCode === 1) {
+          challengeTarget = '공모전';
+        } else if (data.challengeTargetCode === 2) {
+          challengeTarget = '영상 크리에이터 인플루언서';
+        } else if (data.challengeTargetCode === 3) {
+          challengeTarget = '전문영상 편집자';
+        } else if (data.challengeTargetCode === 4) {
+          challengeTarget = '강사 채용';
+        }
+
+        setProjectTitle(data.title);
+        setSubject(challengeTarget);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
+
+  var challengesConfig = {
+    method: 'get',
+    url:
+      process.env.REACT_APP_U2_DB_HOST +
+      `/Campaign/challengesubmitting/${props.location.state.projectId}?size=10&p=1`,
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+      'Content-Type': 'application/json',
+    },
+  };
+
+  useEffect(() => {
+    axios(challengesConfig)
+      .then(res => {
+        console.log('workdetail response:');
+        console.log(res);
+        // if(res.data.entities.contactCode === 0){
+        //   setMeeting("비대면")
+        // } else if(res.data.entities.contactCode ===1){
+        //   setMeeting("대면")
+        // }
+
+        // setTerms([])
+      })
+      .catch(err => {
+        console.log('workdetail error');
+        console.log(err);
+      });
+
+    axios();
+  }, []);
 
   let handleTabClick = tab => {
     setCurrentTab(tab);
@@ -58,7 +121,7 @@ function WorkDetail(props) {
 
             <div className="project_name_wrap">
               <div className="project_name_sub">프로젝트명</div>
-              <div className="porject_name">홍보PPL 영상</div>
+              <div className="porject_name">{projectTitle}</div>
             </div>
           </div>
 

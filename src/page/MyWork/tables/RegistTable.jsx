@@ -6,7 +6,7 @@ import Pagination2 from '../../../component/Pagination/Pagination2';
 import { paginate } from '../../../component/Pagination/paginate';
 import { RegistTableContainer } from './RegistTableStyled';
 import sortarrowdown from '../../../Img/Icons/sortarrowdown.png';
-import * as dateFns from 'date-fns';
+import moment from 'moment';
 function RegistTable({ datas }) {
   const history = useHistory();
   // let [quests, setQuests] = useState({
@@ -80,6 +80,7 @@ function RegistTable({ datas }) {
     console.log(datas);
     setQuests({ ...quests, data: datas });
   }, [datas]);
+
   return (
     <RegistTableContainer>
       <section className="prjregi_btn_area">
@@ -145,7 +146,11 @@ function RegistTable({ datas }) {
                   <>
                     <tr>
                       <td>
-                        <img src={data.mainImage}></img>
+                        {data.mainImage ? (
+                          <img src={data.mainImage}></img>
+                        ) : (
+                          'No Image'
+                        )}
                       </td>
                       <td>
                         {data.challengeTargetCode === 1 && '공모전'}
@@ -159,7 +164,7 @@ function RegistTable({ datas }) {
                           to={{
                             pathname: '/workdetail',
                             state: {
-                              projectId: data.id,
+                              projectId: data.challengeIdx,
                               isContriClicked: false,
                               isInspectClicked: false,
                             },
@@ -173,7 +178,7 @@ function RegistTable({ datas }) {
                           to={{
                             pathname: '/workdetail',
                             state: {
-                              projectId: data.id,
+                              projectId: data.challengeIdx,
                               isContriClicked: true,
                               isInspectClicked: false,
                             },
@@ -193,13 +198,13 @@ function RegistTable({ datas }) {
                           to={{
                             pathname: '/workdetail',
                             state: {
-                              projectId: data.id,
+                              projectId: data.challengeIdx,
                               isContriClicked: false,
                               isInspectClicked: true,
                             },
                           }}
                         >
-                          {data.inspect}
+                          {data.challengerCompleteCount}
                           {data.isNewInspect ? (
                             <span className="newAlert table_newalert">new</span>
                           ) : (
@@ -207,7 +212,12 @@ function RegistTable({ datas }) {
                           )}
                         </Link>
                       </td>
-                      <td>{data.registDate}</td>
+                      <td>
+                        {`${moment(data.registDate).format(
+                          'YYYY-MM-DD'
+                        )} ${moment(data.registDate).format('hh:mm:ss')}`}
+                      </td>
+                      {/* <td>{data.missions[0].dateFin}</td> */}
                     </tr>
                     {/* <hr className="row-line"></hr> */}
                   </>
