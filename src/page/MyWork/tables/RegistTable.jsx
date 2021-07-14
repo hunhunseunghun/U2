@@ -1,31 +1,86 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Pagination2 from '../../../component/Pagination/Pagination2';
 import { paginate } from '../../../component/Pagination/paginate';
 import { RegistTableContainer } from './RegistTableStyled';
 import sortarrowdown from '../../../Img/Icons/sortarrowdown.png';
-
-function RegistTable({ datas }) {
+import moment from 'moment';
+function RegistTable() {
   const history = useHistory();
+  // let [quests, setQuests] = useState({
+  //   data: datas,
+  //   pageSize: 3,
+  //   currentPage: 1,
+  // });
   let [quests, setQuests] = useState({
-    data: datas,
+    data: null,
     pageSize: 3,
     currentPage: 1,
   });
   // console.log('datas: ', datas);
   const { data, pageSize, currentPage } = quests;
   const pagedQuests = paginate(data, currentPage, pageSize);
-  const { length: count } = quests.data;
-  console.log('datas: ', datas);
+  // const { length: count } = quests.data;
+  const [count, setCount] = useState(0);
+  // console.log('datas: ', datas);
+
   let handlePageChange = page => {
     setQuests({ ...quests, currentPage: page });
+    // axios(config)
+    //   .then(response => {
+    //     console.log('레지스트테이블 response:');
+    //     console.log(response.data);
+    //     setQuests({
+    //       ...quests,
+    //       data: response.data.entities,
+    //     });
+    //     setCount(response.data.total);
+    //   })
+    //   .catch(err => {
+    //     console.log('response error:');
+    //     console.log(err);
+    //   });
   };
+
+  var config = {
+    method: 'get',
+    url:
+      process.env.REACT_APP_U2_DB_HOST +
+      '/Campaign/challengeowned?p=1&size=100',
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+      'Content-Type': 'application/json',
+    },
+  };
+
   useEffect(() => {
-    console.log('datas:');
-    console.log(datas);
-    setQuests({ ...quests, data: datas });
-  }, [datas]);
+    axios(config)
+      .then(response => {
+        console.log('레지스트 테이블 response:');
+        console.log(response.data);
+        setQuests({
+          ...quests,
+          data: response.data.entities,
+        });
+        setCount(response.data.total);
+      })
+      .catch(err => {
+        console.log('response error:');
+        console.log(err);
+      });
+
+    console.log('퀘스트', quests);
+    console.log('카운트', count);
+  }, []);
+
+  // useEffect(() => {
+  //   console.log('datas:');
+  //   console.log(datas);
+  //   setQuests({ ...quests, data: datas });
+  // }, [datas]);
+
   return (
     <RegistTableContainer>
       <section className="prjregi_btn_area">
@@ -91,21 +146,31 @@ function RegistTable({ datas }) {
                   <>
                     <tr>
                       <td>
-                        <img src={data.img}></img>
+                        {data.mainImage ? (
+                          <img src={data.mainImage}></img>
+                        ) : (
+                          'No Image'
+                        )}
                       </td>
-                      <td>{data.category}</td>
+                      <td>
+                        {data.challengeTargetCode === 1 && '공모전'}
+                        {data.challengeTargetCode === 2 &&
+                          '영상 크리에이터/인플루언서'}
+                        {data.challengeTargetCode === 3 && '전문영상 편집자'}
+                        {data.challengeTargetCode === 4 && '강사채용'}
+                      </td>
                       <td>
                         <Link
                           to={{
                             pathname: '/workdetail',
                             state: {
-                              projectId: data.id,
+                              projectId: data.challengeIdx,
                               isContriClicked: false,
                               isInspectClicked: false,
                             },
                           }}
                         >
-                          {data.name}
+                          {data.title}
                         </Link>
                       </td>
                       <td>
@@ -113,13 +178,14 @@ function RegistTable({ datas }) {
                           to={{
                             pathname: '/workdetail',
                             state: {
-                              projectId: data.id,
+                              projectId: data.challengeIdx,
                               isContriClicked: true,
                               isInspectClicked: false,
                             },
                           }}
                         >
-                          {data.contriNum}
+                          {/* {data.contriNum} */}
+                          {data.challengerCount}
                           {data.isNewContri ? (
                             <span className="newAlert table_newalert">new</span>
                           ) : (
@@ -132,13 +198,13 @@ function RegistTable({ datas }) {
                           to={{
                             pathname: '/workdetail',
                             state: {
-                              projectId: data.id,
+                              projectId: data.challengeIdx,
                               isContriClicked: false,
                               isInspectClicked: true,
                             },
                           }}
                         >
-                          {data.inspect}
+                          {data.challengerCompleteCount}
                           {data.isNewInspect ? (
                             <span className="newAlert table_newalert">new</span>
                           ) : (
@@ -146,7 +212,14 @@ function RegistTable({ datas }) {
                           )}
                         </Link>
                       </td>
-                      <td>{data.dueDate}</td>
+                      <td>
+                        {`${moment(data.missions[0].dateFin).format(
+                          'YYYY-MM-DD'
+                        )} ${moment(data.missions[0].dateFin).format(
+                          'hh:mm:ss'
+                        )}`}
+                      </td>
+                      {/* <td>{data.missions[0].dateFin}</td> */}
                     </tr>
                     {/* <hr className="row-line"></hr> */}
                   </>

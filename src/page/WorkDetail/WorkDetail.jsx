@@ -1,15 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { WorkDetailContainer } from './WorkDetailStyled';
 import ChallengeTable from './tables/Challenge';
 import InspectTable from './tables/Inspect';
 import challenges from './sampledatas/challenges';
 import inspects from './sampledatas/inspects';
 import SubmissionModal from './modal/SubmissionModal';
+import { set } from 'lodash';
 function WorkDetail(props) {
   let [subject, setSubject] = useState('광고/홍보');
   let [meeting, setMeeting] = useState('비대면');
   let [terms, setTerms] = useState(['YouTube', 'TIKTOK', '파일 업로드']);
   let [prise, setPrise] = useState('10000원');
+  let [projectTitle, setProjectTitle] = useState('');
+  let [mainImage, setMainImage] = useState(null);
+  let [currChallenges, setCurrChallenges] = useState(null);
   let setTab;
   if (props.location.state.isContriClicked) {
     setTab = 0;
@@ -20,7 +25,93 @@ function WorkDetail(props) {
   }
   let [currentTab, setCurrentTab] = useState(setTab); //props에서 현재 탭 가져와 설정
   let [modalProps, setModalProps] = useState({ open: false });
-  console.log(props);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(
+        process.env.REACT_APP_U2_DB_HOST +
+          `/Campaign/challenge/${props.location.state.projectId}` //sample data, should be challengeIdx.
+      )
+      .then(response => {
+        console.log('workDetail response.data: ', response.data);
+        let data = response.data;
+        let challengeTarget = '';
+        let contactRequired = '비대면';
+        let missionRequired = [];
+
+        if (data.challengeTargetCode === 1) {
+          challengeTarget = '공모전';
+        } else if (data.challengeTargetCode === 2) {
+          challengeTarget = '영상 크리에이터 인플루언서';
+        } else if (data.challengeTargetCode === 3) {
+          challengeTarget = '전문영상 편집자';
+        } else if (data.challengeTargetCode === 4) {
+          challengeTarget = '강사 채용';
+        }
+
+        if (data.missions[0].contactRequired === 1) {
+          contactRequired = '비대면';
+        } else if (data.missions[0].contactRequired === 2) {
+          contactRequired = '오프라인';
+        }
+
+        setProjectTitle(data.title);
+        setSubject(challengeTarget);
+        setMeeting(contactRequired);
+        setMainImage(data.mainImage);
+
+        data.missions[0].videos.forEach(ele => {
+          let result;
+          if (ele.platform === 'YU') {
+            result = 'YouTube';
+          } else if (ele.platform === 'TT') {
+            result = 'TIKTOK';
+          } else if (ele.platfrom === 'VM') {
+            result = 'Vimeo';
+          }
+          missionRequired.push(result);
+        });
+
+        setTerms(missionRequired);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
+
+  var challengesConfig = {
+    method: 'get',
+    url:
+      process.env.REACT_APP_U2_DB_HOST +
+      `/Campaign/challengesubmitting/${props.location.state.projectId}?size=10&p=1`,
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+      'Content-Type': 'application/json',
+    },
+  };
+
+  useEffect(() => {
+    axios(challengesConfig)
+      .then(res => {
+        console.log('challengeidx response:');
+        // if(res.data.entities.contactCode === 0){
+        //   setMeeting("비대면")
+        // } else if(res.data.entities.contactCode ===1){
+        //   setMeeting("대면")
+        // }
+
+        // setTerms([])
+        setCurrChallenges(res.data);
+        setIsLoading(true);
+      })
+      .catch(err => {
+        console.log('workdetail error');
+        console.log(err);
+      });
+
+    axios();
+  }, []);
 
   let handleTabClick = tab => {
     setCurrentTab(tab);
@@ -33,7 +124,7 @@ function WorkDetail(props) {
     setModalProps({ ...modalProps, open: false });
   };
   const tables = {
-    0: <ChallengeTable datas={challenges}></ChallengeTable>,
+    0: <ChallengeTable datas={currChallenges}></ChallengeTable>,
     1: (
       <InspectTable
         datas={inspects}
@@ -51,14 +142,15 @@ function WorkDetail(props) {
       <section className="workdetail-section">
         <section className="section1">
           <div className="workdetail_img_wrap">
-            <img
-              src="http://ddragon.leagueoflegends.com/cdn/11.13.1/img/champion/Aatrox.png"
-              alt="image"
-            ></img>
+            {mainImage !== null ? (
+              <img src={mainImage} alt="image"></img>
+            ) : (
+              'No Image'
+            )}
 
             <div className="project_name_wrap">
               <div className="project_name_sub">프로젝트명</div>
-              <div className="porject_name">홍보PPL 영상</div>
+              <div className="porject_name">{projectTitle}</div>
             </div>
           </div>
 
@@ -110,7 +202,11 @@ function WorkDetail(props) {
               검수 대상자
             </div>
           </div>
-          <div className="contents-table">{tables[currentTab]}</div>
+          {isLoading ? (
+            <div className="contents-table">{tables[currentTab]}</div>
+          ) : (
+            ''
+          )}
         </section>
       </section>
     </WorkDetailContainer>
