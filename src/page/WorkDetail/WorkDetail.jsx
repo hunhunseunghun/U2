@@ -7,10 +7,12 @@ import challenges from './sampledatas/challenges';
 import inspects from './sampledatas/inspects';
 import SubmissionModal from './modal/SubmissionModal';
 import { set } from 'lodash';
+import moment from 'moment';
 function WorkDetail(props) {
   let [subject, setSubject] = useState('광고/홍보');
   let [meeting, setMeeting] = useState('비대면');
   let [terms, setTerms] = useState(['YouTube', 'TIKTOK', '파일 업로드']);
+  let [applyPeriod, setApplyPeriod] = useState(null);
   let [prise, setPrise] = useState('10000원');
   let [projectTitle, setProjectTitle] = useState('');
   let [mainImage, setMainImage] = useState(null);
@@ -27,6 +29,7 @@ function WorkDetail(props) {
   let [modalProps, setModalProps] = useState({ open: false });
   const [isLoading, setIsLoading] = useState(false);
 
+  //image section data
   useEffect(() => {
     axios
       .get(
@@ -34,7 +37,7 @@ function WorkDetail(props) {
           `/Campaign/challenge/${props.location.state.projectId}` //sample data, should be challengeIdx.
       )
       .then(response => {
-        console.log('workDetail response.data: ', response.data);
+        console.log('imagesection response.data: ', response.data);
         let data = response.data;
         let challengeTarget = '';
         let contactRequired = '비대면';
@@ -60,6 +63,10 @@ function WorkDetail(props) {
         setSubject(challengeTarget);
         setMeeting(contactRequired);
         setMainImage(data.mainImage);
+        setApplyPeriod(
+          moment(data.missions[0].dateBegin).format('YYYY-MM-DD') +
+            moment(data.missions[0].dateFin).format('hh:mm:ss')
+        );
 
         data.missions[0].videos.forEach(ele => {
           let result;
@@ -95,6 +102,8 @@ function WorkDetail(props) {
     axios(challengesConfig)
       .then(res => {
         console.log('challengeidx response:');
+        console.log(res);
+        console.log(props.location.state.projectId);
         // if(res.data.entities.contactCode === 0){
         //   setMeeting("비대면")
         // } else if(res.data.entities.contactCode ===1){
@@ -172,6 +181,10 @@ function WorkDetail(props) {
                   </div>
                 );
               })}
+            </section>
+            <section className="project_target_wrap ">
+              <div className="project_target_sub">접수기간</div>
+              <div className="project_target">{applyPeriod}</div>
             </section>
             <section className="project_target_wrap project_info_lastchild">
               <div className="project_target_sub">보상</div>
