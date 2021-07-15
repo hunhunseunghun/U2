@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ModalContainer } from './fbModalStyled';
-function FeedbackModal({ open, data, handleModalClose }) {
+function FeedbackModal({ open, data, handleModalClose, isAdmin }) {
 	// console.log(open);
 	// console.log(data);
 
@@ -21,6 +21,7 @@ function FeedbackModal({ open, data, handleModalClose }) {
 								{' '}
 								닫기{' '}
 							</button>
+							{isAdmin && <button>저장</button>}
 						</footer>
 					</section>
 				) : null}

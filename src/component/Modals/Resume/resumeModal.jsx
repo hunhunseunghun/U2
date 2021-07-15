@@ -1,27 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { ModalContainer } from './SubmitModalStyled';
+import { ModalContainer } from './rsModalStyled';
 import { BsPlusSquareFill, BsDashSquareFill } from 'react-icons/bs';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import axios from 'axios';
 import 'react-phone-number-input/style.css';
-// import Banks from '../../../component/banks';
-import Banks from '../../../../component/banks';
-// import { validateEmail } from '../../../library/validate';
-import { validateEmail } from '../../../../library/validate';
-import AddressModal from '../../../../component/address/AddressModal';
-import { TextFile } from '../../../../library/getJson';
-// import 'csshake.min.css'
-const server = process.env.REACT_APP_U2_DB_HOST;
+import AddressModal from '../../address/AddressModal';
+import Banks from '../../banks';
+import { validateEmail } from '../../../library/validate';
 const initialState = {
 	title: '',
-	URLs: [],
-	YUinput: '',
-	YUarr: [],
-	TTinput: '',
-	TTarr: [],
-	VMinput: '',
-	VMarr: [],
 	mobileNum: '',
 	mobileErr: '',
 	mobileErrShake: false,
@@ -34,6 +22,10 @@ const initialState = {
 	toggleEmailAuthInput: false,
 	emailAuthInput: '',
 	emailAuthorized: null,
+	resumeFiles: [],
+	pfURLs: [],
+	pfURLinput: '',
+	pfFile: '',
 	bankAccountNum: '',
 	banks: [],
 	bankCode: 0,
@@ -45,23 +37,14 @@ const initialState = {
 	address3: '',
 	openAddrModal: false,
 	addrMobile: '',
-	image: '',
-	note: '',
 };
+const server = process.env.REACT_APP_U2_DB_HOST;
 function Modal({ open, challenge, handleModalClose }) {
-	// console.log(data);
 	const userInfo = useSelector((state) => state.userInfo);
-	// console.log('challenge: ', challenge);
+	// console.log('challenge in resumemodal : ', challenge);
 	const [
 		{
 			title,
-			URLs,
-			YUinput,
-			YUarr,
-			TTinput,
-			TTarr,
-			VMinput,
-			VMarr,
 			mobileNum,
 			mobileErr,
 			mobileErrShake,
@@ -74,6 +57,10 @@ function Modal({ open, challenge, handleModalClose }) {
 			toggleEmailAuthInput,
 			emailAuthInput,
 			emailAuthorized,
+			resumeFiles,
+			pfURLinput,
+			pfURLs,
+			pfFile,
 			bankAccountNum,
 			banks,
 			bankCode,
@@ -85,11 +72,10 @@ function Modal({ open, challenge, handleModalClose }) {
 			address3,
 			openAddrModal,
 			addrMobile,
-			image,
-			note,
 		},
 		setState,
 	] = useState({ ...initialState });
+
 	const clearState = () => {
 		setState({ ...initialState });
 	};
@@ -139,7 +125,6 @@ function Modal({ open, challenge, handleModalClose }) {
 			mobileAuthorized: false,
 		}));
 	};
-
 	const handleValidateEmail = () => {
 		const { isValid, error } = validateEmail(email);
 		if (!isValid) {
@@ -157,7 +142,6 @@ function Modal({ open, challenge, handleModalClose }) {
 			setState((preState) => ({ ...preState, emailErr: null }));
 		}
 	};
-
 	const handleValidateBank = () => {
 		if (bankAccountNum) {
 			const replaced = bankAccountNum.replace(/[^0-9]/gi, '');
@@ -188,15 +172,32 @@ function Modal({ open, challenge, handleModalClose }) {
 			}
 		}
 	};
+	const handleSearchAddress = () => {
+		// setOpenAddrModal(true);
+		setState((preState) => ({ ...preState, openAddrModal: true }));
+	};
+	const setAddressData = (data) => {
+		console.log('address data: ', data);
+		// setAddress1(data.zonecode);
+		setState((preState) => ({ ...preState, address1: data.zonecode }));
 
+		// setAddress2(
+		// 	data.address +
+		// 		(data.bname && ' ' + data.bname) +
+		// 		(data.buildingName && ' ' + data.buildingName),
+		// );
+		setState((preState) => ({
+			...preState,
+			address2:
+				data.address +
+				(data.bname && ' ' + data.bname) +
+				(data.buildingName && ' ' + data.buildingName),
+		}));
+	};
 	const handleBankCode = (code) => {
 		// console.log('code: ', code);
 		// setBankCode(code);
 		setState((preState) => ({ ...preState, bankCode: code }));
-	};
-	const handleNote = (note) => {
-		// setNote(note);
-		setState((preState) => ({ ...preState, note: note }));
 	};
 	const handleShake = (inputType) => {
 		switch (inputType) {
@@ -230,29 +231,6 @@ function Modal({ open, challenge, handleModalClose }) {
 			}
 		}
 	};
-	const handleSearchAddress = () => {
-		// setOpenAddrModal(true);
-		setState((preState) => ({ ...preState, openAddrModal: true }));
-	};
-	const setAddressData = (data) => {
-		console.log('address data: ', data);
-		// setAddress1(data.zonecode);
-		setState((preState) => ({ ...preState, address1: data.zonecode }));
-
-		// setAddress2(
-		// 	data.address +
-		// 		(data.bname && ' ' + data.bname) +
-		// 		(data.buildingName && ' ' + data.buildingName),
-		// );
-		setState((preState) => ({
-			...preState,
-			address2:
-				data.address +
-				(data.bname && ' ' + data.bname) +
-				(data.buildingName && ' ' + data.buildingName),
-		}));
-	};
-
 	const checkSubmit = () => {
 		if (
 			!title ||
@@ -264,31 +242,43 @@ function Modal({ open, challenge, handleModalClose }) {
 			!address3
 		) {
 			alert('모든 필수 항목을 입력해야 합니다.');
-			return true;
+			return;
 		}
 	};
 	const handleSubmit = () => {
-		console.log(userInfo);
-		if (checkSubmit()) return;
+		checkSubmit();
 
 		var data = {
-			videos: URLs.map((el, idx) => {
+			// videos: [
+			// 	{
+			// 		challengeIdx: 0,
+			// 		missonSeq: 0,
+			// 		memberIdx: 0,
+			// 		seq: 0,
+			// 		platform: 'string',
+			// 		videoId: 'string',
+			// 		registMemberIdx: 0,
+			// 		registDate: '2021-07-14T17:37:33.365Z',
+			// 		modifyMemberIdx: 0,
+			// 		modifyDate: '2021-07-14T17:37:33.365Z',
+			// 	},
+			// ],
+			videos: pfURLs.map((el, idx) => {
 				return {
-					challengeIdx: challenge.challengeIdx,
+					challengeIdx: 29, //challenge.challengeIdx
 					missonSeq: idx + 1,
 					memberIdx: userInfo.memberIdx,
 					seq: idx + 1,
-					platform: el.platform,
-					videoId: el.url,
+					// platform: el.platform,
+					videoId: el,
 					// registMemberIdx: userInfo.memberIdx,
 					// registDate: '2021-07-08T12:43:08.139Z',
 					// modifyMemberIdx: userInfo.memberIdx,
 					// modifyDate: '2021-07-08T12:43:08.139Z',
 				};
 			}),
-			name: userInfo.fullName,
 			postCodeAddr: address2,
-			challengeIdx: challenge.challengeIdx,
+			challengeIdx: 29, //challenge.challengeIdx
 			missonSeq: 1,
 			memberIdx: userInfo.memberIdx,
 			contactCode: 1,
@@ -298,28 +288,17 @@ function Modal({ open, challenge, handleModalClose }) {
 			addr: address3,
 			bankCode: bankCode,
 			bankAccount: bankAccountNum,
-			photo: image,
-			note: note,
+			// photo: 'string',
+			// note: 'string',
 			statusCode: 1,
 			checkStatusCode: 8,
 			dateApplied: new Date(),
-			// registMemberIdx: userInfo.memberIdx,
-			// registDate: '2021-07-08T12:43:08.139Z',
-			// modifyMemberIdx: userInfo.memberIdx,
-			// modifyDate: '2021-07-08T12:43:08.139Z',
+			name: userInfo.fullName,
+			// registMemberIdx: 0,
+			// registDate: '2021-07-14T17:37:33.365Z',
+			// modifyMemberIdx: 0,
+			// modifyDate: '2021-07-14T17:37:33.365Z',
 		};
-		//checkStatusCode
-		// 1. 승인
-		// 2. 반려
-		// 3. 피드백
-		//4. 챌린지
-		// 8. 진행중
-		//statusCode
-		//1. 제출할때
-		//0. 챌린지
-		console.log('body: ', data);
-		// TextFile(data);
-		console.log('token: ', localStorage.getItem('token'));
 		var config = {
 			method: 'post',
 			// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmit
@@ -330,7 +309,6 @@ function Modal({ open, challenge, handleModalClose }) {
 			},
 			data: data,
 		};
-
 		axios(config)
 			.then((response) => {
 				console.log('response: ');
@@ -376,10 +354,10 @@ function Modal({ open, challenge, handleModalClose }) {
 				/>
 				{open ? (
 					<section>
-						<header>자료 제출</header>
-						<main className={'sm-main'}>
+						<header>지원하기</header>
+						<main className="sm-main">
 							<section className="ele">
-								<div className="menu">작품명</div>
+								<div className="menu">프로젝트명</div>
 								<div className="inputInfo">
 									<input
 										className="input_work_title"
@@ -393,240 +371,6 @@ function Modal({ open, challenge, handleModalClose }) {
 											}));
 										}}
 									></input>
-								</div>
-							</section>
-							<section className="ele">
-								<div className="menu">프로젝트 영상</div>
-								<div className="inputInfo URLs">
-									{challenge.missions[0].videos &&
-										challenge.missions[0].videos.map((video) => {
-											return (
-												<div>
-													<span className="youtubeURL">
-														{(() => {
-															switch (video.platform) {
-																case 'YU': {
-																	return 'Youtube';
-																}
-																case 'TT': {
-																	return 'TikTok';
-																}
-																case 'VM': {
-																	return 'Vimeo';
-																}
-																default: {
-																	return;
-																}
-															}
-														})()}{' '}
-														URL:
-													</span>
-													<ul className="ul-URLs">
-														{/* show inputs */}
-														{(() => {
-															let urls = [];
-															switch (video.platform) {
-																case 'YU': {
-																	urls = YUarr;
-																	break;
-																}
-																case 'TT': {
-																	urls = TTarr;
-																	break;
-																}
-																case 'VM': {
-																	urls = VMarr;
-																	break;
-																}
-																default: {
-																	break;
-																}
-															}
-															return urls.map((el, idx) => {
-																return (
-																	<li key={idx} className="li-url">
-																		<input value={el.url} readOnly></input>
-																		<BsDashSquareFill
-																			className="plusMinus"
-																			onClick={() => {
-																				let copyArr = URLs.slice();
-																				copyArr.splice(idx, 1);
-																				// setURLS(copyArr);
-																				setState((preState) => ({
-																					...preState,
-																					URLs: copyArr,
-																				}));
-																			}}
-																		/>
-																	</li>
-																);
-															});
-														})()}
-														{/* {URLs.map((el, idx) => {
-														return (
-															<li key={idx} className="li-url">
-																<input value={el.url} readOnly></input>
-																<BsDashSquareFill
-																	className="plusMinus"
-																	onClick={() => {
-																		let copyArr = URLs.slice();
-																		copyArr.splice(idx, 1);
-																		// setURLS(copyArr);
-																		setState((preState) => ({
-																			...preState,
-																			URLs: copyArr,
-																		}));
-																	}}
-																/>
-															</li>
-														);
-													})} */}
-														<li>
-															<input
-																onChange={(e) => {
-																	// setURLinput(e.target.value);
-																	switch (video.platform) {
-																		case 'YU': {
-																			setState((preState) => ({
-																				...preState,
-																				YUinput: e.target.value,
-																			}));
-																			break;
-																		}
-																		case 'TT': {
-																			setState((preState) => ({
-																				...preState,
-																				TTinput: e.target.value,
-																			}));
-																			break;
-																		}
-																		case 'VM': {
-																			setState((preState) => ({
-																				...preState,
-																				VMinput: e.target.value,
-																			}));
-																			break;
-																		}
-																		default: {
-																			break;
-																		}
-																	}
-																	// setState((preState) => ({
-																	// 	...preState,
-																	// 	URLinput: e.target.value,
-																	// }));
-																}}
-																value={(() => {
-																	switch (video.platform) {
-																		case 'YU': {
-																			return YUinput;
-																		}
-																		case 'TT': {
-																			return TTinput;
-																		}
-																		case 'VM': {
-																			return VMinput;
-																		}
-																		default: {
-																			return;
-																		}
-																	}
-																})()}
-															></input>
-															<BsPlusSquareFill
-																className="plusMinus"
-																onClick={() => {
-																	let input = '';
-																	let obj = {};
-																	switch (video.platform) {
-																		case 'YU': {
-																			obj = {
-																				platform: video.platform,
-																				url: YUinput,
-																			};
-																			input = YUinput;
-																			break;
-																		}
-																		case 'TT': {
-																			obj = {
-																				platform: video.platform,
-																				url: TTinput,
-																			};
-																			input = TTinput;
-																			break;
-																		}
-																		case 'VM': {
-																			obj = {
-																				platform: video.platform,
-																				url: VMinput,
-																			};
-																			input = VMinput;
-																			break;
-																		}
-																		default: {
-																			break;
-																		}
-																	}
-																	if (input) {
-																		//input이 있을때만
-																		let copyArr = URLs.slice();
-																		switch (video.platform) {
-																			case 'YU': {
-																				copyArr.push(obj);
-																				// setURLS(copyArr);
-																				// setURLinput('');
-																				let copyYU = YUarr.slice();
-																				copyYU.push(obj);
-																				setState((preState) => ({
-																					...preState,
-																					URLs: copyArr,
-																					YUinput: '',
-																					YUarr: copyYU,
-																				}));
-																				break;
-																			}
-																			case 'TT': {
-																				copyArr.push(obj);
-																				// setURLS(copyArr);
-																				// setURLinput('');
-																				let copyTT = TTarr.slice();
-																				copyTT.push(obj);
-																				setState((preState) => ({
-																					...preState,
-																					URLs: copyArr,
-																					TTinput: '',
-																					TTarr: copyTT,
-																				}));
-																				break;
-																			}
-																			case 'VM': {
-																				copyArr.push(obj);
-																				// setURLS(copyArr);
-																				// setURLinput('');
-																				let copyVM = VMarr.slice();
-																				copyVM.push(obj);
-																				setState((preState) => ({
-																					...preState,
-																					URLs: copyArr,
-																					VMinput: '',
-																					VMarr: copyVM,
-																				}));
-																				break;
-																			}
-																			default: {
-																				break;
-																			}
-																		}
-																	}
-																}}
-															/>
-														</li>
-													</ul>
-												</div>
-											);
-										})}
-
-									{/* default input box */}
 								</div>
 							</section>
 							<section className="ele">
@@ -822,6 +566,75 @@ function Modal({ open, challenge, handleModalClose }) {
 								</div>
 							</section>
 							<section className="ele">
+								<div className="menu">이력서</div>
+								<div className="inputInfo">
+									<input
+										type="file"
+										onChange={(e) => {
+											console.log(e.target.files);
+											// setImage(e.target.files[0].name);
+											setState((preState) => ({
+												...preState,
+												resumeFiles: e.target.files,
+											}));
+										}}
+										multiple
+									></input>
+								</div>
+							</section>
+							<section className="ele">
+								<div className="menu">포트폴리오</div>
+								<div className="inputInfo URLs">
+									<span className="youtubeURL">URL:</span>
+									<ul className="ul_URLs">
+										{pfURLs.map((el, idx) => {
+											return (
+												<li key={idx} className="li-url">
+													<input value={el} readOnly></input>
+													<BsDashSquareFill
+														className="plusMinus"
+														onClick={() => {
+															let copyArr = pfURLs.slice();
+															copyArr.splice(idx, 1);
+															// setURLS(copyArr);
+															setState((preState) => ({
+																...preState,
+																pfURLs: copyArr,
+															}));
+														}}
+													/>
+												</li>
+											);
+										})}
+										<li>
+											<input
+												onChange={(e) => {
+													setState((preState) => ({
+														...preState,
+														pfURLinput: e.target.value,
+													}));
+												}}
+												value={pfURLinput}
+											></input>
+											<BsPlusSquareFill
+												className="plusMinus"
+												onClick={() => {
+													if (pfURLinput) {
+														let copyArr = pfURLs.slice();
+														copyArr.push(pfURLinput);
+														setState((preState) => ({
+															...preState,
+															pfURLs: copyArr,
+															pfURLinput: '',
+														}));
+													}
+												}}
+											></BsPlusSquareFill>
+										</li>
+									</ul>
+								</div>
+							</section>
+							<section className="ele">
 								<div className="menu">계좌번호</div>
 								<div className="inputInfo banks_accout">
 									<Banks handleBankCode={handleBankCode} datas={banks} />
@@ -922,44 +735,12 @@ function Modal({ open, challenge, handleModalClose }) {
 									</section>
 								</div>
 							</section>
-							<section className="ele">
-								<div className="menu">이미지</div>
-								<div className="inputInfo">
-									<input
-										type="file"
-										onChange={(e) => {
-											console.log(e.target.files);
-											// setImage(e.target.files[0].name);
-											setState((preState) => ({
-												...preState,
-												image: e.target.files[0].name,
-											}));
-										}}
-										// multiple
-									></input>
-								</div>
-							</section>
-							<section className="ele submit_modal_ele_last">
-								<div className="menu">비고</div>
-								<div className="inputInfo">
-									<textarea
-										className="note-textarea"
-										maxLength={800}
-										placeholder="800자 내 프로젝트에 대한 코멘트를 남겨 주세요"
-										aria-setsize="false"
-										onChange={(e) => {
-											handleNote(e.target.value);
-										}}
-									></textarea>
-								</div>
-							</section>
 						</main>
 						<footer>
 							<button
-								className="close_btn"
+								className="close"
 								onClick={() => {
-									clearState();
-									handleModalClose('submit');
+									handleModalClose('resume');
 								}}
 							>
 								{' '}

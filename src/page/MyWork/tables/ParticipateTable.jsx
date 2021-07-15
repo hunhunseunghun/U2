@@ -5,9 +5,8 @@ import axios from 'axios';
 import Pagination2 from '../../../component/Pagination/Pagination2';
 import { paginate } from '../../../component/Pagination/paginate';
 import { ParticipateTableContainer } from './ParticipateTableStyled';
-import FeedbackModal from '../modal/feedback/feedbackModal';
-import ResumeModal from '../modal/resume/resumeModal';
-// import SubmitModal from '../modal/submit/SubmitModal';
+import FeedbackModal from '../../../component/Modals/FeedBack/feedbackModal';
+import ResumeModal from '../../../component/Modals/Resume/resumeModal';
 import SubmitModal from '../../../component/Modals/Submit/SubmitModal';
 import SubmissionModal from '../../../component/Modals/Submission/SubmissionModal';
 import sortarrowdown from '../../../Img/Icons/sortarrowdown.png';
@@ -35,160 +34,7 @@ function ParticipateTable() {
 		open: false,
 		data: null,
 	});
-
-	const handlePageChange = (page) => {
-		var config = {
-			method: 'get',
-			url:
-				process.env.REACT_APP_U2_DB_HOST +
-				`/Campaign/challengeinvolved?p=${page}&size=${quests.pageSize}`,
-			headers: {
-				Authorization: 'Bearer ' + localStorage.getItem('token'),
-				'Content-Type': 'application/json',
-			},
-		};
-		setLoading(true);
-		axios(config)
-			.then((response) => {
-				console.log(response.data);
-				var datas = response.data.entities;
-				var formedData = [];
-				if (datas)
-					formedData = datas.map((el) => {
-						var me = el.applications.filter(
-							(el) => el.memberIdx === userInfo.memberIdx,
-						)[0];
-						if (me) {
-							return {
-								img: el.mainImage,
-								category: (() => {
-									switch (el.challengeTargetCode) {
-										case 1: {
-											return '공모전';
-										}
-										case 2: {
-											return '전문영상 편집자';
-										}
-										case 3: {
-											return '영상크리에이터 / 인플루언서';
-										}
-										case 4: {
-											return '강사채용';
-										}
-										default: {
-											return null;
-										}
-									}
-								})(),
-								name: el.title,
-								status: (() => {
-									switch (me.checkStatusCode) {
-										case 1: {
-											return '승인';
-										}
-										case 2: {
-											return '반려';
-										}
-										case 3: {
-											return '피드백';
-										}
-										case 8: {
-											return '진행중';
-										}
-										case 0: {
-											return '챌린지';
-										}
-										default: {
-											return null;
-										}
-									}
-								})(),
-								presentation: (() => {
-									var me = el.applications.filter(
-										(el) => el.memberIdx === userInfo.memberIdx,
-									)[0];
-
-									if (
-										el.challengeTargetCode === 1 ||
-										el.challengeTargetCode === 3
-									) {
-										//공모전 or 영상크리에이터
-										if (me.statusCode === 0) {
-											return '자료제출';
-										} else {
-											// return me.;
-										}
-									}
-								})(),
-								presentationType: (() => {})(),
-								// feedback:
-							};
-						}
-					});
-				// setQuests({ ...quests, data: response.data.entities });
-				setQuests({
-					...quests,
-					data: formedData,
-					total: response.data.total,
-					currentPage: page,
-				});
-				setLoading(false);
-			})
-			.catch((err) => {
-				console.log(err);
-				setLoading(false);
-			});
-	};
-
-	const handleOpenFeedback = (feedback) => {
-		setFeedbackProps({ open: true, data: feedback });
-	};
-	const handleOpenResume = (resume) => {
-		setResumeProps({ open: true, data: resume });
-	};
-	const handleOpenSubmit = (data) => {
-		setSubmitProps({ open: true, data: data });
-	};
-	const handleOpenSubmission = (data) => {
-		setSubmissionProps({ open: true, data: data });
-	};
-
-	const handleModalClose = (modalType) => {
-		switch (modalType) {
-			case 'feedback': {
-				setFeedbackProps({ ...feedbackProps, open: false });
-				break;
-			}
-			case 'resume': {
-				setResumeProps({ ...resumeProps, open: false });
-				break;
-			}
-			case 'submit': {
-				setSubmitProps({ ...submitProps, open: false });
-				break;
-			}
-			case 'submission': {
-				setSubmissionProps({ ...submitProps, open: false });
-				break;
-			}
-			default: {
-				console.log('no such case');
-				break;
-			}
-		}
-	};
-
-	useEffect(() => {
-		var config = {
-			method: 'get',
-			url:
-				process.env.REACT_APP_U2_DB_HOST +
-				`/Campaign/challengeinvolved?p=${quests.currentPage}&size=${quests.pageSize}`,
-			headers: {
-				Authorization: 'Bearer ' + localStorage.getItem('token'),
-				'Content-Type': 'application/json',
-			},
-		};
+	const getData = (config) => {
 		setLoading(true);
 		axios(config)
 			.then((response) => {
@@ -325,6 +171,72 @@ function ParticipateTable() {
 				console.log(err);
 				setLoading(false);
 			});
+	};
+
+	const handlePageChange = (page) => {
+		var config = {
+			method: 'get',
+			url:
+				process.env.REACT_APP_U2_DB_HOST +
+				`/Campaign/challengeinvolved?p=${page}&size=${quests.pageSize}`,
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+		};
+		getData(config);
+	};
+
+	const handleOpenFeedback = (feedback) => {
+		setFeedbackProps({ open: true, data: feedback });
+	};
+	const handleOpenResume = (resume) => {
+		setResumeProps({ open: true, data: resume });
+	};
+	const handleOpenSubmit = (data) => {
+		setSubmitProps({ open: true, data: data });
+	};
+	const handleOpenSubmission = (data) => {
+		setSubmissionProps({ open: true, data: data });
+	};
+
+	const handleModalClose = (modalType) => {
+		switch (modalType) {
+			case 'feedback': {
+				setFeedbackProps({ ...feedbackProps, open: false });
+				break;
+			}
+			case 'resume': {
+				setResumeProps({ ...resumeProps, open: false });
+				break;
+			}
+			case 'submit': {
+				setSubmitProps({ ...submitProps, open: false });
+				break;
+			}
+			case 'submission': {
+				setSubmissionProps({ ...submitProps, open: false });
+				break;
+			}
+			default: {
+				console.log('no such case');
+				break;
+			}
+		}
+	};
+
+	useEffect(() => {
+		var config = {
+			method: 'get',
+			url:
+				process.env.REACT_APP_U2_DB_HOST +
+				`/Campaign/challengeinvolved?p=${quests.currentPage}&size=${quests.pageSize}`,
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+		};
+		getData(config);
 	}, []);
 	// useEffect(() => {
 	// 	setQuests({ ...quests, data: datas });
@@ -356,6 +268,7 @@ function ParticipateTable() {
 				open={submissionProps.open}
 				data={submissionProps.data}
 				handleModalClose={(modalType) => [handleModalClose(modalType)]}
+				isAdmin={false}
 			/>
 			<section className="prjregi_btn_area">
 				{' '}
