@@ -31,12 +31,26 @@ export const ProjectDetailContainer = styled.div`
     }
   }
 
+  .prj-detail {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    .prj_content_wrap {
+      width: 100%;
+      font-size: 12px;
+    }
+  }
+
   .prj_control {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 
     .prj_control_left {
       .more_prj {
+        position: relative;
+        top: 7px;
         max-width: 218px;
         background: linear-gradient(#fff, #f2f2f2);
         border: 1px solid #eee;
@@ -52,32 +66,30 @@ export const ProjectDetailContainer = styled.div`
       grid-template-columns: 1fr 1fr 1fr;
 
       button {
-        height: 100%;
-        all: unset;
-        padding: 4px 10px;
-        background-color: #cccccc;
-        color: #4e4e4e;
-        font-size: 12px;
+        width: 120px;
         border: 1px solid #d1d1d1;
+        padding: 5px 20px;
         margin: 0 5px;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 600;
         color: #898989;
-        text-align: center;
-        font-size: 13px;
-
+        transition-duration: 0.2s;
         &:hover {
           cursor: pointer;
           color: black;
           border-color: #898989;
-          background-color: #cccccc;
+          transition-duration: 0.2s;
         }
       }
     }
     .prj_control_middle button:last-child {
       border: 1px solid #d1d1d1;
-      font-size: 12px;
+      font-size: 16px;
       font-weight: 500;
       color: #fff;
       padding: 4px 10px;
+      transition-duration: 0.2s;
 
       background-color: #f84135;
       border-color: #f84135;
@@ -86,6 +98,7 @@ export const ProjectDetailContainer = styled.div`
         color: #fff;
         background-color: #ff2a1b;
         border-color: #ff2a1b;
+        transition-duration: 0.2s;
       }
     }
 
