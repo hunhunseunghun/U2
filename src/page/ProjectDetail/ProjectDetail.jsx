@@ -181,9 +181,9 @@ function ProjectDetail(props) {
       </section>
       <section className="prj_control">
         <section className="prj_control_left">
-          <div className="more_prj">
+          <span className="more_prj">
             {challenge.ownerName}의 프로젝트 더 보기
-          </div>
+          </span>
         </section>
         <section className="prj_control_middle">
           <button

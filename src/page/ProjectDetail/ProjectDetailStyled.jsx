@@ -49,6 +49,8 @@ export const ProjectDetailContainer = styled.div`
 
     .prj_control_left {
       .more_prj {
+        position: relative;
+        top: 7px;
         max-width: 218px;
         background: linear-gradient(#fff, #f2f2f2);
         border: 1px solid #eee;
