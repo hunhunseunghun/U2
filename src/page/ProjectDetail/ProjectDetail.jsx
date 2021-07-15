@@ -19,12 +19,15 @@ import ReactHtmlParser from 'react-html-parser';
 import SubmitModal from './Modal/SubmitModal';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import moment from 'moment';
+
 function ProjectDetail(props) {
   const history = useHistory();
   const userInfo = useSelector(state => state.userInfo);
   const challengeIdx = props.match.params.challengeIdx;
   const [challenge, setChallenge] = useState({});
   const [isDataReady, setIsDataReady] = useState(false);
+  const [isShareActive, setIsShareActive] = useState(false);
 
   //자료제출 모달
   const [isSubmitOpen, setSubmitOpen] = useState(false);
@@ -165,7 +168,9 @@ function ProjectDetail(props) {
       <section className="prj_title_area">
         <div className="prj_title">{challenge.title}</div>
         <div className="prj_term">
-          {challenge.missions[0].dateBegin} ~ {challenge.missions[0].dateFin}
+          {`기간 : `}
+          {moment(challenge.missions[0].dateBegin).format('YYYY-MM-DD')} ~{' '}
+          {moment(challenge.missions[0].dateFin).format('YYYY-MM-DD')}
         </div>
       </section>
       <section className="prj-info">
@@ -181,9 +186,9 @@ function ProjectDetail(props) {
       </section>
       <section className="prj_control">
         <section className="prj_control_left">
-          <span className="more_prj">
+          <div className="more_prj">
             {challenge.ownerName}의 프로젝트 더 보기
-          </span>
+          </div>
         </section>
         <section className="prj_control_middle">
           <button
@@ -226,8 +231,84 @@ function ProjectDetail(props) {
         </section>
 
         <section className="prj_control_right">
-          <FaShareSquare />
-          <span>공 유</span>
+          <div className="prjdetail_snsshare_area">
+            <FaShareSquare
+              id="prjdetail_sns_icon"
+              onClick={() => {
+                setIsShareActive(true);
+              }}
+            />
+            <span
+              id="prjdetail_sns_text"
+              onClick={() => {
+                setIsShareActive(true);
+                console.log(isShareActive);
+              }}
+            >
+              공유
+            </span>
+
+            <div
+              id="prjdetail_sns_share"
+              className={
+                isShareActive
+                  ? 'pop_sub sns_share_pop active'
+                  : 'pop_sub sns_share_pop'
+              }
+            >
+              <header>
+                {' '}
+                <div>프로젝트 공유</div>
+                <img
+                  src="/img/closeBtn.svg"
+                  alt="X"
+                  onClick={() => {
+                    setIsShareActive(false);
+                  }}
+                />
+              </header>
+
+              <ul>
+                <li>
+                  <div className="sns_img">
+                    <img src="/img/ic_facebook.svg" />
+                  </div>
+                  <div className="sns_title">페이스북</div>
+                </li>
+                <li className="kakao_share">
+                  <div className="sns_img">
+                    <img src="/img/ic_kakao.svg" />
+                  </div>
+                  <div className="sns_title">카카오톡</div>
+                </li>
+                <li>
+                  <div className="sns_img">
+                    <img src="/img/twittericon.svg" />
+                  </div>
+                  <div className="sns_title">트위터</div>
+                </li>
+              </ul>
+              <ul>
+                <li>
+                  <div className="sns_img">
+                    <img
+                      src="/img/instagramIcon.png"
+                      className="sns_img_instagram"
+                    />
+                  </div>
+                  <div className="sns_title">인스타그램</div>
+                </li>
+                <li>
+                  <div class="sns_img">
+                    <img src="/img/ic_url_copy.svg" />
+                  </div>
+                  <div class="sns_title">URL복사</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* <SnsModal /> */}
         </section>
       </section>
 

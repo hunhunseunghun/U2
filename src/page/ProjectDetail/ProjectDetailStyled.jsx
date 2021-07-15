@@ -16,7 +16,7 @@ export const ProjectDetailContainer = styled.div`
     padding: 10px 15px;
 
     .prj_term {
-      font-size: 13px;
+      font-size: 12px;
       color: #7f7f7f;
       font-weight: 400;
     }
@@ -49,9 +49,8 @@ export const ProjectDetailContainer = styled.div`
 
     .prj_control_left {
       .more_prj {
-        position: relative;
-        top: 7px;
-        max-width: 218px;
+        display: inline-block;
+        width: auto;
         background: linear-gradient(#fff, #f2f2f2);
         border: 1px solid #eee;
         padding: 10px 10px;
@@ -66,9 +65,9 @@ export const ProjectDetailContainer = styled.div`
       grid-template-columns: 1fr 1fr 1fr;
 
       button {
-        width: 120px;
+        width: 100px;
         border: 1px solid #d1d1d1;
-        padding: 5px 20px;
+        padding: 5px 10px;
         margin: 0 5px;
         border-radius: 4px;
         font-size: 16px;
@@ -103,22 +102,83 @@ export const ProjectDetailContainer = styled.div`
     }
 
     .prj_control_right {
+      position: relative;
       display: flex;
       justify-content: flex-end;
 
       svg {
         position: relative;
-        top: 5px;
+        top: 2px;
         width: 20px;
+        &:hover {
+          cursor: pointer;
+          transform: scale(1.05);
+        }
       }
       span {
         margin-left: 5px;
-        font-weight: 400;
+        font-weight: 500;
+        &:hover {
+          cursor: pointer;
+          font-weight: 700;
+        }
       }
     }
   }
 
   .prj-control > button {
     border: solid 1px;
+  }
+
+  .pop_sub.sns_share_pop {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    top: 25px;
+    right: 0;
+    width: 190px;
+    padding: 10px 10px;
+    z-index: 10;
+
+    header {
+      width: 90%;
+      display: flex;
+      justify-content: space-between;
+      padding: 3px 0px;
+      margin-bottom: 10px;
+
+      div {
+        color: #181818;
+        font-size: 14px;
+        font-weight: 500;
+      }
+      img {
+        width: 13px;
+        margin-right: 6px;
+        &:hover {
+          cursor: pointer;
+          transform: scale(0.95);
+        }
+      }
+    }
+    ul {
+      margin-bottom: 10px;
+    }
+    ul:last-child {
+      width: 80%;
+    }
+    li {
+      display: grid;
+      place-items: center;
+      margin: 0 5px;
+    }
+    .sns_img {
+      width: 50px;
+    }
+
+    img {
+      width: 36px;
+      border-radius: 150px;
+    }
   }
 `;
