@@ -1,20 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { ModalContainer } from './SubmitModalStyled';
 import { BsPlusSquareFill, BsDashSquareFill } from 'react-icons/bs';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
-import Banks from './banks';
-import { validateEmail } from '../../../../library/validate';
 import axios from 'axios';
 import 'react-phone-number-input/style.css';
+// import Banks from '../../../component/banks';
+import Banks from '../../../../component/banks';
+// import { validateEmail } from '../../../library/validate';
+import { validateEmail } from '../../../../library/validate';
 import AddressModal from '../../../../component/address/AddressModal';
-
-// import 'csshake.min.css';
-const server = process.env.REACT_APP_TEST_API;
+import { TextFile } from '../../../../library/getJson';
+// import 'csshake.min.css'
+const server = process.env.REACT_APP_U2_DB_HOST;
 const initialState = {
 	title: '',
 	URLs: [],
-	URLinput: '',
+	YUinput: '',
+	YUarr: [],
+	TTinput: '',
+	TTarr: [],
+	VMinput: '',
+	VMarr: [],
 	mobileNum: '',
 	mobileErr: '',
 	mobileErrShake: false,
@@ -28,6 +35,7 @@ const initialState = {
 	emailAuthInput: '',
 	emailAuthorized: null,
 	bankAccountNum: '',
+	banks: [],
 	bankCode: 0,
 	bankAccountErr: '',
 	BaErrShake: false,
@@ -40,7 +48,7 @@ const initialState = {
 	image: '',
 	note: '',
 };
-function Modal({ open, data, handleModalClose }) {
+function Modal({ open, challenge, handleModalClose }) {
 	// console.log(data);
 	const userInfo = useSelector((state) => state.userInfo);
 
@@ -48,7 +56,12 @@ function Modal({ open, data, handleModalClose }) {
 		{
 			title,
 			URLs,
-			URLinput,
+			YUinput,
+			YUarr,
+			TTinput,
+			TTarr,
+			VMinput,
+			VMarr,
 			mobileNum,
 			mobileErr,
 			mobileErrShake,
@@ -62,6 +75,7 @@ function Modal({ open, data, handleModalClose }) {
 			emailAuthInput,
 			emailAuthorized,
 			bankAccountNum,
+			banks,
 			bankCode,
 			bankAccountErr,
 			BaErrShake,
@@ -79,43 +93,7 @@ function Modal({ open, data, handleModalClose }) {
 	const clearState = () => {
 		setState({ ...initialState });
 	};
-	// const [title, setTitle] = useState('');
 
-	// const [URLs, setURLS] = useState([]);
-	// const [URLinput, setURLinput] = useState('');
-
-	// const [mobileNum, setMobileNum] = useState('');
-	// const [mobileErr, setMobileErr] = useState('');
-	// const [mobileErrShake, setMobileErrShake] = useState(false);
-	// const [toggleMobileAuthInput, setToggleMobileAuthInput] = useState(false);
-	// const [mobileAuthInput, setMobileAuthInput] = useState('');
-	// const [mobileAuthorized, setMobileAuthorized] = useState(null);
-
-	// const [email, setEmail] = useState(null);
-	// const [emailErr, setEmailErr] = useState('');
-	// const [emailErrShake, setEmailErrShake] = useState(false);
-	// const [toggleEmailAuthInput, setToggleEmailAuthInput] = useState(false);
-	// const [emailAuthInput, setEmailAuthInput] = useState('');
-	// const [emailAuthorized, setEmailAuthorized] = useState(null);
-
-	// const [bankAccountNum, setBankAccountNum] = useState('');
-	// const [bankCode, setBankCode] = useState(0);
-	// const [bankAccountErr, setBankAccountErr] = useState('');
-	// const [BaErrShake, setBaErrShake] = useState(false);
-	// const [bankAuthorized, setBankAuthorized] = useState(false);
-
-	// const [address1, setAddress1] = useState('');
-	// const [address2, setAddress2] = useState('');
-	// const [address3, setAddress3] = useState('');
-	// const [openAddrModal, setOpenAddrModal] = useState(false);
-	// const [addrMobile, setAddrMobile] = useState('');
-
-	// // const [images, setImages] = useState([])
-	// const [image, setImage] = useState('');
-
-	// const [note, setNote] = useState('');
-	//----------------------------handles
-	/////////////////////////////////////////////////////////////////////setState(preState=>({...preState,}))
 	const handleValidateMobile = () => {
 		if (mobileNum) {
 			if (isValidPhoneNumber(mobileNum)) {
@@ -275,11 +253,7 @@ function Modal({ open, data, handleModalClose }) {
 		}));
 	};
 
-	const handleSubmit = () => {
-		// const confirmSubmit = confirm('제출 하시겠습니까?');
-		// if (!confirmSubmit) {
-		// 	return;
-		// }
+	const checkSubmit = () => {
 		if (
 			!title ||
 			mobileErr ||
@@ -289,65 +263,62 @@ function Modal({ open, data, handleModalClose }) {
 			!address2 ||
 			!address3
 		) {
-			alert('모든 항목을 입력해야 합니다.');
+			alert('모든 필수 항목을 입력해야 합니다.');
 			return;
 		}
+	};
+	const handleSubmit = () => {
+		checkSubmit();
+
 		console.log(userInfo);
 		var data = {
-			videos: [
-				{
-					challengeIdx: 3,
-					missonSeq: 1,
-					memberIdx: userInfo.memberIdx,
-					seq: 1,
-					platform: 'YU',
-					videoId: 'string',
-					registMemberIdx: userInfo.memberIdx,
-					registDate: '2021-07-08T12:43:08.139Z',
-					modifyMemberIdx: userInfo.memberIdx,
-					modifyDate: '2021-07-08T12:43:08.139Z',
-				},
-			],
-			videos2: URLs.map((el) => {
+			videos: URLs.map((el, idx) => {
 				return {
-					challengeIdx: 3,
-					missonSeq: 1,
+					challengeIdx: challenge.challengeIdx,
+					missonSeq: idx + 1,
 					memberIdx: userInfo.memberIdx,
-					seq: 1,
-					platform: 'YU',
-					videoId: el,
-					registMemberIdx: userInfo.memberIdx,
-					registDate: '2021-07-08T12:43:08.139Z',
-					modifyMemberIdx: userInfo.memberIdx,
-					modifyDate: '2021-07-08T12:43:08.139Z',
+					seq: idx + 1,
+					platform: el.platform,
+					videoId: el.url,
+					// registMemberIdx: userInfo.memberIdx,
+					// registDate: '2021-07-08T12:43:08.139Z',
+					// modifyMemberIdx: userInfo.memberIdx,
+					// modifyDate: '2021-07-08T12:43:08.139Z',
 				};
 			}),
-			postCodeAddr: 'string',
-			challengeIdx: 3,
+			postCodeAddr: address2,
+			challengeIdx: challenge.challengeIdx,
 			missonSeq: 1,
 			memberIdx: userInfo.memberIdx,
-			contactCode: 0,
+			contactCode: 1,
 			contact: mobileNum,
 			email: email,
 			postCode: address1,
-			addr: address2 + ' ' + address3,
+			addr: address3,
 			bankCode: bankCode,
 			bankAccount: bankAccountNum,
 			photo: image,
 			note: note,
-			statusCode: 8,
+			statusCode: 1,
 			checkStatusCode: 8,
-			dateApplied: '2021-07-08T12:43:08.139Z',
-			registMemberIdx: userInfo.memberIdx,
-			registDate: '2021-07-08T12:43:08.139Z',
-			modifyMemberIdx: userInfo.memberIdx,
-			modifyDate: '2021-07-08T12:43:08.139Z',
+			dateApplied: new Date(),
+			// registMemberIdx: userInfo.memberIdx,
+			// registDate: '2021-07-08T12:43:08.139Z',
+			// modifyMemberIdx: userInfo.memberIdx,
+			// modifyDate: '2021-07-08T12:43:08.139Z',
 		};
-		//CHECKSTATUS
+		//checkStatusCode
 		// 1. 승인
 		// 2. 반려
 		// 3. 피드백
+		//4. 챌린지
 		// 8. 진행중
+		//statusCode
+		//1. 제출할때
+		//0. 챌린지
+		console.log('body: ', data);
+		// TextFile(data);
+		console.log('token: ', localStorage.getItem('token'));
 		var config = {
 			method: 'post',
 			// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmit
@@ -358,8 +329,7 @@ function Modal({ open, data, handleModalClose }) {
 			},
 			data: data,
 		};
-		console.log('server: ', server);
-		console.log('token: ', localStorage.getItem('token'));
+
 		axios(config)
 			.then((response) => {
 				console.log('response: ');
@@ -374,6 +344,23 @@ function Modal({ open, data, handleModalClose }) {
 				alert(err);
 			});
 	};
+
+	useEffect(() => {
+		var config = {
+			method: 'get',
+			// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmit
+			url: server + '/common/bankcode',
+			headers: {
+				// Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+			// data: data,
+		};
+		axios(config).then((response) => {
+			const banks = response.data;
+			setState((preState) => ({ ...preState, banks: banks }));
+		});
+	}, []);
 
 	return (
 		<ModalContainer>
@@ -410,58 +397,233 @@ function Modal({ open, data, handleModalClose }) {
 							<section className="ele">
 								<div className="menu">프로젝트 영상</div>
 								<div className="inputInfo URLs">
-									<span className="youtubeURL">Youtube URL:</span>
-									<ul className="ul-URLs">
-										{/* show inputs */}
-										{URLs.map((el, idx) => {
-											return (
-												<li key={idx} className="li-url">
-													<input value={el} readOnly></input>
-													<BsDashSquareFill
-														className="plusMinus"
-														onClick={() => {
-															let copyArr = URLs.slice();
-															copyArr.splice(idx, 1);
-															// setURLS(copyArr);
-															setState((preState) => ({
-																...preState,
-																URLs: copyArr,
-															}));
-														}}
-													/>
-												</li>
-											);
-										})}
-										<li>
-											<input
-												onChange={(e) => {
-													// setURLinput(e.target.value);
-													setState((preState) => ({
-														...preState,
-														URLinput: e.target.value,
-													}));
-												}}
-												value={URLinput}
-											></input>
-											<BsPlusSquareFill
-												className="plusMinus"
-												onClick={() => {
-													if (URLinput) {
-														//input이 있을때만
-														let copyArr = URLs.slice();
-														copyArr.push(URLinput);
-														// setURLS(copyArr);
-														// setURLinput('');
-														setState((preState) => ({
-															...preState,
-															URLs: copyArr,
-															URLinput: '',
-														}));
-													}
-												}}
-											/>
-										</li>
-									</ul>
+									{challenge.missions[0].videos.map((video) => {
+										return (
+											<div>
+												<span className="youtubeURL">
+													{(() => {
+														switch (video.platform) {
+															case 'YU': {
+																return 'Youtube';
+															}
+															case 'TT': {
+																return 'TikTok';
+															}
+															case 'VM': {
+																return 'Vimeo';
+															}
+															default: {
+																return;
+															}
+														}
+													})()}{' '}
+													URL:
+												</span>
+												<ul className="ul-URLs">
+													{/* show inputs */}
+													{(() => {
+														let urls = [];
+														switch (video.platform) {
+															case 'YU': {
+																urls = YUarr;
+																break;
+															}
+															case 'TT': {
+																urls = TTarr;
+																break;
+															}
+															case 'VM': {
+																urls = VMarr;
+																break;
+															}
+															default: {
+																break;
+															}
+														}
+														return urls.map((el, idx) => {
+															return (
+																<li key={idx} className="li-url">
+																	<input value={el.url} readOnly></input>
+																	<BsDashSquareFill
+																		className="plusMinus"
+																		onClick={() => {
+																			let copyArr = URLs.slice();
+																			copyArr.splice(idx, 1);
+																			// setURLS(copyArr);
+																			setState((preState) => ({
+																				...preState,
+																				URLs: copyArr,
+																			}));
+																		}}
+																	/>
+																</li>
+															);
+														});
+													})()}
+													{/* {URLs.map((el, idx) => {
+														return (
+															<li key={idx} className="li-url">
+																<input value={el.url} readOnly></input>
+																<BsDashSquareFill
+																	className="plusMinus"
+																	onClick={() => {
+																		let copyArr = URLs.slice();
+																		copyArr.splice(idx, 1);
+																		// setURLS(copyArr);
+																		setState((preState) => ({
+																			...preState,
+																			URLs: copyArr,
+																		}));
+																	}}
+																/>
+															</li>
+														);
+													})} */}
+													<li>
+														<input
+															onChange={(e) => {
+																// setURLinput(e.target.value);
+																switch (video.platform) {
+																	case 'YU': {
+																		setState((preState) => ({
+																			...preState,
+																			YUinput: e.target.value,
+																		}));
+																		break;
+																	}
+																	case 'TT': {
+																		setState((preState) => ({
+																			...preState,
+																			TTinput: e.target.value,
+																		}));
+																		break;
+																	}
+																	case 'VM': {
+																		setState((preState) => ({
+																			...preState,
+																			VMinput: e.target.value,
+																		}));
+																		break;
+																	}
+																	default: {
+																		break;
+																	}
+																}
+																// setState((preState) => ({
+																// 	...preState,
+																// 	URLinput: e.target.value,
+																// }));
+															}}
+															value={(() => {
+																switch (video.platform) {
+																	case 'YU': {
+																		return YUinput;
+																	}
+																	case 'TT': {
+																		return TTinput;
+																	}
+																	case 'VM': {
+																		return VMinput;
+																	}
+																	default: {
+																		return;
+																	}
+																}
+															})()}
+														></input>
+														<BsPlusSquareFill
+															className="plusMinus"
+															onClick={() => {
+																let input = '';
+																let obj = {};
+																switch (video.platform) {
+																	case 'YU': {
+																		obj = {
+																			platform: video.platform,
+																			url: YUinput,
+																		};
+																		input = YUinput;
+																		break;
+																	}
+																	case 'TT': {
+																		obj = {
+																			platform: video.platform,
+																			url: TTinput,
+																		};
+																		input = TTinput;
+																		break;
+																	}
+																	case 'VM': {
+																		obj = {
+																			platform: video.platform,
+																			url: VMinput,
+																		};
+																		input = VMinput;
+																		break;
+																	}
+																	default: {
+																		break;
+																	}
+																}
+																if (input) {
+																	//input이 있을때만
+																	let copyArr = URLs.slice();
+																	switch (video.platform) {
+																		case 'YU': {
+																			copyArr.push(obj);
+																			// setURLS(copyArr);
+																			// setURLinput('');
+																			let copyYU = YUarr.slice();
+																			copyYU.push(obj);
+																			setState((preState) => ({
+																				...preState,
+																				URLs: copyArr,
+																				YUinput: '',
+																				YUarr: copyYU,
+																			}));
+																			break;
+																		}
+																		case 'TT': {
+																			copyArr.push(obj);
+																			// setURLS(copyArr);
+																			// setURLinput('');
+																			let copyTT = TTarr.slice();
+																			copyTT.push(obj);
+																			setState((preState) => ({
+																				...preState,
+																				URLs: copyArr,
+																				TTinput: '',
+																				TTarr: copyTT,
+																			}));
+																			break;
+																		}
+																		case 'VM': {
+																			copyArr.push(obj);
+																			// setURLS(copyArr);
+																			// setURLinput('');
+																			let copyVM = VMarr.slice();
+																			copyVM.push(obj);
+																			setState((preState) => ({
+																				...preState,
+																				URLs: copyArr,
+																				VMinput: '',
+																				VMarr: copyVM,
+																			}));
+																			break;
+																		}
+																		default: {
+																			break;
+																		}
+																	}
+																}
+															}}
+														/>
+													</li>
+												</ul>
+											</div>
+										);
+									})}
+
 									{/* default input box */}
 								</div>
 							</section>
@@ -660,7 +822,7 @@ function Modal({ open, data, handleModalClose }) {
 							<section className="ele">
 								<div className="menu">계좌번호</div>
 								<div className="inputInfo banks_accout">
-									<Banks handleBankCode={handleBankCode} />
+									<Banks handleBankCode={handleBankCode} datas={banks} />
 									<input
 										className="banks_accout_input"
 										type="number"

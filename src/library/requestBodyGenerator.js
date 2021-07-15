@@ -43,6 +43,7 @@ export default function (params, type) {
 						dateFin: params.dateFin, // 접수 종료
 						shareRequired: params.shareRequired, //온라인 게시 필수제출시 2
 						filmRequired: params.filmRequired, //영상 제작 제출 필수제출시 2
+						fileOrUrl: params.fileOrUrl,
 						emailRequired: params.emailRequired, //제출자 개인 정보 수집  이메일
 						contactRequired: params.contactRequired, //제출자 개인 정보 수집 전화번호
 					},

@@ -46,8 +46,7 @@ const CompetitionRegi = () => {
 	const [isYoutube, setIsYoutube] = useState(false);
 	const [isTiktok, setIsTiktok] = useState(false);
 	const [isVimeo, setIsVimeo] = useState(false);
-	const [isFileupload, setIsFileupload] = useState(false);
-	const [isUrlshare, setIsUrlshare] = useState(false);
+	const [isFileOrUrl, setFileOrUrl] = useState(false);
 
 	//제출자 개인정보 수집
 	const [isEmail, setIsEmail] = useState(false);
@@ -241,6 +240,7 @@ const CompetitionRegi = () => {
 				fileRef: etcFile,
 				shareRequired: isOnline ? (isSnsRequired ? 2 : 1) : 0,
 				filmRequired: isVideoProduction ? (isVidRequired ? 2 : 1) : 0,
+				fileOrUrl: isFileOrUrl ? 1 : 0,
 				emailRequired: isEmail ? (emailRequired ? 2 : 1) : 0,
 				contactRequired: isMobile ? (mobileRequired ? 2 : 1) : 0,
 				dateBegin: startDate,
@@ -589,8 +589,7 @@ const CompetitionRegi = () => {
 															name="vidReception"
 															value="파일업로드"
 															onClick={() => {
-																setIsFileupload(true);
-																setIsUrlshare(false);
+																setFileOrUrl(true);
 															}}
 															disabled={!isVideoProduction}
 															defaultChecked
@@ -603,8 +602,7 @@ const CompetitionRegi = () => {
 															name="vidReception"
 															value="URL공유"
 															onClick={() => {
-																setIsUrlshare(true);
-																setIsFileupload(false);
+																setFileOrUrl(false);
 															}}
 															disabled={!isVideoProduction}
 														/>

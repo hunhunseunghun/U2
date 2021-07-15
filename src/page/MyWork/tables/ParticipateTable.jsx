@@ -81,85 +81,87 @@ function ParticipateTable({ datas }) {
 			.then((response) => {
 				console.log(response.data);
 				var datas = response.data.entities;
-
-				var formedData = datas.map((el) => {
-					return {
-						img: el.mainImage,
-						category: (() => {
-							switch (el.challengeTargetCode) {
-								case 1: {
-									return '공모전';
+				var formedData = [];
+				if (datas)
+					formedData = datas.map((el) => {
+						return {
+							img: el.mainImage,
+							category: (() => {
+								switch (el.challengeTargetCode) {
+									case 1: {
+										return '공모전';
+									}
+									case 2: {
+										return '전문영상 편집자';
+									}
+									case 3: {
+										return '영상크리에이터 / 인플루언서';
+									}
+									case 4: {
+										return '강사채용';
+									}
+									default: {
+										return null;
+									}
 								}
-								case 2: {
-									return '전문영상 편집자';
+							})(),
+							name: el.title,
+							status: (() => {
+								var me = el.applications.filter(
+									(el) => el.memberIdx === userInfo.memberIdx,
+								)[0];
+								switch (me.checkStatusCode) {
+									case 1: {
+										return '승인';
+									}
+									case 2: {
+										return '반려';
+									}
+									case 3: {
+										return '피드백';
+									}
+									case 8: {
+										return '진행중';
+									}
+									case 0: {
+										return '챌린지';
+									}
+									default: {
+										return null;
+									}
 								}
-								case 3: {
-									return '영상크리에이터 / 인플루언서';
+							})(),
+							presentation: (() => {
+								var me = el.applications.filter(
+									(el) => el.memberIdx === userInfo.memberIdx,
+								)[0];
+								switch (me.checkStatusCode) {
+									case 1: {
+										//승인
+										return '내자료';
+									}
+									case 2: {
+										//반려
+										return '반려';
+									}
+									case 3: {
+										//피드백
+										return '피드백';
+									}
+									case 8: {
+										//진행중
+										return '자료제출';
+									}
+									default: {
+										return null;
+									}
 								}
-								case 4: {
-									return '강사채용';
-								}
-								default: {
-									return null;
-								}
-							}
-						})(),
-						name: el.title,
-						status: (() => {
-							var me = el.applications.filter(
-								(el) => el.memberIdx === userInfo.memberIdx,
-							)[0];
-							switch (me.checkStatusCode) {
-								case 1: {
-									return '승인';
-								}
-								case 2: {
-									return '반려';
-								}
-								case 3: {
-									return '피드백';
-								}
-								case 8: {
-									return '진행중';
-								}
-								case 0: {
-									return '챌린지';
-								}
-								default: {
-									return null;
-								}
-							}
-						})(),
-						presentation: (() => {
-							var me = el.applications.filter(
-								(el) => el.memberIdx === userInfo.memberIdx,
-							)[0];
-							switch (me.checkStatusCode) {
-								case 1: {
-									//승인
-									return '내자료';
-								}
-								case 2: {
-									//반려
-									return '반려';
-								}
-								case 3: {
-									//피드백
-									return '피드백';
-								}
-								case 8: {
-									//진행중
-									return '자료제출';
-								}
-								default: {
-									return null;
-								}
-							}
-						})(),
-						// feedback:
-					};
-				});
-				// setQuests({...quests, data : response.data.entities})
+							})(),
+							// feedback:
+						};
+					});
+				// setQuests({ ...quests, data: response.data.entities });
+				setQuests({ ...quests, data: formedData });
 			})
 			.catch((err) => {
 				console.log(err);
@@ -186,7 +188,7 @@ function ParticipateTable({ datas }) {
 			/>
 			<SubmitModal
 				open={submitProps.open}
-				data={submitProps.data}
+				challenge={submitProps.data}
 				handleModalClose={(modalType) => {
 					handleModalClose(modalType);
 				}}
@@ -258,8 +260,8 @@ function ParticipateTable({ datas }) {
 					</tr>
 				</thead>
 				<tbody>
-					{pagedQuests
-						? pagedQuests.map((data) => {
+					{quests.data
+						? quests.data.map((data) => {
 								return (
 									<tr>
 										<td>
