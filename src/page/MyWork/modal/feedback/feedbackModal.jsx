@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { ModalContainer } from './fbModalStyled';
 function FeedbackModal({ open, data, handleModalClose }) {
-	console.log(open);
-	console.log(data);
+	// console.log(open);
+	// console.log(data);
 
 	return (
 		<ModalContainer>

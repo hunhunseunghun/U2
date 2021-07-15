@@ -41,7 +41,7 @@ const initialState = {
 const server = process.env.REACT_APP_U2_DB_HOST;
 function Modal({ open, challenge, handleModalClose }) {
 	const userInfo = useSelector((state) => state.userInfo);
-	console.log('challenge in resumemodal : ', challenge);
+	// console.log('challenge in resumemodal : ', challenge);
 	const [
 		{
 			title,

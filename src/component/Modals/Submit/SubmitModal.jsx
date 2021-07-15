@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { ModalContainer } from './SubmitModalStyled';
 import { BsPlusSquareFill, BsDashSquareFill } from 'react-icons/bs';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import axios from 'axios';
 import 'react-phone-number-input/style.css';
-// import Banks from '../../../component/banks';
-import Banks from '../../../../component/banks';
-// import { validateEmail } from '../../../library/validate';
-import { validateEmail } from '../../../../library/validate';
-import AddressModal from '../../../../component/address/AddressModal';
-import { TextFile } from '../../../../library/getJson';
+import Banks from '../../banks';
+import { ModalContainer } from './SubmitModalStyled';
+import AddressModal from '../../address/AddressModal';
+import { validateEmail } from '../../../library/validate';
+import { TextFile } from '../../../library/getJson';
 // import 'csshake.min.css'
 const server = process.env.REACT_APP_U2_DB_HOST;
 const initialState = {
@@ -51,7 +49,7 @@ const initialState = {
 function Modal({ open, challenge, handleModalClose }) {
 	// console.log(data);
 	const userInfo = useSelector((state) => state.userInfo);
-	// console.log('challenge: ', challenge);
+
 	const [
 		{
 			title,
@@ -357,10 +355,14 @@ function Modal({ open, challenge, handleModalClose }) {
 			},
 			// data: data,
 		};
-		axios(config).then((response) => {
-			const banks = response.data;
-			setState((preState) => ({ ...preState, banks: banks }));
-		});
+		axios(config)
+			.then((response) => {
+				const banks = response.data;
+				setState((preState) => ({ ...preState, banks: banks }));
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	}, []);
 
 	return (
@@ -419,7 +421,7 @@ function Modal({ open, challenge, handleModalClose }) {
 																}
 															}
 														})()}{' '}
-														URL:
+														URL :
 													</span>
 													<ul className="ul-URLs">
 														{/* show inputs */}
