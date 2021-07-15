@@ -135,25 +135,38 @@ function ParticipateTable({ datas }) {
 								var me = el.applications.filter(
 									(el) => el.memberIdx === userInfo.memberIdx,
 								)[0];
-								switch (me.checkStatusCode) {
-									case 1: {
-										//승인
-										return '내자료';
-									}
-									case 2: {
-										//반려
-										return '반려';
-									}
-									case 3: {
-										//피드백
-										return '피드백';
-									}
-									case 8: {
-										//진행중
+
+								// switch (me.checkStatusCode) {
+								// 	case 1: {
+								// 		//승인
+								// 		return '내자료';
+								// 	}
+								// 	case 2: {
+								// 		//반려
+								// 		return '반려';
+								// 	}
+								// 	case 3: {
+								// 		//피드백
+								// 		return '피드백';
+								// 	}
+								// 	case 8: {
+								// 		//진행중
+								// 		return '자료제출';
+								// 	}
+								// 	default: {
+								// 		return null;
+								// 	}
+								// }
+
+								if (
+									el.challengeTargetCode === 1 ||
+									el.challengeTargetCode === 3
+								) {
+									//공모전 or 영상크리에이터
+									if (me.statusCode === 0) {
 										return '자료제출';
-									}
-									default: {
-										return null;
+									} else {
+										return;
 									}
 								}
 							})(),
