@@ -258,7 +258,7 @@ function ProjectDetail(props) {
             >
               <header>
                 {' '}
-                <span>프로젝트 공유</span>
+                <div>프로젝트 공유</div>
                 <img
                   src="/img/closeBtn.svg"
                   alt="X"
@@ -287,6 +287,8 @@ function ProjectDetail(props) {
                   </div>
                   <div className="sns_title">트위터</div>
                 </li>
+              </ul>
+              <ul>
                 <li>
                   <div className="sns_img">
                     <img
@@ -295,6 +297,12 @@ function ProjectDetail(props) {
                     />
                   </div>
                   <div className="sns_title">인스타그램</div>
+                </li>
+                <li>
+                  <div class="sns_img">
+                    <img src="/img/ic_url_copy.svg" />
+                  </div>
+                  <div class="sns_title">URL복사</div>
                 </li>
               </ul>
             </div>

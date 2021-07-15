@@ -131,20 +131,23 @@ export const ProjectDetailContainer = styled.div`
   }
 
   .pop_sub.sns_share_pop {
+    display: grid;
+    place-items: center;
     position: absolute;
     top: 25px;
     right: 0;
-    width: 250px;
+    width: 190px;
     padding: 10px 10px;
     z-index: 10;
 
     header {
+      width: 90%;
       display: flex;
       justify-content: space-between;
       padding: 3px 0px;
       margin-bottom: 10px;
 
-      span {
+      div {
         color: #181818;
         font-size: 14px;
         font-weight: 500;
@@ -158,10 +161,15 @@ export const ProjectDetailContainer = styled.div`
         }
       }
     }
+    ul {
+      margin-bottom: 10px;
+    }
+    ul:last-child {
+      width: 80%;
+    }
     li {
       display: grid;
       place-items: center;
-
       margin: 0 5px;
     }
     .sns_img {
