@@ -29,6 +29,7 @@ function WorkDetail(props) {
   let [modalProps, setModalProps] = useState({ open: false });
   const [isLoading, setIsLoading] = useState(false);
 
+  console.log(applyPeriod);
   //image section data
   useEffect(() => {
     axios
@@ -42,6 +43,9 @@ function WorkDetail(props) {
         let challengeTarget = '';
         let contactRequired = '비대면';
         let missionRequired = [];
+        let priceContent = [];
+
+        //대상 text
 
         if (data.challengeTargetCode === 1) {
           challengeTarget = '공모전';
@@ -53,21 +57,48 @@ function WorkDetail(props) {
           challengeTarget = '강사 채용';
         }
 
+        //프로젝트 미팅 text
         if (data.missions[0].contactRequired === 1) {
           contactRequired = '비대면';
         } else if (data.missions[0].contactRequired === 2) {
           contactRequired = '오프라인';
         }
 
+        //보상 text
+        data.rewards.forEach(ele => {
+          if (ele.cat === 1) {
+            priceContent.push('현상공모');
+          } else if (ele.cat === 2) {
+            priceContent.push('해외탐방');
+          } else if (ele.cat === 3) {
+            priceContent.push('국내캠프');
+          } else if (ele.cat === 4) {
+            priceContent.push('입사시 가산점');
+          } else if (ele.cat === 5) {
+            priceContent.push('인턴채용');
+          } else if (ele.cat === 6) {
+            priceContent.push('정직원채용');
+          } else if (ele.cat === 7) {
+            priceContent.push('경품');
+          }
+        });
+
         setProjectTitle(data.title);
         setSubject(challengeTarget);
         setMeeting(contactRequired);
         setMainImage(data.mainImage);
+        setPrise(priceContent);
         setApplyPeriod(
           moment(data.missions[0].dateBegin).format('YYYY-MM-DD') +
+            ' ' +
+            moment(data.missions[0].dateBegin).format('hh:mm:ss') +
+            ' ~ ' +
+            moment(data.missions[0].dateFin).format('YYYY-MM-DD') +
+            ' ' +
             moment(data.missions[0].dateFin).format('hh:mm:ss')
         );
 
+        //과제완료조건 text
         data.missions[0].videos.forEach(ele => {
           let result;
           if (ele.platform === 'YU') {
