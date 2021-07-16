@@ -21,7 +21,7 @@ import SubmitModal from '../../component/Modals/Submit/SubmitModal';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
-
+import { TextFile } from '../../library/getJson';
 function ProjectDetail(props) {
 	const history = useHistory();
 	const userInfo = useSelector((state) => state.userInfo);
@@ -109,10 +109,10 @@ function ProjectDetail(props) {
 	const handleComment = () => {
 		if (userInfo.email) {
 			var body = {
-				commentIdx: 0,
+				// commentIdx: 0,
 				challengeIdx: challengeIdx,
 				seq: 1,
-				seqx: 1,
+				// seqx: 1,
 				memberIdx: userInfo.memberIdx,
 				comment: inputComment,
 				statusCode: 1,
@@ -121,6 +121,7 @@ function ProjectDetail(props) {
 				// "modifyMemberIdx": 0,
 				// "modifyDate": "2021-07-14T11:00:22.230Z"
 			};
+			// TextFile(body);
 			var config = {
 				method: 'post',
 				url: process.env.REACT_APP_U2_DB_HOST + `/Campaign/challengecomment`,
