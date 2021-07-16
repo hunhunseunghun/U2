@@ -12,14 +12,14 @@ let datas = [
 	},
 	{
 		id: 2,
-		img: '',
-		category: '강사채용',
-		name: '의뢰2',
-		status: '제출완료',
-		presentation: 'xxxxx',
-		feedback: null,
-		requestDate: '2021-01-01',
-		dueDate: '2021-01-01',
+		img: '', //
+		category: '강사채용', //
+		name: '의뢰2', //
+		status: '제출완료', //
+		presentation: 'xxxxx', //
+		feedback: null, //
+		requestDate: '2021-01-01', //
+		dueDate: '2021-01-01', //
 	},
 	{
 		id: 3,

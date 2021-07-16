@@ -21,16 +21,15 @@ export const MainContainer = styled.div`
     display: flex;
   }
 
-  .challange_wrap {
+  .challenge_wrap {
   }
-  .challange_tab {
+  .challenge_tab {
     margin-top: 76px;
     max-width: 100%;
     height: 40px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     place-items: center;
-    border: 1px solid #eee;
     border-right: none;
     border-left: none;
     /* background-color: #f6f6f6; */
@@ -45,6 +44,8 @@ export const MainContainer = styled.div`
       font-weight: 500;
       font-size: 14px;
       line-height: 24px;
+      border: 1px solid #eee;
+      border-left: 0;
       /* border-right: 1px solid #e2e2e2; */
 
       &:hover {
@@ -52,6 +53,9 @@ export const MainContainer = styled.div`
         background-color: #ebebeb;
         color: #0c0c0c;
       }
+    }
+    .tab_ir {
+      border-right: 0;
     }
 
     .tab_active {
@@ -62,6 +66,9 @@ export const MainContainer = styled.div`
 
   .challange_ele {
     width: 100%;
+  }
+  .makeStyles-ul-1 {
+    margin-bottom: 30px;
   }
 
   .challenge_more_btn_area {

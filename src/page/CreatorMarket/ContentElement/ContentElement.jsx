@@ -60,7 +60,9 @@ const ContentElement = (props) => {
 					</div>
 					<div className="remainDateArea">
 						<div className="remainDate">
-							{/* {calcRemainDays(challenge.missions[0].dateFin)}일 */}
+							{challenge.missions.length > 0 &&
+								calcRemainDays(challenge.missions[0].dateFin)}
+							일
 						</div>
 						<div className="remainText">남은 일자</div>
 					</div>
