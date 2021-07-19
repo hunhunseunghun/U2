@@ -456,12 +456,12 @@ function ProjectDetail(props) {
                       <div className="comment_reply">
                         <img src="/img/replycomment.png" alt="답글 : " />
                         <div className="comment_reply_area">
-                          <div className="comment_reply_name">
+                          <span className="comment_reply_name">
                             {el.userName ? el.userName : '닉네임'}
-                          </div>
-                          <div className="comment_reply_content">
+                          </span>
+                          <span className="comment_reply_content">
                             {el.comment}
-                          </div>
+                          </span>
                         </div>
                       </div>
                     );
@@ -469,7 +469,7 @@ function ProjectDetail(props) {
                 <div
                   className="comment_replyregi"
                   style={{
-                    display: comments[idx].isReply ? 'block' : 'none',
+                    display: comments[idx].isReply ? 'grid' : 'none',
                   }}
                 >
                   <input
@@ -482,7 +482,7 @@ function ProjectDetail(props) {
                       handleComment({ seqx: comment.seqx, index: idx });
                     }}
                   >
-                    등록하기
+                    등록
                   </button>
                 </div>
               </fieldset>

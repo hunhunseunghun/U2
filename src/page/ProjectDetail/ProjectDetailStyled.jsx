@@ -200,6 +200,9 @@ export const ProjectDetailContainer = styled.div`
       background-color: #292727;
       color: white;
       font-size: 13px;
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 
@@ -240,6 +243,7 @@ export const ProjectDetailContainer = styled.div`
         font-weight: 400;
         padding-top: 10px;
         margin-bottom: 7px;
+        word-break: break-all;
       }
     }
 
@@ -270,16 +274,47 @@ export const ProjectDetailContainer = styled.div`
         font-size: 11px;
         color: #ffff00;
         margin-left: 5px;
+        text-align: center;
+        min-width: 33px;
       }
       .comment_reply_content {
+        width: 100%;
         margin-left: 10px;
         font-size: 13px;
         color: #4e4e4e;
         font-weight: 400;
+        word-break: break-all;
       }
     }
   }
   .comments fieldset:last-child {
     border-bottom: 0;
+  }
+
+  .comment_replyregi {
+    display: grid;
+    grid-template-columns: 9fr 1fr;
+    grid-gap: 5px;
+    padding: 10px 10px 10px 15px;
+    min-height: 30px;
+
+    input {
+      width: 100%;
+      border: 1px solid #c5c5c5;
+      outline: none;
+      resize: none;
+    }
+    button {
+      background: linear-gradient(#fff, #f2f2f2);
+      border: 1px solid #eee;
+      padding: 0 10px;
+      color: #747474;
+      font-size: 12px;
+      font-weight: 400;
+      margin-left: 10px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 `;
