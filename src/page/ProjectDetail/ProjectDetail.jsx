@@ -360,7 +360,7 @@ function ProjectDetail(props) {
         </section>
       </section>
 
-      <section>
+      {/* <section>
         {' '}
         <KakaoShareButton
           challengeTitle={challenge.title}
@@ -406,7 +406,7 @@ function ProjectDetail(props) {
         >
           <FaLine />
         </LineShareButton>
-      </section>
+      </section> */}
       <section className="commentInput">
         <textarea
           type="text"

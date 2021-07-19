@@ -57,6 +57,10 @@ export const ProjectDetailContainer = styled.div`
         color: #747474;
         font-size: 13px;
         font-weight: 400;
+
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
 
@@ -188,13 +192,16 @@ export const ProjectDetailContainer = styled.div`
     padding: 10px;
     margin-top: 20px;
     margin-bottom: 10px;
-    min-height: 120px;
+    min-height: 100px;
     background-color: #eaeaea;
     border: 1px solid #c5c5c5;
+
     textarea {
+      height: 100%;
       border: 1px solid #c5c5c5;
       outline: none;
       resize: none;
+      font-size: 13px;
     }
     button {
       background-color: #292727;
@@ -213,6 +220,7 @@ export const ProjectDetailContainer = styled.div`
     border-bottom: 2px solid #c5c5c5;
     padding: 10px 5px;
     font-weight: 400;
+
     fieldset {
       all: unset;
       padding: 10px 0;
@@ -263,7 +271,7 @@ export const ProjectDetailContainer = styled.div`
         width: 100%;
         display: flex;
         align-items: center;
-        padding: 10px 5px;
+        padding: 5px 5px;
         border: 1px solid #bebebe;
         background-color: #eaeaea;
       }
