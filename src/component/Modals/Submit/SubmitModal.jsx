@@ -13,6 +13,7 @@ import { TextFile } from '../../../library/getJson';
 const server = process.env.REACT_APP_U2_DB_HOST;
 const initialState = {
 	title: '',
+	videos: [],
 	URLs: [],
 	YUinput: '',
 	YUarr: [],
@@ -52,6 +53,7 @@ function Modal({ open, challenge, handleModalClose }) {
 	const [
 		{
 			title,
+			videos,
 			URLs,
 			YUinput,
 			YUarr,
@@ -87,7 +89,7 @@ function Modal({ open, challenge, handleModalClose }) {
 		setState,
 	] = useState({ ...initialState });
 	const clearState = () => {
-		setState({ ...initialState });
+		setState({ ...initialState, videos: videos });
 	};
 
 	const handleValidateMobile = () => {
@@ -314,7 +316,7 @@ function Modal({ open, challenge, handleModalClose }) {
 		//1. 제출할때
 		//0. 챌린지
 		console.log('body: ', data);
-		// TextFile(data);
+		TextFile(data);
 		console.log('token: ', localStorage.getItem('token'));
 		var config = {
 			method: 'post',
@@ -343,25 +345,31 @@ function Modal({ open, challenge, handleModalClose }) {
 	};
 
 	useEffect(() => {
-		// var config = {
-		// 	method: 'get',
-		// 	// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmit
-		// 	url: server + '/common/bankcode',
-		// 	headers: {
-		// 		// Authorization: 'Bearer ' + localStorage.getItem('token'),
-		// 		'Content-Type': 'application/json',
-		// 	},
-		// 	// data: data,
-		// };
-		// axios(config)
-		// 	.then((response) => {
-		// 		const banks = response.data;
-		// 		setState((preState) => ({ ...preState, banks: banks }));
-		// 	})
-		// 	.catch((err) => {
-		// 		console.log(err);
-		// 	});
-	}, []);
+		console.log('challenge in submit modal: ', challenge);
+		if (challenge) {
+			var config = {
+				method: 'get',
+				// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmit
+				url: server + `/Campaign/challenge/${challenge.challengeIdx}`,
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+					'Content-Type': 'application/json',
+				},
+				// data: data,
+			};
+			axios(config)
+				.then((response) => {
+					console.log('submit modal useEffect data: ', response.data);
+					setState((state) => ({
+						...state,
+						videos: response.data.missions[0].videos,
+					}));
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
+	}, [challenge]);
 
 	return (
 		<ModalContainer>
@@ -398,71 +406,71 @@ function Modal({ open, challenge, handleModalClose }) {
 							<section className="ele">
 								<div className="menu">프로젝트 영상</div>
 								<div className="inputInfo URLs">
-									{challenge.missions[0].videos &&
-										challenge.missions[0].videos.map((video) => {
-											return (
-												<div>
-													<span className="youtubeURL">
-														{(() => {
-															switch (video.platform) {
-																case 'YU': {
-																	return 'Youtube';
+									{videos.length > 0
+										? videos.map((video) => {
+												return (
+													<div>
+														<span className="youtubeURL">
+															{(() => {
+																switch (video.platform) {
+																	case 'YU': {
+																		return 'Youtube';
+																	}
+																	case 'TT': {
+																		return 'TikTok';
+																	}
+																	case 'VM': {
+																		return 'Vimeo';
+																	}
+																	default: {
+																		return;
+																	}
 																}
-																case 'TT': {
-																	return 'TikTok';
+															})()}{' '}
+															URL :
+														</span>
+														<ul className="ul-URLs">
+															{/* show inputs */}
+															{(() => {
+																let urls = [];
+																switch (video.platform) {
+																	case 'YU': {
+																		urls = YUarr;
+																		break;
+																	}
+																	case 'TT': {
+																		urls = TTarr;
+																		break;
+																	}
+																	case 'VM': {
+																		urls = VMarr;
+																		break;
+																	}
+																	default: {
+																		break;
+																	}
 																}
-																case 'VM': {
-																	return 'Vimeo';
-																}
-																default: {
-																	return;
-																}
-															}
-														})()}{' '}
-														URL :
-													</span>
-													<ul className="ul-URLs">
-														{/* show inputs */}
-														{(() => {
-															let urls = [];
-															switch (video.platform) {
-																case 'YU': {
-																	urls = YUarr;
-																	break;
-																}
-																case 'TT': {
-																	urls = TTarr;
-																	break;
-																}
-																case 'VM': {
-																	urls = VMarr;
-																	break;
-																}
-																default: {
-																	break;
-																}
-															}
-															return urls.map((el, idx) => {
-																return (
-																	<li key={idx} className="li-url">
-																		<input value={el.url} readOnly></input>
-																		<BsDashSquareFill
-																			className="plusMinus"
-																			onClick={() => {
-																				let copyArr = URLs.slice();
-																				copyArr.splice(idx, 1);
-																				// setURLS(copyArr);
-																				setState((preState) => ({
-																					...preState,
-																					URLs: copyArr,
-																				}));
-																			}}
-																		/>
-																	</li>
-																);
-															});
-														})()}
-														{/* {URLs.map((el, idx) => {
+																return urls.map((el, idx) => {
+																	return (
+																		<li key={idx} className="li-url">
+																			<input value={el.url} readOnly></input>
+																			<BsDashSquareFill
+																				className="plusMinus"
+																				onClick={() => {
+																					let copyArr = URLs.slice();
+																					copyArr.splice(idx, 1);
+																					// setURLS(copyArr);
+																					setState((preState) => ({
+																						...preState,
+																						URLs: copyArr,
+																					}));
+																				}}
+																			/>
+																		</li>
+																	);
+																});
+															})()}
+															{/* {URLs.map((el, idx) => {
 														return (
 															<li key={idx} className="li-url">
 																<input value={el.url} readOnly></input>
@@ -481,135 +489,29 @@ function Modal({ open, challenge, handleModalClose }) {
 															</li>
 														);
 													})} */}
-														<li>
-															<input
-																onChange={(e) => {
-																	// setURLinput(e.target.value);
-																	switch (video.platform) {
-																		case 'YU': {
-																			setState((preState) => ({
-																				...preState,
-																				YUinput: e.target.value,
-																			}));
-																			break;
-																		}
-																		case 'TT': {
-																			setState((preState) => ({
-																				...preState,
-																				TTinput: e.target.value,
-																			}));
-																			break;
-																		}
-																		case 'VM': {
-																			setState((preState) => ({
-																				...preState,
-																				VMinput: e.target.value,
-																			}));
-																			break;
-																		}
-																		default: {
-																			break;
-																		}
-																	}
-																	// setState((preState) => ({
-																	// 	...preState,
-																	// 	URLinput: e.target.value,
-																	// }));
-																}}
-																value={(() => {
-																	switch (video.platform) {
-																		case 'YU': {
-																			return YUinput;
-																		}
-																		case 'TT': {
-																			return TTinput;
-																		}
-																		case 'VM': {
-																			return VMinput;
-																		}
-																		default: {
-																			return;
-																		}
-																	}
-																})()}
-															></input>
-															<BsPlusSquareFill
-																className="plusMinus"
-																onClick={() => {
-																	let input = '';
-																	let obj = {};
-																	switch (video.platform) {
-																		case 'YU': {
-																			obj = {
-																				platform: video.platform,
-																				url: YUinput,
-																			};
-																			input = YUinput;
-																			break;
-																		}
-																		case 'TT': {
-																			obj = {
-																				platform: video.platform,
-																				url: TTinput,
-																			};
-																			input = TTinput;
-																			break;
-																		}
-																		case 'VM': {
-																			obj = {
-																				platform: video.platform,
-																				url: VMinput,
-																			};
-																			input = VMinput;
-																			break;
-																		}
-																		default: {
-																			break;
-																		}
-																	}
-																	if (input) {
-																		//input이 있을때만
-																		let copyArr = URLs.slice();
+															<li>
+																<input
+																	onChange={(e) => {
+																		// setURLinput(e.target.value);
 																		switch (video.platform) {
 																			case 'YU': {
-																				copyArr.push(obj);
-																				// setURLS(copyArr);
-																				// setURLinput('');
-																				let copyYU = YUarr.slice();
-																				copyYU.push(obj);
 																				setState((preState) => ({
 																					...preState,
-																					URLs: copyArr,
-																					YUinput: '',
-																					YUarr: copyYU,
+																					YUinput: e.target.value,
 																				}));
 																				break;
 																			}
 																			case 'TT': {
-																				copyArr.push(obj);
-																				// setURLS(copyArr);
-																				// setURLinput('');
-																				let copyTT = TTarr.slice();
-																				copyTT.push(obj);
 																				setState((preState) => ({
 																					...preState,
-																					URLs: copyArr,
-																					TTinput: '',
-																					TTarr: copyTT,
+																					TTinput: e.target.value,
 																				}));
 																				break;
 																			}
 																			case 'VM': {
-																				copyArr.push(obj);
-																				// setURLS(copyArr);
-																				// setURLinput('');
-																				let copyVM = VMarr.slice();
-																				copyVM.push(obj);
 																				setState((preState) => ({
 																					...preState,
-																					URLs: copyArr,
-																					VMinput: '',
-																					VMarr: copyVM,
+																					VMinput: e.target.value,
 																				}));
 																				break;
 																			}
@@ -617,14 +519,121 @@ function Modal({ open, challenge, handleModalClose }) {
 																				break;
 																			}
 																		}
-																	}
-																}}
-															/>
-														</li>
-													</ul>
-												</div>
-											);
-										})}
+																		// setState((preState) => ({
+																		// 	...preState,
+																		// 	URLinput: e.target.value,
+																		// }));
+																	}}
+																	value={(() => {
+																		switch (video.platform) {
+																			case 'YU': {
+																				return YUinput;
+																			}
+																			case 'TT': {
+																				return TTinput;
+																			}
+																			case 'VM': {
+																				return VMinput;
+																			}
+																			default: {
+																				return;
+																			}
+																		}
+																	})()}
+																></input>
+																<BsPlusSquareFill
+																	className="plusMinus"
+																	onClick={() => {
+																		let input = '';
+																		let obj = {};
+																		switch (video.platform) {
+																			case 'YU': {
+																				obj = {
+																					platform: video.platform,
+																					url: YUinput,
+																				};
+																				input = YUinput;
+																				break;
+																			}
+																			case 'TT': {
+																				obj = {
+																					platform: video.platform,
+																					url: TTinput,
+																				};
+																				input = TTinput;
+																				break;
+																			}
+																			case 'VM': {
+																				obj = {
+																					platform: video.platform,
+																					url: VMinput,
+																				};
+																				input = VMinput;
+																				break;
+																			}
+																			default: {
+																				break;
+																			}
+																		}
+																		if (input) {
+																			//input이 있을때만
+																			let copyArr = URLs.slice();
+																			switch (video.platform) {
+																				case 'YU': {
+																					copyArr.push(obj);
+																					// setURLS(copyArr);
+																					// setURLinput('');
+																					let copyYU = YUarr.slice();
+																					copyYU.push(obj);
+																					setState((preState) => ({
+																						...preState,
+																						URLs: copyArr,
+																						YUinput: '',
+																						YUarr: copyYU,
+																					}));
+																					break;
+																				}
+																				case 'TT': {
+																					copyArr.push(obj);
+																					// setURLS(copyArr);
+																					// setURLinput('');
+																					let copyTT = TTarr.slice();
+																					copyTT.push(obj);
+																					setState((preState) => ({
+																						...preState,
+																						URLs: copyArr,
+																						TTinput: '',
+																						TTarr: copyTT,
+																					}));
+																					break;
+																				}
+																				case 'VM': {
+																					copyArr.push(obj);
+																					// setURLS(copyArr);
+																					// setURLinput('');
+																					let copyVM = VMarr.slice();
+																					copyVM.push(obj);
+																					setState((preState) => ({
+																						...preState,
+																						URLs: copyArr,
+																						VMinput: '',
+																						VMarr: copyVM,
+																					}));
+																					break;
+																				}
+																				default: {
+																					break;
+																				}
+																			}
+																		}
+																	}}
+																/>
+															</li>
+														</ul>
+													</div>
+												);
+										  })
+										: 'No video required'}
 
 									{/* default input box */}
 								</div>

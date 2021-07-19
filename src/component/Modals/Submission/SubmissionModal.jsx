@@ -3,10 +3,10 @@ import axios from 'axios';
 import { ModalContainer } from './SubmissionModalStyled';
 // ReactModal.setAppElement('#root');
 import FeedbackModal from '../FeedBack/feedbackModal';
-function SubmissionModal({ open, data, handleModalClose, isAdmin }) {
-	console.log('data in submission: ', data);
-	console.log('open: ', open);
+function SubmissionModal({ open, challengeIdx, handleModalClose, isAdmin }) {
+	console.log('challengeIdx in submission: ', challengeIdx);
 	const [fbProps, setFbProps] = useState({ open: false, data: null });
+	const [data, setData] = useState({});
 	const handleFeedback = () => [
 		setFbProps({ open: true, data: 'sample data' }),
 	];
@@ -14,27 +14,30 @@ function SubmissionModal({ open, data, handleModalClose, isAdmin }) {
 		setFbProps({ open: false, data: null });
 	};
 	useEffect(() => {
-		if (data) {
+		if (challengeIdx) {
 			var config = {
 				method: 'get',
 				url:
 					process.env.REACT_APP_U2_DB_HOST +
 					`/Campaign/challengesubmit/${Number(
-						data.challengeIdx ? data.challengeIdx : 36,
+						challengeIdx ? challengeIdx : 36,
 					)}`,
 				headers: {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 					'Content-Type': 'application/json',
 				},
 			};
-			axios(config).then((response) => console.log(response.data));
+			axios(config).then((response) => {
+				console.log('data in submission: ', response.data);
+				setData(response.data);
+			});
 		}
-	});
+	}, [challengeIdx]);
 	return (
 		<ModalContainer className="workdetail_submission_modal">
 			<FeedbackModal
 				open={fbProps.open}
-				data={'sample data'}
+				data={data.feedback}
 				handleModalClose={handleFBClose}
 			/>
 			<div className={open ? 'openModal modal' : 'modal'}>
@@ -52,15 +55,13 @@ function SubmissionModal({ open, data, handleModalClose, isAdmin }) {
 							<section className="submission_modal_ele">
 								<div className="menu">지원자</div>
 								<div className="inputInfo">
-									{data.application.name ? data.application.name : 'no data'}
+									{data.name ? data.name : 'no data'}
 								</div>
 							</section>
 							<section className="submission_modal_ele">
 								<div className="menu">휴대전화</div>
 								<div className="inputInfo">
-									{data.application.contact
-										? data.application.contact
-										: 'no data'}
+									{data.contact ? data.contact : 'no data'}
 									<div className="authorized">
 										<kbd>인증완료</kbd>
 									</div>
@@ -69,17 +70,17 @@ function SubmissionModal({ open, data, handleModalClose, isAdmin }) {
 							<section className="submission_modal_ele">
 								<div className="menu">이메일</div>
 								<div className="inputInfo">
-									{data.application.email ? data.application.email : 'no data'}
+									{data.email ? data.email : 'no data'}
 									<div className="authorized">
 										<kbd>인증완료</kbd>
 									</div>
 								</div>
 							</section>
-							{data.challengeIdx === 1 && (
+							{challengeIdx === 1 && (
 								<section className="submission_modal_ele">
 									<div className="menu">계좌번호</div>
 									<div className="inputInfo">
-										신한은행 | {data.application.bankAccount}
+										{data.bankName} | {data.bankAccount}
 										<div className="authorized">
 											<kbd>인증완료</kbd>
 										</div>
@@ -89,15 +90,19 @@ function SubmissionModal({ open, data, handleModalClose, isAdmin }) {
 
 							<section className="submission_modal_ele">
 								<div className="menu">지원자 코멘트</div>
-								<div className="inputInfo">{data.application.note}</div>
+								<div className="inputInfo">{data.note}</div>
 							</section>
 							<section className="submission_modal_ele">
-								<div className="menu">첨부파일</div>
-								<div className="inputInfo">test map.ppt</div>
+								<div className="menu">이미지</div>
+								<div className="inputInfo">
+									{data.photo ? <img src={data.photo}></img> : '-'}
+								</div>
 							</section>
 							<section className="submission_modal_ele submission_modal_ele_last">
 								<div className="menu">검수자 피드백</div>
-								<div className="inputInfo">내용없음</div>
+								<div className="inputInfo">
+									{data.feedback ? data.feedback : '내용없음'}
+								</div>
 							</section>
 						</main>
 						{isAdmin ? (
@@ -132,16 +137,6 @@ function SubmissionModal({ open, data, handleModalClose, isAdmin }) {
 								>
 									{' '}
 									닫기{' '}
-								</button>
-
-								<button
-									className="feedback"
-									onClick={() => {
-										handleFeedback();
-									}}
-									isAdmin={isAdmin}
-								>
-									피드백
 								</button>
 							</footer>
 						)}
