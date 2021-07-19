@@ -1,4 +1,27 @@
-export default function ({ handleBankCode, datas }) {
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+export default function ({ handleBankCode }) {
+	const [codes, setCodes] = useState([]);
+	useEffect(() => {
+		var config = {
+			method: 'get',
+			// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmit
+			url: process.env.REACT_APP_U2_DB_HOST + '/common/bankcode',
+			headers: {
+				// Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+			// data: data,
+		};
+		axios(config)
+			.then((response) => {
+				const banks = response.data;
+				setCodes(banks);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
 	return (
 		<select
 			className="banks_select"
@@ -8,7 +31,7 @@ export default function ({ handleBankCode, datas }) {
 			}}
 		>
 			<option value="">은행 선택</option>
-			{datas.map((el) => {
+			{codes.map((el) => {
 				return <option value={el.code}>{el.bankName}</option>;
 			})}
 			{/* <option value="">은행 선택</option>

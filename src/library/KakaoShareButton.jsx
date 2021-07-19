@@ -17,7 +17,6 @@ const KakaoShareButton = ({
 	social,
 	buttons,
 }) => {
-	console.log('challengeTitle: ', challengeTitle);
 	useEffect(() => {
 		createKakaoButton();
 	}, []);

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import { ModalContainer } from './SubmissionModalStyled';
 // ReactModal.setAppElement('#root');
 import FeedbackModal from '../FeedBack/feedbackModal';
@@ -12,11 +13,28 @@ function SubmissionModal({ open, data, handleModalClose, isAdmin }) {
 	const handleFBClose = () => {
 		setFbProps({ open: false, data: null });
 	};
+	useEffect(() => {
+		if (data) {
+			var config = {
+				method: 'get',
+				url:
+					process.env.REACT_APP_U2_DB_HOST +
+					`/Campaign/challengesubmit/${Number(
+						data.challengeIdx ? data.challengeIdx : 36,
+					)}`,
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+					'Content-Type': 'application/json',
+				},
+			};
+			axios(config).then((response) => console.log(response.data));
+		}
+	});
 	return (
 		<ModalContainer className="workdetail_submission_modal">
 			<FeedbackModal
 				open={fbProps.open}
-				data={fbProps.data}
+				data={'sample data'}
 				handleModalClose={handleFBClose}
 			/>
 			<div className={open ? 'openModal modal' : 'modal'}>
