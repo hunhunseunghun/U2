@@ -186,7 +186,7 @@ export const ProjectDetailContainer = styled.div`
     display: flex;
     flex-direction: column;
     border-top: 2px solid #4e4e4e;
-    padding: 20px 0;
+    padding: 10px 5px;
     fieldset {
       all: unset;
       padding: 10px 0;
@@ -215,7 +215,43 @@ export const ProjectDetailContainer = styled.div`
         font-size: 13px;
         color: #4e4e4e;
         font-weight: 400;
-        padding: 5px 0;
+        padding-top: 10px;
+        margin-bottom: 7px;
+      }
+    }
+    .comment_reply {
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+      color: #4e4e4e;
+      font-weight: 400;
+      padding: 2px 0;
+
+      img {
+        height: 12px;
+      }
+
+      .comment_reply_area {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 10px 5px;
+        border: 1px solid #bebebe;
+        background-color: #eaeaea;
+      }
+      .comment_reply_name {
+        background-color: black;
+        padding: 2px 5px;
+        border-radius: 4px;
+        font-size: 13px;
+        color: #ffff00;
+        margin-left: 5px;
+      }
+      .comment_reply_content {
+        margin-left: 10px;
+        font-size: 13px;
+        color: #4e4e4e;
+        font-weight: 400;
       }
     }
   }

@@ -437,14 +437,21 @@ function ProjectDetail(props) {
                 {replies.length > 0 &&
                   replies.map(el => {
                     return (
-                      <div>
-                        <div>{el.userName ? el.userName : '닉네임'}</div>
-                        <div>{el.comment}</div>
+                      <div className="comment_reply">
+                        <img src="/img/replycomment.png" alt="답글 : " />
+                        <div className="comment_reply_area">
+                          <div className="comment_reply_name">
+                            {el.userName ? el.userName : '닉네임'}
+                          </div>
+                          <div className="comment_reply_content">
+                            {el.comment}
+                          </div>
+                        </div>
                       </div>
                     );
                   })}
                 <div
-                  class="reply"
+                  className="comment_replyregi"
                   style={{
                     display: comments[idx].isReply ? 'block' : 'none',
                   }}
