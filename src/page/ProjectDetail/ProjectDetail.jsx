@@ -407,6 +407,21 @@ function ProjectDetail(props) {
           <FaLine />
         </LineShareButton>
       </section>
+      <section className="commentInput">
+        <input
+          type="text"
+          onChange={e => {
+            setInputComment(e.target.value);
+          }}
+        ></input>
+        <button
+          onClick={() => {
+            handleComment();
+          }}
+        >
+          등록하기
+        </button>
+      </section>
       <section className="comments">
         {comments &&
           comments.map((comment, idx) => {
@@ -472,21 +487,6 @@ function ProjectDetail(props) {
               </fieldset>
             );
           })}
-      </section>
-      <section className="commentInput">
-        <input
-          type="text"
-          onChange={e => {
-            setInputComment(e.target.value);
-          }}
-        ></input>
-        <button
-          onClick={() => {
-            handleComment();
-          }}
-        >
-          등록하기
-        </button>
       </section>
     </ProjectDetailContainer>
   );

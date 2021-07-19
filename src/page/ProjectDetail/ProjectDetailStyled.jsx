@@ -181,11 +181,23 @@ export const ProjectDetailContainer = styled.div`
       border-radius: 150px;
     }
   }
+  .commentInput {
+    display: grid;
+    grid-template-columns: 8fr 2fr;
+    grid-gap: 5px;
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    min-height: 120px;
+    input {
+    }
+  }
 
   .comments {
     display: flex;
     flex-direction: column;
-    border-top: 2px solid #4e4e4e;
+    border-top: 2px solid #c5c5c5;
+    border-bottom: 2px solid #c5c5c5;
     padding: 10px 5px;
     fieldset {
       all: unset;
@@ -219,6 +231,7 @@ export const ProjectDetailContainer = styled.div`
         margin-bottom: 7px;
       }
     }
+
     .comment_reply {
       display: flex;
       align-items: center;
@@ -243,7 +256,7 @@ export const ProjectDetailContainer = styled.div`
         background-color: black;
         padding: 2px 5px;
         border-radius: 4px;
-        font-size: 13px;
+        font-size: 11px;
         color: #ffff00;
         margin-left: 5px;
       }
@@ -254,5 +267,8 @@ export const ProjectDetailContainer = styled.div`
         font-weight: 400;
       }
     }
+  }
+  .comments fieldset:last-child {
+    border-bottom: 0;
   }
 `;
