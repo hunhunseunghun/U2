@@ -138,16 +138,6 @@ function SubmissionModal({ open, challengeIdx, handleModalClose, isAdmin }) {
 									{' '}
 									닫기{' '}
 								</button>
-
-								<button
-									className="feedback"
-									onClick={() => {
-										handleFeedback();
-									}}
-									isAdmin={isAdmin}
-								>
-									피드백
-								</button>
 							</footer>
 						)}
 					</section>
