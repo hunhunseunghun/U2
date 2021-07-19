@@ -106,22 +106,39 @@ function ProjectDetail(props) {
 		}
 	};
 
-	const handleComment = () => {
+	const handleComment = (reply) => {
 		if (userInfo.email) {
-			var body = {
-				// commentIdx: 0,
-				challengeIdx: challengeIdx,
-				seq: 1,
-				// seqx: 1,
-				memberIdx: userInfo.memberIdx,
-				comment: inputComment,
-				statusCode: 1,
-				// "registMemberIdx": 0,
-				// "registDate": "2021-07-14T11:00:22.230Z",
-				// "modifyMemberIdx": 0,
-				// "modifyDate": "2021-07-14T11:00:22.230Z"
-			};
+			var body = {};
 			// TextFile(body);
+			if (reply) {
+				body = {
+					// commentIdx: 0,
+					challengeIdx: Number(challengeIdx),
+					seq: reply.seqx,
+					// seqx: 1,
+					// memberIdx: userInfo.memberIdx,
+					comment: comments[reply.index].inputReply,
+					statusCode: 1,
+					// "registMemberIdx": 0,
+					// "registDate": "2021-07-14T11:00:22.230Z",
+					// "modifyMemberIdx": 0,
+					// "modifyDate": "2021-07-14T11:00:22.230Z"
+				};
+			} else {
+				body = {
+					// commentIdx: 0,
+					challengeIdx: Number(challengeIdx),
+					seq: 0,
+					// seqx: 1,
+					// memberIdx: userInfo.memberIdx,
+					comment: inputComment,
+					statusCode: 1,
+					// "registMemberIdx": 0,
+					// "registDate": "2021-07-14T11:00:22.230Z",
+					// "modifyMemberIdx": 0,
+					// "modifyDate": "2021-07-14T11:00:22.230Z"
+				};
+			}
 			var config = {
 				method: 'post',
 				url: process.env.REACT_APP_U2_DB_HOST + `/Campaign/challengecomment`,
@@ -134,6 +151,15 @@ function ProjectDetail(props) {
 			axios(config)
 				.then((response) => {
 					console.log('new comment: ', response.data);
+					axios
+						.get(
+							process.env.REACT_APP_U2_DB_HOST +
+								`/Campaign/challengecomments/${challengeIdx}`,
+						)
+						.then((response) => {
+							console.log('comments: ', response.data);
+							setComments(response.data);
+						});
 				})
 				.catch((err) => {
 					console.log(err);
@@ -169,7 +195,11 @@ function ProjectDetail(props) {
 			)
 			.then((response) => {
 				console.log('comments: ', response.data);
-				setComments(response.data);
+				var comments = response.data;
+				let newForm = comments.map((el) => {
+					return { ...el, isReply: false };
+				});
+				setComments(newForm);
 			});
 	}, []);
 	if (!isDataReady) {
@@ -379,15 +409,62 @@ function ProjectDetail(props) {
 				</LineShareButton>
 			</section>
 			<section className="comments">
-				{comments.map((el, idx) => {
-					return (
-						<div>
-							<div>{el.memberIdx}</div>
-							<div>{el.comment}</div>
-							<button>답글 달기</button>
-						</div>
-					);
-				})}
+				{comments &&
+					comments.map((comment, idx) => {
+						var copyArr = comments.slice();
+						copyArr.splice(idx, 1); //나를 제외한 배열에서 답글 탐색
+						var replies = copyArr.filter(
+							(reply) => reply.seq === comment.seqx && reply.seq !== 1,
+						);
+						console.log('replies: ', replies);
+
+						if (comment.seq !== 1) return; //답글인 경우 아래에서 이미 다 렌더링함.
+						return (
+							<fieldset>
+								<div>{comment.memberIdx}</div>
+								<div>{comment.comment}</div>
+
+								<button
+									onClick={() => {
+										let copyArr = comments.slice();
+										copyArr[idx].isReply = !copyArr[idx].isReply;
+										setComments(copyArr);
+									}}
+								>
+									답글 달기
+									<br />
+								</button>
+								{replies.length > 0 &&
+									replies.map((el) => {
+										return (
+											<div>
+												<div>{el.userName ? el.userName : '답글'}</div>
+												<div>{el.comment}</div>
+											</div>
+										);
+									})}
+								<div
+									class="reply"
+									style={{
+										display: comments[idx].isReply ? 'block' : 'none',
+									}}
+								>
+									<input
+										onChange={(e) => {
+											comments[idx].inputReply = e.target.value;
+										}}
+									></input>
+									<button
+										onClick={() => {
+											handleComment({ seqx: comment.seqx, index: idx });
+										}}
+									>
+										등록하기
+									</button>
+								</div>
+							</fieldset>
+						);
+					})}
 			</section>
 			<section className="commentInput">
 				<input

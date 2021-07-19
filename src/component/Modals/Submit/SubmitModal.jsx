@@ -33,7 +33,6 @@ const initialState = {
 	emailAuthInput: '',
 	emailAuthorized: null,
 	bankAccountNum: '',
-	banks: [],
 	bankCode: 0,
 	bankAccountErr: '',
 	BaErrShake: false,
@@ -73,7 +72,6 @@ function Modal({ open, challenge, handleModalClose }) {
 			emailAuthInput,
 			emailAuthorized,
 			bankAccountNum,
-			banks,
 			bankCode,
 			bankAccountErr,
 			BaErrShake,
@@ -345,24 +343,24 @@ function Modal({ open, challenge, handleModalClose }) {
 	};
 
 	useEffect(() => {
-		var config = {
-			method: 'get',
-			// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmit
-			url: server + '/common/bankcode',
-			headers: {
-				// Authorization: 'Bearer ' + localStorage.getItem('token'),
-				'Content-Type': 'application/json',
-			},
-			// data: data,
-		};
-		axios(config)
-			.then((response) => {
-				const banks = response.data;
-				setState((preState) => ({ ...preState, banks: banks }));
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		// var config = {
+		// 	method: 'get',
+		// 	// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmit
+		// 	url: server + '/common/bankcode',
+		// 	headers: {
+		// 		// Authorization: 'Bearer ' + localStorage.getItem('token'),
+		// 		'Content-Type': 'application/json',
+		// 	},
+		// 	// data: data,
+		// };
+		// axios(config)
+		// 	.then((response) => {
+		// 		const banks = response.data;
+		// 		setState((preState) => ({ ...preState, banks: banks }));
+		// 	})
+		// 	.catch((err) => {
+		// 		console.log(err);
+		// 	});
 	}, []);
 
 	return (
@@ -826,7 +824,7 @@ function Modal({ open, challenge, handleModalClose }) {
 							<section className="ele">
 								<div className="menu">계좌번호</div>
 								<div className="inputInfo banks_accout">
-									<Banks handleBankCode={handleBankCode} datas={banks} />
+									<Banks handleBankCode={handleBankCode} />
 									<input
 										className="banks_accout_input"
 										type="number"

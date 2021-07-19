@@ -7,7 +7,7 @@ export const ModalContainer = styled.div`
 		right: 0;
 		bottom: 0;
 		left: 0;
-		z-index: 100;
+		z-index: 200;
 		background-color: rgba(0, 0, 0, 0.6);
 	}
 	.modal button {
