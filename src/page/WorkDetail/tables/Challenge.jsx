@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import Pagination2 from '../../../component/Pagination/Pagination2';
 import { paginate } from '../../../component/Pagination/paginate';
 import { ChallengeTableContainer } from './ChallengeStyled';
 import excelIcon from '../../../Img/Icons/excelIcon.png';
 import moment from 'moment';
-function ChallengeTable({ datas }) {
+function ChallengeTable({ challengeIdx, setIsLoading }) {
 	let [subjects, setSubjects] = useState({
-		data: datas.entities,
+		// data: datas.entities,
+		data: [],
 		pageSize: 10,
 		currentPage: 1,
 	});
@@ -28,10 +30,45 @@ function ChallengeTable({ datas }) {
 		setSubjects({ ...subjects, pageSize: pageSize });
 		setPagedSubjects(paginate(data, 1, pageSize));
 	};
+	// useEffect(() => {
+	// 	setSubjects({ ...subjects, data: datas.entities });
+	// 	setCount(datas.total);
+	// }, [datas]);
+	var challengesConfig = {
+		method: 'get',
+		url:
+			process.env.REACT_APP_U2_DB_HOST +
+			`/Campaign/challengesubmitting/${challengeIdx}?size=${pageSize}&p=${currentPage}`,
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('token'),
+			'Content-Type': 'application/json',
+		},
+	};
+
 	useEffect(() => {
-		setSubjects({ ...subjects, data: datas.entities });
-		setCount(datas.total);
-	}, [datas]);
+		axios(challengesConfig)
+			.then((res) => {
+				console.log('challengeidx response:');
+				console.log(res);
+				console.log(challengeIdx);
+				// if(res.data.entities.contactCode === 0){
+				//   setMeeting("비대면")
+				// } else if(res.data.entities.contactCode ===1){
+				//   setMeeting("대면")
+				// }
+
+				// setTerms([])
+				// setCurrChallenges(res.data);
+				setSubjects({ ...subjects, data: res.data.entities });
+				setCount(res.data.total);
+				setPagedSubjects(paginate(res.data.entities, res.data.page, pageSize));
+				setIsLoading(true);
+			})
+			.catch((err) => {
+				console.log('workdetail error');
+				console.log(err);
+			});
+	}, []);
 	return (
 		<ChallengeTableContainer>
 			{' '}

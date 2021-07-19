@@ -118,41 +118,6 @@ function WorkDetail(props) {
 			});
 	}, []);
 
-	var challengesConfig = {
-		method: 'get',
-		url:
-			process.env.REACT_APP_U2_DB_HOST +
-			`/Campaign/challengesubmitting/${props.location.state.projectId}?size=10&p=1`,
-		headers: {
-			Authorization: 'Bearer ' + localStorage.getItem('token'),
-			'Content-Type': 'application/json',
-		},
-	};
-
-	useEffect(() => {
-		axios(challengesConfig)
-			.then((res) => {
-				console.log('challengeidx response:');
-				console.log(res);
-				console.log(props.location.state.projectId);
-				// if(res.data.entities.contactCode === 0){
-				//   setMeeting("비대면")
-				// } else if(res.data.entities.contactCode ===1){
-				//   setMeeting("대면")
-				// }
-
-				// setTerms([])
-				setCurrChallenges(res.data);
-				setIsLoading(true);
-			})
-			.catch((err) => {
-				console.log('workdetail error');
-				console.log(err);
-			});
-
-		axios();
-	}, []);
-
 	let handleTabClick = (tab) => {
 		setCurrentTab(tab);
 	};
@@ -164,7 +129,13 @@ function WorkDetail(props) {
 		setModalProps({ ...modalProps, open: false });
 	};
 	const tables = {
-		0: <ChallengeTable datas={currChallenges}></ChallengeTable>,
+		0: (
+			<ChallengeTable
+				datas={currChallenges}
+				setIsLoading={setIsLoading}
+				challengeIdx={props.location.state.projectId}
+			></ChallengeTable>
+		),
 		1: (
 			<InspectTable
 				datas={inspects}
