@@ -266,7 +266,7 @@ function ParticipateTable() {
 			<SubmissionModal
 				open={submissionProps.open}
 				challengeIdx={submissionProps.challengeIdx}
-				handleModalClose={(modalType) => [handleModalClose(modalType)]}
+				handleModalClose={(modalType) => handleModalClose(modalType)}
 				isAdmin={false}
 			/>
 			<section className="prjregi_btn_area">

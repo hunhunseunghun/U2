@@ -16,7 +16,7 @@ function WorkDetail(props) {
 	let [prise, setPrise] = useState('10000원');
 	let [projectTitle, setProjectTitle] = useState('');
 	let [mainImage, setMainImage] = useState(null);
-	let [currChallenges, setCurrChallenges] = useState(null);
+	// let [currChallenges, setCurrChallenges] = useState(null);
 	let setTab;
 	if (props.location.state.isContriClicked) {
 		setTab = 0;
@@ -27,9 +27,9 @@ function WorkDetail(props) {
 	}
 	let [currentTab, setCurrentTab] = useState(setTab); //props에서 현재 탭 가져와 설정
 	let [modalProps, setModalProps] = useState({ open: false });
-	const [isLoading, setIsLoading] = useState(false);
+	// const [isLoading, setIsLoading] = useState(false);
 
-	console.log(applyPeriod);
+	// console.log(applyPeriod);
 	//image section data
 	useEffect(() => {
 		axios
@@ -105,7 +105,7 @@ function WorkDetail(props) {
 						result = 'YouTube';
 					} else if (ele.platform === 'TT') {
 						result = 'TIKTOK';
-					} else if (ele.platfrom === 'VM') {
+					} else if (ele.platform === 'VM') {
 						result = 'Vimeo';
 					}
 					missionRequired.push(result);
@@ -131,14 +131,14 @@ function WorkDetail(props) {
 	const tables = {
 		0: (
 			<ChallengeTable
-				datas={currChallenges}
-				setIsLoading={setIsLoading}
+				// datas={currChallenges}
+				// setIsLoading={setIsLoading}
 				challengeIdx={props.location.state.projectId}
 			></ChallengeTable>
 		),
 		1: (
 			<InspectTable
-				datas={inspects}
+				challengeIdx={props.location.state.projectId}
 				handlePresentationClick={handlePresentationClick}
 			></InspectTable>
 		),
@@ -147,8 +147,10 @@ function WorkDetail(props) {
 		<WorkDetailContainer id="workdetail-root">
 			<SubmissionModal
 				open={modalProps.open}
-				data={modalProps.data}
-				handleModalClose={handleModalClose}
+				// challengeIdx={props.location.state.projectId}
+				handleModalClose={(modalType) => handleModalClose(modalType)}
+				isAdmin={true}
+				propsData={modalProps.data}
 			/>
 			<section className="workdetail-section">
 				<section className="section1">
@@ -217,11 +219,12 @@ function WorkDetail(props) {
 							검수 대상자
 						</div>
 					</div>
-					{isLoading ? (
+					{/* {isLoading ? (
 						<div className="contents-table">{tables[currentTab]}</div>
 					) : (
 						''
-					)}
+					)} */}
+					<div className="contents-table">{tables[currentTab]}</div>
 				</section>
 			</section>
 		</WorkDetailContainer>

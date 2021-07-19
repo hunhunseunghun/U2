@@ -6,60 +6,86 @@ import { paginate } from '../../../component/Pagination/paginate';
 import { ChallengeTableContainer } from './ChallengeStyled';
 import excelIcon from '../../../Img/Icons/excelIcon.png';
 import moment from 'moment';
-function ChallengeTable({ challengeIdx, setIsLoading }) {
-	let [subjects, setSubjects] = useState({
-		// data: datas.entities,
-		data: [],
-		pageSize: 10,
-		currentPage: 1,
-	});
-	const { data, pageSize, currentPage } = subjects;
-	let [pagedSubjects, setPagedSubjects] = useState(
-		paginate(data, currentPage, pageSize),
-	);
-	let [count, setCount] = useState(0);
-	// console.log('datas: ', datas);
-	// const pagedQuests = paginate(data, currentPage, pageSize);
-	// const { length: count } = subjects.data;
+function ChallengeTable({ challengeIdx }) {
+	const [isLoading, setIsLoading] = useState(false);
+	const [pageSize, setPageSize] = useState(10);
+	const [page, setPage] = useState(1);
+	const [count, setCount] = useState(0);
+	const [pagedSubjects, setPagedSubjects] = useState(null);
 
-	let handlePageChange = (page) => {
-		setSubjects({ ...subjects, currentPage: page });
-		setPagedSubjects(paginate(data, page, pageSize));
+	let handlePageChange = (changedPage) => {
+		setPage(changedPage);
+		var config = {
+			method: 'get',
+			url:
+				process.env.REACT_APP_U2_DB_HOST +
+				`/Campaign/challengesubmitting/${challengeIdx}?size=${pageSize}&p=${changedPage}`,
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+		};
+		axios(config)
+			.then((res) => {
+				console.log('challengeidx response:');
+				console.log(res);
+				console.log(challengeIdx);
+
+				setCount(res.data.total);
+				setPagedSubjects(paginate(res.data.entities, res.data.page, pageSize));
+				setIsLoading(true);
+			})
+			.catch((err) => {
+				console.log('workdetail error');
+				console.log(err);
+			});
+		// setPagedSubjects(paginate(data, page, pageSize));
 	};
-	let handleSelectChange = (pageSize) => {
-		setSubjects({ ...subjects, pageSize: pageSize });
-		setPagedSubjects(paginate(data, 1, pageSize));
-	};
-	// useEffect(() => {
-	// 	setSubjects({ ...subjects, data: datas.entities });
-	// 	setCount(datas.total);
-	// }, [datas]);
-	var challengesConfig = {
-		method: 'get',
-		url:
-			process.env.REACT_APP_U2_DB_HOST +
-			`/Campaign/challengesubmitting/${challengeIdx}?size=${pageSize}&p=${currentPage}`,
-		headers: {
-			Authorization: 'Bearer ' + localStorage.getItem('token'),
-			'Content-Type': 'application/json',
-		},
+	let handleSelectChange = (changedSize) => {
+		setPageSize(changedSize);
+		var config = {
+			method: 'get',
+			url:
+				process.env.REACT_APP_U2_DB_HOST +
+				`/Campaign/challengesubmitting/${challengeIdx}?size=${changedSize}&p=${page}`,
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+		};
+		axios(config)
+			.then((res) => {
+				console.log('challengeidx response:');
+				console.log(res);
+				console.log(challengeIdx);
+
+				setCount(res.data.total);
+				setPagedSubjects(paginate(res.data.entities, res.data.page, pageSize));
+				setIsLoading(true);
+			})
+			.catch((err) => {
+				console.log('workdetail error');
+				console.log(err);
+			});
 	};
 
 	useEffect(() => {
+		var challengesConfig = {
+			method: 'get',
+			url:
+				process.env.REACT_APP_U2_DB_HOST +
+				`/Campaign/challengesubmitting/${challengeIdx}?size=${pageSize}&p=${page}`,
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+		};
 		axios(challengesConfig)
 			.then((res) => {
 				console.log('challengeidx response:');
 				console.log(res);
 				console.log(challengeIdx);
-				// if(res.data.entities.contactCode === 0){
-				//   setMeeting("비대면")
-				// } else if(res.data.entities.contactCode ===1){
-				//   setMeeting("대면")
-				// }
 
-				// setTerms([])
-				// setCurrChallenges(res.data);
-				setSubjects({ ...subjects, data: res.data.entities });
 				setCount(res.data.total);
 				setPagedSubjects(paginate(res.data.entities, res.data.page, pageSize));
 				setIsLoading(true);
@@ -113,7 +139,7 @@ function ChallengeTable({ challengeIdx, setIsLoading }) {
 											</td>
 											<td>{data.memberIdx}</td>
 											<td>{data.name}</td>
-											<td>{data.mobileNum}</td>
+											<td>{data.contact}</td>
 											<td>{data.email}</td>
 										</tr>
 									</>
@@ -123,11 +149,18 @@ function ChallengeTable({ challengeIdx, setIsLoading }) {
 				</tbody>
 			</table>
 			<div className="pagination">
-				<Pagination2
+				{isLoading && (
+					<Pagination2
+						itemsCount={count}
+						handlePageChange={handlePageChange}
+						pageSize={pageSize}
+					></Pagination2>
+				)}
+				{/* <Pagination2
 					itemsCount={count}
 					handlePageChange={handlePageChange}
 					pageSize={subjects.pageSize}
-				></Pagination2>
+				></Pagination2> */}
 			</div>{' '}
 		</ChallengeTableContainer>
 	);
