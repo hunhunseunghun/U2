@@ -408,18 +408,19 @@ function ProjectDetail(props) {
         </LineShareButton>
       </section>
       <section className="commentInput">
-        <input
+        <textarea
           type="text"
+          placeholder="댓글을 남겨보세요"
           onChange={e => {
             setInputComment(e.target.value);
           }}
-        ></input>
+        ></textarea>
         <button
           onClick={() => {
             handleComment();
           }}
         >
-          등록하기
+          등 록
         </button>
       </section>
       <section className="comments">

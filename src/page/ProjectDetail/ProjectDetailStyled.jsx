@@ -183,13 +183,23 @@ export const ProjectDetailContainer = styled.div`
   }
   .commentInput {
     display: grid;
-    grid-template-columns: 8fr 2fr;
+    grid-template-columns: 8fr 1fr;
     grid-gap: 5px;
     padding: 10px;
     margin-top: 20px;
     margin-bottom: 10px;
     min-height: 120px;
-    input {
+    background-color: #eaeaea;
+    border: 1px solid #c5c5c5;
+    textarea {
+      border: 1px solid #c5c5c5;
+      outline: none;
+      resize: none;
+    }
+    button {
+      background-color: #292727;
+      color: white;
+      font-size: 13px;
     }
   }
 
@@ -199,6 +209,7 @@ export const ProjectDetailContainer = styled.div`
     border-top: 2px solid #c5c5c5;
     border-bottom: 2px solid #c5c5c5;
     padding: 10px 5px;
+    font-weight: 400;
     fieldset {
       all: unset;
       padding: 10px 0;
