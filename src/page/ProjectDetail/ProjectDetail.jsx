@@ -438,7 +438,7 @@ function ProjectDetail(props) {
 									replies.map((el) => {
 										return (
 											<div>
-												<div>{el.userName ? el.userName : '답글'}</div>
+												<div>{el.userName ? el.userName : '닉네임'}</div>
 												<div>{el.comment}</div>
 											</div>
 										);
