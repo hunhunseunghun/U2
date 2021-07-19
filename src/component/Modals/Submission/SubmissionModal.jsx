@@ -3,13 +3,17 @@ import axios from 'axios';
 import { ModalContainer } from './SubmissionModalStyled';
 // ReactModal.setAppElement('#root');
 import FeedbackModal from '../FeedBack/feedbackModal';
-function SubmissionModal({ open, challengeIdx, handleModalClose, isAdmin }) {
-	console.log('challengeIdx in submission: ', challengeIdx);
+function SubmissionModal({
+	open,
+	challengeIdx,
+	handleModalClose,
+	isAdmin,
+	propsData,
+}) {
+	// console.log('challengeIdx in submission: ', challengeIdx);
 	const [fbProps, setFbProps] = useState({ open: false, data: null });
 	const [data, setData] = useState({});
-	const handleFeedback = () => [
-		setFbProps({ open: true, data: 'sample data' }),
-	];
+	const handleFeedback = () => [setFbProps({ open: true, data: data })];
 	const handleFBClose = () => {
 		setFbProps({ open: false, data: null });
 	};
@@ -19,9 +23,7 @@ function SubmissionModal({ open, challengeIdx, handleModalClose, isAdmin }) {
 				method: 'get',
 				url:
 					process.env.REACT_APP_U2_DB_HOST +
-					`/Campaign/challengesubmit/${Number(
-						challengeIdx ? challengeIdx : 36,
-					)}`,
+					`/Campaign/challengesubmit/${Number(challengeIdx)}`,
 				headers: {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 					'Content-Type': 'application/json',
@@ -33,16 +35,23 @@ function SubmissionModal({ open, challengeIdx, handleModalClose, isAdmin }) {
 			});
 		}
 	}, [challengeIdx]);
+	useEffect(() => {
+		if (propsData) {
+			console.log('propsData: ', propsData);
+			setData(propsData);
+		}
+	}, [propsData]);
 	return (
 		<ModalContainer className="workdetail_submission_modal">
-			<FeedbackModal
-				open={fbProps.open}
-				data={data.feedback}
-				handleModalClose={handleFBClose}
-			/>
 			<div className={open ? 'openModal modal' : 'modal'}>
 				{open ? (
 					<section>
+						<FeedbackModal
+							open={fbProps.open}
+							data={fbProps.data}
+							handleModalClose={handleFBClose}
+							isAdmin={isAdmin}
+						/>
 						<header>제출 자료</header>
 						<main>
 							<div className="submission_modal_ele">
