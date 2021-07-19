@@ -60,10 +60,11 @@ const KakaoShareButton = ({
 		// 	</button> */}
 		// 	<RiKakaoTalkFill  className="kakao-share-button" id="kakao-link-btn" ></RiKakaoTalkFill>
 		// </div>
-		<RiKakaoTalkFill
+		<img
 			className="kakao-share-button"
 			id="kakao-link-btn"
-		></RiKakaoTalkFill>
+			src="/img/ic_kakao.svg"
+		></img>
 	);
 };
 export default KakaoShareButton;
