@@ -356,7 +356,7 @@ function Modal({ open, challenge, handleModalClose }) {
 		// axios(config)
 		// 	.then((response) => {
 		// 		const banks = response.data;
-		// 		setState((preState) => ({ ...preState, banks: banks }));
+		// 		// setState((preState) => ({ ...preState, banks: banks }));
 		// 	})
 		// 	.catch((err) => {
 		// 		console.log(err);
