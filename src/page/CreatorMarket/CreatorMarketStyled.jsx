@@ -88,6 +88,7 @@ export const MainContainer = styled.div`
     font-weight: 600;
     color: #898989;
     transition-duration: 0.2s;
+    margin-top: 30px;
     &:hover {
       cursor: pointer;
       transition-duration: 0.2s;
