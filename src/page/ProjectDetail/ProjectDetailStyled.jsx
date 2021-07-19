@@ -181,4 +181,42 @@ export const ProjectDetailContainer = styled.div`
       border-radius: 150px;
     }
   }
+
+  .comments {
+    display: flex;
+    flex-direction: column;
+    border-top: 2px solid #4e4e4e;
+    padding: 20px 0;
+    fieldset {
+      all: unset;
+      padding: 10px 0;
+      border-bottom: 1px solid #c5c5c5;
+      .comment_memberidx {
+        display: flex;
+        align-items: center;
+        font-size: 15px;
+        color: #367b91;
+
+        button {
+          background: linear-gradient(#fff, #f2f2f2);
+          border: 1px solid #eee;
+          padding: 0 10px;
+          color: #747474;
+          font-size: 12px;
+          font-weight: 400;
+          margin-left: 10px;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+      .comment_content {
+        font-size: 13px;
+        color: #4e4e4e;
+        font-weight: 400;
+        padding: 5px 0;
+      }
+    }
+  }
 `;
