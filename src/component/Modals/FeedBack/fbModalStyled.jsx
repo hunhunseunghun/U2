@@ -52,18 +52,37 @@ export const ModalContainer = styled.div`
 	.modal > section > footer {
 		padding: 12px 16px;
 		text-align: right;
-	}
-	.modal > section > footer button {
-		padding: 6px 12px;
-		color: #fff;
-		background-color: #6c757d;
-		border-radius: 5px;
-		font-size: 13px;
+		button {
+			padding: 6px 15px;
+			color: #fff;
+			font-size: 12px;
+			border: 1px solid #d1d1d1;
+			margin: 0 5px;
+			border-radius: 4px;
+			color: #898989;
+			&:hover {
+				cursor: pointer;
+				color: black;
+				border-color: #898989;
+			}
+		}
+		.okay {
+			border: 1px solid #d1d1d1;
+			font-size: 12px;
+			font-weight: 500;
+			color: #fff;
+			background-color: #f84135;
+			border-color: #f84135;
 
-		&:hover {
-			background-color: #4b5157;
+			&:hover {
+				cursor: pointer;
+				color: #fff;
+				background-color: #ff2a1b;
+				border-color: #ff2a1b;
+			}
 		}
 	}
+
 	.modal.openModal {
 		display: flex;
 		align-items: center;

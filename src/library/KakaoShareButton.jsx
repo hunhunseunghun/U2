@@ -17,7 +17,6 @@ const KakaoShareButton = ({
 	social,
 	buttons,
 }) => {
-	console.log('challengeTitle: ', challengeTitle);
 	useEffect(() => {
 		createKakaoButton();
 	}, []);
@@ -36,7 +35,7 @@ const KakaoShareButton = ({
 				objectType: 'feed',
 				content: {
 					title: challengeTitle,
-					description: tags.join(' '),
+					// description: tags.join(' ') ,
 					imageUrl: imageUrl, // i.e. process.env.FETCH_URL + '/logo.png'
 					link: {
 						mobileWebUrl: window.location.href,
@@ -45,8 +44,8 @@ const KakaoShareButton = ({
 						// webUrl: 'https://www.naver.com',
 					},
 				},
-				social: social,
-				buttons: buttons,
+				// social: social,
+				// buttons: buttons,
 			});
 		}
 	};
@@ -61,10 +60,11 @@ const KakaoShareButton = ({
 		// 	</button> */}
 		// 	<RiKakaoTalkFill  className="kakao-share-button" id="kakao-link-btn" ></RiKakaoTalkFill>
 		// </div>
-		<RiKakaoTalkFill
+		<img
 			className="kakao-share-button"
 			id="kakao-link-btn"
-		></RiKakaoTalkFill>
+			src="/img/ic_kakao.svg"
+		></img>
 	);
 };
 export default KakaoShareButton;

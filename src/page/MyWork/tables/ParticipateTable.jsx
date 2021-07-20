@@ -32,7 +32,7 @@ function ParticipateTable() {
 	});
 	const [submissionProps, setSubmissionProps] = useState({
 		open: false,
-		data: null,
+		challengeIdx: null,
 	});
 	const getData = (config) => {
 		setLoading(true);
@@ -119,7 +119,6 @@ function ParticipateTable() {
 										// var me = el.applications.filter(
 										// 	(el) => el.memberIdx === userInfo.memberIdx,
 										// )[0];
-										console.log('me : ', myApplication);
 										if (
 											el.challengeTargetCode === 1 ||
 											el.challengeTargetCode === 3
@@ -147,8 +146,8 @@ function ParticipateTable() {
 									})(),
 									// feedback:
 
-									requestDate: myApplication.dateApplied,
-									dueDate: el.missions[0].dateFin,
+									requestDate: myApplication.registDate.split('T')[0],
+									dueDate: el.missions[0].dateFin.split('T')[0],
 									challengeIdx: el.challengeIdx,
 									missions: el.missions,
 									application: myApplication,
@@ -197,7 +196,7 @@ function ParticipateTable() {
 		setSubmitProps({ open: true, data: data });
 	};
 	const handleOpenSubmission = (data) => {
-		setSubmissionProps({ open: true, data: data });
+		setSubmissionProps({ open: true, challengeIdx: data.challengeIdx });
 	};
 
 	const handleModalClose = (modalType) => {
@@ -266,8 +265,8 @@ function ParticipateTable() {
 			/>
 			<SubmissionModal
 				open={submissionProps.open}
-				data={submissionProps.data}
-				handleModalClose={(modalType) => [handleModalClose(modalType)]}
+				challengeIdx={submissionProps.challengeIdx}
+				handleModalClose={(modalType) => handleModalClose(modalType)}
 				isAdmin={false}
 			/>
 			<section className="prjregi_btn_area">
@@ -365,7 +364,6 @@ function ParticipateTable() {
 																		<button
 																			className="resume"
 																			onClick={() => {
-																				console.log('지원서 clicked');
 																				handleOpenResume(data);
 																			}}
 																		>
@@ -393,7 +391,7 @@ function ParticipateTable() {
 																				handleOpenSubmission(data);
 																			}}
 																		>
-																			{data.presentation}
+																			보기
 																		</button>
 																	);
 																}

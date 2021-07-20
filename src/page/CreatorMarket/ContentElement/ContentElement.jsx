@@ -11,15 +11,14 @@ const ContentElement = (props) => {
 	const [mySubmit, setMySubmit] = useState(false);
 	const challenge = props.challenge;
 	return (
-		<EleContainer>
-			<div
-				className="challenge_img_area"
-				onClick={() => {
-					props.history.push({
-						pathname: `/prjdetail/${challenge.challengeIdx}`,
-					});
-				}}
-			>
+		<EleContainer
+			onClick={() => {
+				props.history.push({
+					pathname: `/prjdetail/${challenge.challengeIdx}`,
+				});
+			}}
+		>
+			<div className="challenge_img_area">
 				<img src={ceImg} alt={ceImg} className="challenge_img" />
 				{/* {tItem.bannerImage === null && (
           <div className={'no_img'}>

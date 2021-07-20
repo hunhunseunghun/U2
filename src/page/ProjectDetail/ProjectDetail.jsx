@@ -105,23 +105,51 @@ function ProjectDetail(props) {
 			}
 		}
 	};
+	const handleCopyURL = () => {
+		var dummy = document.createElement('input');
+		var text = window.location.href;
 
-	const handleComment = () => {
+		document.body.appendChild(dummy);
+		dummy.value = text;
+		dummy.select();
+		document.execCommand('copy');
+		document.body.removeChild(dummy);
+		alert('URL이 복사되었습니다.');
+	};
+
+	const handleComment = (reply) => {
 		if (userInfo.email) {
-			var body = {
-				// commentIdx: 0,
-				challengeIdx: challengeIdx,
-				seq: 1,
-				// seqx: 1,
-				memberIdx: userInfo.memberIdx,
-				comment: inputComment,
-				statusCode: 1,
-				// "registMemberIdx": 0,
-				// "registDate": "2021-07-14T11:00:22.230Z",
-				// "modifyMemberIdx": 0,
-				// "modifyDate": "2021-07-14T11:00:22.230Z"
-			};
+			var body = {};
 			// TextFile(body);
+			if (reply) {
+				body = {
+					// commentIdx: 0,
+					challengeIdx: Number(challengeIdx),
+					seq: reply.seqx,
+					// seqx: 1,
+					// memberIdx: userInfo.memberIdx,
+					comment: comments[reply.index].inputReply,
+					statusCode: 1,
+					// "registMemberIdx": 0,
+					// "registDate": "2021-07-14T11:00:22.230Z",
+					// "modifyMemberIdx": 0,
+					// "modifyDate": "2021-07-14T11:00:22.230Z"
+				};
+			} else {
+				body = {
+					// commentIdx: 0,
+					challengeIdx: Number(challengeIdx),
+					seq: 0,
+					// seqx: 1,
+					// memberIdx: userInfo.memberIdx,
+					comment: inputComment,
+					statusCode: 1,
+					// "registMemberIdx": 0,
+					// "registDate": "2021-07-14T11:00:22.230Z",
+					// "modifyMemberIdx": 0,
+					// "modifyDate": "2021-07-14T11:00:22.230Z"
+				};
+			}
 			var config = {
 				method: 'post',
 				url: process.env.REACT_APP_U2_DB_HOST + `/Campaign/challengecomment`,
@@ -134,6 +162,15 @@ function ProjectDetail(props) {
 			axios(config)
 				.then((response) => {
 					console.log('new comment: ', response.data);
+					axios
+						.get(
+							process.env.REACT_APP_U2_DB_HOST +
+								`/Campaign/challengecomments/${challengeIdx}`,
+						)
+						.then((response) => {
+							console.log('comments: ', response.data);
+							setComments(response.data);
+						});
 				})
 				.catch((err) => {
 					console.log(err);
@@ -169,7 +206,11 @@ function ProjectDetail(props) {
 			)
 			.then((response) => {
 				console.log('comments: ', response.data);
-				setComments(response.data);
+				var comments = response.data;
+				let newForm = comments.map((el) => {
+					return { ...el, isReply: false };
+				});
+				setComments(newForm);
 			});
 	}, []);
 	if (!isDataReady) {
@@ -290,19 +331,55 @@ function ProjectDetail(props) {
 							<ul>
 								<li>
 									<div className="sns_img">
-										<img src="/img/ic_facebook.svg" />
+										{/* <img src="/img/ic_facebook.svg" /> */}
+										<FacebookShareButton
+											title={challenge.title}
+											url={'https://u2-web-dev.azurewebsites.net'}
+										>
+											<img src="/img/ic_facebook.svg" />
+										</FacebookShareButton>
 									</div>
 									<div className="sns_title">페이스북</div>
 								</li>
 								<li className="kakao_share">
 									<div className="sns_img">
-										<img src="/img/ic_kakao.svg" />
+										<KakaoShareButton
+											challengeTitle={challenge.title}
+											imageUrl={'test'}
+											// tags={['#test1', '#test2', '#test3']}
+											// social={{
+											// 	likeCount: 10,
+											// 	commentCount: 23,
+											// 	sharedCount: 333,
+											// }}
+											// buttons={[
+											// 	{
+											// 		title: 'button1',
+											// 		link: {
+											// 			mobileWebUrl: window.location.href,
+											// 			webUrl: window.location.href,
+											// 		},
+											// 	},
+											// 	{
+											// 		title: 'button2',
+											// 		link: {
+											// 			mobileWebUrl: window.location.href,
+											// 			webUrl: window.location.href,
+											// 		},
+											// 	},
+											// ]}
+										/>
 									</div>
 									<div className="sns_title">카카오톡</div>
 								</li>
 								<li>
 									<div className="sns_img">
-										<img src="/img/twittericon.svg" />
+										<TwitterShareButton
+											title={challenge.title}
+											url={'https://u2-web-dev.azurewebsites.net'}
+										>
+											<img src="/img/twittericon.svg" />
+										</TwitterShareButton>
 									</div>
 									<div className="sns_title">트위터</div>
 								</li>
@@ -317,7 +394,11 @@ function ProjectDetail(props) {
 									</div>
 									<div className="sns_title">인스타그램</div>
 								</li>
-								<li>
+								<li
+									onClick={() => {
+										handleCopyURL();
+									}}
+								>
 									<div class="sns_img">
 										<img src="/img/ic_url_copy.svg" />
 									</div>
@@ -331,78 +412,133 @@ function ProjectDetail(props) {
 				</section>
 			</section>
 
-			<section>
-				{' '}
-				<KakaoShareButton
-					challengeTitle={challenge.title}
-					imageUrl={'test'}
-					tags={['#test1', '#test2', '#test3']}
-					social={{
-						likeCount: 10,
-						commentCount: 23,
-						sharedCount: 333,
-					}}
-					buttons={[
-						{
-							title: 'button1',
-							link: {
-								mobileWebUrl: window.location.href,
-								webUrl: window.location.href,
-							},
-						},
-						{
-							title: 'button2',
-							link: {
-								mobileWebUrl: window.location.href,
-								webUrl: window.location.href,
-							},
-						},
-					]}
-				/>
-				<FacebookShareButton
-					title={challenge.title}
-					url={'https://u2-web-dev.azurewebsites.net'}
-				>
-					<FaFacebookSquare />
-				</FacebookShareButton>
-				<TwitterShareButton
-					title={challenge.title}
-					url={'https://u2-web-dev.azurewebsites.net'}
-				>
-					<FaTwitter />
-				</TwitterShareButton>
-				<LineShareButton
-					title={challenge.title}
-					url={'https://u2-web-dev.azurewebsites.net'}
-				>
-					<FaLine />
-				</LineShareButton>
-			</section>
-			<section className="comments">
-				{comments.map((el, idx) => {
-					return (
-						<div>
-							<div>{el.memberIdx}</div>
-							<div>{el.comment}</div>
-							<button>답글 달기</button>
-						</div>
-					);
-				})}
-			</section>
+			{/* <section>
+        {' '}
+        <KakaoShareButton
+          challengeTitle={challenge.title}
+          imageUrl={'test'}
+          tags={['#test1', '#test2', '#test3']}
+          social={{
+            likeCount: 10,
+            commentCount: 23,
+            sharedCount: 333,
+          }}
+          buttons={[
+            {
+              title: 'button1',
+              link: {
+                mobileWebUrl: window.location.href,
+                webUrl: window.location.href,
+              },
+            },
+            {
+              title: 'button2',
+              link: {
+                mobileWebUrl: window.location.href,
+                webUrl: window.location.href,
+              },
+            },
+          ]}
+        />
+        <FacebookShareButton
+          title={challenge.title}
+          url={'https://u2-web-dev.azurewebsites.net'}
+        >
+          <FaFacebookSquare />
+        </FacebookShareButton>
+        <TwitterShareButton
+          title={challenge.title}
+          url={'https://u2-web-dev.azurewebsites.net'}
+        >
+          <FaTwitter />
+        </TwitterShareButton>
+        <LineShareButton
+          title={challenge.title}
+          url={'https://u2-web-dev.azurewebsites.net'}
+        >
+          <FaLine />
+        </LineShareButton>
+      </section> */}
 			<section className="commentInput">
-				<input
+				<textarea
 					type="text"
+					placeholder="댓글을 남겨보세요"
 					onChange={(e) => {
 						setInputComment(e.target.value);
 					}}
-				></input>
+				></textarea>
 				<button
 					onClick={() => {
 						handleComment();
 					}}
 				>
-					등록하기
+					등 록
 				</button>
+			</section>
+			<section className="comments">
+				{comments &&
+					comments.map((comment, idx) => {
+						var copyArr = comments.slice();
+						copyArr.splice(idx, 1); //나를 제외한 배열에서 답글 탐색
+						var replies = copyArr.filter(
+							(reply) => reply.seq === comment.seqx && reply.seq !== 1,
+						);
+
+						if (comment.seq !== 1) return; //답글인 경우 아래에서 이미 다 렌더링함.
+						return (
+							<fieldset>
+								<div className="comment_memberidx">
+									<div>{comment.name}</div>
+									<button
+										onClick={() => {
+											let copyArr = comments.slice();
+											copyArr[idx].isReply = !copyArr[idx].isReply;
+											setComments(copyArr);
+										}}
+									>
+										답글
+									</button>
+								</div>
+								<div className="comment_content">{comment.comment}</div>
+
+								{replies.length > 0 &&
+									replies.map((el) => {
+										return (
+											<div className="comment_reply">
+												<img src="/img/replycomment.png" alt="답글 : " />
+												<div className="comment_reply_area">
+													<span className="comment_reply_name">
+														{el.name ? el.name : '닉네임'}
+													</span>
+													<span className="comment_reply_content">
+														{el.comment}
+													</span>
+												</div>
+											</div>
+										);
+									})}
+								<div
+									className="comment_replyregi"
+									style={{
+										display: comments[idx].isReply ? 'grid' : 'none',
+									}}
+								>
+									<input
+										onChange={(e) => {
+											comments[idx].inputReply = e.target.value;
+										}}
+									></input>
+									<button
+										onClick={() => {
+											handleComment({ seqx: comment.seqx, index: idx });
+										}}
+									>
+										등록
+									</button>
+								</div>
+							</fieldset>
+						);
+					})}
 			</section>
 		</ProjectDetailContainer>
 	);
