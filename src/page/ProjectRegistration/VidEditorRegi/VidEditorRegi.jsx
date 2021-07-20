@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import DropDown from './DropDown/DropDown.jsx';
 import FileUploader from './FileUploader/FileUploader.jsx';
 import EditFileUploader from './EditFileUploader/EditFileUploader.jsx';
@@ -12,48 +13,78 @@ import downArrowIcon from '../../../Img/Icons/sortarrowdown.png';
 import { DateTimePicker } from '@material-ui/pickers';
 import { createMuiTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
+import requestBodyGenerator from '../../../library/requestBodyGenerator.js';
+import axios from 'axios';
 
 const VidEditorRegi = () => {
   let history = useHistory();
+  const userInfo = useSelector(state => state.userInfo);
+
+  //handle editor ---------------------------------------------
+  const [title, setTitle] = useState('');
+  const [organizer, setOrganizer] = useState('');
+  const [sponsor, setSponsor] = useState('');
+  const [refvidUrl, setrefvidUrl] = useState('');
+  //대면미팅
+  const [meetCode, setMeetCode] = useState(0);
+  //ownerIdx for API
+  const [ownerIdx, setOwnerIdx] = useState(0);
+  //이메일
+  const [email, setEmail] = useState('');
+  const [emailErr, setEmailErr] = useState('');
+  const [emailExposure, setEmailExposure] = useState(false);
+  //연락처
+  const [mobile1, setMobile1] = useState('010');
+  const [mobile2, setMobile2] = useState('');
+  const [mobile3, setMobile3] = useState('');
+  const [mobileExposure, setMobileExposure] = useState(false);
+  //담당자
+  const [admin, setAdmin] = useState('');
+  const [adminExposure, setAdminExposure] = useState(false);
+  //댓글 기능
+  const [isComment, setIsComment] = useState(true);
+  //상세 내용
+  const [missionDesc, setMissionDesc] = useState('');
+  //시상종류
+  const [contest, setContest] = useState(false);
+  const [overseas, setOverseas] = useState(false);
+  const [camp, setCamp] = useState(false);
+  const [scatterPoint, setScatterPoint] = useState(false);
+  const [intern, setIntern] = useState(false);
+  const [full_time, setFull_time] = useState(false);
+  const [prize, setPrize] = useState(false);
+  const [toggleDirect, setToggleDirect] = useState(false);
+  const [directInput, setDirectInput] = useState('');
+  //접수방법
+  const [isOnline, setIsOnline] = useState(false);
+  const [isSnsRequired, setIsSnsRequired] = useState(true);
+  const [isVideoProduction, setIsVideoProduction] = useState(false);
+  const [isVidRequired, setIsVidRequired] = useState(true);
+  const [isYoutube, setIsYoutube] = useState(false);
+  const [isTiktok, setIsTiktok] = useState(false);
+  const [isVimeo, setIsVimeo] = useState(false);
+  const [isFileOrUrl, setFileOrUrl] = useState(false);
+  //제출자 개인정보 수집
+  const [isEmail, setIsEmail] = useState(false);
+  const [emailRequired, setEmailRequired] = useState(true);
+
+  const [isMobile, setIsMobile] = useState(false);
+  const [mobileRequired, setMobileRequired] = useState(true);
+  //공지 시작일
+  const [noticeStart, setNoticeStart] = useState(new Date());
+
   // handle modal state---------------------------------------
   const [isActive, setIsActive] = useState(false);
   const [defaultIdx, setDefaultIdx] = useState(0);
-  const [profiles, setProfiles] = useState([
-    {
-      form: '개인',
-      companyName: '홍길동',
-      logo: '',
-      email: '',
-      phoneNumber: '',
-      snsId: '',
-      id: 1,
-    },
-    {
-      form: '비즈프로필',
-      companyName: 'abc입니다.test입니다.',
-      logo: '',
-      email: 'abc@gmail.com',
-      phoneNumber: '023333333',
-      snsId: 'abcCompany',
-      id: 2,
-    },
-    {
-      form: '비즈프로필',
-      companyName: 'U2',
-      logo: '',
-      email: '',
-      phoneNumber: '',
-      snsId: '',
-      id: 3,
-    },
-  ]);
+  const [profiles, setProfiles] = useState([]);
   // file uploade ---------------------------------------
-  const [etcFile, setEtcFile] = useState(null);
+  const [etcFile, setEtcFile] = useState([]);
   const [etcFilePath, setEtcFilePath] = useState('Choose file to upload');
-  const [editTargetFile, setEditTargetFile] = useState(null);
+  const [editTargetFile, setEditTargetFile] = useState([]);
   const [editTargetFilePath, setEditTargetFilePath] = useState(
     'Choose file to upload'
   );
+
   //-----------------------------------------------------
 
   const [onMeet, setOnMeet] = useState(null); //온라인 오프라인 미팅 state 값
@@ -77,6 +108,112 @@ const VidEditorRegi = () => {
     setFinishDate(date);
   };
 
+  const body = requestBodyGenerator(
+    {
+      memberIdx: userInfo.memberIdx,
+      title: title,
+      ownerIdx: ownerIdx,
+      // // ownerName: profiles[defaultIdx].companyName,
+      // // ownerCat: profiles[defaultIdx].cat,
+      // // company: profiles[defaultIdx].companyName,
+      // companyA: organizer,
+      // companyB: sponsor,
+      url: refvidUrl,
+      missionDesc: missionDesc,
+      meetCode: meetCode,
+      // mainImage: posterFile.length > 0 ? posterFile[0].name : null,
+      // fileRef: etcFile,
+      shareRequired: isOnline ? (isSnsRequired ? 2 : 1) : 0,
+      filmRequired: isVideoProduction ? (isVidRequired ? 2 : 1) : 0,
+      fileOrUrl: isFileOrUrl ? 1 : 0,
+      emailRequired: isEmail ? (emailRequired ? 2 : 1) : 0,
+      contactRequired: isMobile ? (mobileRequired ? 2 : 1) : 0,
+      // dateBegin: startDate,
+      // dateFin: finishDate,
+      // datePub: noticeStart,
+      // // rewards: rewards,
+      // // videos: videos,
+      // // challengeDesc: viewRef.current.getAttribute('content_data'),
+      // // challengeDesc: quillText,
+      // commentAllowed: isComment,
+      // charge: admin,
+      // chargeShown: adminExposure,
+      // chargeContact: `${mobile1}-${mobile2}-${mobile3}`,
+      // chargeContactShown: mobileExposure,
+      // chargeeMail: email,
+      // chargeeMailShown: emailExposure,
+    },
+    '전문영상편집자'
+  );
+
+  console.log(body);
+  // var config = {
+  //   method: 'post',
+  //   url: process.env.REACT_APP_U2_DB_HOST + '/Campaign/challenge',
+  //   headers: {
+  //     Authorization: 'Bearer ' + localStorage.getItem('token'),
+  //     'Content-Type': 'application/json',
+  //   },
+  //   data: body,
+  // };
+
+  // useEffect(() => {
+  //   axios.post(config).then(res => {
+  //     console.log(res);
+  //   });
+  // });
+
+  // };
+
+  const handleNewData = data => {
+    var newForm = {
+      form: data.ownerCat ? '비즈프로필' : '개인',
+      cat: data.ownerCat,
+      companyName: data.company,
+      email: data.email,
+      phoneNumber: data.contact,
+      snsId: data.socialMediaId,
+      snsType: data.socialMediaCode,
+      id: data.ownerIdx,
+    };
+
+    setProfiles([...profiles, newForm]);
+  };
+
+  useEffect(() => {
+    var config = {
+      method: 'get',
+      url:
+        process.env.REACT_APP_U2_DB_HOST +
+        `/Campaign/challengeowners/${userInfo.memberIdx}`,
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+        'Content-Type': 'application/json',
+      },
+    };
+    axios(config)
+      .then(response => {
+        var data = response.data;
+
+        var newForm = data.map(el => {
+          return {
+            form: el.ownerCat ? '비즈프로필' : '개인',
+            cat: el.ownerCat,
+            companyName: el.company,
+            email: el.email,
+            phoneNumber: el.contact,
+            snsId: el.socialMediaId,
+            snsType: el.socialMediaCode,
+            id: el.ownerIdx,
+          };
+        });
+        setOwnerIdx(data[0].ownerIdx);
+        // setCompetition(newForm);
+        setProfiles(newForm);
+      })
+      .catch(err => console.log(err));
+  }, []);
+
   //window.localstorage에 state 저장 페이지 새로고침시 state값 유지 목적
   useEffect(() => {
     setOnMeet(JSON.parse(myStorage.getItem('onMeet')));
@@ -84,7 +221,12 @@ const VidEditorRegi = () => {
 
   useEffect(() => {
     myStorage.setItem('onMeet', onMeet);
-    console.log('useEffect excuted');
+
+    if (onMeet) {
+      setMeetCode(0);
+    } else {
+      setMeetCode(1);
+    }
   }, [onMeet]);
 
   // on offline meet state handle
@@ -128,7 +270,10 @@ const VidEditorRegi = () => {
             <div className="menu">* 주최사</div>
             <div className="inputInfo company_profiles">
               <div className="default_profile">
-                <div>{`${profiles[defaultIdx].form} : ${profiles[defaultIdx].companyName}`}</div>
+                <div>
+                  {profiles.length &&
+                    `${profiles[defaultIdx].form} : ${profiles[defaultIdx].companyName}`}
+                </div>
                 <img
                   src={downArrowIcon}
                   alt=""
@@ -139,9 +284,12 @@ const VidEditorRegi = () => {
               </div>
               <DropDown
                 setDefaultIdx={setDefaultIdx}
+                setOwnerIdx={setOwnerIdx}
                 profiles={profiles}
                 setIsActive={setIsActive}
                 isActive={isActive}
+                handleNewData={handleNewData}
+                setOwnerIdx={setOwnerIdx}
               />
             </div>
           </section>
@@ -149,7 +297,13 @@ const VidEditorRegi = () => {
             <div className="menu">* 프로젝트명</div>
             <div className="inputInfo videditor_project_name">
               <div>
-                <input type="text" />
+                <input
+                  type="text"
+                  onChange={e => {
+                    setTitle(e.target.value);
+                  }}
+                  maxLength={20}
+                />
               </div>
             </div>
           </section>
@@ -157,7 +311,13 @@ const VidEditorRegi = () => {
             <div className="menu">참고 영상 URL</div>
             <div className="inputInfo videditor_reference_url">
               <div>
-                <input type="text" placeholder="www.youtube.com/u2life" />
+                <input
+                  type="text"
+                  placeholder="www.youtube.com/u2life"
+                  onChange={e => {
+                    setrefvidUrl(e.target.value);
+                  }}
+                />
               </div>
               <div>
                 제작하려는 영상과 비슷한 유형이 있다면 URL을 입력하여 공유해
@@ -176,6 +336,9 @@ const VidEditorRegi = () => {
                   placeholder={
                     'U2 서비스 매니저에게 프로젝트에 대해서 좀 더 자세한 내용을 알려주세요'
                   }
+                  onChange={e => {
+                    setMissionDesc(e.target.value);
+                  }}
                 />
               </div>
             </div>
@@ -262,7 +425,13 @@ const VidEditorRegi = () => {
                       <td>
                         {' '}
                         <div className="table_checkarea">
-                          <input type="checkbox" />
+                          <input
+                            type="checkbox"
+                            onClick={() => {
+                              setIsOnline(!isOnline);
+                            }}
+                            checked={isOnline}
+                          />
                         </div>{' '}
                       </td>
                       <td>
@@ -272,15 +441,36 @@ const VidEditorRegi = () => {
                         {' '}
                         <section className="reception_options">
                           <div>
-                            <input type="checkbox" value="youtube" />
+                            <input
+                              type="checkbox"
+                              value="youtube"
+                              onClick={() => {
+                                setIsYoutube(!isYoutube);
+                              }}
+                              disabled={!isOnline}
+                            />
                             <label>Youtube</label>
                           </div>
                           <div>
-                            <input type="checkbox" value="Tiktok" />
+                            <input
+                              type="checkbox"
+                              value="Tiktok"
+                              onClick={() => {
+                                setIsTiktok(!isTiktok);
+                              }}
+                              disabled={!isOnline}
+                            />
                             <label>Tiktok</label>
                           </div>
                           <div>
-                            <input type="checkbox" value="Vimeo" />
+                            <input
+                              type="checkbox"
+                              value="Vimeo"
+                              onClick={() => {
+                                setIsVimeo(!isVimeo);
+                              }}
+                              disabled={!isOnline}
+                            />
                             <label>Vimeo</label>
                           </div>
                         </section>
@@ -292,6 +482,10 @@ const VidEditorRegi = () => {
                               type="radio"
                               name="snsRequired"
                               value="필수"
+                              onClick={() => {
+                                setIsSnsRequired(true);
+                              }}
+                              disabled={!isOnline}
                               defaultChecked
                             />
                             <label>필수</label>
@@ -301,6 +495,10 @@ const VidEditorRegi = () => {
                               type="radio"
                               name="snsRequired"
                               value="선택"
+                              onClick={() => {
+                                setIsSnsRequired(false);
+                              }}
+                              disabled={!isOnline}
                             />
                             <label>선택사항</label>
                           </div>
@@ -311,7 +509,12 @@ const VidEditorRegi = () => {
                       <td>
                         {' '}
                         <div className="table_checkarea">
-                          <input type="checkbox" />
+                          <input
+                            type="checkbox"
+                            onClick={() => {
+                              setIsVideoProduction(!isVideoProduction);
+                            }}
+                          />
                         </div>{' '}
                       </td>
                       <td>
@@ -325,6 +528,10 @@ const VidEditorRegi = () => {
                               type="radio"
                               name="vidReception"
                               value="파일업로드"
+                              onClick={() => {
+                                setFileOrUrl(true);
+                              }}
+                              disabled={!isVideoProduction}
                               defaultChecked
                             />
                             <label>파일 업로드</label>
@@ -334,6 +541,10 @@ const VidEditorRegi = () => {
                               type="radio"
                               name="vidReception"
                               value="URL공유"
+                              onClick={() => {
+                                setFileOrUrl(false);
+                              }}
+                              disabled={!isVideoProduction}
                             />
                             <label>URL 공유</label>
                           </div>
@@ -372,7 +583,13 @@ const VidEditorRegi = () => {
                       <td>
                         {' '}
                         <div className="table_checkarea">
-                          <input type="checkbox" value="emailselected" />
+                          <input
+                            type="checkbox"
+                            value="emailselected"
+                            onClick={() => {
+                              setIsEmail(!isEmail);
+                            }}
+                          />
                         </div>{' '}
                       </td>
                       <td>
@@ -386,6 +603,11 @@ const VidEditorRegi = () => {
                               type="radio"
                               name="emailRequired"
                               value="필수"
+                              onClick={() => {
+                                setEmailRequired(true);
+                              }}
+                              disabled={!isEmail}
+                              defaultChecked
                             />
                             <label>Youtube</label>
                           </div>
@@ -394,6 +616,10 @@ const VidEditorRegi = () => {
                               type="radio"
                               name="emailRequired"
                               value="선택"
+                              onClick={() => {
+                                setEmailRequired(false);
+                              }}
+                              disabled={!isEmail}
                             />
                             <label>Tiktok</label>
                           </div>
@@ -404,7 +630,13 @@ const VidEditorRegi = () => {
                       <td>
                         {' '}
                         <div className="table_checkarea">
-                          <input type="checkbox" value="phoneselected" />
+                          <input
+                            type="checkbox"
+                            value="phoneselected"
+                            onClick={() => {
+                              setIsMobile(!isMobile);
+                            }}
+                          />
                         </div>{' '}
                       </td>
                       <td>
@@ -417,7 +649,11 @@ const VidEditorRegi = () => {
                               type="radio"
                               name="phoneRquired"
                               value="필수"
+                              onClick={() => {
+                                setMobileRequired(true);
+                              }}
                               defaultChecked
+                              disabled={!isMobile}
                             />
                             <label>필수</label>
                           </div>
@@ -426,6 +662,10 @@ const VidEditorRegi = () => {
                               type="radio"
                               name="phoneRquired"
                               value="선택"
+                              onClick={() => {
+                                setMobileRequired(false);
+                              }}
+                              disabled={!isMobile}
                             />
                             <label>선택사항</label>
                           </div>
