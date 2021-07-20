@@ -140,8 +140,8 @@ export const ProjectDetailContainer = styled.div`
     position: absolute;
     top: 25px;
     right: 0;
-    width: 190px;
-    padding: 10px 10px;
+    width: 240px;
+    padding: 10px 5px;
     z-index: 10;
 
     header {
@@ -168,9 +168,7 @@ export const ProjectDetailContainer = styled.div`
     ul {
       margin-bottom: 10px;
     }
-    ul:last-child {
-      width: 80%;
-    }
+
     li {
       display: grid;
       place-items: center;
