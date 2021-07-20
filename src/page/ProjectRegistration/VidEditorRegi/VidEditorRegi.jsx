@@ -30,8 +30,9 @@ const VidEditorRegi = () => {
   //보상일 비활성화
   const [confirmRewardsDate, SetConfirmRewardsDate] = useState(true);
   //보상 조건
-  const [isCurrencyReward, setIsCurrencyReward] = useState(false);
+
   const [isDirectReward, setIsDirectReward] = useState(false);
+  const [isCurrencyReward, setIsCurrencyReward] = useState(false);
   const [rewardCurrency, setRewardCurrency] = useState(null);
   const [rewardDirect, setRewardDirect] = useState(null);
   //ownerIdx for API
