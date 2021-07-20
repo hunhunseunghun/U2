@@ -72,25 +72,44 @@ function ParticipateTable() {
 									})(),
 									title: el.title ? el.title : 'no data',
 									status: (() => {
-										switch (myApplication.checkStatusCode) {
-											case 1: {
-												return '승인';
+										console.log('el: ', el);
+
+										if (
+											//공모전 또는 전문영상편집자
+											el.challengeTargetCode === 1 ||
+											el.challengeTargetCode === 3
+										) {
+											if (myApplication.statusCode === 0) return '챌린지';
+											switch (myApplication.checkStatusCode) {
+												case 1: {
+													return '승인';
+												}
+												case -1: {
+													return '반려';
+												}
+												case 0: {
+													return '검수중';
+												}
+												default: {
+													return null;
+												}
 											}
-											case 2: {
-												return '반려';
-											}
-											case 3: {
-												return '피드백';
-											}
-											case 8: {
-												return '진행중';
-											}
-											case 0: {
-												return '챌린지';
-											}
-											default: {
-												return null;
-											}
+										} else {
+											// if (myHireApply.statusCode === 0) return '챌린지';
+											// switch (myHireApply.checkStatusCode) {
+											// 	case 1: {
+											// 		return '승인';
+											// 	}
+											// 	case -1: {
+											// 		return '반려';
+											// 	}
+											// 	case 0: {
+											// 		return '지원완료';
+											// 	}
+											// 	default: {
+											// 		return null;
+											// 	}
+											// }
 										}
 									})(),
 									presentationType: (() => {

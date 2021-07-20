@@ -18,7 +18,7 @@ function SubmissionModal({
 		setFbProps({ open: false, data: null });
 	};
 	useEffect(() => {
-		if (challengeIdx) {
+		if (challengeIdx && !propsData) {
 			var config = {
 				method: 'get',
 				url:
@@ -38,7 +38,25 @@ function SubmissionModal({
 	useEffect(() => {
 		if (propsData) {
 			console.log('propsData: ', propsData);
-			setData(propsData);
+			var config = {
+				method: 'get',
+				url:
+					process.env.REACT_APP_U2_DB_HOST +
+					`/Campaign/challengesubmit/${Number(
+						propsData.challengeIdx,
+					)}?memberIdx=${propsData.memberIdx}`,
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+					'Content-Type': 'application/json',
+				},
+			};
+			axios(config)
+				.then((response) => {
+					console.log('data in submission: ', response.data);
+					setData(response.data);
+				})
+				.catch((err) => console.log(err));
+			// setData(propsData);
 		}
 	}, [propsData]);
 	return (
@@ -110,7 +128,11 @@ function SubmissionModal({
 							<section className="submission_modal_ele submission_modal_ele_last">
 								<div className="menu">검수자 피드백</div>
 								<div className="inputInfo">
-									{data.feedback ? data.feedback : '내용없음'}
+									{data.feedback
+										? data.feedback.comment
+											? data.feedback.comment
+											: '내용없음'
+										: '-'}
 								</div>
 							</section>
 						</main>

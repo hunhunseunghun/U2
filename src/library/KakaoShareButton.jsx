@@ -35,7 +35,7 @@ const KakaoShareButton = ({
 				objectType: 'feed',
 				content: {
 					title: challengeTitle,
-					description: tags.join(' '),
+					// description: tags.join(' ') ,
 					imageUrl: imageUrl, // i.e. process.env.FETCH_URL + '/logo.png'
 					link: {
 						mobileWebUrl: window.location.href,
@@ -44,8 +44,8 @@ const KakaoShareButton = ({
 						// webUrl: 'https://www.naver.com',
 					},
 				},
-				social: social,
-				buttons: buttons,
+				// social: social,
+				// buttons: buttons,
 			});
 		}
 	};
