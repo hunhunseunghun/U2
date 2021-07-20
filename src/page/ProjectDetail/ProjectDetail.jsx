@@ -114,6 +114,7 @@ function ProjectDetail(props) {
 		dummy.select();
 		document.execCommand('copy');
 		document.body.removeChild(dummy);
+		alert('URL이 복사되었습니다.');
 	};
 
 	const handleComment = (reply) => {
@@ -345,28 +346,28 @@ function ProjectDetail(props) {
 										<KakaoShareButton
 											challengeTitle={challenge.title}
 											imageUrl={'test'}
-											tags={['#test1', '#test2', '#test3']}
-											social={{
-												likeCount: 10,
-												commentCount: 23,
-												sharedCount: 333,
-											}}
-											buttons={[
-												{
-													title: 'button1',
-													link: {
-														mobileWebUrl: window.location.href,
-														webUrl: window.location.href,
-													},
-												},
-												{
-													title: 'button2',
-													link: {
-														mobileWebUrl: window.location.href,
-														webUrl: window.location.href,
-													},
-												},
-											]}
+											// tags={['#test1', '#test2', '#test3']}
+											// social={{
+											// 	likeCount: 10,
+											// 	commentCount: 23,
+											// 	sharedCount: 333,
+											// }}
+											// buttons={[
+											// 	{
+											// 		title: 'button1',
+											// 		link: {
+											// 			mobileWebUrl: window.location.href,
+											// 			webUrl: window.location.href,
+											// 		},
+											// 	},
+											// 	{
+											// 		title: 'button2',
+											// 		link: {
+											// 			mobileWebUrl: window.location.href,
+											// 			webUrl: window.location.href,
+											// 		},
+											// 	},
+											// ]}
 										/>
 									</div>
 									<div className="sns_title">카카오톡</div>
@@ -487,7 +488,7 @@ function ProjectDetail(props) {
 						return (
 							<fieldset>
 								<div className="comment_memberidx">
-									<div>{comment.memberIdx}</div>
+									<div>{comment.name}</div>
 									<button
 										onClick={() => {
 											let copyArr = comments.slice();
@@ -507,7 +508,7 @@ function ProjectDetail(props) {
 												<img src="/img/replycomment.png" alt="답글 : " />
 												<div className="comment_reply_area">
 													<span className="comment_reply_name">
-														{el.userName ? el.userName : '닉네임'}
+														{el.name ? el.name : '닉네임'}
 													</span>
 													<span className="comment_reply_content">
 														{el.comment}

@@ -94,8 +94,39 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 		// setSubjects({ ...subjects, pageSize: pageSize });
 		// setPagedSubjects(paginate(data, 1, pageSize));
 	};
-
-	const handleBulkOkay = () => {};
+	//0. 검수되지않은 경우
+	//1. 검수완료
+	//-1. 반려
+	const handleBulkOkay = () => {
+		var body = [];
+		var indexs = [];
+		for (let i = 0; i < pagedCheckboxes.length; i++) {
+			if (pagedCheckboxes[i]) {
+				indexs.push(i);
+			}
+		}
+		for (let i = 0; i < indexs.length; i++) {
+			body.push({
+				missionSeq: 1,
+				memberIdx: pagedSubjects[indexs[i]].memberIdx,
+			});
+		}
+		console.log('body: ', body);
+		var config = {
+			method: 'post',
+			url:
+				process.env.REACT_APP_U2_DB_HOST +
+				`/Campaign/challengesubmitcheckbulk/${challengeIdx}?checkStatus=${1}`,
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+			data: body,
+		};
+		axios(config)
+			.then((response) => console.log(response.data))
+			.catch((err) => console.log(err));
+	};
 
 	useEffect(() => {
 		var config = {
@@ -136,7 +167,7 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 		<InspectTableContainer>
 			<section className="inspect_table_header">
 				<section className="inspect_table_header_left">
-					<button>승인</button>
+					<button onClick={() => handleBulkOkay()}>승인</button>
 					<button>반려</button>
 					<button>피드백</button>
 				</section>

@@ -14,7 +14,7 @@ export const Pagination2Styled = styled.nav`
 		border: none;
 		/* width: 30px; */
 		margin: 0 1px;
-		background-color: #fafafa;
+		background-color: inherit;
 		color: #747474;
 	}
 	button:hover {
