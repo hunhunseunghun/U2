@@ -27,8 +27,16 @@ const VidEditorRegi = () => {
   const [refvidUrl, setrefvidUrl] = useState('');
   //대면미팅
   const [meetCode, setMeetCode] = useState(0);
+  //보상일 비활성화
+  const [confirmRewardsDate, SetConfirmRewardsDate] = useState(true);
+  //보상 조건
+  const [isCurrencyReward, setIsCurrencyReward] = useState(false);
+  const [isDirectReward, setIsDirectReward] = useState(false);
+  const [rewardCurrency, setRewardCurrency] = useState(null);
+  const [rewardDirect, setRewardDirect] = useState(null);
   //ownerIdx for API
   const [ownerIdx, setOwnerIdx] = useState(0);
+
   //이메일
   const [email, setEmail] = useState('');
   const [emailErr, setEmailErr] = useState('');
@@ -70,8 +78,6 @@ const VidEditorRegi = () => {
 
   const [isMobile, setIsMobile] = useState(false);
   const [mobileRequired, setMobileRequired] = useState(true);
-  //공지 시작일
-  const [noticeStart, setNoticeStart] = useState(new Date());
 
   // handle modal state---------------------------------------
   const [isActive, setIsActive] = useState(false);
@@ -93,7 +99,7 @@ const VidEditorRegi = () => {
   //handle date ----------------------------------------------
   const [startDate, setStartDate] = useState(new Date());
   const [finishDate, setFinishDate] = useState(new Date());
-  const [rewardDate, setRewardDate] = useState(new Date());
+  const [rewardDate, setRewardDate] = useState(null);
 
   // handle datetime picker theme------------------------------
   const materialTheme = createMuiTheme({
@@ -108,63 +114,83 @@ const VidEditorRegi = () => {
     setFinishDate(date);
   };
 
-  const body = requestBodyGenerator(
-    {
-      memberIdx: userInfo.memberIdx,
-      title: title,
-      ownerIdx: ownerIdx,
-      // // ownerName: profiles[defaultIdx].companyName,
-      // // ownerCat: profiles[defaultIdx].cat,
-      // // company: profiles[defaultIdx].companyName,
-      // companyA: organizer,
-      // companyB: sponsor,
-      url: refvidUrl,
-      missionDesc: missionDesc,
-      meetCode: meetCode,
-      // mainImage: posterFile.length > 0 ? posterFile[0].name : null,
-      // fileRef: etcFile,
-      shareRequired: isOnline ? (isSnsRequired ? 2 : 1) : 0,
-      filmRequired: isVideoProduction ? (isVidRequired ? 2 : 1) : 0,
-      fileOrUrl: isFileOrUrl ? 1 : 0,
-      emailRequired: isEmail ? (emailRequired ? 2 : 1) : 0,
-      contactRequired: isMobile ? (mobileRequired ? 2 : 1) : 0,
-      // dateBegin: startDate,
-      // dateFin: finishDate,
-      // datePub: noticeStart,
-      // // rewards: rewards,
-      // // videos: videos,
-      // // challengeDesc: viewRef.current.getAttribute('content_data'),
-      // // challengeDesc: quillText,
-      // commentAllowed: isComment,
-      // charge: admin,
-      // chargeShown: adminExposure,
-      // chargeContact: `${mobile1}-${mobile2}-${mobile3}`,
-      // chargeContactShown: mobileExposure,
-      // chargeeMail: email,
-      // chargeeMailShown: emailExposure,
-    },
-    '전문영상편집자'
-  );
+  const handleSubmit = () => {
+    console.log('userInfo: ', userInfo);
+    var rewards = [];
+    var rewardsEle = {};
 
-  console.log(body);
-  // var config = {
-  //   method: 'post',
-  //   url: process.env.REACT_APP_U2_DB_HOST + '/Campaign/challenge',
-  //   headers: {
-  //     Authorization: 'Bearer ' + localStorage.getItem('token'),
-  //     'Content-Type': 'application/json',
-  //   },
-  //   data: body,
-  // };
+    if (rewardCurrency) {
+      if (confirmRewardsDate && rewardDate) {
+        rewardsEle.datePayment = rewardDate;
+        rewardsEle.currency = rewardCurrency;
+      }
+    }
 
-  // useEffect(() => {
-  //   axios.post(config).then(res => {
-  //     console.log(res);
-  //   });
-  // });
+    console.log(rewardsEle);
+    console.log(rewards);
 
-  // };
+    var videos = [];
+    isYoutube && videos.push({ platform: 'YU' });
+    isTiktok && videos.push({ platform: 'TT' });
+    isVimeo && videos.push({ platform: 'VM' });
 
+    const body = requestBodyGenerator(
+      {
+        memberIdx: userInfo.memberIdx,
+        title: title,
+        ownerIdx: ownerIdx,
+        // // ownerName: profiles[defaultIdx].companyName,
+        // // ownerCat: profiles[defaultIdx].cat,
+        // // company: profiles[defaultIdx].companyName,
+        // companyA: organizer,
+        // companyB: sponsor,
+        url: refvidUrl,
+        missionDesc: missionDesc,
+        meetCode: meetCode,
+        // mainImage: posterFile.length > 0 ? posterFile[0].name : null,
+        // fileRef: etcFile,
+        shareRequired: isOnline ? (isSnsRequired ? 2 : 1) : 0,
+        filmRequired: isVideoProduction ? (isVidRequired ? 2 : 1) : 0,
+        fileOrUrl: isFileOrUrl ? 1 : 0,
+        emailRequired: isEmail ? (emailRequired ? 2 : 1) : 0,
+        contactRequired: isMobile ? (mobileRequired ? 2 : 1) : 0,
+        dateBegin: startDate,
+        dateFin: finishDate,
+        // datePub: noticeStart,
+        rewards: rewards,
+        // // videos: videos,
+        // // challengeDesc: viewRef.current.getAttribute('content_data'),
+        // // challengeDesc: quillText,
+        // commentAllowed: isComment,
+        // charge: admin,
+        // chargeShown: adminExposure,
+        // chargeContact: `${mobile1}-${mobile2}-${mobile3}`,
+        // chargeContactShown: mobileExposure,
+        // chargeeMail: email,
+        // chargeeMailShown: emailExposure,
+      },
+      '전문영상편집자'
+    );
+
+    console.log(body);
+    // var config = {
+    //   method: 'post',
+    //   url: process.env.REACT_APP_U2_DB_HOST + '/Campaign/challenge',
+    //   headers: {
+    //     Authorization: 'Bearer ' + localStorage.getItem('token'),
+    //     'Content-Type': 'application/json',
+    //   },
+    //   data: body,
+    // };
+
+    // useEffect(() => {
+    //   axios.post(config).then(res => {
+    //     console.log(res);
+    //   });
+    // });
+
+    // };
+  };
   const handleNewData = data => {
     var newForm = {
       form: data.ownerCat ? '비즈프로필' : '개인',
@@ -257,7 +283,7 @@ const VidEditorRegi = () => {
     <RegiConationer className="contents_wrap">
       <div className="videditorregi_section">
         <div className="videditorregi_title_area">
-          <div>프로젝트 등록</div>
+          <div onClick={handleSubmit}>프로젝트 등록</div>
           <div className="videditorregi_title_style"></div>
         </div>
         <section className="videditorregi_title_sub">
@@ -727,30 +753,45 @@ const VidEditorRegi = () => {
             <div className="inputInfo videditor_rewarddate">
               <div className="videditor_reward_date_select">
                 <div className="fixed_date">
-                  <input type="radio" name="videditorRewardDate" />
+                  <input
+                    type="radio"
+                    name="videditorRewardDate"
+                    onClick={() => {
+                      SetConfirmRewardsDate(true);
+                    }}
+                    defaultChecked
+                  />
                   <div>확정일</div>
                 </div>
                 <div className="discussed_date">
-                  <input type="radio" name="videditorRewardDate" />
+                  <input
+                    type="radio"
+                    name="videditorRewardDate"
+                    onClick={() => {
+                      SetConfirmRewardsDate(false);
+                    }}
+                  />
                   <div>추후 협의</div>
                 </div>
               </div>
               <div className="videditor_rewarddate_wrap">
-                <ThemeProvider theme={materialTheme}>
-                  <DateTimePicker
-                    className="dtPicker"
-                    label="시작 날짜 선택"
-                    inputVariant="outlined"
-                    value={rewardDate}
-                    onChange={date => setRewardDate(date)}
-                    format="yyyy/MM/dd hh:mm a"
-                    disablePast={true}
-                    minDate={new Date()}
-                    minDateMessage={false}
-                    // minDateMessage="현 시각 이후부터 가능합니다"
-                    strictCompareDates={true}
-                  />
-                </ThemeProvider>
+                {confirmRewardsDate ? (
+                  <ThemeProvider theme={materialTheme}>
+                    <DateTimePicker
+                      className="dtPicker"
+                      label="시작 날짜 선택"
+                      inputVariant="outlined"
+                      value={rewardDate}
+                      onChange={date => setRewardDate(date)}
+                      format="yyyy/MM/dd hh:mm a"
+                      disablePast={true}
+                      minDate={new Date()}
+                      minDateMessage={false}
+                      // minDateMessage="현 시각 이후부터 가능합니다"
+                      strictCompareDates={true}
+                    />
+                  </ThemeProvider>
+                ) : null}
               </div>
             </div>
           </section>
@@ -768,6 +809,9 @@ const VidEditorRegi = () => {
                             type="checkbox"
                             name="rewardcash"
                             value="rewardcash"
+                            onClick={() => {
+                              setIsCurrencyReward(!isCurrencyReward);
+                            }}
                           />
                         </div>{' '}
                       </td>
@@ -782,9 +826,16 @@ const VidEditorRegi = () => {
                               type="text"
                               name="rewardcash"
                               placeholder="무료일 경우 0원 입력"
+                              onChange={e => {
+                                setRewardCurrency(e.target.value);
+                              }}
+                              disabled={!isCurrencyReward}
                             />
 
-                            <select name="currencyselect">
+                            <select
+                              name="currencyselect"
+                              disabled={!isCurrencyReward}
+                            >
                               <option value="krw">KRW</option>
                             </select>
                           </div>
@@ -803,6 +854,9 @@ const VidEditorRegi = () => {
                             type="checkbox"
                             name="rewardproduct"
                             value="rewardproduct"
+                            onClick={() => {
+                              setIsDirectReward(!isDirectReward);
+                            }}
                           />
                         </div>{' '}
                       </td>
@@ -812,7 +866,14 @@ const VidEditorRegi = () => {
                       <td>
                         <section className="reception_options">
                           <div>
-                            <input type="text" name="rewardproduct" />
+                            <input
+                              type="text"
+                              name="rewardproduct"
+                              onChange={e => {
+                                setRewardDirect(e.target.value);
+                              }}
+                              disabled={!isDirectReward}
+                            />
                           </div>
                           <div>
                             상품, 사은품, 상품권 등 지급할 현물을 입력해
