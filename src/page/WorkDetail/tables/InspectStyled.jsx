@@ -139,7 +139,6 @@ export const InspectTableContainer = styled.div`
 
     button {
       position: relative;
-      top: -34px;
       width: 112px;
       height: 39px;
       background: linear-gradient(#fff, #f2f2f2);

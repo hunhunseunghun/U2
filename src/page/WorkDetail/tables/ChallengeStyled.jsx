@@ -71,4 +71,23 @@ export const ChallengeTableContainer = styled.div`
       }
     }
   }
+  .bt_list {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      position: relative;
+      width: 112px;
+      height: 39px;
+      background: linear-gradient(#fff, #f2f2f2);
+      border: 1px solid #eee;
+      color: #747474;
+      font-size: 12px;
+      &:hover {
+        cursor: pointer;
+        background: linear-gradient(#fff, #e0e0e0);
+      }
+    }
+  }
 `;
