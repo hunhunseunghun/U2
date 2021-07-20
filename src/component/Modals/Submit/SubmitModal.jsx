@@ -299,7 +299,7 @@ function Modal({ open, challenge, handleModalClose }) {
 			photo: image,
 			note: note,
 			statusCode: 1,
-			checkStatusCode: 8,
+			checkStatusCode: 0,
 			dateApplied: new Date(),
 			// registMemberIdx: userInfo.memberIdx,
 			// registDate: '2021-07-08T12:43:08.139Z',

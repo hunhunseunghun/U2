@@ -24,6 +24,7 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 	const [count, setCount] = useState(0);
 	const [pagedSubjects, setPagedSubjects] = useState(null);
 	const [pagedCheckboxes, setPagedCheckBoxes] = useState(null);
+	const [pagedSelects, setPagedSelects] = useState([]);
 	// let [pagedSubjects, setPagedSubjects] = useState(pagedDatas);
 	// let [pagedCheckboxes, setPagedCheckBoxes] = useState(pagedArr);
 	let [plusIndex, setPlusIndex] = useState(0);
@@ -43,14 +44,14 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 		};
 		axios(config)
 			.then((res) => {
-				console.log('challengeidx response:');
-				console.log(res);
-				console.log(challengeIdx);
+				// console.log('handle page change res:');
+				// console.log(res.data);
+				// console.log(challengeIdx);
 
 				setCount(res.data.total);
-				setPagedSubjects(paginate(res.data.entities, res.data.page, pageSize));
-				setPlusIndex((page - 1) * pageSize);
-				setPagedCheckBoxes(paginate(allCheckBoxes, page, pageSize));
+				setPlusIndex((changedPage - 1) * pageSize);
+				setPagedSubjects(res.data.entities);
+				setPagedCheckBoxes(paginate(allCheckBoxes, changedPage, pageSize));
 				setIsLoading(true);
 			})
 			.catch((err) => {
@@ -75,14 +76,12 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 		};
 		axios(config)
 			.then((res) => {
-				console.log('challengeidx response:');
-				console.log(res);
-				console.log(challengeIdx);
+				// console.log('handle page change res:');
+				// console.log(res.data);
+				// console.log(challengeIdx);
 
 				setCount(res.data.total);
-				setPagedSubjects(
-					paginate(res.data.entities, res.data.page, changedSize),
-				);
+				setPagedSubjects(res.data.entities);
 				setPlusIndex((page - 1) * changedSize);
 				setPagedCheckBoxes(paginate(allCheckBoxes, page, changedSize));
 				setIsLoading(true);
@@ -97,7 +96,59 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 	//0. 검수되지않은 경우
 	//1. 검수완료
 	//-1. 반려
-	const handleBulkOkay = () => {
+	const handleSingleStatus = (memberIdx, checkStatusCode) => {
+		var body = {
+			challengeIdx: challengeIdx,
+			missonSeq: 1,
+			memberIdx: memberIdx,
+			checkStatusCode: checkStatusCode,
+		};
+		console.log('body: ', body);
+		var config = {
+			method: 'post',
+			url: process.env.REACT_APP_U2_DB_HOST + `/Campaign/challengesubmitcheck`,
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+			data: body,
+		};
+		axios(config)
+			.then((response) => {
+				var config = {
+					method: 'get',
+					url:
+						process.env.REACT_APP_U2_DB_HOST +
+						`/Campaign/challengesubmitted/${challengeIdx}?size=${pageSize}&p=${page}`,
+					headers: {
+						Authorization: 'Bearer ' + localStorage.getItem('token'),
+						'Content-Type': 'application/json',
+					},
+				};
+				axios(config)
+					.then((res) => {
+						// console.log('challengeidx response:');
+						// console.log(res);
+						// console.log(challengeIdx);
+
+						setCount(res.data.total);
+						setPagedSubjects(res.data.entities);
+						setAllCheckBoxes(new Array(res.data.total).fill(false));
+						setPlusIndex((page - 1) * pageSize);
+						setPagedCheckBoxes(
+							paginate(new Array(res.data.total).fill(false), page, pageSize),
+						);
+						setIsLoading(true);
+					})
+					.catch((err) => {
+						console.log('workdetail error');
+						console.log(err);
+					});
+			})
+			.catch((err) => console.log(err));
+	};
+
+	const handleBulkOkay = (checkStatus) => {
 		var body = [];
 		var indexs = [];
 		for (let i = 0; i < pagedCheckboxes.length; i++) {
@@ -107,7 +158,6 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 		}
 		for (let i = 0; i < indexs.length; i++) {
 			body.push({
-				missionSeq: 1,
 				memberIdx: pagedSubjects[indexs[i]].memberIdx,
 			});
 		}
@@ -116,7 +166,7 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 			method: 'post',
 			url:
 				process.env.REACT_APP_U2_DB_HOST +
-				`/Campaign/challengesubmitcheckbulk/${challengeIdx}?checkStatus=${1}`,
+				`/Campaign/challengesubmitcheckbulk/${challengeIdx}?checkStatus=${checkStatus}`,
 			headers: {
 				Authorization: 'Bearer ' + localStorage.getItem('token'),
 				'Content-Type': 'application/json',
@@ -124,7 +174,37 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 			data: body,
 		};
 		axios(config)
-			.then((response) => console.log(response.data))
+			.then((response) => {
+				var config = {
+					method: 'get',
+					url:
+						process.env.REACT_APP_U2_DB_HOST +
+						`/Campaign/challengesubmitted/${challengeIdx}?size=${pageSize}&p=${page}`,
+					headers: {
+						Authorization: 'Bearer ' + localStorage.getItem('token'),
+						'Content-Type': 'application/json',
+					},
+				};
+				axios(config)
+					.then((res) => {
+						// console.log('challengeidx response:');
+						// console.log(res);
+						// console.log(challengeIdx);
+
+						setCount(res.data.total);
+						setPagedSubjects(res.data.entities);
+						setAllCheckBoxes(new Array(res.data.total).fill(false));
+						setPlusIndex((page - 1) * pageSize);
+						setPagedCheckBoxes(
+							paginate(new Array(res.data.total).fill(false), page, pageSize),
+						);
+						setIsLoading(true);
+					})
+					.catch((err) => {
+						console.log('workdetail error');
+						console.log(err);
+					});
+			})
 			.catch((err) => console.log(err));
 	};
 
@@ -141,13 +221,13 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 		};
 		axios(config)
 			.then((res) => {
-				console.log('challengeidx response:');
-				console.log(res);
-				console.log(challengeIdx);
+				// console.log('challengeidx response:');
+				// console.log(res);
+				// console.log(challengeIdx);
 
 				setCount(res.data.total);
-				setPagedSubjects(paginate(res.data.entities, res.data.page, pageSize));
-				setAllCheckBoxes(new Array(res.data.entities.length).fill(false));
+				setPagedSubjects(res.data.entities);
+				setAllCheckBoxes(new Array(res.data.total).fill(false));
 				setPlusIndex((page - 1) * pageSize);
 				setPagedCheckBoxes(
 					paginate(
@@ -167,9 +247,9 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 		<InspectTableContainer>
 			<section className="inspect_table_header">
 				<section className="inspect_table_header_left">
-					<button onClick={() => handleBulkOkay()}>승인</button>
-					<button>반려</button>
-					<button>피드백</button>
+					<button onClick={() => handleBulkOkay(1)}>승인</button>
+					<button onClick={() => handleBulkOkay(-1)}>반려</button>
+					<button onClick={() => handleBulkOkay(0)}>피드백</button>
 				</section>
 				<section className="inspect_table_header_right">
 					<div className="inspect_download_btn">
@@ -286,12 +366,28 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 												})()}
 											</td>
 											<td className="inspect_project">
-												<select>
-													<option value="okay">승인</option>
-													<option value="return">반려</option>
-													<option value="feedback">피드백</option>
+												<select
+													onChange={(e) => {
+														console.log(e.target.value);
+														let copyArr = pagedSelects.slice();
+														copyArr[index] = e.target.value;
+														setPagedSelects(copyArr);
+													}}
+												>
+													<option value={1}>승인</option>
+													<option value={-1}>반려</option>
+													<option value={0}>피드백</option>
 												</select>
-												<button>확인</button>
+												<button
+													onClick={() => {
+														handleSingleStatus(
+															data.memberIdx,
+															pagedSelects[index],
+														);
+													}}
+												>
+													확인
+												</button>
 											</td>
 										</tr>
 									</>

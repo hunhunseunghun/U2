@@ -18,7 +18,7 @@ function SubmissionModal({
 		setFbProps({ open: false, data: null });
 	};
 	useEffect(() => {
-		if (challengeIdx) {
+		if (challengeIdx && !propsData) {
 			var config = {
 				method: 'get',
 				url:
@@ -42,18 +42,20 @@ function SubmissionModal({
 				method: 'get',
 				url:
 					process.env.REACT_APP_U2_DB_HOST +
-					`/Campaign/challengesubmit/${Number(challengeIdx)}&memberIdx=${
-						propsData.memberIdx
-					}`,
+					`/Campaign/challengesubmit/${Number(
+						propsData.challengeIdx,
+					)}?memberIdx=${propsData.memberIdx}`,
 				headers: {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 					'Content-Type': 'application/json',
 				},
 			};
-			axios(config).then((response) => {
-				console.log('data in submission: ', response.data);
-				setData(response.data);
-			});
+			axios(config)
+				.then((response) => {
+					console.log('data in submission: ', response.data);
+					setData(response.data);
+				})
+				.catch((err) => console.log(err));
 			// setData(propsData);
 		}
 	}, [propsData]);
