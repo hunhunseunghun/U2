@@ -52,6 +52,7 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 				setPlusIndex((changedPage - 1) * pageSize);
 				setPagedSubjects(res.data.entities);
 				setPagedCheckBoxes(paginate(allCheckBoxes, changedPage, pageSize));
+				setPagedSelects(new Array(res.data.entities.length).fill(1));
 				setIsLoading(true);
 			})
 			.catch((err) => {
@@ -84,6 +85,7 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 				setPagedSubjects(res.data.entities);
 				setPlusIndex((page - 1) * changedSize);
 				setPagedCheckBoxes(paginate(allCheckBoxes, page, changedSize));
+				setPagedSelects(new Array(res.data.entities.length).fill(1));
 				setIsLoading(true);
 			})
 			.catch((err) => {
@@ -99,11 +101,11 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 	const handleSingleStatus = (memberIdx, checkStatusCode) => {
 		var body = {
 			challengeIdx: challengeIdx,
-			missonSeq: 1,
 			memberIdx: memberIdx,
 			checkStatusCode: checkStatusCode,
 		};
 		console.log('body: ', body);
+		console.log('pagedSelected: ', pagedSelects);
 		var config = {
 			method: 'post',
 			url: process.env.REACT_APP_U2_DB_HOST + `/Campaign/challengesubmitcheck`,
@@ -138,6 +140,7 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 						setPagedCheckBoxes(
 							paginate(new Array(res.data.total).fill(false), page, pageSize),
 						);
+
 						setIsLoading(true);
 					})
 					.catch((err) => {
@@ -236,6 +239,7 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 						pageSize,
 					),
 				);
+				setPagedSelects(new Array(res.data.entities.length).fill(1));
 				setIsLoading(true);
 			})
 			.catch((err) => {
@@ -370,7 +374,7 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 													onChange={(e) => {
 														console.log(e.target.value);
 														let copyArr = pagedSelects.slice();
-														copyArr[index] = e.target.value;
+														copyArr[index] = Number(e.target.value);
 														setPagedSelects(copyArr);
 													}}
 												>

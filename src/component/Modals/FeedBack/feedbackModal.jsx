@@ -10,7 +10,7 @@ function FeedbackModal({ open, data, handleModalClose, isAdmin }) {
 
 	useEffect(() => {
 		if (data) {
-			setInput(data.feedback);
+			setInput(data.feedback.comment);
 		}
 	}, [data]);
 
@@ -27,6 +27,7 @@ function FeedbackModal({ open, data, handleModalClose, isAdmin }) {
 			// modifyMemberIdx: 0,
 			// modifyDate: '2021-07-19T13:20:33.918Z',
 		};
+		console.log('body: ', body);
 		var config = {
 			method: 'post',
 			url:
@@ -43,8 +44,9 @@ function FeedbackModal({ open, data, handleModalClose, isAdmin }) {
 				window.alert('저장되었습니다.');
 				handleModalClose();
 			})
-			.catch((err) => {
+			.catch((err, asdf) => {
 				window.alert(err);
+				console.log(asdf);
 			});
 	};
 	return (
