@@ -2,7 +2,70 @@ export default function (params, type) {
   switch (type) {
     case '전문영상편집자': {
       return {
+        challengeDesc: params.challengeDesc,
+        challengeTargetCode: 3,
+        charge: params.charge, //담당자
+        chargeContact: params.chargeContact,
+        chargeContactShown: params.chargeContactShown ? 1 : 0,
+        chargeShown: params.chargeShown ? 1 : 0,
+        chargeeMail: params.chargeeMail,
+        chargeeMailShown: params.chargeeMailShown ? 1 : 0,
+        // fileRef: etcFile,
+        // mainImage: null,
         memberIdx: params.memberIdx,
+        hire: {
+          fields: [
+            {
+              challengeIdx: 0,
+              seq: 1,
+              fieldCode: '현금',
+              fieldName: '현금',
+              //   registMemberIdx: 0,
+              //   registDate: '2021-07-20T04:48:15.938Z',
+              //   modifyMemberIdx: 0,
+              //   modifyDate: '2021-07-20T04:48:15.938Z',
+            },
+          ],
+
+          challengeIdx: 0,
+          seq: 1,
+          isOnline: 0,
+          loc: 'string',
+          //   applyWay: 0,
+          //   dateBegin: '2021-07-20T04:48:15.939Z',
+          //   dateFin: '2021-07-20T04:48:15.939Z',
+          //   deadline: 0,
+          //   registMemberIdx: 0,
+          //   registDate: '2021-07-20T04:48:15.939Z',
+          //   modifyMemberIdx: 0,
+          //   modifyDate: '2021-07-20T04:48:15.939Z',
+        },
+        missions: [
+          // 템플릿
+          {
+            videos: params.videos.map((el, idx) => {
+              return {
+                // "challengeIdx": 0,
+                seq: idx + 1, //seq는 무조건 1
+                platform: el.platform, //객체
+                platformRequired: 1,
+              };
+            }),
+            contactRequired: params.contactRequired,
+            datePub: params.datePub ? params.datePub : null, //공지 시작일
+            dateBegin: params.dateBegin, //접수 시작
+            dateFin: params.dateFin, // 접수 종료
+            emailRequired: params.emailRequired, //제출자 개인 정보 수집  이메일
+            fileOrUrl: params.fileOrUrl,
+            filmRequired: params.filmRequired, //영상 제작 제출 필수제출시 2
+            seq: 1, //무조건 1
+            shareRequired: params.shareRequired, //온라인 게시 필수제출시 2
+            missionDesc: params.missionDesc,
+
+            //제출자 개인 정보 수집 전화번호
+          },
+        ],
+
         title: params.title,
         ownerIdx: params.ownerIdx,
         // // ownerName: competition[defaultIdx].companyName,
@@ -11,34 +74,31 @@ export default function (params, type) {
         // companyA: params.organizer,
         // companyB: params.sponsor,
         url: params.refvidUrl,
-        missionDesc: params.missionDesc,
         meetCode: params.meetCode,
         // mainImage:
         //   params.posterFile.length > 0 ? params.posterFile[0].name : null,
         // fileRef: params.etcFile,
         shareRequired: params.isOnline ? (params.isSnsRequired ? 2 : 1) : 0,
         filmRequired: params.isVideoProduction,
-        //   ? params.isVidRequired
-        //     ? 2
-        //     : 1
-        //   : 0,
         fileOrUrl: params.isFileOrUrl ? 1 : 0,
         emailRequired: params.isEmail ? (params.emailRequired ? 2 : 1) : 0,
         contactRequired: params.isMobile ? (params.mobileRequired ? 2 : 1) : 0,
-        dateBegin: params.startDate,
-        dateFin: params.finishDate,
         // datePub: params.noticeStart,
-        rewards: params.rewards,
-        // // videos: videos,
+        rewards: params.rewards.map((el, idx) => {
+          return {
+            seq: idx + 1,
+            cat: el.cat,
+            qty: el.qty ? el.qty : 0,
+            pts: el.pts ? el.pts : 0,
+            currency: el.currency ? el.currency : null,
+            rewarddesc: el.rewarddesc ? el.rewarddesc : null,
+          };
+        }),
+
         // // challengeDesc: viewRef.current.getAttribute('content_data'),
-        // // challengeDesc: quillText,
-        // commentAllowed: params.isComment,
-        // charge: params.admin,
-        // chargeShown: params.adminExposure,
-        // chargeContact: `${params.mobile1}-${params.mobile2}-${params.mobile3}`,
-        // chargeContactShown: params.mobileExposure,
-        // chargeeMail: params.email,
-        // chargeeMailShown: params.emailExposure,
+
+        //공모 공지글
+        commentAllowed: params.commentAllowed ? 1 : 0, //댓글기능
       };
     }
     case 'challengeowner': {

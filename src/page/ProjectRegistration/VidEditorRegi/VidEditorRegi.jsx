@@ -14,27 +14,33 @@ import { DateTimePicker } from '@material-ui/pickers';
 import { createMuiTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import requestBodyGenerator from '../../../library/requestBodyGenerator.js';
+import { validateEmail } from '../../../library/validate.js';
 import axios from 'axios';
 
 const VidEditorRegi = () => {
   let history = useHistory();
   const userInfo = useSelector(state => state.userInfo);
 
-  //handle editor ---------------------------------------------
+  const [quillText, setQuillText] = useState(
+    '<ul><li>제목 :</li></ul><p><br></p><ul><li>응모 자격 :</li></ul><p><br></p><ul><li>응모 주제 :</li></ul><p><br></p><ul><li>시상 내역 :</li></ul><p><br></p><ul><li>응모 일정 : </li></ul><p><br></p><ul><li>제출 방법 :</li></ul><p><br></p><ul><li>접수 방법 :</li></ul><p><br></p><ul><li>심사 방법 :</li></ul><p><br></p><ul><li>유의 사항 :</li></ul><p><br></p><ul><li>문의 사항:</li></ul>'
+  );
+
   const [title, setTitle] = useState('');
-  const [organizer, setOrganizer] = useState('');
-  const [sponsor, setSponsor] = useState('');
   const [refvidUrl, setrefvidUrl] = useState('');
   //대면미팅
-  const [meetCode, setMeetCode] = useState(0);
+  const [meetCode, setMeetCode] = useState(1);
+  //handle date ----------------------------------------------
+  const [startDate, setStartDate] = useState(new Date());
+  const [finishDate, setFinishDate] = useState(new Date());
+  const [rewardDate, setRewardDate] = useState(null);
   //보상일 비활성화
   const [confirmRewardsDate, SetConfirmRewardsDate] = useState(true);
   //보상 조건
-
+  const [isRewardCash, setIsRewardCash] = useState(false);
   const [isDirectReward, setIsDirectReward] = useState(false);
-  const [isCurrencyReward, setIsCurrencyReward] = useState(false);
-  const [rewardCurrency, setRewardCurrency] = useState(null);
+  const [rewardsCash, setRewardsCash] = useState(null);
   const [rewardDirect, setRewardDirect] = useState(null);
+  const [rewardCurrency, setRewardCurrency] = useState('krw');
   //ownerIdx for API
   const [ownerIdx, setOwnerIdx] = useState(0);
 
@@ -54,16 +60,7 @@ const VidEditorRegi = () => {
   const [isComment, setIsComment] = useState(true);
   //상세 내용
   const [missionDesc, setMissionDesc] = useState('');
-  //시상종류
-  const [contest, setContest] = useState(false);
-  const [overseas, setOverseas] = useState(false);
-  const [camp, setCamp] = useState(false);
-  const [scatterPoint, setScatterPoint] = useState(false);
-  const [intern, setIntern] = useState(false);
-  const [full_time, setFull_time] = useState(false);
-  const [prize, setPrize] = useState(false);
-  const [toggleDirect, setToggleDirect] = useState(false);
-  const [directInput, setDirectInput] = useState('');
+
   //접수방법
   const [isOnline, setIsOnline] = useState(false);
   const [isSnsRequired, setIsSnsRequired] = useState(true);
@@ -97,10 +94,6 @@ const VidEditorRegi = () => {
   const [onMeet, setOnMeet] = useState(null); //온라인 오프라인 미팅 state 값
 
   const myStorage = window.localStorage;
-  //handle date ----------------------------------------------
-  const [startDate, setStartDate] = useState(new Date());
-  const [finishDate, setFinishDate] = useState(new Date());
-  const [rewardDate, setRewardDate] = useState(null);
 
   // handle datetime picker theme------------------------------
   const materialTheme = createMuiTheme({
@@ -118,18 +111,27 @@ const VidEditorRegi = () => {
   const handleSubmit = () => {
     console.log('userInfo: ', userInfo);
     var rewards = [];
-    var rewardsEle = {};
 
-    if (rewardCurrency) {
-      if (confirmRewardsDate && rewardDate) {
-        rewardsEle.datePayment = rewardDate;
-        rewardsEle.currency = rewardCurrency;
-      }
+    if (confirmRewardsDate && rewardDate && isRewardCash) {
+      var rewardsEle = {
+        cat: 0,
+        datePayment: rewardDate,
+        currency: rewardCurrency,
+        pts: rewardsCash,
+      };
+
+      rewards.push(rewardsEle);
     }
+    if (confirmRewardsDate && rewardDate && isDirectReward) {
+      var rewardsEle = {
+        cat: 99,
+        datePayment: rewardDate,
+        rewarddesc: rewardDirect,
+      };
 
-    console.log(rewardsEle);
+      rewards.push(rewardsEle);
+    }
     console.log(rewards);
-
     var videos = [];
     isYoutube && videos.push({ platform: 'YU' });
     isTiktok && videos.push({ platform: 'TT' });
@@ -137,6 +139,7 @@ const VidEditorRegi = () => {
 
     const body = requestBodyGenerator(
       {
+        challengeDesc: quillText,
         memberIdx: userInfo.memberIdx,
         title: title,
         ownerIdx: ownerIdx,
@@ -159,38 +162,38 @@ const VidEditorRegi = () => {
         dateFin: finishDate,
         // datePub: noticeStart,
         rewards: rewards,
-        // // videos: videos,
+
         // // challengeDesc: viewRef.current.getAttribute('content_data'),
         // // challengeDesc: quillText,
-        // commentAllowed: isComment,
-        // charge: admin,
-        // chargeShown: adminExposure,
-        // chargeContact: `${mobile1}-${mobile2}-${mobile3}`,
-        // chargeContactShown: mobileExposure,
-        // chargeeMail: email,
-        // chargeeMailShown: emailExposure,
+        videos: videos,
+        commentAllowed: isComment,
+        charge: admin,
+        chargeShown: adminExposure,
+        chargeContact: `${mobile1}-${mobile2}-${mobile3}`,
+        chargeContactShown: mobileExposure,
+        chargeeMail: email,
+        chargeeMailShown: emailExposure,
       },
       '전문영상편집자'
     );
 
-    console.log(body);
-    // var config = {
-    //   method: 'post',
-    //   url: process.env.REACT_APP_U2_DB_HOST + '/Campaign/challenge',
-    //   headers: {
-    //     Authorization: 'Bearer ' + localStorage.getItem('token'),
-    //     'Content-Type': 'application/json',
-    //   },
-    //   data: body,
-    // };
-
-    // useEffect(() => {
-    //   axios.post(config).then(res => {
-    //     console.log(res);
-    //   });
-    // });
-
-    // };
+    console.log('config body data', body);
+    var config = {
+      method: 'post',
+      url: process.env.REACT_APP_U2_DB_HOST + '/Campaign/challenge',
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+        'Content-Type': 'application/json',
+      },
+      data: body,
+    };
+    console.log('vidEditorRegi post body : ', body);
+    axios
+      .post(config)
+      .then(res => {
+        console.log('videditorregi response data', res);
+      })
+      .catch(err => console.log(err));
   };
   const handleNewData = data => {
     var newForm = {
@@ -250,9 +253,9 @@ const VidEditorRegi = () => {
     myStorage.setItem('onMeet', onMeet);
 
     if (onMeet) {
-      setMeetCode(0);
-    } else {
       setMeetCode(1);
+    } else {
+      setMeetCode(2);
     }
   }, [onMeet]);
 
@@ -280,6 +283,15 @@ const VidEditorRegi = () => {
   //     console.log(ex);
   //   }
   // };
+  const handleEmailValidation = email => {
+    const { isValid, error } = validateEmail(email);
+    if (!isValid) {
+      setEmailErr(error);
+    } else {
+      setEmail(email);
+      setEmailErr(null);
+    }
+  };
   return (
     <RegiConationer className="contents_wrap">
       <div className="videditorregi_section">
@@ -584,6 +596,10 @@ const VidEditorRegi = () => {
                               type="radio"
                               name="vidRequired"
                               value="필수"
+                              onClick={() => {
+                                setIsVidRequired(true);
+                              }}
+                              disabled={!isVideoProduction}
                               defaultChecked
                             />
                             <label>필수</label>
@@ -593,6 +609,10 @@ const VidEditorRegi = () => {
                               type="radio"
                               name="vidRequired"
                               value="선택"
+                              onClick={() => {
+                                setIsVidRequired(false);
+                              }}
+                              disabled={!isVideoProduction}
                             />
                             <label>선택사항</label>
                           </div>
@@ -636,7 +656,7 @@ const VidEditorRegi = () => {
                               disabled={!isEmail}
                               defaultChecked
                             />
-                            <label>Youtube</label>
+                            <label>필수</label>
                           </div>
                           <div>
                             <input
@@ -648,7 +668,7 @@ const VidEditorRegi = () => {
                               }}
                               disabled={!isEmail}
                             />
-                            <label>Tiktok</label>
+                            <label>선택사항</label>
                           </div>
                         </section>
                       </td>
@@ -811,7 +831,7 @@ const VidEditorRegi = () => {
                             name="rewardcash"
                             value="rewardcash"
                             onClick={() => {
-                              setIsCurrencyReward(!isCurrencyReward);
+                              setIsRewardCash(!isRewardCash);
                             }}
                           />
                         </div>{' '}
@@ -824,20 +844,29 @@ const VidEditorRegi = () => {
                         <section className="reception_options">
                           <div>
                             <input
-                              type="text"
+                              type="number"
                               name="rewardcash"
                               placeholder="무료일 경우 0원 입력"
                               onChange={e => {
-                                setRewardCurrency(e.target.value);
+                                setRewardsCash(e.target.value);
                               }}
-                              disabled={!isCurrencyReward}
+                              step={rewardCurrency === 'krw' ? '1000' : '1'}
+                              min="0"
+                              max={'99999999999'}
+                              defaultValue={rewardsCash ? rewardsCash : 0}
+                              disabled={!isRewardCash}
                             />
 
                             <select
                               name="currencyselect"
-                              disabled={!isCurrencyReward}
+                              disabled={!isRewardCash}
+                              onChange={e => {
+                                setRewardCurrency(e.target.value);
+                                console.log(e.target.value);
+                              }}
                             >
                               <option value="krw">KRW</option>
+                              <option value="usd">USD</option>
                             </select>
                           </div>
                           <div>
@@ -874,6 +903,7 @@ const VidEditorRegi = () => {
                                 setRewardDirect(e.target.value);
                               }}
                               disabled={!isDirectReward}
+                              maxLength="50"
                             />
                           </div>
                           <div>
@@ -899,7 +929,15 @@ const VidEditorRegi = () => {
             <section className="inputInfo replyfunc_form">
               <div className="replyfunc_items">
                 <div className="replyfunc_item_wrap">
-                  <input type="radio" name="replyrequired" value="댓글사용" />
+                  <input
+                    type="radio"
+                    name="replyrequired"
+                    value="댓글사용"
+                    onClick={() => {
+                      setIsComment(true);
+                    }}
+                    defaultChecked
+                  />
                   <div>댓글 사용</div>
                 </div>
               </div>
@@ -910,6 +948,9 @@ const VidEditorRegi = () => {
                     type="radio"
                     name="replyrequired"
                     value="댓글사용안함"
+                    onClick={() => {
+                      setIsComment(false);
+                    }}
                   />
                   <div>댓글 사용 안함</div>
                 </div>
@@ -920,11 +961,22 @@ const VidEditorRegi = () => {
             <div className="menu">* 담당자</div>
             <section className="inputInfo manager_form">
               <div className="manager_items">
-                <input type="text" />
+                <input
+                  type="text"
+                  onChange={e => {
+                    setAdmin(e.target.value);
+                  }}
+                />
               </div>
               <div className="manager_items manager_noexposure">
                 <section>
-                  <input type="checkbox" name="noexposure" />
+                  <input
+                    type="checkbox"
+                    name="noexposure"
+                    onClick={() => {
+                      setAdminExposure(!adminExposure);
+                    }}
+                  />
                   <div className="manager_noexposure_text">비노출</div>
                 </section>
               </div>
@@ -934,7 +986,13 @@ const VidEditorRegi = () => {
             <div className="menu">* 연락처</div>
             <section className="inputInfo phonenumber_form">
               <div className="phonenumber_items">
-                <select name="areacode" id="areacode">
+                <select
+                  name="areacode"
+                  id="areacode"
+                  onChange={e => {
+                    setMobile1(e.target.value);
+                  }}
+                >
                   <option value="goldfish">010</option>
                   <option value="02">02</option>
                   <option value="">031</option>
@@ -961,7 +1019,10 @@ const VidEditorRegi = () => {
                   type="tel"
                   name="phonenumber"
                   placeholder="0000"
-                  maxlength="4"
+                  maxLength="4"
+                  onChange={e => {
+                    setMobile2(e.target.value);
+                  }}
                 />
               </div>
               -
@@ -970,12 +1031,21 @@ const VidEditorRegi = () => {
                   type="tel"
                   name="phonenumber"
                   placeholder="0000"
-                  maxlength="4"
+                  maxLength="4"
+                  onChange={e => {
+                    setMobile3(e.target.value);
+                  }}
                 />
               </div>
               <div className="manager_items phonenumber_noexposure">
                 <section>
-                  <input type="checkbox" name="noexposure" />
+                  <input
+                    type="checkbox"
+                    name="noexposure"
+                    onClick={() => {
+                      setMobileExposure(!mobileExposure);
+                    }}
+                  />
                   <div className="manager_noexposure_text">비노출</div>
                 </section>
               </div>
@@ -985,13 +1055,25 @@ const VidEditorRegi = () => {
             <div className="menu">* 이메일</div>
             <section className="inputInfo email_form">
               <div className="email_items">
-                <input type="text" />
+                <input
+                  type="text"
+                  onChange={e => {
+                    handleEmailValidation(e.target.value);
+                  }}
+                />
               </div>
               <div className="manager_items email_noexposure">
                 <section>
-                  <input type="checkbox" name="email" />
+                  <input
+                    type="checkbox"
+                    name="email"
+                    onClick={() => {
+                      setEmailExposure(!emailExposure);
+                    }}
+                  />
                   <div className="email_noexposure_text">비노출</div>
                 </section>
+                {emailErr && emailErr}
               </div>
             </section>
           </section>
