@@ -28,17 +28,26 @@ export default function (params, type) {
         dateBegin: params.startDate,
         dateFin: params.finishDate,
         // datePub: params.noticeStart,
-        rewards: params.rewards,
+        rewards: params.rewards.map((el, idx) => {
+          return {
+            seq: idx + 1,
+            cat: el.cat,
+            qty: el.qty ? el.qty : 0,
+            pts: el.pts ? el.pts : 0,
+            currency: el.currency ? el.currency : null,
+            rewarddesc: el.rewarddesc ? el.rewarddesc : null,
+          };
+        }),
         // // videos: videos,
         // // challengeDesc: viewRef.current.getAttribute('content_data'),
         // // challengeDesc: quillText,
-        // commentAllowed: params.isComment,
-        // charge: params.admin,
-        // chargeShown: params.adminExposure,
-        // chargeContact: `${params.mobile1}-${params.mobile2}-${params.mobile3}`,
-        // chargeContactShown: params.mobileExposure,
-        // chargeeMail: params.email,
-        // chargeeMailShown: params.emailExposure,
+        commentAllowed: params.commentAllowed ? 1 : 0, //댓글기능
+        charge: params.charge, //담당자
+        chargeShown: params.chargeShown ? 1 : 0,
+        chargeContact: params.chargeContact,
+        chargeContactShown: params.chargeContactShown ? 1 : 0,
+        chargeeMail: params.chargeeMail,
+        chargeeMailShown: params.chargeeMailShown ? 1 : 0,
       };
     }
     case 'challengeowner': {
