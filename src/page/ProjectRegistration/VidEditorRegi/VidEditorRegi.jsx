@@ -200,7 +200,7 @@ const VidEditorRegi = () => {
 				missionDesc: missionDesc,
 				meetCode: meetCode,
 				// mainImage: posterFile.length > 0 ? posterFile[0].name : null,
-				fileRef: etcFile,
+				fileRef: etcFilePath,
 				shareRequired: isOnline ? (isSnsRequired ? 2 : 1) : 0,
 				filmRequired: isVideoProduction ? (isVidRequired ? 2 : 1) : 0,
 				fileOrUrl: isFileOrUrl ? 1 : 0,

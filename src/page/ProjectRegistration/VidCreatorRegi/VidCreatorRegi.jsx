@@ -93,7 +93,7 @@ const VidCreatorRegi = () => {
 	const [defaultIdx, setDefaultIdx] = useState(0);
 	const [profiles, setProfiles] = useState([]);
 	// file uploade ---------------------------------------
-	const [etcFile, setEtcFile] = useState([]);
+	// const [etcFile, setEtcFile] = useState([]);
 	const [etcFilePath, setEtcFilePath] = useState('Choose file to upload');
 	const [editTargetFile, setEditTargetFile] = useState([]);
 	const [editTargetFilePath, setEditTargetFilePath] = useState(
@@ -197,7 +197,7 @@ const VidCreatorRegi = () => {
 				missionDesc: missionDesc,
 				meetCode: meetCode,
 				// mainImage: posterFile.length > 0 ? posterFile[0].name : null,
-				fileRef: etcFile,
+				fileRef: etcFilePath,
 				shareRequired: isOnline ? (isSnsRequired ? 2 : 1) : 0,
 				filmRequired: isVideoProduction ? (isVidRequired ? 2 : 1) : 0,
 				fileOrUrl: isFileOrUrl ? 1 : 0,
