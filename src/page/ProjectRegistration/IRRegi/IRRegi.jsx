@@ -16,35 +16,7 @@ const IRRegi = () => {
   // handle modal state---------------------------------------
   const [isActive, setIsActive] = useState(false);
   const [defaultIdx, setDefaultIdx] = useState(0);
-  const [profiles, setProfiles] = useState([
-    {
-      form: '개인',
-      companyName: '홍길동',
-      logo: '',
-      email: '',
-      phoneNumber: '',
-      snsId: '',
-      id: 1,
-    },
-    {
-      form: '비즈프로필',
-      companyName: 'abc입니다.test입니다.',
-      logo: '',
-      email: 'abc@gmail.com',
-      phoneNumber: '023333333',
-      snsId: 'abcCompany',
-      id: 2,
-    },
-    {
-      form: '비즈프로필',
-      companyName: 'U2',
-      logo: '',
-      email: '',
-      phoneNumber: '',
-      snsId: '',
-      id: 3,
-    },
-  ]);
+  const [profiles, setProfiles] = useState([]);
   //handle recuritmentareas modal ----------------------------
   const [recruitmentModalOpen, setRecruitmentModalOpen] = useState(false);
 
@@ -52,9 +24,29 @@ const IRRegi = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [finishDate, setFinishDate] = useState(new Date());
   const [onMeet, setOnMeet] = useState(null); //온라인 오프라인 미팅 state 값
+  //ownerIdx for API
+  const [ownerIdx, setOwnerIdx] = useState(0);
+  //강사채용 제목 ---------------------------------------------
+  const [title, setTitle] = useState('');
+  //모집분야
+
   //-----------------------------------------------------
   const myStorage = window.localStorage;
 
+  const handleNewData = data => {
+    var newForm = {
+      form: data.ownerCat ? '비즈프로필' : '개인',
+      cat: data.ownerCat,
+      companyName: data.company,
+      email: data.email,
+      phoneNumber: data.contact,
+      snsId: data.socialMediaId,
+      snsType: data.socialMediaCode,
+      id: data.ownerIdx,
+    };
+
+    setProfiles([...profiles, newForm]);
+  };
   //window.localstorage에 state 저장 페이지 새로고침시 state값 유지 목적
   useEffect(() => {
     setOnMeet(JSON.parse(myStorage.getItem('onMeet')));
@@ -64,6 +56,12 @@ const IRRegi = () => {
     myStorage.setItem('onMeet', onMeet);
     console.log('useEffect excuted');
   }, [onMeet]);
+
+  useEffect(() => {
+    if (profiles.length === 0) {
+      setIsActive(true);
+    }
+  }, []);
 
   // on offline meet state handle
   const handleOnline = () => {
@@ -118,7 +116,11 @@ const IRRegi = () => {
             <div className="menu">* 의뢰주체</div>
             <div className="inputInfo company_profiles">
               <div className="default_profile">
-                <div>{`${profiles[defaultIdx].form} : ${profiles[defaultIdx].companyName}`}</div>
+                <div>
+                  {!isActive &&
+                    profiles.length &&
+                    `${profiles[defaultIdx].form} : ${profiles[defaultIdx].companyName}`}
+                </div>
                 <img
                   src={downArrowIcon}
                   alt=""
@@ -129,9 +131,11 @@ const IRRegi = () => {
               </div>
               <DropDown
                 setDefaultIdx={setDefaultIdx}
+                setOwnerIdx={setOwnerIdx}
                 profiles={profiles}
                 setIsActive={setIsActive}
                 isActive={isActive}
+                handleNewData={handleNewData}
               />
             </div>
           </section>
@@ -139,7 +143,13 @@ const IRRegi = () => {
             <div className="menu">* 강사 채용 제목</div>
             <div className="inputInfo irregi_name">
               <div>
-                <input type="text" />
+                <input
+                  type="text"
+                  onChange={e => {
+                    setTitle(e.target.value);
+                  }}
+                  maxLength={20}
+                />
               </div>
             </div>
           </section>
