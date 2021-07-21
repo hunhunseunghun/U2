@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { ModalContainer } from './fbModalStyled';
 import axios from 'axios';
-function FeedbackModal({ open, data, handleModalClose, isAdmin }) {
-	// console.log(open);
-	const userInfo = useSelector((state) => state.userInfo);
+function FeedbackModal({ open, data, handleModalClose, isAdmin, refresh }) {
+	console.log('inside feedback data :', data);
+	// const userInfo = useSelector((state) => state.userInfo);
 
 	const [input, setInput] = useState(null);
 
 	useEffect(() => {
 		if (data) {
-			setInput(data.feedback.comment);
+			setInput(data.feedback ? data.feedback.comment : '');
 		}
 	}, [data]);
 
@@ -19,7 +19,7 @@ function FeedbackModal({ open, data, handleModalClose, isAdmin }) {
 		var body = {
 			challengeIdx: data.challengeIdx,
 			// missionSeq: 0,
-			memberIdx: userInfo.memberIdx,
+			memberIdx: data.memberIdx,
 			comment: input,
 			statusCode: 1,
 			// registMemberIdx: 0,
@@ -42,10 +42,11 @@ function FeedbackModal({ open, data, handleModalClose, isAdmin }) {
 			.then((response) => {
 				console.log(response.data);
 				window.alert('저장되었습니다.');
+				refresh();
 				handleModalClose();
 			})
 			.catch((err, asdf) => {
-				window.alert(err);
+				window.alert('이미 피드백이 등록되어있습니다.');
 				console.log(asdf);
 			});
 	};

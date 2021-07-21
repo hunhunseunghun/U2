@@ -11,12 +11,40 @@ function SubmissionModal({
 	propsData,
 }) {
 	// console.log('challengeIdx in submission: ', challengeIdx);
-	const [fbProps, setFbProps] = useState({ open: false, data: null });
+	const [fbProps, setFbProps] = useState({ open: false, data: '' });
 	const [data, setData] = useState({});
-	const [feedback, setFeedback] = useState('');
-	const handleFeedback = () => [setFbProps({ open: true, data: data })];
+	const handleFeedback = () => [
+		setFbProps({
+			open: true,
+			data: data,
+		}),
+	];
 	const handleFBClose = () => {
 		setFbProps({ open: false, data: null });
+	};
+	const handleRefresh = () => {
+		var config = {
+			method: 'get',
+			url:
+				process.env.REACT_APP_U2_DB_HOST +
+				`/Campaign/challengesubmit/${Number(
+					propsData.challengeIdx,
+				)}?memberIdx=${propsData.memberIdx}`,
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+		};
+		axios(config)
+			.then((response) => {
+				console.log('data in submission: ', response.data);
+				setData(response.data);
+				setFbProps({
+					open: false,
+					data: response.data,
+				});
+			})
+			.catch((err) => console.log(err));
 	};
 	useEffect(() => {
 		if (challengeIdx && !propsData) {
@@ -33,6 +61,7 @@ function SubmissionModal({
 			axios(config).then((response) => {
 				console.log('data in submission: ', response.data);
 				setData(response.data);
+				setFbProps({ ...fbProps, data: response.data });
 			});
 		}
 	}, [challengeIdx]);
@@ -55,24 +84,29 @@ function SubmissionModal({
 				.then((response) => {
 					console.log('data in submission: ', response.data);
 					setData(response.data);
+					setFbProps({
+						...fbProps,
+						data: response.data,
+					});
 				})
 				.catch((err) => console.log(err));
 
-			var config2 = {
-				method: 'get',
-				url:
-					process.env.REACT_APP_U2_DB_HOST +
-					`/Campaign/challengesubmitfeedback?challengeIdx=${
-						propsData.challengeIdx
-					}&seq=${1}&memberIdx=${propsData.memberIdx}`,
-				headers: {
-					Authorization: 'Bearer ' + localStorage.getItem('token'),
-					'Content-Type': 'application/json',
-				},
-			};
-			axios(config2).then((response) => {
-				console.log(response);
-			});
+			// var config2 = {
+			// 	method: 'get',
+			// 	url:
+			// 		process.env.REACT_APP_U2_DB_HOST +
+			// 		`/Campaign/challengesubmitfeedback?challengeIdx=${
+			// 			propsData.challengeIdx
+			// 		}&seq=${1}&memberIdx=${propsData.memberIdx}`,
+			// 	headers: {
+			// 		Authorization: 'Bearer ' + localStorage.getItem('token'),
+			// 		'Content-Type': 'application/json',
+			// 	},
+			// };
+			// console.log(config2.url);
+			// axios(config2).then((response) => {
+			// 	console.log(response);
+			// });
 			// setData(propsData);
 		}
 	}, [propsData]);
@@ -85,6 +119,7 @@ function SubmissionModal({
 							open={fbProps.open}
 							data={fbProps.data}
 							handleModalClose={handleFBClose}
+							refresh={handleRefresh}
 							isAdmin={isAdmin}
 						/>
 						<header>제출 자료</header>
@@ -145,11 +180,7 @@ function SubmissionModal({
 							<section className="submission_modal_ele submission_modal_ele_last">
 								<div className="menu">검수자 피드백</div>
 								<div className="inputInfo">
-									{data.feedback
-										? data.feedback.comment
-											? data.feedback.comment
-											: '내용없음'
-										: '-'}
+									{data.feedback ? data.feedback.comment : '내용없음'}
 								</div>
 							</section>
 						</main>
