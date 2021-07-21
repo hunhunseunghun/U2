@@ -26,10 +26,14 @@ import Ckeditor5 from '../../../component/Ckeditor5/Ckeditor5.jsx';
 const VidEditorRegi = () => {
 	let history = useHistory();
 	const userInfo = useSelector((state) => state.userInfo);
+	if (!userInfo.email) {
+		if (window.confirm('로그인이 필요한 서비스입니다. 로그인 하시겠습니까?')) {
+			history.push('/login');
+		} else {
+			history.push('/creatormarket');
+		}
+	}
 	//공모 공지글
-	const [quillText, setQuillText] = useState(
-		'<ul><li>제목 :</li></ul><p><br></p><ul><li>응모 자격 :</li></ul><p><br></p><ul><li>응모 주제 :</li></ul><p><br></p><ul><li>시상 내역 :</li></ul><p><br></p><ul><li>응모 일정 : </li></ul><p><br></p><ul><li>제출 방법 :</li></ul><p><br></p><ul><li>접수 방법 :</li></ul><p><br></p><ul><li>심사 방법 :</li></ul><p><br></p><ul><li>유의 사항 :</li></ul><p><br></p><ul><li>문의 사항:</li></ul>',
-	);
 	const [ckText, setCkText] = useState('');
 
 	const [title, setTitle] = useState('');
@@ -70,7 +74,7 @@ const VidEditorRegi = () => {
 	//상세 내용
 	const [missionDesc, setMissionDesc] = useState('');
 
-	//접수방법
+	//프로젝트 완료 조건
 	const [isOnline, setIsOnline] = useState(false);
 	const [isSnsRequired, setIsSnsRequired] = useState(true);
 	const [isVideoProduction, setIsVideoProduction] = useState(false);
@@ -117,16 +121,35 @@ const VidEditorRegi = () => {
 		setStartDate(date);
 		setFinishDate(date);
 	};
-	const test = async () => {
-		const blobsInContainer = await getFilesFromBlob();
-		setBlobList(blobsInContainer);
-		console.log(blobsInContainer);
-	};
+
 	const handleCkeditorValue = (value) => {
 		setCkText(value);
 	};
-
+	const checkRequiredField = () => {
+		// if(competition && title && (isOnline || isVideoProduction) && (isEmail || isMobile) && )
+		if (!(profiles.length > 0)) return alert('주최사를 선택해주십시오');
+		if (!title) return alert('프로젝트명을 입력해주십시오');
+		if (!(isOnline || isVideoProduction))
+			return alert('접수방법을 선택해주십시오');
+		if (!(isEmail || isMobile))
+			return alert('제출자 개인정보 수집을 선택해주십시오');
+		// if (!(startDate > new Date()))
+		// 	return alert('정확한 접수기간을 입력해주십시오');
+		if (!(startDate < finishDate))
+			return alert('접수 종료 기간을 입력해주십시오');
+		if (!(noticeStart > new Date()))
+			return alert('공지 시작일을 선택해주십시오');
+		if (!rewardDate) return alert('보상일을 선택해주십시오');
+		if (!(isRewardCash || isDirectReward))
+			return alert('보상 조건을 선택해주십시오');
+		if (!admin) return alert('담당자명을 입력해주십시오');
+		if (!(mobile1 && mobile2 && mobile3))
+			return alert('연락처를 입력해주십시오');
+		if (!email) return alert('이메일을 입력해 주십시오');
+		return true;
+	};
 	const handleSubmit = () => {
+		if (checkRequiredField() !== true) return;
 		console.log('userInfo: ', userInfo);
 		var rewards = [];
 
@@ -479,13 +502,10 @@ const VidEditorRegi = () => {
 						</div>
 					</section>
 					<section className="ele">
-						<div className="menu">* 프로젝트 완료 조건</div>
-						<div className="inputInfo videditor_reception_info videditor_reception_condition">
-							<div className="videditor_reception_form">
-								<div className="videditor_reception_title">
-									접수자 연락처 정보
-								</div>
-								<table className="videditor_reception_table">
+						<div className="menu">* 편집자 포트폴리오</div>
+						<div className="inputInfo reception_info">
+							<div className="reception_form">
+								<table className="reception_table">
 									<tbody>
 										<tr>
 											<td>
@@ -612,6 +632,7 @@ const VidEditorRegi = () => {
 															}}
 															disabled={!isVideoProduction}
 														/>
+
 														<label>URL 공유</label>
 													</div>
 												</section>
@@ -649,9 +670,13 @@ const VidEditorRegi = () => {
 									</tbody>
 								</table>
 							</div>
-							<div className="videditor_reception_form">
-								<div className="videditor_reception_title">접수방법</div>
-								<table className="videditor_reception_table">
+						</div>
+					</section>
+					<section className="ele">
+						<div className="menu">* 제출자 개인정보 수집</div>
+						<div className="inputInfo reception_info">
+							<div className="reception_form">
+								<table className="reception_table">
 									<tbody>
 										<tr>
 											<td>
@@ -683,7 +708,7 @@ const VidEditorRegi = () => {
 															disabled={!isEmail}
 															defaultChecked
 														/>
-														<label>필수</label>
+														<label>필수입력</label>
 													</div>
 													<div>
 														<input
@@ -695,7 +720,7 @@ const VidEditorRegi = () => {
 															}}
 															disabled={!isEmail}
 														/>
-														<label>선택사항</label>
+														<label>선택입력</label>
 													</div>
 												</section>
 											</td>
@@ -729,7 +754,7 @@ const VidEditorRegi = () => {
 															defaultChecked
 															disabled={!isMobile}
 														/>
-														<label>필수</label>
+														<label>필수입력</label>
 													</div>
 													<div>
 														<input
@@ -753,7 +778,7 @@ const VidEditorRegi = () => {
 					</section>
 
 					<section className="ele">
-						<div className="menu">* 프로젝트 공시 게시 기한</div>
+						<div className="menu">* 접수 기간</div>
 						<div className="inputInfo chooseDate">
 							<div className="inputStart">
 								<ThemeProvider theme={materialTheme}>
@@ -968,7 +993,7 @@ const VidEditorRegi = () => {
 						</div>
 					</section>
 					<section className="ele">
-						<div className="menu">공모 공지글</div>
+						<div className="menu">프로젝트 공지글</div>
 						<div className="inputInfo notice_editor_form">
 							{/* <QuillTextEditor className="notice_editor" /> */}
 							<Ckeditor5
@@ -978,7 +1003,7 @@ const VidEditorRegi = () => {
 						</div>
 					</section>
 					<section className="ele">
-						<div className="menu">* 댓글 기능</div>
+						<div className="menu">댓글 기능</div>
 						<section className="inputInfo replyfunc_form">
 							<div className="replyfunc_items">
 								<div className="replyfunc_item_wrap">

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useHistory } from 'react-router-dom';
 import { API_URL, IMG_URL } from '../const/URL';
 import { useDispatch, useSelector } from 'react-redux';
 import * as baseActions from '../store/base';
@@ -8,6 +8,7 @@ import axios from 'axios';
 import DdProfile from './DropDown/DdProfile.jsx';
 const newAPI = process.env.REACT_APP_TEST_API;
 function Header(props) {
+	const history = useHistory();
 	const [mobileYn, setMobileYn] = useState(false);
 	const [whiteFix, setWhiteFix] = useState(false);
 	const [headerFix, setHeaderFix] = useState(false);
@@ -165,7 +166,22 @@ function Header(props) {
 						<Link to={'/creatormarket'}>크리에이터 마켓</Link>
 
 						<div className="creatorMarket_dropdown">
-							<Link to={'/prjregi'} className="dropdown_ele">
+							<Link
+								className="dropdown_ele"
+								onClick={() => {
+									if (!userInfo.email) {
+										if (
+											window.confirm(
+												'로그인이 필요한 서비스입니다. 로그인하시겠습니까?',
+											)
+										) {
+											history.push('/login');
+										}
+									} else {
+										history.push('/prjregi');
+									}
+								}}
+							>
 								프로젝트 등록
 							</Link>
 							<Link className="dropdown_ele">진행중인 프로젝트</Link>

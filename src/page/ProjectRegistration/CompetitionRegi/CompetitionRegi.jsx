@@ -2,13 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import uploadFileToBlob, {
-	isStorageConfigured,
-	getFilesFromBlob,
-} from '../../../library/azureBlob';
-
 import PosterUploader from './PosterUploader/PosterUploader.jsx';
 import FileUploader from './FileUploader/FileUploader.jsx';
+import Uploader from '../../../component/Uploader/Uploader';
 import { RegiContainer } from './CompetitionRegiStyled.jsx';
 import DropDown from './DropDown/DropDown.jsx';
 import headerIcon from '../../../Img/Icons/headerIcon.png';
@@ -22,20 +18,25 @@ import { ThemeProvider } from '@material-ui/styles';
 import { validateEmail } from '../../../library/validate.js';
 import axios from 'axios';
 import requestBodyGenerator from '../../../library/requestBodyGenerator.js';
-
+import Ckeditor from '../../../component/Ckeditor5/Ckeditor5.jsx';
 // import writeJsonFile from 'write-json-file';
 
 const CompetitionRegi = () => {
 	let history = useHistory();
 	const userInfo = useSelector((state) => state.userInfo);
-
+	if (!userInfo.email) {
+		if (window.confirm('로그인이 필요한 서비스입니다. 로그인 하시겠습니까?')) {
+			history.push('/login');
+		} else {
+			history.push('/creatormarket');
+		}
+	}
 	// posterfile upload handle---------------------------------
-	const [posterFile, setPosterFile] = useState([]); //포스터 파일, fileList 객체 -> 배열로 변환 후 -> posterfile에 할당
+	// const [posterFile, setPosterFile] = useState([]); //포스터 파일, fileList 객체 -> 배열로 변환 후 -> posterfile에 할당
 	const [posterFilePath, setPosterFilePath] = useState('Choose file to upload'); //포스터 파일 업로드 파일패스 , placholder 값
-	const [etcFile, setEtcFile] = useState(null);
+	// const [etcFile, setEtcFile] = useState(null);
 	const [etcFilePath, setEtcFilePath] = useState('Choose file to upload');
 	//handle date ----------------------------------------------
-	const [currency, setCurrency] = useState('KRW');
 	//handle editor ---------------------------------------------
 	const [title, setTitle] = useState('');
 	const [organizer, setOrganizer] = useState('');
@@ -75,9 +76,7 @@ const CompetitionRegi = () => {
 	const [toggleDirect, setToggleDirect] = useState(false);
 	const [directInput, setDirectInput] = useState('');
 	//공모 공지글
-	const [quillText, setQuillText] = useState(
-		'<ul><li>제목 :</li></ul><p><br></p><ul><li>응모 자격 :</li></ul><p><br></p><ul><li>응모 주제 :</li></ul><p><br></p><ul><li>시상 내역 :</li></ul><p><br></p><ul><li>응모 일정 : </li></ul><p><br></p><ul><li>제출 방법 :</li></ul><p><br></p><ul><li>접수 방법 :</li></ul><p><br></p><ul><li>심사 방법 :</li></ul><p><br></p><ul><li>유의 사항 :</li></ul><p><br></p><ul><li>문의 사항:</li></ul>',
-	);
+	const [CkText, setCkText] = useState('');
 	//summernote
 	// const viewRef = useRef(null);
 	//댓글 기능
@@ -104,35 +103,6 @@ const CompetitionRegi = () => {
 	const [defaultIdx, setDefaultIdx] = useState(0);
 	const [competition, setCompetition] = useState([]);
 
-	// const [competition, setCompetition] = useState([
-	// 	{
-	// 		form: '개인',
-	// 		companyName: '홍길동',
-	// 		logo: '',
-	// 		email: '',
-	// 		phoneNumber: '',
-	// 		snsId: '',
-	// 		id: 1,
-	// 	},
-	// 	{
-	// 		form: '비즈프로필',
-	// 		companyName: 'abc입니다.test입니다.',
-	// 		logo: '',
-	// 		email: 'abc@gmail.com',
-	// 		phoneNumber: '023333333',
-	// 		snsId: 'abcCompany',
-	// 		id: 2,
-	// 	},
-	// 	{
-	// 		form: '비즈프로필',
-	// 		companyName: 'U2',
-	// 		logo: '',
-	// 		email: '',
-	// 		phoneNumber: '',
-	// 		snsId: '',
-	// 		id: 3,
-	// 	},
-	// ]);
 	// handle datetime picker theme------------------------------
 	const materialTheme = createMuiTheme({
 		palette: {
@@ -147,12 +117,10 @@ const CompetitionRegi = () => {
 		setFinishDate(date);
 	};
 
-	const handleCurrency = (e) => {
-		setCurrency(e.target.value);
-	};
-	const handleQuillText = (text) => {
+	const handleCkeditorValue = (text) => {
+		// console.log(text);
 		console.log(text);
-		setQuillText(text);
+		setCkText(text);
 	};
 	const handleEmailValidation = (email) => {
 		const { isValid, error } = validateEmail(email);
@@ -241,8 +209,8 @@ const CompetitionRegi = () => {
 				companyA: organizer,
 				companyB: sponsor,
 				url: webpageURL,
-				mainImage: posterFile.length > 0 ? posterFile[0].name : null,
-				fileRef: etcFile,
+				mainImage: posterFilePath ? posterFilePath : null,
+				fileRef: etcFilePath ? etcFilePath : null,
 				shareRequired: isOnline ? (isSnsRequired ? 2 : 1) : 0,
 				filmRequired: isVideoProduction ? (isVidRequired ? 2 : 1) : 0,
 				fileOrUrl: isFileOrUrl ? 1 : 0,
@@ -254,7 +222,7 @@ const CompetitionRegi = () => {
 				rewards: rewards,
 				videos: videos,
 				// challengeDesc: viewRef.current.getAttribute('content_data'),
-				challengeDesc: quillText,
+				challengeDesc: CkText,
 				commentAllowed: isComment,
 				charge: admin,
 				chargeShown: adminExposure,
@@ -277,10 +245,8 @@ const CompetitionRegi = () => {
 
 		// TextFile();
 		console.log('body: ', body);
-		console.log(etcFile);
-		console.log(posterFile);
-		console.log(posterFilePath);
 		console.log(etcFilePath);
+		console.log(posterFilePath);
 		let isConfirmed = window.confirm('등록하시겠습니까?');
 		if (isConfirmed) {
 			axios(config)
@@ -456,11 +422,13 @@ const CompetitionRegi = () => {
 						<div className="menu">포스터</div>
 						<div className="inputInfo infoPoster">
 							<div>공모전의 포스터가 있다면 업로드 해주세요</div>
-							<PosterUploader
-								file={posterFile}
-								setFile={setPosterFile}
+							<Uploader
+								// file={posterFile}
+								// setFile={setPosterFile}
 								filePath={posterFilePath}
 								setFilePath={setPosterFilePath}
+								multiple={false}
+								accept={'image/*'}
 							/>
 						</div>
 					</section>
@@ -469,11 +437,13 @@ const CompetitionRegi = () => {
 						<div className="inputInfo infoFiles">
 							<div>공모전에 관련한 자료가 있다면 업로드 해주세요</div>
 
-							<FileUploader
-								file={etcFile}
-								setFile={setEtcFile}
+							<Uploader
+								// file={etcFile}
+								// setFile={setEtcFile}
 								filePath={etcFilePath}
 								setFilePath={setEtcFilePath}
+								multiple={false}
+								accept={'*'}
 							/>
 						</div>
 					</section>
@@ -934,12 +904,15 @@ const CompetitionRegi = () => {
 					<section className="ele">
 						<div className="menu">공모 공지글</div>
 						<div className="inputInfo notice_editor_form">
-							{/* <Ckeditor /> */}
+							<Ckeditor
+								className="ckeditor_wrap"
+								handleCkeditorValue={handleCkeditorValue}
+							/>
 
-							<QuillTextEditor
+							{/* <QuillTextEditor
 								className="notice_editor"
 								handleText={handleQuillText}
-							/>
+							/> */}
 							{/* <Summernote viewRef={viewRef} placeHolder={placeHolder} /> */}
 							{/* <div id="summernote">
 								제목: <br />

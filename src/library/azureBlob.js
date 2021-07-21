@@ -87,5 +87,30 @@ export const getFilesFromBlob = async () => {
 	);
 	// get Container - full public read access
 	const containerClient = blobService.getContainerClient(containerName);
+
 	return getBlobsInContainer(containerClient);
+};
+export const getSingleFileFromBlob = async (name) => {
+	const blobService = new BlobServiceClient(
+		`https://${storageAccountName}.blob.core.windows.net/?${sasToken}`,
+	);
+	// get Container - full public read access
+	const containerClient = blobService.getContainerClient(containerName);
+	const blob = await containerClient.getBlobClient(name);
+	// return endpoint + blob.name;
+	return `https://${storageAccountName}.blob.core.windows.net/${containerName}/${blob.name}`;
+};
+export const delteFileFromBlob = async (name) => {
+	const blobService = new BlobServiceClient(
+		`https://${storageAccountName}.blob.core.windows.net/?${sasToken}`,
+	);
+	// get Container - full public read access
+	const containerClient = blobService.getContainerClient(containerName);
+	try {
+		await containerClient.deleteBlob(name);
+		return true;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
 };

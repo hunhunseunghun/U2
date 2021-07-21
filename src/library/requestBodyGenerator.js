@@ -46,7 +46,7 @@ export default function (params, type) {
 				company: params.company,
 				// companyA: params.organizer,
 				// companyB: params.sponsor,
-				url: params.refvidUrl,
+				url: params.url,
 				meetCode: params.meetCode,
 				// mainImage:
 				//   params.posterFile.length > 0 ? params.posterFile[0].name : null,
@@ -113,7 +113,7 @@ export default function (params, type) {
 						// },
 
 						seq: 1, //무조건 1
-						missionDesc: 'string',
+						// missionDesc: 'string',
 						datePub: params.datePub, //공지 시작일
 						dateBegin: params.dateBegin, //접수 시작
 						dateFin: params.dateFin, // 접수 종료

@@ -31,7 +31,9 @@ const Main = (props) => {
 	const handleRequestClick = (data) => {
 		// console.log(props);
 		if (!userInfo.email) {
-			props.history.push('/login');
+			if (window.confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?')) {
+				props.history.push('/login');
+			}
 		} else {
 			props.history.push('/prjregi');
 		}

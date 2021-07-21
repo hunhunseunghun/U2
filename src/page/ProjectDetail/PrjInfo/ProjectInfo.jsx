@@ -117,7 +117,7 @@ function ProjectInfo({ challenge }) {
 										let arr = challenge.rewards.map((el) => {
 											if (el.cat === 0) {
 												return `${el.pts} ${el.currency.toUpperCase()}`;
-											} else if (el.cat === 1) {
+											} else if (el.cat === 99) {
 												return el.rewardDesc;
 											}
 										});

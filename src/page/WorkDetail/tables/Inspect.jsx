@@ -210,6 +210,34 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 			})
 			.catch((err) => console.log(err));
 	};
+	function handleExcel() {
+		var config = {
+			method: 'get',
+			url:
+				process.env.REACT_APP_U2_DB_HOST +
+				`/Campaign/challengesubmittedxls/${challengeIdx}`,
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				// 'Content-Type': 'application/json',
+			},
+			responseType: 'blob',
+		};
+		axios(config)
+			.then((response) => {
+				const url = window.URL.createObjectURL(
+					new Blob([response.data], { type: response.headers['content-type'] }),
+				);
+				const link = document.createElement('a');
+				link.href = url;
+				link.setAttribute('download', 'Inspectors.xlsx');
+				document.body.appendChild(link);
+				link.click();
+			})
+			.catch((err, b) => {
+				console.log('err: ', err);
+				console.log('b: ', b);
+			});
+	}
 
 	useEffect(() => {
 		var config = {
@@ -256,7 +284,12 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 					<button onClick={() => handleBulkOkay(0)}>피드백</button>
 				</section>
 				<section className="inspect_table_header_right">
-					<div className="inspect_download_btn">
+					<div
+						className="inspect_download_btn"
+						onClick={() => {
+							handleExcel();
+						}}
+					>
 						<img src={excelIcon} alt="" />
 						<div>다운로드</div>
 					</div>
