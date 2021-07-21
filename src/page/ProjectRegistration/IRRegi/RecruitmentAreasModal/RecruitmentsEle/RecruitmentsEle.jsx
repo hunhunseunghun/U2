@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 const RecruitmentsEle = ({ ele, idx, handleSelectedList }) => {
   const [isChecked, setIsChecked] = useState(false);
 
+  console.log(isChecked);
   const handleChecked = e => {
     setIsChecked(!isChecked);
     handleSelectedList(e.target.value, isChecked);

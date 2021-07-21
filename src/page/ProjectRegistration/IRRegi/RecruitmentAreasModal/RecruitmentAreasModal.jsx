@@ -17,19 +17,17 @@ const RecruitmentAreasModal = ({ modalOpen, handleCloseModal }) => {
     '3D 애니메이션',
     '게임 그래픽',
   ]);
-  const [selectedList, setSelectedList] = useState(new Set());
+
   const [addInputValue, setAddInputValue] = useState(null);
   const handleRecruitmentInput = e => {
     let recruitmentListTemp = [...recruitmentList];
     if (e.key === 'Enter') {
       recruitmentListTemp.push(addInputValue);
       setRecruitmentList(recruitmentListTemp);
-      console.log('recruitmentsInput Excuted');
-      console.log(recruitmentListTemp);
-      console.log(addInputValue);
     }
   };
 
+  const [selectedList, setSelectedList] = useState(new Set());
   const handleSelectedList = (value, isChecked) => {
     if (isChecked) {
       selectedList.add(value);
@@ -39,7 +37,6 @@ const RecruitmentAreasModal = ({ modalOpen, handleCloseModal }) => {
       setSelectedList(selectedList);
     }
     console.log(selectedList);
-    console.log(isChecked);
   };
 
   useEffect(() => {
