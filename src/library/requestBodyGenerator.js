@@ -3,7 +3,7 @@ export default function (params, type) {
 		case '전문영상편집자': {
 			return {
 				challengeDesc: params.challengeDesc,
-				challengeTargetCode: 3,
+				challengeTargetCode: 2,
 				charge: params.charge, //담당자
 				chargeContact: params.chargeContact,
 				chargeContactShown: params.chargeContactShown ? 1 : 0,
@@ -25,7 +25,7 @@ export default function (params, type) {
 							};
 						}),
 						contactRequired: params.contactRequired,
-						datePub: params.datePub ? params.datePub : null, //공지 시작일
+						// datePub: params.datePub ? params.datePub : null, //공지 시작일
 						dateBegin: params.dateBegin, //접수 시작
 						dateFin: params.dateFin, // 접수 종료
 						emailRequired: params.emailRequired, //제출자 개인 정보 수집  이메일
@@ -56,7 +56,7 @@ export default function (params, type) {
 				fileOrUrl: params.isFileOrUrl ? 1 : 0,
 				emailRequired: params.isEmail ? (params.emailRequired ? 2 : 1) : 0,
 				contactRequired: params.isMobile ? (params.mobileRequired ? 2 : 1) : 0,
-				// datePub: params.noticeStart,
+				datePub: params.datePub ? params.datePub : null,
 				rewards: params.rewards.map((el, idx) => {
 					return {
 						seq: idx + 1,
@@ -179,11 +179,12 @@ export default function (params, type) {
 				ownerIdx: params.ownerIdx, //userinfo.member idx
 				companya: params.companyA, //주관사
 				companyb: params.companyB, //후원사
+
 				url: params.url, //홈페이지 URL
 				challengeDesc: params.challengeDesc, //공모 공지글
 				// "meetCode": 0, //?
 				challengeTargetCode: 1, //공모전이니까 1
-				// datePub: params.datePub, //공지 시작일
+				datePub: params.datePub, //공지 시작일
 				// "logo": "string", //?
 				mainImage: params.mainImage, //포스터
 				fileRef: params.fileRef, //파일

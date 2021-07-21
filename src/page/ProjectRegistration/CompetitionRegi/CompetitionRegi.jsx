@@ -213,6 +213,7 @@ const CompetitionRegi = () => {
 	};
 
 	const handleSubmit = () => {
+		if (checkRequiredField() !== true) return;
 		console.log('userInfo: ', userInfo);
 		var rewards = [];
 		contest && rewards.push({ cat: 1 });
@@ -282,21 +283,19 @@ const CompetitionRegi = () => {
 		console.log(etcFilePath);
 		let isConfirmed = window.confirm('등록하시겠습니까?');
 		if (isConfirmed) {
-			if (checkRequiredField() === true) {
-				axios(config)
-					.then(async (response) => {
-						console.log(response.data);
-						// if(isStorageConfigured()){
-						// 	// await uploadFileToBlob(etcFile)
-						// }
-						alert('공모전 등록에 성공했습니다.');
-						history.push('/creatormarket');
-					})
-					.catch((err) => {
-						console.log(err);
-						alert('공모전 등록에 실패했습니다.');
-					});
-			}
+			axios(config)
+				.then(async (response) => {
+					console.log(response.data);
+					// if(isStorageConfigured()){
+					// 	// await uploadFileToBlob(etcFile)
+					// }
+					alert('등록이 완료되었습니다.');
+					history.push('/creatormarket');
+				})
+				.catch((err) => {
+					console.log(err);
+					alert('공모전 등록에 실패했습니다.' + err);
+				});
 		}
 	};
 	useEffect(() => {

@@ -105,17 +105,17 @@ const Main = (props) => {
 							<span>공모전</span>
 						</div>
 						<div
-							className={tabActive === 2 ? 'tab_cv tab_active' : 'tab_cv'}
+							className={tabActive === 3 ? 'tab_cv tab_active' : 'tab_cv'}
 							onClick={() => {
-								setTabActive(2);
+								setTabActive(3);
 							}}
 						>
 							<span>영상크리에이터 / 인플루언서</span>
 						</div>
 						<div
-							className={tabActive === 3 ? 'tab_ve tab_active' : 'tab_ve'}
+							className={tabActive === 2 ? 'tab_ve tab_active' : 'tab_ve'}
 							onClick={() => {
-								setTabActive(3);
+								setTabActive(2);
 							}}
 						>
 							<span>전문영상 편집자</span>
@@ -159,7 +159,7 @@ const Main = (props) => {
 								case false: {
 									return moreActive
 										? challenges.slice(0, 3).map((ele, idx) => {
-												// console.log('ele: ', ele);
+												console.log('ele: ', ele);
 												if (tabActive === 0) {
 													return (
 														<ContentElement
@@ -180,7 +180,7 @@ const Main = (props) => {
 												}
 										  })
 										: pagedChallenges.map((ele, idx) => {
-												// console.log('ele: ', ele);
+												console.log('ele: ', ele);
 												if (tabActive === 0) {
 													return (
 														<ContentElement
