@@ -7,6 +7,7 @@ import uploadFileToBlob, {
 } from '../../../library/azureBlob';
 import DropDown from './DropDown/DropDown.jsx';
 import FileUploader from './FileUploader/FileUploader.jsx';
+import Uploader from '../../../component/Uploader/Uploader';
 import EditFileUploader from './EditFileUploader/EditFileUploader.jsx';
 import QuillTextEditor from './QuillTextEditor/QuillTextEditor.jsx';
 import { RegiConationer } from './VidEditorRegiStyled.jsx';
@@ -437,11 +438,11 @@ const VidEditorRegi = () => {
 						<div className="menu">파일 업로드</div>
 						<div className="inputInfo videditor_files_uploader">
 							<div>프로젝트에 관련한 자료를 업로드 해주세요</div>
-							<FileUploader
-								file={etcFile}
-								setFile={setEtcFile}
+							<Uploader
 								filePath={etcFilePath}
 								setFilePath={setEtcFilePath}
+								multiple={false}
+								accept={'*'}
 							/>
 						</div>
 					</section>

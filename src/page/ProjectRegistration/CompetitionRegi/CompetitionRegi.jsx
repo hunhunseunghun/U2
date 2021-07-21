@@ -2,16 +2,16 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import PosterUploader from './PosterUploader/PosterUploader.jsx';
-import FileUploader from './FileUploader/FileUploader.jsx';
+// import PosterUploader from './PosterUploader/PosterUploader.jsx';
+// import FileUploader from './FileUploader/FileUploader.jsx';
 import Uploader from '../../../component/Uploader/Uploader';
 import { RegiContainer } from './CompetitionRegiStyled.jsx';
 import DropDown from './DropDown/DropDown.jsx';
 import headerIcon from '../../../Img/Icons/headerIcon.png';
 import downArrowIcon from '../../../Img/Icons/sortarrowdown.png';
-import QuillTextEditor from './QuillTextEditor/QuillTextEditor.jsx';
-import Summernote from '../../../component/Summernote/summernote.jsx';
-import { TiDeleteOutline } from 'react-icons/ti'; // 파일삭제 버튼 icon
+// import QuillTextEditor from './QuillTextEditor/QuillTextEditor.jsx';
+// import Summernote from '../../../component/Summernote/summernote.jsx';
+// import { TiDeleteOutline } from 'react-icons/ti'; // 파일삭제 버튼 icon
 import { DateTimePicker } from '@material-ui/pickers';
 import { createMuiTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
