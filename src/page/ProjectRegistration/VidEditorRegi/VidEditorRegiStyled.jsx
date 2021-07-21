@@ -413,12 +413,10 @@ export const RegiConationer = styled.div`
   }
   //editor css ----------------------------------
   .notice_editor_form {
-    padding: 0 0 42px 0;
-  }
-  .notice_editor {
-    width: 100%;
-    height: 300px;
-    border: 0;
+    padding: 0px 0px;
+    .ckeditor_wrap {
+      width: 100%;
+    }
   }
 
   //reply css -------------------------------------

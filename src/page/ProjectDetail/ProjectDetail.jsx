@@ -129,7 +129,7 @@ function ProjectDetail(props) {
 					// seqx: 1,
 					// memberIdx: userInfo.memberIdx,
 					comment: comments[reply.index].inputReply,
-					// statusCode: 1,
+					//   statusCode: 1,
 					// "registMemberIdx": 0,
 					// "registDate": "2021-07-14T11:00:22.230Z",
 					// "modifyMemberIdx": 0,
@@ -139,11 +139,11 @@ function ProjectDetail(props) {
 				body = {
 					// commentIdx: 0,
 					challengeIdx: Number(challengeIdx),
-					// seq: 0,
+					//   seq: 0,
 					// seqx: 1,
 					// memberIdx: userInfo.memberIdx,
 					comment: inputComment,
-					// statusCode: 1,
+					//   statusCode: 1,
 					// "registMemberIdx": 0,
 					// "registDate": "2021-07-14T11:00:22.230Z",
 					// "modifyMemberIdx": 0,
@@ -382,17 +382,6 @@ function ProjectDetail(props) {
 										</TwitterShareButton>
 									</div>
 									<div className="sns_title">트위터</div>
-								</li>
-							</ul>
-							<ul>
-								<li>
-									<div className="sns_img">
-										<img
-											src="/img/instagramIcon.png"
-											className="sns_img_instagram"
-										/>
-									</div>
-									<div className="sns_title">인스타그램</div>
 								</li>
 								<li
 									onClick={() => {

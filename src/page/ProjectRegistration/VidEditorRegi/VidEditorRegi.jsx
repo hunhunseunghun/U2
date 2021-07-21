@@ -21,6 +21,8 @@ import requestBodyGenerator from '../../../library/requestBodyGenerator.js';
 import { validateEmail } from '../../../library/validate.js';
 import axios from 'axios';
 import { TextFile } from '../../../library/getJson';
+import Ckeditor5 from '../../../component/Ckeditor5/Ckeditor5.jsx';
+
 const VidEditorRegi = () => {
 	let history = useHistory();
 	const userInfo = useSelector((state) => state.userInfo);
@@ -929,7 +931,8 @@ const VidEditorRegi = () => {
 					<section className="ele">
 						<div className="menu">공모 공지글</div>
 						<div className="inputInfo notice_editor_form">
-							<QuillTextEditor className="notice_editor" />
+							{/* <QuillTextEditor className="notice_editor" /> */}
+							<Ckeditor5 className="ckeditor_wrap" />
 						</div>
 					</section>
 					<section className="ele">
