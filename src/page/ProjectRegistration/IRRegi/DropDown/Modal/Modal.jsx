@@ -1,8 +1,74 @@
 import React, { useState } from 'react';
-
-const Modal = ({ modalOpen, handleOpenModal, handleCloseModal, header }) => {
+import axios from 'axios';
+import requestBodyGenerator from '../../../../../library/requestBodyGenerator';
+import { useSelector } from 'react-redux';
+const Modal = ({
+  modalOpen,
+  handleOpenModal,
+  handleCloseModal,
+  header,
+  handleNewData,
+}) => {
   const [columnText, setColumnText] = useState('개인');
+  const userInfo = useSelector(state => state.userInfo);
+  const [ownerCat, setOwnerCat] = useState(0); // 0: 개인 , 1: 비지니스
+  const [company, setCompany] = useState('');
+  const [logo, setLogo] = useState(null);
+  const [email, setEmail] = useState('');
+  const [mobile, setMobile] = useState('');
+  const [sns, setSns] = useState('');
+  const [snsType, setSnsType] = useState('F');
+  const handleOwnerCat = e => {
+    switch (e.target.value) {
+      case '개인': {
+        setOwnerCat(0);
+        break;
+      }
 
+      case '비지니스': {
+        setOwnerCat(1);
+        break;
+      }
+
+      default:
+        break;
+    }
+    // setOwnerCat(e.target.value);
+  };
+  const handleSubmit = () => {
+    console.log(userInfo);
+    const data = requestBodyGenerator(
+      {
+        ownerIdx: userInfo.memberIdx,
+        memberIdx: userInfo.memberIdx,
+        ownerCat: ownerCat,
+        company: company,
+        email: email,
+        contact: mobile,
+        socialMediaCode: snsType,
+        socialMediaId: sns,
+      },
+      'challengeowner'
+    );
+    var config = {
+      method: 'post',
+      url: process.env.REACT_APP_U2_DB_HOST + '/Campaign/challengeowner',
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+        'Content-Type': 'application/json',
+      },
+      data: data,
+    };
+    axios(config)
+      .then(response => {
+        console.log(response.data);
+        handleNewData(response.data);
+        handleCloseModal();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
   const handleColumnText = e => {
     setColumnText(e.target.value);
   };
@@ -27,8 +93,8 @@ const Modal = ({ modalOpen, handleOpenModal, handleCloseModal, header }) => {
                       type="radio"
                       name="Form"
                       value="개인"
-                      onClick={handleColumnText}
-                      checked={columnText === '개인' ? true : false}
+                      onClick={handleOwnerCat}
+                      checked={ownerCat === 0}
                       readOnly
                     />
                     <label htmlFor="From">개인</label>
@@ -38,8 +104,8 @@ const Modal = ({ modalOpen, handleOpenModal, handleCloseModal, header }) => {
                       type="radio"
                       name="Form"
                       value="비지니스"
-                      onClick={handleColumnText}
-                      checked={columnText === '비지니스' ? true : false}
+                      onClick={handleOwnerCat}
+                      checked={ownerCat === 1}
                       readOnly
                     />
                     <label htmlFor="From">비지니스</label>
@@ -48,10 +114,16 @@ const Modal = ({ modalOpen, handleOpenModal, handleCloseModal, header }) => {
               </div>
             </section>
             <section className="ele">
-              <div className="menu">{columnText}</div>
+              <div className="menu">{!ownerCat ? '개인' : '비지니스'}</div>
               <div className="inputInfo">
                 <div className="inputCompany">
-                  <input type="text" className="inputCompany" />
+                  <input
+                    type="text"
+                    className="inputCompany"
+                    onChange={e => {
+                      setCompany(e.target.value);
+                    }}
+                  />
                 </div>
               </div>
             </section>
@@ -63,7 +135,11 @@ const Modal = ({ modalOpen, handleOpenModal, handleCloseModal, header }) => {
                     type="file"
                     accept="image/*"
                     className="competitionName"
-                    multiple
+                    onChange={e => {
+                      // console.log(e.target.value);
+                      // console.log(e.target.files[0]);
+                      setLogo(e.target.files[0]);
+                    }}
                   />
                 </div>
               </div>
@@ -72,7 +148,13 @@ const Modal = ({ modalOpen, handleOpenModal, handleCloseModal, header }) => {
               <div className="menu">* 이메일</div>
               <div className="inputInfo">
                 <div className="inputEmail">
-                  <input type="text" className="prjName" />
+                  <input
+                    type="text"
+                    className="prjName"
+                    onChange={e => {
+                      setEmail(e.target.value);
+                    }}
+                  />
                 </div>
               </div>
             </section>
@@ -80,7 +162,13 @@ const Modal = ({ modalOpen, handleOpenModal, handleCloseModal, header }) => {
               <div className="menu">* 전화번호</div>
               <div className="inputInfo">
                 <div className="inputPhoneNumber">
-                  <input type="text" className="prjName" />
+                  <input
+                    type="text"
+                    className="prjName"
+                    onChange={e => {
+                      setMobile(e.target.value);
+                    }}
+                  />
                 </div>
               </div>
             </section>
@@ -88,7 +176,24 @@ const Modal = ({ modalOpen, handleOpenModal, handleCloseModal, header }) => {
               <div className="menu">SNS ID</div>
               <div className="inputInfo">
                 <div className="inputSnsID">
-                  <input type="text" className="prjName" />
+                  <input
+                    type="text"
+                    className="prjName"
+                    onChange={e => {
+                      setSns(e.target.value);
+                    }}
+                  />
+                  <select
+                    onChange={e => {
+                      console.log('snsType: ', e.target.value);
+                      setSnsType(e.target.value);
+                    }}
+                  >
+                    <option value="F" defaultChecked>
+                      페이스북
+                    </option>
+                    <option value="K">카카오톡</option>
+                  </select>
                 </div>
               </div>
             </section>
@@ -98,7 +203,7 @@ const Modal = ({ modalOpen, handleOpenModal, handleCloseModal, header }) => {
               {' '}
               취소{' '}
             </button>
-            <button className="close" onClick={handleCloseModal}>
+            <button className="close saveBtn" onClick={handleSubmit}>
               {' '}
               저장{' '}
             </button>
