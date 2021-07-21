@@ -6,10 +6,10 @@ import uploadFileToBlob, {
 	getFilesFromBlob,
 } from '../../../library/azureBlob';
 import DropDown from './DropDown/DropDown.jsx';
-import FileUploader from './FileUploader/FileUploader.jsx';
+// import FileUploader from './FileUploader/FileUploader.jsx';
 import Uploader from '../../../component/Uploader/Uploader';
-import EditFileUploader from './EditFileUploader/EditFileUploader.jsx';
-import QuillTextEditor from './QuillTextEditor/QuillTextEditor.jsx';
+// import EditFileUploader from './EditFileUploader/EditFileUploader.jsx';
+// import QuillTextEditor from './QuillTextEditor/QuillTextEditor.jsx';
 import { RegiConationer } from './VidEditorRegiStyled.jsx';
 import headerIcon from '../../../Img/Icons/headerIcon.png';
 import onlineIcon from '../../../Img/Icons/onlineIcon.png';

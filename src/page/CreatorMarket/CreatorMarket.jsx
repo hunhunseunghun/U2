@@ -15,13 +15,15 @@ const Main = (props) => {
 	const [tabActive, setTabActive] = useState(0); // 탭 선택 소팅
 	//0: 전체, 1: 공모전, 2: 전문영상 편집자 , 3: 영상 크리에이터/언플루언서, 4: 강사채용
 	const [challenges, setChallengs] = useState(null); // 챌린지 데이터
+	const [sortedChallenges, setSortedChallenges] = useState([]);
 	const [isLoadingChallenges, setIsLoadingChallenges] = useState(null);
 	const [moreActive, setMoreActive] = useState(false);
 	const userInfo = useSelector((state) => state.userInfo);
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const pageSize = 6; //테스트를 위해 한페이지당 4개만 보여줌. 데이터가 많아지면 3단 * 2 = 6개씩 보여줘야함
-	const pagedChallenges = paginate(challenges, currentPage, pageSize);
+	const pagedChallenges = paginate(sortedChallenges, currentPage, pageSize);
+
 	// useEffect(()=>{
 	//   axios.get(`${server}/api/Campaign/challengemaster`).then(res=>{
 	//     setData(res.data)
@@ -42,6 +44,17 @@ const Main = (props) => {
 	const handlePageChange = (page) => {
 		setCurrentPage(page);
 	};
+	const handleTabChange = (tab) => {
+		setTabActive(tab);
+		if (tab === 0) {
+			setSortedChallenges(challenges);
+			return;
+		}
+		var newArr = challenges.filter((el) => el.challengeTargetCode === tab);
+		console.log('tab: ', tab);
+		console.log(newArr);
+		setSortedChallenges(newArr);
+	};
 
 	useEffect(() => {
 		setIsLoadingChallenges(true);
@@ -51,6 +64,7 @@ const Main = (props) => {
 			.then((res) => {
 				console.log(res.data);
 				setChallengs(res.data);
+				setSortedChallenges(res.data);
 				setIsLoadingChallenges(false);
 			})
 			.catch((err) => {
@@ -91,7 +105,7 @@ const Main = (props) => {
 								tabActive === 0 ? 'tab_entire tab_active' : 'tab_entire'
 							}
 							onClick={() => {
-								setTabActive(0);
+								handleTabChange(0);
 							}}
 						>
 							<span>전체</span>
@@ -101,7 +115,7 @@ const Main = (props) => {
 								tabActive === 1 ? 'tab_compte tab_active' : 'tab_compte'
 							}
 							onClick={() => {
-								setTabActive(1);
+								handleTabChange(1);
 							}}
 						>
 							<span>공모전</span>
@@ -109,7 +123,7 @@ const Main = (props) => {
 						<div
 							className={tabActive === 3 ? 'tab_cv tab_active' : 'tab_cv'}
 							onClick={() => {
-								setTabActive(3);
+								handleTabChange(3);
 							}}
 						>
 							<span>영상크리에이터 / 인플루언서</span>
@@ -117,7 +131,7 @@ const Main = (props) => {
 						<div
 							className={tabActive === 2 ? 'tab_ve tab_active' : 'tab_ve'}
 							onClick={() => {
-								setTabActive(2);
+								handleTabChange(2);
 							}}
 						>
 							<span>전문영상 편집자</span>
@@ -125,7 +139,7 @@ const Main = (props) => {
 						<div
 							className={tabActive === 4 ? 'tab_ir tab_active' : 'tab_ir'}
 							onClick={() => {
-								setTabActive(4);
+								handleTabChange(4);
 							}}
 						>
 							<span>강사채용</span>
@@ -160,7 +174,7 @@ const Main = (props) => {
 								}
 								case false: {
 									return moreActive
-										? challenges.slice(0, 3).map((ele, idx) => {
+										? sortedChallenges.slice(0, 3).map((ele, idx) => {
 												console.log('ele: ', ele);
 												if (tabActive === 0) {
 													return (

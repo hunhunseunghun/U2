@@ -3,10 +3,7 @@ import axios from 'axios';
 import { WorkDetailContainer } from './WorkDetailStyled';
 import ChallengeTable from './tables/Challenge';
 import InspectTable from './tables/Inspect';
-import challenges from './sampledatas/challenges';
-import inspects from './sampledatas/inspects';
 import SubmissionModal from '../../component/Modals/Submission/SubmissionModal';
-import { set } from 'lodash';
 import moment from 'moment';
 function WorkDetail(props) {
 	let [subject, setSubject] = useState('광고/홍보');
