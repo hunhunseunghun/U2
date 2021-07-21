@@ -169,6 +169,7 @@ function ProjectDetail(props) {
 						)
 						.then((response) => {
 							console.log('comments: ', response.data);
+							setInputComment('');
 							setComments(response.data);
 						});
 				})

@@ -31,139 +31,139 @@ import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64u
 import { Container } from './Ckeditor5Styled.jsx';
 
 const Ckeditor = ({ handleCkeditorValue }) => {
-  return (
-    <Container className="ckeditor_wrap">
-      <CKEditor
-        className="ckeditor5"
-        onChange={e => {
-          handleCkeditorValue(e);
-        }}
-        onInit={editor => {
-          editor.ui
-            .getEditableElement()
-            .parentElement.insertBefore(
-              editor.ui.view.toolbar.element,
-              editor.ui.getEditableElement()
-            );
-        }}
-        config={{
-          language: 'ko',
-          plugins: [
-            Essentials,
-            Paragraph,
-            Bold,
-            Italic,
-            Heading,
-            Indent,
-            IndentBlock,
-            Underline,
-            Strikethrough,
-            BlockQuote,
-            Font,
-            Alignment,
-            List,
-            Link,
-            PasteFromOffice,
-            Image,
-            ImageStyle,
-            ImageToolbar,
-            ImageUpload,
-            ImageResize,
-            Base64UploadAdapter,
-            Table,
-            TableToolbar,
-            TableProperties,
-            TableCellProperties,
-            TextTransformation,
-          ],
-          toolbar: [
-            'heading',
-            '|',
-            'bold',
-            'italic',
-            'underline',
-            'strikethrough',
-            '|',
-            'fontSize',
-            'fontColor',
-            'fontBackgroundColor',
-            '|',
-            'alignment',
-            'outdent',
-            'indent',
-            'bulletedList',
-            'numberedList',
-            'blockQuote',
-            '|',
-            'link',
-            'insertTable',
-            'imageUpload',
-            '|',
-            'undo',
-            'redo',
-          ],
-          fontSize: {
-            options: [
-              14,
-              15,
-              16,
-              17,
-              18,
-              19,
-              'default',
-              21,
-              22,
-              23,
-              24,
-              25,
-              26,
-              27,
-              28,
-              29,
-              30,
-            ],
-          },
-          alignment: {
-            options: ['justify', 'left', 'center', 'right'],
-          },
-          table: {
-            contentToolbar: [
-              'tableColumn',
-              'tableRow',
-              'mergeTableCells',
-              'tableProperties',
-              'tableCellProperties',
-            ],
-          },
-          image: {
-            resizeUnit: 'px',
-            toolbar: [
-              'imageStyle:alignLeft',
-              'imageStyle:full',
-              'imageStyle:alignRight',
-              '|',
-              'imageTextAlternative',
-            ],
-            styles: ['full', 'alignLeft', 'alignRight'],
-            type: ['JPEG', 'JPG', 'GIF', 'PNG'],
-          },
-          typing: {
-            transformations: {
-              remove: [
-                'enDash',
-                'emDash',
-                'oneHalf',
-                'oneThird',
-                'twoThirds',
-                'oneForth',
-                'threeQuarters',
-              ],
-            },
-          },
-        }}
-        editor={DecoupledEditor}
-      />
-    </Container>
-  );
+	return (
+		<Container className="ckeditor_wrap">
+			<CKEditor
+				className="ckeditor5"
+				onChange={(event, editor) => {
+					handleCkeditorValue(editor.getData());
+				}}
+				onInit={(editor) => {
+					editor.ui
+						.getEditableElement()
+						.parentElement.insertBefore(
+							editor.ui.view.toolbar.element,
+							editor.ui.getEditableElement(),
+						);
+				}}
+				config={{
+					language: 'ko',
+					plugins: [
+						Essentials,
+						Paragraph,
+						Bold,
+						Italic,
+						Heading,
+						Indent,
+						IndentBlock,
+						Underline,
+						Strikethrough,
+						BlockQuote,
+						Font,
+						Alignment,
+						List,
+						Link,
+						PasteFromOffice,
+						Image,
+						ImageStyle,
+						ImageToolbar,
+						ImageUpload,
+						ImageResize,
+						Base64UploadAdapter,
+						Table,
+						TableToolbar,
+						TableProperties,
+						TableCellProperties,
+						TextTransformation,
+					],
+					toolbar: [
+						'heading',
+						'|',
+						'bold',
+						'italic',
+						'underline',
+						'strikethrough',
+						'|',
+						'fontSize',
+						'fontColor',
+						'fontBackgroundColor',
+						'|',
+						'alignment',
+						'outdent',
+						'indent',
+						'bulletedList',
+						'numberedList',
+						'blockQuote',
+						'|',
+						'link',
+						'insertTable',
+						'imageUpload',
+						'|',
+						'undo',
+						'redo',
+					],
+					fontSize: {
+						options: [
+							14,
+							15,
+							16,
+							17,
+							18,
+							19,
+							'default',
+							21,
+							22,
+							23,
+							24,
+							25,
+							26,
+							27,
+							28,
+							29,
+							30,
+						],
+					},
+					alignment: {
+						options: ['justify', 'left', 'center', 'right'],
+					},
+					table: {
+						contentToolbar: [
+							'tableColumn',
+							'tableRow',
+							'mergeTableCells',
+							'tableProperties',
+							'tableCellProperties',
+						],
+					},
+					image: {
+						resizeUnit: 'px',
+						toolbar: [
+							'imageStyle:alignLeft',
+							'imageStyle:full',
+							'imageStyle:alignRight',
+							'|',
+							'imageTextAlternative',
+						],
+						styles: ['full', 'alignLeft', 'alignRight'],
+						type: ['JPEG', 'JPG', 'GIF', 'PNG'],
+					},
+					typing: {
+						transformations: {
+							remove: [
+								'enDash',
+								'emDash',
+								'oneHalf',
+								'oneThird',
+								'twoThirds',
+								'oneForth',
+								'threeQuarters',
+							],
+						},
+					},
+				}}
+				editor={DecoupledEditor}
+			/>
+		</Container>
+	);
 };
 export default Ckeditor;
