@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from './RecruitmentAreasModalStyled.jsx';
+import RecruitmentsEle from './RecruitmentsEle/RecruitmentsEle.jsx';
 
 const RecruitmentAreasModal = ({ modalOpen, handleCloseModal }) => {
   const [recruitmentList, setRecruitmentList] = useState([
@@ -16,17 +17,31 @@ const RecruitmentAreasModal = ({ modalOpen, handleCloseModal }) => {
     '3D 애니메이션',
     '게임 그래픽',
   ]);
+
   const [addInputValue, setAddInputValue] = useState(null);
   const handleRecruitmentInput = e => {
     let recruitmentListTemp = [...recruitmentList];
     if (e.key === 'Enter') {
-      recruitmentListTemp.push('까꿍');
+      recruitmentListTemp.push(addInputValue);
       setRecruitmentList(recruitmentListTemp);
-      console.log('recruitmentsInput Excuted');
-      console.log(recruitmentListTemp);
-      console.log(addInputValue);
     }
   };
+
+  const [selectedList, setSelectedList] = useState(new Set());
+  const handleSelectedList = (value, isChecked) => {
+    if (isChecked) {
+      selectedList.add(value);
+      setSelectedList(selectedList);
+    } else if (!isChecked && selectedList.has(value)) {
+      selectedList.delete(value);
+      setSelectedList(selectedList);
+    }
+    console.log(selectedList);
+  };
+
+  useEffect(() => {
+    console.log(selectedList);
+  }, [selectedList]);
 
   return (
     <Container>
@@ -47,23 +62,32 @@ const RecruitmentAreasModal = ({ modalOpen, handleCloseModal }) => {
             </header>
             <main>
               <section>
-                {'hello'}
                 {recruitmentList.map((ele, idx) => {
                   return (
-                    <div
-                      className={`recuitment_modal_elements recuitment_modal_elements_${idx}`}
-                      key={idx}
-                    >
-                      <input type="checkbox" name={`${ele}`} value={`${ele}`} />
-                      <div>{ele}</div>
-                    </div>
+                    // <div
+                    //   className={`recuitment_modal_elements recuitment_modal_elements_${idx}`}
+                    //   key={idx}
+                    // >
+                    //   <input
+                    //     type="checkbox"
+                    //     name={`${ele}`}
+                    //     value={`${ele}`}
+                    //     onChange={e => {
+                    //       handleSelectedList(e, idx);
+                    //     }}
+                    //   />
+                    //   <div>{ele}</div>
+
+                    // </div>
+                    <RecruitmentsEle
+                      ele={ele}
+                      idx={idx}
+                      handleSelectedList={handleSelectedList}
+                    />
                   );
                 })}
-                <div>
-                  <input type="checkbox" name="photoshop" value="photoshop" />
-                  <div>photoshop</div>
-                </div>
               </section>
+
               <section>
                 <div>직접입력</div>
                 <div>
