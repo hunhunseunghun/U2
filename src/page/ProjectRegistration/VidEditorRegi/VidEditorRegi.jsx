@@ -26,10 +26,11 @@ import Ckeditor5 from '../../../component/Ckeditor5/Ckeditor5.jsx';
 const VidEditorRegi = () => {
 	let history = useHistory();
 	const userInfo = useSelector((state) => state.userInfo);
-
+	//공모 공지글
 	const [quillText, setQuillText] = useState(
 		'<ul><li>제목 :</li></ul><p><br></p><ul><li>응모 자격 :</li></ul><p><br></p><ul><li>응모 주제 :</li></ul><p><br></p><ul><li>시상 내역 :</li></ul><p><br></p><ul><li>응모 일정 : </li></ul><p><br></p><ul><li>제출 방법 :</li></ul><p><br></p><ul><li>접수 방법 :</li></ul><p><br></p><ul><li>심사 방법 :</li></ul><p><br></p><ul><li>유의 사항 :</li></ul><p><br></p><ul><li>문의 사항:</li></ul>',
 	);
+	const [ckText, setCkText] = useState('');
 
 	const [title, setTitle] = useState('');
 	const [refvidUrl, setrefvidUrl] = useState('');
@@ -121,6 +122,9 @@ const VidEditorRegi = () => {
 		setBlobList(blobsInContainer);
 		console.log(blobsInContainer);
 	};
+	const handleCkeditorValue = (value) => {
+		setCkText(value);
+	};
 
 	const handleSubmit = () => {
 		console.log('userInfo: ', userInfo);
@@ -159,7 +163,7 @@ const VidEditorRegi = () => {
 
 		const body = requestBodyGenerator(
 			{
-				challengeDesc: quillText,
+				challengeDesc: ckText,
 				memberIdx: userInfo.memberIdx,
 				title: title,
 				ownerIdx: ownerIdx,
@@ -210,8 +214,13 @@ const VidEditorRegi = () => {
 		axios(config)
 			.then((res) => {
 				console.log('videditorregi response data', res);
+				alert('등록이 완료되었습니다.');
+				history.push('/creatormarket');
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => {
+				console.log(err);
+				alert(err);
+			});
 	};
 	const handleNewData = (data) => {
 		var newForm = {
@@ -962,7 +971,10 @@ const VidEditorRegi = () => {
 						<div className="menu">공모 공지글</div>
 						<div className="inputInfo notice_editor_form">
 							{/* <QuillTextEditor className="notice_editor" /> */}
-							<Ckeditor5 className="ckeditor_wrap" />
+							<Ckeditor5
+								className="ckeditor_wrap"
+								handleCkeditorValue={handleCkeditorValue}
+							/>
 						</div>
 					</section>
 					<section className="ele">
