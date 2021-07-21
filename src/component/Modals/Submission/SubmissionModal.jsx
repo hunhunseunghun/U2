@@ -61,7 +61,7 @@ function SubmissionModal({
 			axios(config).then((response) => {
 				console.log('data in submission: ', response.data);
 				setData(response.data);
-				setFbProps({ ...fbProps, data: response.data });
+				setFbProps({ ...fbProps, data: response.data.feedback });
 			});
 		}
 	}, [challengeIdx]);

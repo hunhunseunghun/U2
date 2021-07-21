@@ -41,6 +41,8 @@ const VidEditorRegi = () => {
 	const [rewardDate, setRewardDate] = useState(null);
 	//보상일 비활성화
 	const [confirmRewardsDate, SetConfirmRewardsDate] = useState(true);
+	//공지 시작일
+	const [noticeStart, setNoticeStart] = useState(new Date());
 	//보상 조건
 	const [isRewardCash, setIsRewardCash] = useState(false);
 	const [isDirectReward, setIsDirectReward] = useState(false);
@@ -129,10 +131,13 @@ const VidEditorRegi = () => {
 				cat: 0,
 				datePayment: rewardDate,
 				currency: rewardCurrency,
-				pts: rewardsCash,
+				pts: Number(rewardsCash),
 			};
 
 			rewards.push(rewardsEle);
+		} else {
+			alert('모든 필수 입력란을 작성해주세요.');
+			return;
 		}
 		if (confirmRewardsDate && rewardDate && isDirectReward) {
 			var rewardsEle = {
@@ -142,6 +147,9 @@ const VidEditorRegi = () => {
 			};
 
 			rewards.push(rewardsEle);
+		} else {
+			alert('모든 필수 입력란을 작성해주세요.');
+			return;
 		}
 		console.log(rewards);
 		var videos = [];
@@ -172,7 +180,7 @@ const VidEditorRegi = () => {
 				contactRequired: isMobile ? (mobileRequired ? 2 : 1) : 0,
 				dateBegin: startDate,
 				dateFin: finishDate,
-				// datePub: noticeStart,
+				datePub: noticeStart,
 				rewards: rewards,
 				// // challengeDesc: viewRef.current.getAttribute('content_data'),
 				// // challengeDesc: quillText,
@@ -776,6 +784,28 @@ const VidEditorRegi = () => {
 								<div className="input_sub_text">
 									공지 종료일을 입력해주십시오
 								</div>
+							</div>
+						</div>
+					</section>
+					<section className="ele">
+						<div className="menu">* 공지시작일</div>
+						<div className="inputInfo noticeDate">
+							<div className="noticeStart">
+								<ThemeProvider theme={materialTheme}>
+									<DateTimePicker
+										className="dtPicker"
+										label="시작 날짜 선택"
+										inputVariant="outlined"
+										value={noticeStart}
+										onChange={(date) => setNoticeStart(date)}
+										format="yyyy/MM/dd hh:mm a"
+										disablePast={true}
+										minDate={new Date()}
+										minDateMessage={false}
+										// minDateMessage="현 시각 이후부터 가능합니다"
+										strictCompareDates={true}
+									/>
+								</ThemeProvider>
 							</div>
 						</div>
 					</section>

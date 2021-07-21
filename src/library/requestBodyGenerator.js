@@ -62,9 +62,11 @@ export default function (params, type) {
 						seq: idx + 1,
 						cat: el.cat,
 						qty: el.qty ? el.qty : 0,
-						pts: el.pts ? el.pts : 0,
+						pts: el.pts ? Number(el.pts) : 0,
+						// pts: 2000,
 						currency: el.currency ? el.currency : null,
 						rewarddesc: el.rewarddesc ? el.rewarddesc : null,
+						datePayment: el.datePayment,
 					};
 				}),
 
@@ -138,7 +140,7 @@ export default function (params, type) {
 							seq: idx + 1,
 							cat: el.cat,
 							qty: el.qty ? el.qty : 0,
-							pts: el.pts ? el.pts : 0,
+							pts: el.pts ? Number(el.pts) : 0,
 							currency: el.currency ? el.currency : null,
 							rewarddesc: el.rewarddesc ? el.rewarddesc : null,
 						};

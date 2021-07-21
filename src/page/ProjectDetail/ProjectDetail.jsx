@@ -125,7 +125,7 @@ function ProjectDetail(props) {
 				body = {
 					// commentIdx: 0,
 					challengeIdx: Number(challengeIdx),
-					seq: reply.seqx,
+					seq: reply.seq,
 					// seqx: 1,
 					// memberIdx: userInfo.memberIdx,
 					comment: comments[reply.index].inputReply,
@@ -470,10 +470,10 @@ function ProjectDetail(props) {
 						var copyArr = comments.slice();
 						copyArr.splice(idx, 1); //나를 제외한 배열에서 답글 탐색
 						var replies = copyArr.filter(
-							(reply) => reply.seq === comment.seqx && reply.seq !== 1,
+							(reply) => reply.seq === comment.seq && reply.seqx !== 1,
 						);
 
-						if (comment.seq !== 1) return; //답글인 경우 아래에서 이미 다 렌더링함.
+						if (comment.seqx !== 1) return; //답글인 경우 아래에서 이미 다 렌더링함.
 						return (
 							<fieldset>
 								<div className="comment_memberidx">
@@ -519,7 +519,7 @@ function ProjectDetail(props) {
 									></input>
 									<button
 										onClick={() => {
-											handleComment({ seqx: comment.seqx, index: idx });
+											handleComment({ seq: comment.seq, index: idx });
 										}}
 									>
 										등록

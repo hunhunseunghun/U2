@@ -28,6 +28,30 @@ function RegistTable() {
 
 	let handlePageChange = (page) => {
 		setQuests({ ...quests, currentPage: page });
+		var config = {
+			method: 'get',
+			url:
+				process.env.REACT_APP_U2_DB_HOST +
+				`/Campaign/challengeowned?p=${page}&size=${quests.pageSize}`,
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+		};
+		axios(config)
+			.then((response) => {
+				console.log('레지스트 테이블 response:');
+				console.log(response.data);
+				setQuests({
+					...quests,
+					data: response.data.entities,
+				});
+				setCount(response.data.total);
+			})
+			.catch((err) => {
+				console.log('response error:');
+				console.log(err);
+			});
 		// axios(config)
 		//   .then(response => {
 		//     console.log('레지스트테이블 response:');
