@@ -30,11 +30,14 @@ import TableCellProperties from '@ckeditor/ckeditor5-table/src/tablecellproperti
 import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter';
 import { Container } from './Ckeditor5Styled.jsx';
 
-const Ckeditor = () => {
+const Ckeditor = ({ handleCkeditorValue }) => {
   return (
     <Container className="ckeditor_wrap">
       <CKEditor
         className="ckeditor5"
+        onChange={e => {
+          handleCkeditorValue(e);
+        }}
         onInit={editor => {
           editor.ui
             .getEditableElement()
