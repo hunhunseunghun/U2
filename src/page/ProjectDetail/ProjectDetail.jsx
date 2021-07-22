@@ -121,33 +121,19 @@ function ProjectDetail(props) {
 		if (userInfo.email) {
 			var body = {};
 			// TextFile(body);
+			if (!inputComment.length > 0) return alert('내용을 입력해주세요');
 			if (reply) {
 				body = {
-					// commentIdx: 0,
 					challengeIdx: Number(challengeIdx),
 					seq: reply.seq,
-					// seqx: 1,
-					// memberIdx: userInfo.memberIdx,
+
 					comment: comments[reply.index].inputReply,
-					//   statusCode: 1,
-					// "registMemberIdx": 0,
-					// "registDate": "2021-07-14T11:00:22.230Z",
-					// "modifyMemberIdx": 0,
-					// "modifyDate": "2021-07-14T11:00:22.230Z"
 				};
 			} else {
 				body = {
-					// commentIdx: 0,
 					challengeIdx: Number(challengeIdx),
-					//   seq: 0,
-					// seqx: 1,
-					// memberIdx: userInfo.memberIdx,
+
 					comment: inputComment,
-					//   statusCode: 1,
-					// "registMemberIdx": 0,
-					// "registDate": "2021-07-14T11:00:22.230Z",
-					// "modifyMemberIdx": 0,
-					// "modifyDate": "2021-07-14T11:00:22.230Z"
 				};
 			}
 			var config = {
