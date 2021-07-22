@@ -23,7 +23,7 @@ const IRRegi = () => {
   const [isActive, setIsActive] = useState(false);
   const [defaultIdx, setDefaultIdx] = useState(0);
   const [profiles, setProfiles] = useState([]);
-  //handle recuritmentareas modal ----------------------------
+  //모집분야 ----------------------------
   const [recruitmentModalOpen, setRecruitmentModalOpen] = useState(false);
   const [recruitmentFieldList, setRecruitmentFieldList] = useState([]);
 
@@ -83,42 +83,36 @@ const IRRegi = () => {
   const [ownerIdx, setOwnerIdx] = useState(0);
   //강사채용 제목 ---------------------------------------------
   const [title, setTitle] = useState('');
-  //프로젝트 완료 조건
-  const [isOnline, setIsOnline] = useState(false);
-
-  const [isVideoProduction, setIsVideoProduction] = useState(false);
-
-  //제출자 개인정보 수집
-  const [isEmail, setIsEmail] = useState(false);
-  const [emailRequired, setEmailRequired] = useState(true);
-
-  const [isMobile, setIsMobile] = useState(false);
-  const [mobileRequired, setMobileRequired] = useState(true);
 
   //-----------------------------------------------------
 
-  // const checkRequiredField = () => {
-  //   // if(competition && title && (isOnline || isVideoProduction) && (isEmail || isMobile) && )
-  //   if (!(profiles.length > 0)) return alert('주최사를 선택해주십시오');
-  //   if (!title) return alert('프로젝트명을 입력해주십시오');
-  //   if (!(isOnline || isVideoProduction))
-  //     return alert('접수방법을 선택해주십시오');
-  //   if (!(isEmail || isMobile))
-  //     return alert('제출자 개인정보 수집을 선택해주십시오');
-  //   // if (!(startDate > new Date()))
-  //   // 	return alert('정확한 접수기간을 입력해주십시오');
-  //   if (!(startDate < finishDate))
-  //     return alert('접수 종료 기간을 입력해주십시오');
-  //   if (!noticeDate) return alert('공지 시작일을 선택해주십시오');
-  //   if (!rewardDate) return alert('보상일을 선택해주십시오');
-  //   if (!(isRewardCash || isDirectReward))
-  //     return alert('보상 조건을 선택해주십시오');
-  //   if (!admin) return alert('담당자명을 입력해주십시오');
-  //   if (!(mobile1 && mobile2 && mobile3))
-  //     return alert('연락처를 입력해주십시오');
-  //   if (!email) return alert('이메일을 입력해 주십시오');
-  //   return true;
-  // };
+  const checkRequiredField = () => {
+    // if(competition && title && (isOnline || isVideoProduction) && (isEmail || isMobile) && )
+    if (!(profiles.length > 0)) return alert('의뢰주체를 선택해주십시오');
+    if (!title) return alert('강사 채용 제목을 입력해주십시오');
+    if (!(recruitmentFieldList.length > 0))
+      return alert('모집분야를 선택해주십시오');
+    if (!irOnline) return alert('강의형태를 선택해주십시오');
+    if (!irLocation) return alert('근무지역을 선택해주십시오');
+    if (!(submitU2 !== null)) return alert('근무지역을 선택해주십시오');
+    if (!(submitDocs.length > 0)) return alert('근무지역을 선택해주십시오');
+
+    if (!(startDate > new Date()))
+      return alert('정확한 접수기간을 입력해주십시오');
+    if (!(startDate === finishDate))
+      return alert('정확한 접수기간을 입력해주십시오');
+    if (!(startDate < finishDate))
+      return alert('접수 종료 기간을 입력해주십시오');
+    if (!noticeDate) return alert('공지 시작일을 선택해주십시오');
+    if (!(isRewardCash || isDirectReward))
+      return alert('보상 조건을 선택해주십시오');
+    if (!admin) return alert('담당자명을 입력해주십시오');
+    if (!(mobile1 && mobile2 && mobile3))
+      return alert('연락처를 입력해주십시오');
+    if (!email) return alert('이메일을 입력해 주십시오');
+
+    return true;
+  };
 
   const handleNewData = data => {
     var newForm = {
@@ -761,6 +755,7 @@ const IRRegi = () => {
               className="irregi_btn irregi_btn_next"
               onClick={() => {
                 history.push('/prjregi');
+                checkRequiredField();
               }}
             >{`등록하기`}</button>
           </section>
