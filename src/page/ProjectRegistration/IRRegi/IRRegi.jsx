@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import DropDown from './DropDown/DropDown.jsx';
 import RecruitmentAreasModal from './RecruitmentAreasModal/RecruitmentAreasModal.jsx';
-import QuillTextEditor from './QuillTextEditor/QuillTextEditor.jsx';
-import onlineIcon from '../../../Img/Icons/onlineIcon.png';
-import offlineIcon from '../../../Img/Icons/offlineIcon.png';
 import headerIcon from '../../../Img/Icons/headerIcon.png';
 import downArrowIcon from '../../../Img/Icons/sortarrowdown.png';
 import { RegiConationer } from './IRRegiStyled.jsx';
 import { DateTimePicker } from '@material-ui/pickers';
 import { createMuiTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
+import { validateEmail } from '../../../library/validate.js';
+import Ckeditor5 from '../../../component/Ckeditor5/Ckeditor5.jsx';
+import axios from 'axios';
 
 import { TiDeleteOutline } from 'react-icons/ti';
 const IRRegi = () => {
+  const myStorage = window.localStorage;
   let history = useHistory();
+  const userInfo = useSelector(state => state.userInfo);
+
   // handle modal state---------------------------------------
   const [isActive, setIsActive] = useState(false);
   const [defaultIdx, setDefaultIdx] = useState(0);
@@ -29,25 +33,92 @@ const IRRegi = () => {
       instance.push(value);
     }
     setRecruitmentFieldList(instance);
-    console.log(instance);
   };
-  console.log(recruitmentFieldList);
+
   //강의형태
   const [irOnline, setIrOnline] = useState(null);
-  console.log(irOnline);
 
+  //근무지역
+  const [irLocation, setIrLocation] = useState(null);
+  //접수방법 u2life ---
+  const [submitU2, setSubmitU2] = useState(null);
+  //제출 서류 ---
+  const [submitDocs, setSubmitDocs] = useState([]);
+  const [korChekced, setKorChecked] = useState(false);
+  const [portChecked, setPortChecked] = useState(false);
+  const [engChecked, setEngChecked] = useState(false);
+
+  //보상 조건
+  const [isRewardCash, setIsRewardCash] = useState(false);
+  const [isDirectReward, setIsDirectReward] = useState(false);
+  const [rewardsCash, setRewardsCash] = useState(null);
+  const [rewardDirect, setRewardDirect] = useState(null);
+  const [rewardCurrency, setRewardCurrency] = useState('krw');
+  //접수기간
+  const [selectDeadline, setSelectDealine] = useState(false);
+  //CKeditor 공모공지글
+  const [ckText, setCkText] = useState('');
+  const handleCkeditorValue = value => {
+    setCkText(value);
+  };
+  //담당자
+  const [admin, setAdmin] = useState('');
+  const [adminExposure, setAdminExposure] = useState(false);
+  //이메일
+  const [email, setEmail] = useState('');
+  const [emailErr, setEmailErr] = useState('');
+  const [emailExposure, setEmailExposure] = useState(false);
+  //연락처
+  const [mobile1, setMobile1] = useState('010');
+  const [mobile2, setMobile2] = useState('');
+  const [mobile3, setMobile3] = useState('');
+  const [mobileExposure, setMobileExposure] = useState(false);
   //handle date ----------------------------------------------
   const [startDate, setStartDate] = useState(new Date());
   const [finishDate, setFinishDate] = useState(new Date());
-  const [onMeet, setOnMeet] = useState(null); //온라인 오프라인 미팅 state 값
+  const [noticeDate, setNoticeDate] = useState(null);
+  //온라인 오프라인 미팅 state 값
+  const [onMeet, setOnMeet] = useState(null);
   //ownerIdx for API
   const [ownerIdx, setOwnerIdx] = useState(0);
   //강사채용 제목 ---------------------------------------------
   const [title, setTitle] = useState('');
-  //모집분야
+  //프로젝트 완료 조건
+  const [isOnline, setIsOnline] = useState(false);
+
+  const [isVideoProduction, setIsVideoProduction] = useState(false);
+
+  //제출자 개인정보 수집
+  const [isEmail, setIsEmail] = useState(false);
+  const [emailRequired, setEmailRequired] = useState(true);
+
+  const [isMobile, setIsMobile] = useState(false);
+  const [mobileRequired, setMobileRequired] = useState(true);
 
   //-----------------------------------------------------
-  const myStorage = window.localStorage;
+
+  // const checkRequiredField = () => {
+  //   // if(competition && title && (isOnline || isVideoProduction) && (isEmail || isMobile) && )
+  //   if (!(profiles.length > 0)) return alert('주최사를 선택해주십시오');
+  //   if (!title) return alert('프로젝트명을 입력해주십시오');
+  //   if (!(isOnline || isVideoProduction))
+  //     return alert('접수방법을 선택해주십시오');
+  //   if (!(isEmail || isMobile))
+  //     return alert('제출자 개인정보 수집을 선택해주십시오');
+  //   // if (!(startDate > new Date()))
+  //   // 	return alert('정확한 접수기간을 입력해주십시오');
+  //   if (!(startDate < finishDate))
+  //     return alert('접수 종료 기간을 입력해주십시오');
+  //   if (!noticeDate) return alert('공지 시작일을 선택해주십시오');
+  //   if (!rewardDate) return alert('보상일을 선택해주십시오');
+  //   if (!(isRewardCash || isDirectReward))
+  //     return alert('보상 조건을 선택해주십시오');
+  //   if (!admin) return alert('담당자명을 입력해주십시오');
+  //   if (!(mobile1 && mobile2 && mobile3))
+  //     return alert('연락처를 입력해주십시오');
+  //   if (!email) return alert('이메일을 입력해 주십시오');
+  //   return true;
+  // };
 
   const handleNewData = data => {
     var newForm = {
@@ -73,12 +144,6 @@ const IRRegi = () => {
     console.log('useEffect excuted');
   }, [onMeet]);
 
-  useEffect(() => {
-    if (profiles.length === 0) {
-      setIsActive(true);
-    }
-  }, []);
-
   // on offline meet state handle
   const handleOnline = () => {
     setOnMeet(true);
@@ -100,21 +165,48 @@ const IRRegi = () => {
     setFinishDate(date);
   };
 
-  // 첨부 파일 업로드 로직
-  // const uploadFile = async (e) => {
-  //   const formData = new FormData();
-  //   formData.append("file", uploadFile);
-  //   formData.append("fileName", upLoadFileName);
-  //   try {
-  //     const res = await axios.post(
-  //       "http://locathisIdxlhost:3000/upload",
-  //       formData
-  //     );
-  //     console.log(res);
-  //   } catch (ex) {
-  //     console.log(ex);
-  //   }
-  // };
+  const handleEmailValidation = email => {
+    const { isValid, error } = validateEmail(email);
+    if (!isValid) {
+      setEmailErr(error);
+    } else {
+      setEmail(email);
+      setEmailErr(null);
+    }
+  };
+  useEffect(() => {
+    var config = {
+      method: 'get',
+      url:
+        process.env.REACT_APP_U2_DB_HOST +
+        `/Campaign/challengeowners/${userInfo.memberIdx}`,
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+        'Content-Type': 'application/json',
+      },
+    };
+    axios(config)
+      .then(response => {
+        var data = response.data;
+
+        var newForm = data.map(el => {
+          return {
+            form: el.ownerCat ? '비즈프로필' : '개인',
+            cat: el.ownerCat,
+            companyName: el.company,
+            email: el.email,
+            phoneNumber: el.contact,
+            snsId: el.socialMediaId,
+            snsType: el.socialMediaCode,
+            id: el.ownerIdx,
+          };
+        });
+        setOwnerIdx(data[0].ownerIdx);
+        // setCompetition(newForm);
+        setProfiles(newForm);
+      })
+      .catch(err => console.log(err));
+  }, []);
   return (
     <RegiConationer className="contents_wrap">
       <div className="irregi_section">
@@ -133,8 +225,7 @@ const IRRegi = () => {
             <div className="inputInfo company_profiles">
               <div className="default_profile">
                 <div>
-                  {!isActive &&
-                    profiles.length &&
+                  {profiles.length &&
                     `${profiles[defaultIdx].form} : ${profiles[defaultIdx].companyName}`}
                 </div>
                 <img
@@ -256,6 +347,9 @@ const IRRegi = () => {
                   name="ir_location"
                   placeholder={irOnline === 0 && '온라인 비대면 강의'}
                   disabled={irOnline === 0 || irOnline === 2}
+                  onChange={e => {
+                    setIrLocation(e.target.value);
+                  }}
                 />
               </div>
             </div>
@@ -264,7 +358,14 @@ const IRRegi = () => {
             <div className="menu">* 접수방법</div>
             <div className="inputInfo irregi_submit_type">
               <div>
-                <input type="checkbox" name="u2lifes_submit" />
+                <input
+                  type="checkbox"
+                  name="u2lifes_submit"
+                  checked={submitU2}
+                  onChange={() => {
+                    setSubmitU2(!submitU2);
+                  }}
+                />
                 <div>U2.LIFE접수</div>
               </div>
             </div>
@@ -273,34 +374,65 @@ const IRRegi = () => {
             <div className="menu">* 제출서류</div>
             <div className="inputInfo irregi_submit_docs">
               <div>
-                <input type="checkbox" name="submit_docs" value="국문이력서" />
+                <input
+                  type="checkbox"
+                  name="submit_docs"
+                  value="국문이력서"
+                  checked={korChekced}
+                  onChange={e => {
+                    let instance = [...submitDocs];
+                    !korChekced
+                      ? instance.push(e.target.value)
+                      : instance.forEach((ele, idx) => {
+                          if (ele === e.target.value) {
+                            instance.splice(idx, 1);
+                          }
+                        });
+                    setSubmitDocs(instance);
+                    setKorChecked(!korChekced);
+                  }}
+                />
                 <div>국문 이력서</div>
               </div>
               <div>
-                <input type="checkbox" name="submit_docs" value="포트폴리오" />
+                <input
+                  type="checkbox"
+                  name="submit_docs"
+                  value="포트폴리오"
+                  onChange={e => {
+                    let instance = [...submitDocs];
+                    !portChecked
+                      ? instance.push(e.target.value)
+                      : instance.forEach((ele, idx) => {
+                          if (ele === e.target.value) {
+                            instance.splice(idx, 1);
+                          }
+                        });
+                    setSubmitDocs(instance);
+                    setPortChecked(!portChecked);
+                  }}
+                />
                 <div>포트폴리오</div>
               </div>
               <div>
-                <input type="checkbox" name="submit_docs" value="영문이력서" />
+                <input
+                  type="checkbox"
+                  name="submit_docs"
+                  value="영문이력서"
+                  onChange={e => {
+                    let instance = [...submitDocs];
+                    !engChecked
+                      ? instance.push(e.target.value)
+                      : instance.forEach((ele, idx) => {
+                          if (ele === e.target.value) {
+                            instance.splice(idx, 1);
+                          }
+                        });
+                    setSubmitDocs(instance);
+                    setEngChecked(!engChecked);
+                  }}
+                />
                 <div>영문 이력서</div>
-              </div>
-            </div>
-          </section>
-
-          <section className="ele">
-            <div className="menu">* 강의형태</div>
-            <div className="inputInfo irregi_submitdocs">
-              <div>
-                <input type="checkbox" name="submitdocs" value="국문이력서" />
-                <label>국문 이력서</label>
-              </div>
-              <div>
-                <input type="checkbox" name="submitdocs" value="포트폴리오" />
-                <label>포트폴리오</label>
-              </div>
-              <div>
-                <input type="checkbox" name="submitdocs" value="영문이력서" />
-                <label>영문 이력서</label>
               </div>
             </div>
           </section>
@@ -319,6 +451,9 @@ const IRRegi = () => {
                             type="checkbox"
                             name="rewardcash"
                             value="rewardcash"
+                            onClick={() => {
+                              setIsRewardCash(!isRewardCash);
+                            }}
                           />
                         </div>{' '}
                       </td>
@@ -330,13 +465,28 @@ const IRRegi = () => {
                         <section className="reception_options">
                           <div>
                             <input
-                              type="text"
+                              type="number"
                               name="rewardcash"
                               placeholder="무료일 경우 0원 입력"
+                              onChange={e => {
+                                setRewardsCash(e.target.value);
+                              }}
+                              step={rewardCurrency === 'krw' ? '1000' : '1'}
+                              min="0"
+                              max={'99999999999'}
+                              defaultValue={rewardsCash ? rewardsCash : 0}
+                              disabled={!isRewardCash}
                             />
 
-                            <select name="currencyselect">
+                            <select
+                              name="currencyselect"
+                              disabled={!isRewardCash}
+                              onChange={e => {
+                                setRewardCurrency(e.target.value);
+                              }}
+                            >
                               <option value="krw">KRW</option>
+                              <option value="usd">USD</option>
                             </select>
                           </div>
                           <div>
@@ -354,6 +504,9 @@ const IRRegi = () => {
                             type="checkbox"
                             name="rewardproduct"
                             value="rewardproduct"
+                            onClick={() => {
+                              setIsDirectReward(!isDirectReward);
+                            }}
                           />
                         </div>{' '}
                       </td>
@@ -363,7 +516,15 @@ const IRRegi = () => {
                       <td>
                         <section className="reception_options">
                           <div>
-                            <input type="text" name="rewardproduct" />
+                            <input
+                              type="text"
+                              name="rewardproduct"
+                              onChange={e => {
+                                setRewardDirect(e.target.value);
+                              }}
+                              disabled={!isDirectReward}
+                              maxLength="50"
+                            />
                           </div>
                           <div>
                             상품, 사은품, 상품권 등 지급할 현물을 입력해
@@ -382,7 +543,14 @@ const IRRegi = () => {
             <div className="menu">* 접수기간</div>
             <div className="inputInfo chooseDate">
               <div className="choosedate_ircodition">
-                <input type="checkbox" name="ircodition" />
+                <input
+                  type="checkbox"
+                  name="ircodition"
+                  checked={selectDeadline}
+                  onChange={() => {
+                    setSelectDealine(!selectDeadline);
+                  }}
+                />
                 <div>채용 시 마감</div>
               </div>
               <div className="inputStart">
@@ -402,7 +570,7 @@ const IRRegi = () => {
                   />
                 </ThemeProvider>
                 <div className="input_sub_text">
-                  공지 시작일을 입력해주십시오
+                  접수 시작일을 입력해주십시오
                 </div>
               </div>
               <div className="inputFinish">
@@ -421,15 +589,42 @@ const IRRegi = () => {
                   />
                 </ThemeProvider>
                 <div className="input_sub_text">
-                  공지 종료일을 입력해주십시오
+                  접수 종료일을 입력해주십시오
                 </div>
               </div>
             </div>
           </section>
           <section className="ele">
-            <div className="menu">공모 공지글</div>
+            <div className="menu">* 공지시작일</div>
+            <div className="inputInfo irregi_notice_startdate">
+              <div className="irregi_notice_timepicker">
+                <ThemeProvider theme={materialTheme}>
+                  <DateTimePicker
+                    className="dtPicker"
+                    label="시작 날짜 선택"
+                    inputVariant="outlined"
+                    value={noticeDate}
+                    onChange={date => {
+                      setNoticeDate(date);
+                    }}
+                    format="yyyy/MM/dd hh:mm a"
+                    disablePast={true}
+                    minDate={new Date()}
+                    minDateMessage={false}
+                    // minDateMessage="현 시각 이후부터 가능합니다"
+                    strictCompareDates={true}
+                  />
+                </ThemeProvider>
+              </div>
+            </div>
+          </section>
+          <section className="ele">
+            <div className="menu">강사채용 공지글</div>
             <div className="inputInfo notice_editor_form">
-              <QuillTextEditor className="notice_editor" />
+              <Ckeditor5
+                className="ckeditor_wrap"
+                handleCkeditorValue={handleCkeditorValue}
+              />
             </div>
           </section>
 
@@ -437,11 +632,22 @@ const IRRegi = () => {
             <div className="menu">* 담당자</div>
             <section className="inputInfo manager_form">
               <div className="manager_items">
-                <input type="text" />
+                <input
+                  type="text"
+                  onChange={e => {
+                    setAdmin(e.target.value);
+                  }}
+                />
               </div>
               <div className="manager_items manager_noexposure">
                 <section>
-                  <input type="checkbox" name="noexposure" />
+                  <input
+                    type="checkbox"
+                    name="noexposure"
+                    onClick={() => {
+                      setAdminExposure(!adminExposure);
+                    }}
+                  />
                   <div className="manager_noexposure_text">비노출</div>
                 </section>
               </div>
@@ -451,7 +657,13 @@ const IRRegi = () => {
             <div className="menu">* 연락처</div>
             <section className="inputInfo phonenumber_form">
               <div className="phonenumber_items">
-                <select name="areacode" id="areacode">
+                <select
+                  name="areacode"
+                  id="areacode"
+                  onChange={e => {
+                    setMobile1(e.target.value);
+                  }}
+                >
                   <option value="goldfish">010</option>
                   <option value="02">02</option>
                   <option value="">031</option>
@@ -479,6 +691,9 @@ const IRRegi = () => {
                   name="phonenumber"
                   placeholder="0000"
                   maxlength="4"
+                  onChange={e => {
+                    setMobile2(e.target.value);
+                  }}
                 />
               </div>
               -
@@ -488,11 +703,20 @@ const IRRegi = () => {
                   name="phonenumber"
                   placeholder="0000"
                   maxlength="4"
+                  onChange={e => {
+                    setMobile3(e.target.value);
+                  }}
                 />
               </div>
               <div className="manager_items phonenumber_noexposure">
                 <section>
-                  <input type="checkbox" name="noexposure" />
+                  <input
+                    type="checkbox"
+                    name="noexposure"
+                    onClick={() => {
+                      setMobileExposure(!mobileExposure);
+                    }}
+                  />
                   <div className="manager_noexposure_text">비노출</div>
                 </section>
               </div>
@@ -502,13 +726,25 @@ const IRRegi = () => {
             <div className="menu">* 이메일</div>
             <section className="inputInfo email_form">
               <div className="email_items">
-                <input type="text" />
+                <input
+                  type="text"
+                  onChange={e => {
+                    handleEmailValidation(e.target.value);
+                  }}
+                />
               </div>
               <div className="manager_items email_noexposure">
                 <section>
-                  <input type="checkbox" name="email" />
+                  <input
+                    type="checkbox"
+                    name="email"
+                    onClick={() => {
+                      setEmailExposure(!emailExposure);
+                    }}
+                  />
                   <div className="email_noexposure_text">비노출</div>
                 </section>
+                {emailErr && emailErr}
               </div>
             </section>
           </section>
