@@ -41,7 +41,7 @@ const IRRegi = () => {
   //근무지역
   const [irLocation, setIrLocation] = useState(null);
   //접수방법 u2life ---
-  const [submitU2, setSubmitU2] = useState(null);
+  const [submitU2, setSubmitU2] = useState(false);
   //제출 서류 ---
   const [submitDocs, setSubmitDocs] = useState([]);
   const [korChekced, setKorChecked] = useState(false);
@@ -96,6 +96,8 @@ const IRRegi = () => {
     if (irOnline === 1) {
       if (!irLocation) return alert('근무지역을 입력해주십시오');
     }
+    if (!submitU2) return alert('접수방법을 선택해주십시오');
+    if (!(submitDocs.length > 0)) return alert('제출서류를 선책해주십시오');
 
     if (!(startDate > new Date()))
       return alert('정확한 접수기간을 입력해주십시오');
