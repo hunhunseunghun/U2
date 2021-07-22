@@ -7,9 +7,7 @@ import FileRepository from '@ckeditor/ckeditor5-upload/src/filerepository';
 import Notification from '@ckeditor/ckeditor5-ui/src/notification/notification';
 import Command from '@ckeditor/ckeditor5-core/src/command';
 import { findOptimalInsertionPosition } from '@ckeditor/ckeditor5-widget/src/utils';
-import uploadFileToBlob, {
-	getSingleFileFromBlob,
-} from '../../library/azureBlob';
+import { singleUploadAndReturnObj } from '../../library/azureBlob';
 const _UPLOAD_FILE_LIMIT = 50000000; //50mb
 
 const createImageTypeRegExp = (types) => {
@@ -54,6 +52,11 @@ class FileUploadCommand extends Command {
 				// 		return;
 				// 	}
 				// }
+
+				if (imagesToUpload2[0].size > _UPLOAD_FILE_LIMIT) {
+					notification.showWarning('50MB 이상의 파일은 올릴 수 없습니다.');
+					return;
+				}
 				uploadImg(writer, model, imagesToUpload2);
 			});
 		}
@@ -93,13 +96,19 @@ function uploadImg(writer, model, file) {
 		model.document.selection,
 		model,
 	);
-	uploadFileToBlob(file).then((blobs) => {
-		getSingleFileFromBlob(file[0].name).then((url) => {
-			const image = writer.createElement('image', { src: url });
+	// uploadFileToBlob(file).then((blobs) => {
+	// 	getSingleFileFromBlob(file[0].name).then((url) => {
+	// 		const image = writer.createElement('image', { src: url });
 
+	// 		model.insertContent(image, insertAtSelection);
+	// 	});
+	// });
+	singleUploadAndReturnObj(file, 'market-texteditor').then(
+		({ url, blobname }) => {
+			const image = writer.createElement('image', { src: url });
 			model.insertContent(image, insertAtSelection);
-		});
-	});
+		},
+	);
 	console.log(file.name);
 }
 // Handles uploading single file.
@@ -108,8 +117,24 @@ function uploadImg(writer, model, file) {
 // @param {module:engine/model/model~Model} model
 // @param {File} file
 function uploadFile(writer, model, fileRepository, file) {
-	uploadFileToBlob(file).then((blobs) => {
-		getSingleFileFromBlob(file[0].name).then((url) => {
+	// uploadFileToBlob(file).then((blobs) => {
+	// 	getSingleFileFromBlob(file[0].name).then((url) => {
+	// 		const attributes = {
+	// 			linkHref: url,
+	// 			titleTarget: file[0].name,
+	// 		};
+	// 		const fileElement = writer.createText(file[0].name, attributes);
+
+	// 		const insertAtSelection = findOptimalInsertionPosition(
+	// 			model.document.selection,
+	// 			model,
+	// 		);
+
+	// 		model.insertContent(fileElement, insertAtSelection);
+	// 	});
+	// });
+	singleUploadAndReturnObj(file, 'market-texteditor').then(
+		({ url, blobname }) => {
 			const attributes = {
 				linkHref: url,
 				titleTarget: file[0].name,
@@ -122,8 +147,8 @@ function uploadFile(writer, model, fileRepository, file) {
 			);
 
 			model.insertContent(fileElement, insertAtSelection);
-		});
-	});
+		},
+	);
 	console.log(file.name);
 }
 

@@ -83,7 +83,7 @@ function WorkDetail(props) {
 				setProjectTitle(data.title);
 				setSubject(challengeTarget);
 				setMeeting(contactRequired);
-				setMainImage(data.mainImage);
+				setMainImage(data.logo);
 				setPrise(priceContent);
 				setApplyPeriod(
 					moment(data.missions[0].dateBegin).format('YYYY-MM-DD') +
@@ -104,6 +104,10 @@ function WorkDetail(props) {
 						result = 'TIKTOK';
 					} else if (ele.platform === 'VM') {
 						result = 'Vimeo';
+					} else if (ele.platform === 'DR') {
+						result = '직접 입력';
+					} else if (ele.platform === 'FS') {
+						result = '파일 전송';
 					}
 					missionRequired.push(result);
 				});

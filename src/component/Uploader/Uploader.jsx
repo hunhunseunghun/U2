@@ -11,43 +11,56 @@ import uploadFileToBlob, {
 	getFilesFromBlob,
 	getSingleFileFromBlob,
 	delteFileFromBlob,
+	singleUploadAndReturnObj,
 } from '../../library/azureBlob.js';
 // Object.defineProperty(fileToAmend, 'name', {
 //   writable: true,
 //   value: updatedFileName
 // });
-const Uploader = ({ setFilePath, accept, multiple }) => {
+const _UPLOAD_FILE_LIMIT = 300000000;
+const Uploader = ({
+	setFilePath,
+	accept,
+	multiple,
+	folder,
+	memberIdx,
+	challengeIdx,
+}) => {
 	//file = files 배열 , setFile = useState func
 	//filePath = 파일 경로, setFilePath = useState func
 
 	//바뀐 파일이름을 임시 저장하기 위한 state
-	const [namedFiles, setNamedFiles] = useState([]);
+	const [blobname, setBlobname] = useState('');
 	const [file, setFile] = useState(null);
 	// posterfile upload handle------------------------------
 	const fileChangeFunc = async (e) => {
 		let files = [];
 		let realFiles = e.target.files;
 		if (!realFiles) return;
+		if (realFiles[0].size > _UPLOAD_FILE_LIMIT) {
+			alert('300MB 이상의 파일은 올릴 수 없습니다.');
+			return;
+		}
 		for (let key in realFiles) {
 			if (!isNaN(Number(key))) {
 				//파일 이름 바꾸기
 				Object.defineProperty(realFiles[key], 'name', {
 					writable: true,
-					value: `${new Date().getTime()}_${realFiles[key].name}`,
+					value: `${challengeIdx ? challengeIdx + '-' : ''}${memberIdx}-${
+						realFiles[key].name
+					}`,
 				});
 			}
 			files[key] = realFiles[key];
 		}
 
-		setNamedFiles(realFiles);
-		uploadFileToBlob(realFiles);
-		// posterFileArr.push(e.target.files[0]);
+		const { url, blobname } = await singleUploadAndReturnObj(realFiles, folder);
 		setFile(files);
-		// posterFile path setting
+		setBlobname(blobname);
 		if (document.getElementById('upLoader').value) {
-			setFilePath(realFiles[0].name);
+			setFilePath(url);
 		} else {
-			setFilePath('Choose file to upload');
+			setFilePath('파일을 선택해주세요. (최대 300MB)');
 		}
 	};
 
@@ -65,12 +78,10 @@ const Uploader = ({ setFilePath, accept, multiple }) => {
 							onClick={() => {
 								const edit = file.slice();
 								edit.splice(idx, 1);
-								const copyNamed = namedFiles;
-								let oldfile = copyNamed[idx].name;
-								console.log('file to delete: ', oldfile);
-								delteFileFromBlob(oldfile);
+								delteFileFromBlob(blobname);
 								// delete copyNamed[idx];
 								setFile(edit);
+								setFilePath('');
 								// setNamedFiles(copyNamed);
 							}}
 						></TiDeleteOutline>
@@ -103,7 +114,7 @@ const Uploader = ({ setFilePath, accept, multiple }) => {
 					id="upLoader"
 					className="upLoader"
 					accept={accept}
-					multiple={multiple}
+					// multiple={multiple}
 					onChange={fileChangeFunc}
 				/>
 			</div>

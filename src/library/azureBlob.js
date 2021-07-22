@@ -31,16 +31,18 @@ const getBlobsInContainer = async (containerClient) => {
 	return returnedBlobUrls;
 };
 
-const createBlobInContainer = async (containerClient, file) => {
+const createBlobInContainer = async (containerClient, file, folder) => {
 	// create blobClient for container
-	const blobClient = containerClient.getBlockBlobClient(file.name);
+	const blobClient = containerClient.getBlockBlobClient(
+		`${folder ? folder + '/' : ''}${file.name}`,
+	);
 
 	// set mimetype as determined from browser with file upload control
 	const options = { blobHTTPHeaders: { blobContentType: file.type } };
 
 	// upload file
-	await blobClient.uploadBrowserData(file, options);
-	await blobClient.setMetadata({ UserName: 'shubham' });
+	return await blobClient.uploadBrowserData(file, options);
+	// await blobClient.setMetadata({ UserName: 'lhj' });
 };
 
 // const uploadFileToBlob = async (file) => {
@@ -72,7 +74,9 @@ const uploadFileToBlob = async (files) => {
 
 	// upload file
 	for (let file of files) {
-		await createBlobInContainer(containerClient, file);
+		let result = await createBlobInContainer(containerClient, file);
+		console.log('file: ', file);
+		console.log('result: ', result);
 	}
 
 	// get list of blobs in container
@@ -113,4 +117,27 @@ export const delteFileFromBlob = async (name) => {
 		console.log(error);
 		return false;
 	}
+};
+export const singleUploadAndReturnObj = async (files, folder) => {
+	var file = files[0];
+	Object.defineProperty(file, 'name', {
+		//이름 바꾸기
+		writable: true,
+		value: `${new Date().getTime()}_${file.name}`,
+	});
+	// get BlobService = notice `?` is pulled out of sasToken - if created in Azure portal
+	const blobService = new BlobServiceClient(
+		`https://${storageAccountName}.blob.core.windows.net/?${sasToken}`,
+	);
+	// get Container - full public read access
+	const containerClient = blobService.getContainerClient(containerName);
+
+	// upload file
+	await createBlobInContainer(containerClient, file, folder);
+	var returnObj = {
+		url: `https://${storageAccountName}.blob.core.windows.net/${containerName}/${folder}/${file.name}`,
+		blobname: `${folder}/${file.name}`,
+	};
+	// get list of blobs in container
+	return returnObj;
 };

@@ -34,6 +34,19 @@ function ParticipateTable() {
 		open: false,
 		challengeIdx: null,
 	});
+	useEffect(() => {
+		var config = {
+			method: 'get',
+			url:
+				process.env.REACT_APP_U2_DB_HOST +
+				`/Campaign/challengeinvolved?p=${quests.currentPage}&size=${quests.pageSize}`,
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+		};
+		getData(config);
+	}, []);
 	const getData = (config) => {
 		setLoading(true);
 		axios(config)
@@ -243,19 +256,6 @@ function ParticipateTable() {
 		}
 	};
 
-	useEffect(() => {
-		var config = {
-			method: 'get',
-			url:
-				process.env.REACT_APP_U2_DB_HOST +
-				`/Campaign/challengeinvolved?p=${quests.currentPage}&size=${quests.pageSize}`,
-			headers: {
-				Authorization: 'Bearer ' + localStorage.getItem('token'),
-				'Content-Type': 'application/json',
-			},
-		};
-		getData(config);
-	}, []);
 	// useEffect(() => {
 	// 	setQuests({ ...quests, data: datas });
 	// }, [datas]);

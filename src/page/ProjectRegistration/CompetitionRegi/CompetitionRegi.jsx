@@ -425,12 +425,11 @@ const CompetitionRegi = () => {
 						<div className="inputInfo infoPoster">
 							<div>공모전의 포스터가 있다면 업로드 해주세요</div>
 							<Uploader
-								// file={posterFile}
-								// setFile={setPosterFile}
-								filePath={posterFilePath}
 								setFilePath={setPosterFilePath}
 								multiple={false}
 								accept={'image/*'}
+								memberIdx={userInfo.memberIdx}
+								folder={'market-logo'}
 							/>
 						</div>
 					</section>
@@ -440,12 +439,11 @@ const CompetitionRegi = () => {
 							<div>공모전에 관련한 자료가 있다면 업로드 해주세요</div>
 
 							<Uploader
-								// file={etcFile}
-								// setFile={setEtcFile}
-								filePath={etcFilePath}
 								setFilePath={setEtcFilePath}
 								multiple={false}
 								accept={'*'}
+								memberIdx={userInfo.memberIdx}
+								folder={'market-fileref'}
 							/>
 						</div>
 					</section>

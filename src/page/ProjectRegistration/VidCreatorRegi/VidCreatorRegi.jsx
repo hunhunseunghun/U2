@@ -448,10 +448,11 @@ const VidCreatorRegi = () => {
 						<div className="inputInfo videditor_files_uploader">
 							<div>프로젝트에 관련한 자료를 업로드 해주세요</div>
 							<Uploader
-								filePath={etcFilePath}
 								setFilePath={setEtcFilePath}
 								multiple={false}
 								accept={'*'}
+								foler={'market-fileref'}
+								memberIdx={userInfo.memberIdx}
 							/>
 						</div>
 					</section>

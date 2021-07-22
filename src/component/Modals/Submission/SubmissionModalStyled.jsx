@@ -51,6 +51,12 @@ export const ModalContainer = styled.div`
 		padding: 16px;
 		height: 80%;
 		border-top: 1px solid #dee2e6;
+		.links {
+			width: 100%;
+			a:hover {
+				color: blue;
+			}
+		}
 	}
 
 	.modal > section > footer {

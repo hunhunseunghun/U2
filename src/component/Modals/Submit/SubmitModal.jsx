@@ -9,18 +9,22 @@ import { ModalContainer } from './SubmitModalStyled';
 import AddressModal from '../../address/AddressModal';
 import { validateEmail } from '../../../library/validate';
 import { TextFile } from '../../../library/getJson';
+import Uploader from '../../Uploader/Uploader';
 // import 'csshake.min.css'
 const server = process.env.REACT_APP_U2_DB_HOST;
 const initialState = {
 	title: '',
 	videos: [],
-	URLs: [],
+	fileOrUrl: 0,
 	YUinput: '',
 	YUarr: [],
 	TTinput: '',
 	TTarr: [],
 	VMinput: '',
 	VMarr: [],
+	DRinput: '',
+	DRarr: [],
+	videoFile: {},
 	mobileNum: '',
 	mobileErr: '',
 	mobileErrShake: false,
@@ -45,6 +49,11 @@ const initialState = {
 	addrMobile: '',
 	image: '',
 	note: '',
+
+	shareRequired: 0,
+	filmRequired: 0,
+	contactRequired: 0,
+	emailRequired: 0,
 };
 function Modal({ open, challenge, handleModalClose }) {
 	// console.log(data);
@@ -54,13 +63,16 @@ function Modal({ open, challenge, handleModalClose }) {
 		{
 			title,
 			videos,
-			URLs,
+			fileOrUrl,
 			YUinput,
 			YUarr,
 			TTinput,
 			TTarr,
 			VMinput,
 			VMarr,
+			DRinput,
+			DRarr,
+			videoFile,
 			mobileNum,
 			mobileErr,
 			mobileErrShake,
@@ -85,6 +97,10 @@ function Modal({ open, challenge, handleModalClose }) {
 			addrMobile,
 			image,
 			note,
+			shareRequired,
+			filmRequired,
+			contactRequired,
+			emailRequired,
 		},
 		setState,
 	] = useState({ ...initialState });
@@ -92,6 +108,37 @@ function Modal({ open, challenge, handleModalClose }) {
 		setState({ ...initialState, videos: videos });
 	};
 
+	useEffect(() => {
+		console.log('challenge in submit modal: ', challenge);
+		if (challenge) {
+			var config = {
+				method: 'get',
+				// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmit
+				url: server + `/Campaign/challenge/${challenge.challengeIdx}`,
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+					'Content-Type': 'application/json',
+				},
+				// data: data,
+			};
+			axios(config)
+				.then((response) => {
+					console.log('submit modal useEffect data: ', response.data);
+					setState((state) => ({
+						...state,
+						videos: response.data.missions[0].videos,
+						fileOrUrl: response.data.missions[0].fileOrUrl,
+						shareRequired: response.data.missions[0].shareRequired,
+						filmRequired: response.data.missions[0].filmRequired,
+						contactRequired: response.data.missions[0].contactRequired,
+						emailRequired: response.data.missions[0].emailRequired,
+					}));
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
+	}, [challenge]);
 	const handleValidateMobile = () => {
 		if (mobileNum) {
 			if (isValidPhoneNumber(mobileNum)) {
@@ -252,25 +299,58 @@ function Modal({ open, challenge, handleModalClose }) {
 	};
 
 	const checkSubmit = () => {
-		if (
-			!title ||
-			mobileErr ||
-			emailErr ||
-			bankAccountErr ||
-			!address1 ||
-			!address2 ||
-			!address3
-		) {
+		if (!title || bankAccountErr || !address1 || !address2 || !address3) {
 			alert('모든 필수 항목을 입력해야 합니다.');
 			return true;
+		}
+		if (filmRequired === 2) {
+			if (fileOrUrl) {
+				if (!videoFile) {
+					alert('제출할 영상을 입력해주세요');
+					return true;
+				}
+			} else {
+				if (!DRarr.length > 0) {
+					alert('제출할 영상을 입력해주세요');
+					return true;
+				}
+			}
+		}
+		if (shareRequired === 2) {
+			let totalArr = new Array().concat(YUarr, TTarr, VMarr);
+			if (!totalArr.length > 0) {
+				alert('영상 URL을 입력해주세요');
+				return true;
+			}
+		}
+		// contactRequired,
+		// 	emailRequired,
+		if (contactRequired === 1) {
+			if (mobileErr) {
+				alert('휴대전화 번호를 입력해주세요');
+				return true;
+			}
+		}
+		if (emailRequired === 1) {
+			if (emailErr) {
+				alert('이메일을 입력해주세요');
+				return true;
+			}
 		}
 	};
 	const handleSubmit = () => {
 		console.log(userInfo);
 		if (checkSubmit()) return;
+		let totalURLs = new Array().concat(
+			YUarr,
+			TTarr,
+			VMarr,
+			DRarr,
+			videoFile && videoFile,
+		);
 
 		var data = {
-			videos: URLs.map((el, idx) => {
+			videos: totalURLs.map((el, idx) => {
 				return {
 					challengeIdx: challenge.challengeIdx,
 					missonSeq: idx + 1,
@@ -344,33 +424,6 @@ function Modal({ open, challenge, handleModalClose }) {
 			});
 	};
 
-	useEffect(() => {
-		console.log('challenge in submit modal: ', challenge);
-		if (challenge) {
-			var config = {
-				method: 'get',
-				// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmit
-				url: server + `/Campaign/challenge/${challenge.challengeIdx}`,
-				headers: {
-					Authorization: 'Bearer ' + localStorage.getItem('token'),
-					'Content-Type': 'application/json',
-				},
-				// data: data,
-			};
-			axios(config)
-				.then((response) => {
-					console.log('submit modal useEffect data: ', response.data);
-					setState((state) => ({
-						...state,
-						videos: response.data.missions[0].videos,
-					}));
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		}
-	}, [challenge]);
-
 	return (
 		<ModalContainer>
 			<div className={open ? 'openModal modal' : 'modal'}>
@@ -387,7 +440,7 @@ function Modal({ open, challenge, handleModalClose }) {
 						<header>자료 제출</header>
 						<main className={'sm-main'}>
 							<section className="ele">
-								<div className="menu">작품명</div>
+								<div className="menu">* 작품명</div>
 								<div className="inputInfo">
 									<input
 										className="input_work_title"
@@ -404,8 +457,101 @@ function Modal({ open, challenge, handleModalClose }) {
 								</div>
 							</section>
 							<section className="ele">
-								<div className="menu">프로젝트 영상</div>
+								<div className="menu">
+									{(filmRequired === 2 || shareRequired === 2) && '*'}프로젝트
+									영상
+								</div>
 								<div className="inputInfo URLs">
+									{(() => {
+										if (filmRequired !== 0) {
+											if (fileOrUrl === 1) {
+												//파일
+												return (
+													<div>
+														<span className="youtubeURL">파일 선택:</span>
+														<Uploader
+															setFilePath={(path) => {
+																if (path.length) {
+																	let obj = {
+																		platform: 'FS',
+																		url: path,
+																	};
+																	setState((preState) => ({
+																		...preState,
+																		videoFile: obj,
+																	}));
+																} else {
+																	//삭제 됐을 때
+																	setState((preState) => ({
+																		...preState,
+																		videoFile: null,
+																	}));
+																}
+															}}
+															multiple={false}
+															accept={'*'}
+															folder={'market-submit-media'}
+															memberIdx={userInfo.memberIdx}
+														/>
+													</div>
+												);
+											} else {
+												//url
+												return (
+													<div>
+														<span className="youtubeURL">직접 입력: </span>
+														<ul className="ul-URLs">
+															{DRarr.map((el, idx) => {
+																return (
+																	<li key={idx} className="li-url">
+																		<input value={el.url} readOnly></input>
+																		<BsDashSquareFill
+																			className="plusMinus"
+																			onClick={() => {
+																				let copyArr = DRarr.slice();
+																				copyArr.splice(idx, 1);
+																				// setURLS(copyArr);
+																				setState((preState) => ({
+																					...preState,
+																					DRarr: copyArr,
+																				}));
+																			}}
+																		/>
+																	</li>
+																);
+															})}
+															<li>
+																<input
+																	onChange={(e) => {
+																		setState((preState) => ({
+																			...preState,
+																			DRinput: e.target.value,
+																		}));
+																	}}
+																></input>
+																<BsPlusSquareFill
+																	className="plusMinus"
+																	onClick={() => {
+																		if (DRinput) {
+																			let copyArr = DRarr;
+																			copyArr.push({
+																				platform: 'DR',
+																				url: DRinput,
+																			});
+																			setState((preState) => ({
+																				...preState,
+																				DRarr: copyArr,
+																			}));
+																		}
+																	}}
+																/>
+															</li>
+														</ul>
+													</div>
+												);
+											}
+										}
+									})()}
 									{videos.length > 0
 										? videos.map((video) => {
 												return (
@@ -457,13 +603,39 @@ function Modal({ open, challenge, handleModalClose }) {
 																			<BsDashSquareFill
 																				className="plusMinus"
 																				onClick={() => {
-																					let copyArr = URLs.slice();
+																					let copyArr = urls.slice();
 																					copyArr.splice(idx, 1);
 																					// setURLS(copyArr);
-																					setState((preState) => ({
-																						...preState,
-																						URLs: copyArr,
-																					}));
+																					switch (video.platform) {
+																						case 'YU': {
+																							setState((preState) => ({
+																								...preState,
+																								YUarr: copyArr,
+																							}));
+																							break;
+																						}
+																						case 'TT': {
+																							setState((preState) => ({
+																								...preState,
+																								TTarr: copyArr,
+																							}));
+																							break;
+																						}
+																						case 'VM': {
+																							setState((preState) => ({
+																								...preState,
+																								VMarr: copyArr,
+																							}));
+																							break;
+																						}
+																						default: {
+																							break;
+																						}
+																					}
+																					// setState((preState) => ({
+																					// 	...preState,
+																					// 	URLs: copyArr,
+																					// }));
 																				}}
 																			/>
 																		</li>
@@ -577,45 +749,45 @@ function Modal({ open, challenge, handleModalClose }) {
 																		}
 																		if (input) {
 																			//input이 있을때만
-																			let copyArr = URLs.slice();
+																			// let copyArr = URLs.slice();
 																			switch (video.platform) {
 																				case 'YU': {
-																					copyArr.push(obj);
+																					// copyArr.push(obj);
 																					// setURLS(copyArr);
 																					// setURLinput('');
 																					let copyYU = YUarr.slice();
 																					copyYU.push(obj);
 																					setState((preState) => ({
 																						...preState,
-																						URLs: copyArr,
+																						// URLs: copyArr,
 																						YUinput: '',
 																						YUarr: copyYU,
 																					}));
 																					break;
 																				}
 																				case 'TT': {
-																					copyArr.push(obj);
+																					// copyArr.push(obj);
 																					// setURLS(copyArr);
 																					// setURLinput('');
 																					let copyTT = TTarr.slice();
 																					copyTT.push(obj);
 																					setState((preState) => ({
 																						...preState,
-																						URLs: copyArr,
+																						// URLs: copyArr,
 																						TTinput: '',
 																						TTarr: copyTT,
 																					}));
 																					break;
 																				}
 																				case 'VM': {
-																					copyArr.push(obj);
+																					// copyArr.push(obj);
 																					// setURLS(copyArr);
 																					// setURLinput('');
 																					let copyVM = VMarr.slice();
 																					copyVM.push(obj);
 																					setState((preState) => ({
 																						...preState,
-																						URLs: copyArr,
+																						// URLs: copyArr,
 																						VMinput: '',
 																						VMarr: copyVM,
 																					}));
@@ -639,7 +811,9 @@ function Modal({ open, challenge, handleModalClose }) {
 								</div>
 							</section>
 							<section className="ele">
-								<div className="menu">휴대전화</div>
+								<div className="menu">
+									{contactRequired === 2 && '*'} 휴대전화
+								</div>
 								<div className="inputInfo">
 									<div className="MobileContainer">
 										<PhoneInput
@@ -728,7 +902,7 @@ function Modal({ open, challenge, handleModalClose }) {
 								</div>
 							</section>
 							<section className="ele">
-								<div className="menu">이메일</div>
+								<div className="menu">{emailRequired === 2 && '*'} 이메일</div>
 								<div className="inputInfo">
 									<div className="EmailContainer">
 										<input
@@ -831,7 +1005,7 @@ function Modal({ open, challenge, handleModalClose }) {
 								</div>
 							</section>
 							<section className="ele">
-								<div className="menu">계좌번호</div>
+								<div className="menu">* 계좌번호</div>
 								<div className="inputInfo banks_accout">
 									<Banks handleBankCode={handleBankCode} />
 									<input
@@ -870,7 +1044,7 @@ function Modal({ open, challenge, handleModalClose }) {
 								</div>
 							</section>
 							<section className="ele">
-								<div className="menu">주소</div>
+								<div className="menu">* 주소</div>
 								<div className="inputInfo Address">
 									<section className="address_ele">
 										<div className="address_menu">받으시는 분 성함</div>
@@ -934,7 +1108,7 @@ function Modal({ open, challenge, handleModalClose }) {
 							<section className="ele">
 								<div className="menu">이미지</div>
 								<div className="inputInfo">
-									<input
+									{/* <input
 										type="file"
 										onChange={(e) => {
 											console.log(e.target.files);
@@ -945,7 +1119,17 @@ function Modal({ open, challenge, handleModalClose }) {
 											}));
 										}}
 										// multiple
-									></input>
+									></input> */}
+									<Uploader
+										setFilePath={(path) => {
+											setState((preState) => ({ ...preState, image: path }));
+										}}
+										multiple={false}
+										accept={'image/*'}
+										folder={'market-submit-media'}
+										memberIdx={userInfo.memberIdx}
+										challengeIdx={challenge.challengeIdx}
+									/>
 								</div>
 							</section>
 							<section className="ele submit_modal_ele_last">

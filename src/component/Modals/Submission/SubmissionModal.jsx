@@ -127,8 +127,45 @@ function SubmissionModal({
 							<div className="submission_modal_ele">
 								<div className="menu">과제영상</div>
 								<div className="inputInfo submission_inputinfo_challengevid">
-									<img src="" alt="image" />
-									<span>OR URL FILE DOWN</span>
+									{data.videos && data.videos.length > 0
+										? data.videos.map((el) => {
+												let src = '';
+												switch (el.platform) {
+													case 'YU': {
+														src =
+															'https://www.youtube.com/watch?v=' + el.videoId;
+														break;
+													}
+													case 'TT': {
+														src = `https://www.tiktok.com/${el.videoId}`;
+														break;
+													}
+													case 'VM': {
+														src = `https://vimeo.com/${el.videoId}`;
+														break;
+													}
+													case 'DR': {
+														src = el.videoId;
+														break;
+													}
+													case 'FS': {
+														src = el.videoId;
+														break;
+													}
+													default: {
+														break;
+													}
+												}
+												return (
+													<div className="links">
+														<a href={src} target="_blank">
+															링크
+														</a>
+														<br />
+													</div>
+												);
+										  })
+										: '-'}
 								</div>
 							</div>
 							<section className="submission_modal_ele">
@@ -174,13 +211,19 @@ function SubmissionModal({
 							<section className="submission_modal_ele">
 								<div className="menu">이미지</div>
 								<div className="inputInfo">
-									{data.photo ? <img src={data.photo}></img> : '-'}
+									{data.photo ? (
+										<img src={data.photo} alt={data.photo}></img>
+									) : (
+										'-'
+									)}
 								</div>
 							</section>
 							<section className="submission_modal_ele submission_modal_ele_last">
 								<div className="menu">검수자 피드백</div>
 								<div className="inputInfo">
-									{data.feedback ? data.feedback.comment : '내용없음'}
+									{data.feedback && data.feedback.comment
+										? data.feedback.comment
+										: '내용없음'}
 								</div>
 							</section>
 						</main>
