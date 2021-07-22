@@ -92,10 +92,10 @@ const IRRegi = () => {
     if (!title) return alert('강사 채용 제목을 입력해주십시오');
     if (!(recruitmentFieldList.length > 0))
       return alert('모집분야를 선택해주십시오');
-    if (!irOnline) return alert('강의형태를 선택해주십시오');
-    if (!irLocation) return alert('근무지역을 선택해주십시오');
-    if (!(submitU2 !== null)) return alert('근무지역을 선택해주십시오');
-    if (!(submitDocs.length > 0)) return alert('근무지역을 선택해주십시오');
+    if (irOnline === null) return alert('강의형태를 선택해주십시오');
+    if (irOnline === 1) {
+      if (!irLocation) return alert('근무지역을 입력해주십시오');
+    }
 
     if (!(startDate > new Date()))
       return alert('정확한 접수기간을 입력해주십시오');
@@ -754,7 +754,7 @@ const IRRegi = () => {
             <button
               className="irregi_btn irregi_btn_next"
               onClick={() => {
-                history.push('/prjregi');
+                // history.push('/prjregi');
                 checkRequiredField();
               }}
             >{`등록하기`}</button>
