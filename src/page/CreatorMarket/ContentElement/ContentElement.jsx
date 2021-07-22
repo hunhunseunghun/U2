@@ -2,14 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { FiCheck, FiX } from 'react-icons/fi';
 import { EleContainer } from './ContentElementStyled.jsx';
 import { LinearProgress } from '@material-ui/core';
-import ceImg from '../../../Img/ceImg.png';
+import blankImg from '../../../Img/no_image.png';
 import paticipateUser from '../../../Img/Icons/user-regular.svg';
 import { calcRemainDays } from '../../../library/timeSetting.js';
-
+import { getSingleFileFromBlob } from '../../../library/azureBlob.js';
 const ContentElement = (props) => {
 	const [myRegistration, setMyRegistration] = useState(false);
 	const [mySubmit, setMySubmit] = useState(false);
 	const challenge = props.challenge;
+	const [src, setSrc] = useState('');
+	console.log('challenge inside contentelement: ', challenge);
+	useEffect(async () => {
+		if (challenge.logo) {
+			setSrc(await getSingleFileFromBlob(challenge.logo));
+		} else {
+			setSrc(blankImg);
+		}
+	});
 	return (
 		<EleContainer
 			onClick={() => {
@@ -19,7 +28,7 @@ const ContentElement = (props) => {
 			}}
 		>
 			<div className="challenge_img_area">
-				<img src={ceImg} alt={ceImg} className="challenge_img" />
+				<img src={src} alt={src} className="challenge_img" />
 				{/* {tItem.bannerImage === null && (
           <div className={'no_img'}>
             <img src={'/img/no_image.png'} />
@@ -37,13 +46,13 @@ const ContentElement = (props) => {
 						{/* <button className="paticipantBtn">+</button> */}
 						<div>참가자</div> <div>{`${challenge.challengerCount}`}</div>
 					</div>
-
+					{/* 
 					<LinearProgress
 						className="challenge_progressBar"
 						variant="determinate"
 						color="secondary"
 						value={challenge.challengerCount}
-					/>
+					/> */}
 				</div>
 				<section className="challenge_info_top">
 					<div className="meetArea">

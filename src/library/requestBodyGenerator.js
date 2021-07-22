@@ -11,7 +11,8 @@ export default function (params, type) {
 				chargeeMail: params.chargeeMail,
 				chargeeMailShown: params.chargeeMailShown ? 1 : 0,
 				fileRef: params.fileRef,
-				mainImage: 'test',
+				// logo: params.logo,
+				// mainImage: 'test',
 				memberIdx: params.memberIdx,
 				missions: [
 					// 템플릿
@@ -185,8 +186,8 @@ export default function (params, type) {
 				// "meetCode": 0, //?
 				challengeTargetCode: 1, //공모전이니까 1
 				datePub: params.datePub, //공지 시작일
-				// "logo": "string", //?
-				mainImage: params.mainImage, //포스터
+				logo: params.logo, //로고
+				// mainImage: params.mainImage, //포스터
 				fileRef: params.fileRef, //파일
 				// "promoting": 0, //?
 				commentAllowed: params.commentAllowed ? 1 : 0, //댓글기능

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import CKEditor from '@ckeditor/ckeditor5-react';
 import DecoupledEditor from '@ckeditor/ckeditor5-editor-decoupled/src/decouplededitor';
 import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
@@ -27,17 +26,16 @@ import Indent from '@ckeditor/ckeditor5-indent/src/indent';
 import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
 import TableProperties from '@ckeditor/ckeditor5-table/src/tableproperties';
 import TableCellProperties from '@ckeditor/ckeditor5-table/src/tablecellproperties';
-import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter';
+import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter';
+import Uploader from './Uploader';
+import LinkTitle from './LinkTitle';
+
 import { Container } from './Ckeditor5Styled.jsx';
 
-const Ckeditor = ({ handleCkeditorValue }) => {
+const Ckeditor = (props) => {
 	return (
 		<Container className="ckeditor_wrap">
 			<CKEditor
-				className="ckeditor5"
-				onChange={(event, editor) => {
-					handleCkeditorValue(editor.getData());
-				}}
 				onInit={(editor) => {
 					editor.ui
 						.getEditableElement()
@@ -69,39 +67,44 @@ const Ckeditor = ({ handleCkeditorValue }) => {
 						ImageToolbar,
 						ImageUpload,
 						ImageResize,
-						Base64UploadAdapter,
 						Table,
 						TableToolbar,
 						TableProperties,
 						TableCellProperties,
 						TextTransformation,
+						Uploader,
+						SimpleUploadAdapter,
+						// CustomFigureAttributes,
+						LinkTitle,
 					],
-					toolbar: [
-						'heading',
-						'|',
-						'bold',
-						'italic',
-						'underline',
-						'strikethrough',
-						'|',
-						'fontSize',
-						'fontColor',
-						'fontBackgroundColor',
-						'|',
-						'alignment',
-						'outdent',
-						'indent',
-						'bulletedList',
-						'numberedList',
-						'blockQuote',
-						'|',
-						'link',
-						'insertTable',
-						'imageUpload',
-						'|',
-						'undo',
-						'redo',
-					],
+					toolbar: props.toolbar
+						? props.toolbar
+						: [
+								'heading',
+								'|',
+								'bold',
+								'italic',
+								'underline',
+								'strikethrough',
+								'|',
+								'fontSize',
+								'fontColor',
+								'fontBackgroundColor',
+								'|',
+								'alignment',
+								'outdent',
+								'indent',
+								'bulletedList',
+								'numberedList',
+								'blockQuote',
+								'|',
+								'link',
+								'insertTable',
+								'insertFileAndImage',
+								'|',
+								'undo',
+								'redo',
+						  ],
 					fontSize: {
 						options: [
 							14,
@@ -160,8 +163,17 @@ const Ckeditor = ({ handleCkeditorValue }) => {
 							],
 						},
 					},
+					// simpleUpload: {
+					// 	uploadUrl: '/uploadFile',
+					// 	withCredentials: true,
+					// 	headers: {
+					// 		'upload-folder': props.uploadFolder ? props.uploadFolder : 'root',
+					// 		'upload-editor': props.uploader ? props.uploader : '',
+					// 	},
+					// },
 				}}
 				editor={DecoupledEditor}
+				{...props}
 			/>
 		</Container>
 	);

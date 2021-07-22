@@ -117,10 +117,11 @@ const CompetitionRegi = () => {
 		setFinishDate(date);
 	};
 
-	const handleCkeditorValue = (text) => {
+	const handleCkeditorValue = (event, editor) => {
 		// console.log(text);
-		console.log(text);
-		setCkText(text);
+		const data = editor.getData();
+		console.log(data);
+		setCkText(data);
 	};
 	const handleEmailValidation = (email) => {
 		const { isValid, error } = validateEmail(email);
@@ -209,7 +210,8 @@ const CompetitionRegi = () => {
 				companyA: organizer,
 				companyB: sponsor,
 				url: webpageURL,
-				mainImage: posterFilePath ? posterFilePath : null,
+				// mainImage: posterFilePath ? posterFilePath : null,
+				logo: posterFilePath ? posterFilePath : null,
 				fileRef: etcFilePath ? etcFilePath : null,
 				shareRequired: isOnline ? (isSnsRequired ? 2 : 1) : 0,
 				filmRequired: isVideoProduction ? (isVidRequired ? 2 : 1) : 0,
@@ -906,7 +908,8 @@ const CompetitionRegi = () => {
 						<div className="inputInfo notice_editor_form">
 							<Ckeditor
 								className="ckeditor_wrap"
-								handleCkeditorValue={handleCkeditorValue}
+								onChange={handleCkeditorValue}
+								data={`<p>제목</p><ol><li>응모 자격</li><li>-</li><li>응모 주제</li><li>-</li><li>시상 내역</li><li>-</li><li>응모 일정</li><li>-</li><li>제출 방법</li><li>-</li><li>접수 방법</li><li>-</li><li>심사 방법</li><li>-</li><li>유의 사항</li><li>-&nbsp;</li><li>문의 사항</li><li>-</li></ol>`}
 							/>
 
 							{/* <QuillTextEditor

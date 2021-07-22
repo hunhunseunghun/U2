@@ -16,7 +16,7 @@ import uploadFileToBlob, {
 //   writable: true,
 //   value: updatedFileName
 // });
-const Uploader = ({ filePath, setFilePath, accept, multiple }) => {
+const Uploader = ({ setFilePath, accept, multiple }) => {
 	//file = files 배열 , setFile = useState func
 	//filePath = 파일 경로, setFilePath = useState func
 

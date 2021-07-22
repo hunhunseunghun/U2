@@ -237,9 +237,9 @@ function ProjectDetail(props) {
 			<section className="prj-info">
 				<ProjectInfo challenge={challenge}></ProjectInfo>
 			</section>
-			<section className="prj_topview_area">
+			{/* <section className="prj_topview_area">
 				<img src={topviewEx} alt="image" />
-			</section>
+			</section> */}
 			<section className="prj-detail">
 				<div className="prj_content_wrap">
 					{ReactHtmlParser(challenge.challengeDesc)}
