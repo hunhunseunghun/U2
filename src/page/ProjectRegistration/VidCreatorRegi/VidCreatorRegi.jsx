@@ -120,8 +120,11 @@ const VidCreatorRegi = () => {
 		setFinishDate(date);
 	};
 
-	const handleCkeditorValue = (value) => {
-		setCkText(value);
+	const handleCkeditorValue = (event, editor) => {
+		// console.log(text);
+		const data = editor.getData();
+		console.log(data);
+		setCkText(data);
 	};
 	const checkRequiredField = () => {
 		// if(competition && title && (isOnline || isVideoProduction) && (isEmail || isMobile) && )
@@ -1005,7 +1008,8 @@ const VidCreatorRegi = () => {
 							{/* <QuillTextEditor className="notice_editor" /> */}
 							<Ckeditor5
 								className="ckeditor_wrap"
-								handleCkeditorValue={handleCkeditorValue}
+								onChange={handleCkeditorValue}
+								data={`<p>제목</p><ol><li>응모 자격</li><li>-</li><li>응모 주제</li><li>-</li><li>시상 내역</li><li>-</li><li>응모 일정</li><li>-</li><li>제출 방법</li><li>-</li><li>접수 방법</li><li>-</li><li>심사 방법</li><li>-</li><li>유의 사항</li><li>-&nbsp;</li><li>문의 사항</li><li>-</li></ol>`}
 							/>
 						</div>
 					</section>
