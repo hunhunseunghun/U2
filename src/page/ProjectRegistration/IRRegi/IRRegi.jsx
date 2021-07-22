@@ -32,17 +32,10 @@ const IRRegi = () => {
     console.log(instance);
   };
   console.log(recruitmentFieldList);
+  //강의형태
+  const [irOnline, setIrOnline] = useState(null);
+  console.log(irOnline);
 
-  // const handleDeleteFieldList = target => {
-  //   console.log('handleDeleteFieldList excuted', target);
-  //   let instance = [...recruitmentFieldList];
-  //   instance.forEach((ele, idx) => {
-  //     if (ele === target) {
-  //       instance.splice(idx, 1);
-  //     }
-  //   });
-  //   setRecruitmentFieldList(instance);
-  // };
   //handle date ----------------------------------------------
   const [startDate, setStartDate] = useState(new Date());
   const [finishDate, setFinishDate] = useState(new Date());
@@ -220,64 +213,76 @@ const IRRegi = () => {
             <div className="menu">* 강의형태</div>
             <div className="inputInfo irregi_irtype">
               <div>
-                <input type="radio" name="irtype" value="온라인비대면강의" />
+                <input
+                  type="radio"
+                  name="irtype"
+                  value="온라인비대면강의"
+                  onChange={() => {
+                    setIrOnline(0);
+                  }}
+                />
                 <label>온라인 비대면 강의</label>
               </div>
               <div>
-                <input type="radio" name="irtype" value="오프라인강의" />
+                <input
+                  type="radio"
+                  name="irtype"
+                  value="오프라인강의"
+                  onChange={() => {
+                    setIrOnline(1);
+                  }}
+                />
                 <label>오프라인 강의</label>
               </div>
               <div>
-                <input type="radio" name="irtype" value="추후협의" />
+                <input
+                  type="radio"
+                  name="irtype"
+                  value="추후협의"
+                  onChange={() => {
+                    setIrOnline(2);
+                  }}
+                />
                 <label>추후 협의</label>
               </div>
             </div>
           </section>
           <section className="ele">
-            <div className="menu">* 접수기간</div>
-            <div className="inputInfo chooseDate">
-              <div className="choosedate_ircodition">
-                <input type="checkbox" name="ircodition" />
-                <div>채용 시 마감</div>
+            <div className="menu">* 근무지역</div>
+            <div className="inputInfo irregi_ir_location">
+              <div>
+                <input
+                  type="text"
+                  name="ir_location"
+                  placeholder={irOnline === 0 && '온라인 비대면 강의'}
+                  disabled={irOnline === 0 || irOnline === 2}
+                />
               </div>
-              <div className="inputStart">
-                <ThemeProvider theme={materialTheme}>
-                  <DateTimePicker
-                    className="dtPicker"
-                    label="접수시작"
-                    inputVariant="outlined"
-                    value={startDate}
-                    onChange={date => handleStartDate(date)}
-                    format="yyyy/MM/dd hh:mm a"
-                    disablePast={true}
-                    minDate={new Date()}
-                    minDateMessage={false}
-                    // minDateMessage="현 시각 이후부터 가능합니다"
-                    strictCompareDates={true}
-                  />
-                </ThemeProvider>
-                <div className="input_sub_text">
-                  공지 시작일을 입력해주십시오
-                </div>
+            </div>
+          </section>
+          <section className="ele">
+            <div className="menu">* 접수방법</div>
+            <div className="inputInfo irregi_submit_type">
+              <div>
+                <input type="checkbox" name="u2lifes_submit" />
+                <div>U2.LIFE접수</div>
               </div>
-              <div className="inputFinish">
-                <ThemeProvider theme={materialTheme}>
-                  <DateTimePicker
-                    className="dtPicker"
-                    label="접수종료"
-                    inputVariant="outlined"
-                    value={finishDate}
-                    onChange={date => setFinishDate(date)}
-                    format="yyyy/MM/dd hh:mm a"
-                    disablePast={true}
-                    minDate={startDate}
-                    minDateMessage={false}
-                    strictCompareDates={true}
-                  />
-                </ThemeProvider>
-                <div className="input_sub_text">
-                  공지 종료일을 입력해주십시오
-                </div>
+            </div>
+          </section>
+          <section className="ele">
+            <div className="menu">* 제출서류</div>
+            <div className="inputInfo irregi_submit_docs">
+              <div>
+                <input type="checkbox" name="submit_docs" value="국문이력서" />
+                <div>국문 이력서</div>
+              </div>
+              <div>
+                <input type="checkbox" name="submit_docs" value="포트폴리오" />
+                <div>포트폴리오</div>
+              </div>
+              <div>
+                <input type="checkbox" name="submit_docs" value="영문이력서" />
+                <div>영문 이력서</div>
               </div>
             </div>
           </section>
@@ -369,6 +374,55 @@ const IRRegi = () => {
                     </tr>
                   </tbody>
                 </table>
+              </div>
+            </div>
+          </section>
+
+          <section className="ele">
+            <div className="menu">* 접수기간</div>
+            <div className="inputInfo chooseDate">
+              <div className="choosedate_ircodition">
+                <input type="checkbox" name="ircodition" />
+                <div>채용 시 마감</div>
+              </div>
+              <div className="inputStart">
+                <ThemeProvider theme={materialTheme}>
+                  <DateTimePicker
+                    className="dtPicker"
+                    label="접수시작"
+                    inputVariant="outlined"
+                    value={startDate}
+                    onChange={date => handleStartDate(date)}
+                    format="yyyy/MM/dd hh:mm a"
+                    disablePast={true}
+                    minDate={new Date()}
+                    minDateMessage={false}
+                    // minDateMessage="현 시각 이후부터 가능합니다"
+                    strictCompareDates={true}
+                  />
+                </ThemeProvider>
+                <div className="input_sub_text">
+                  공지 시작일을 입력해주십시오
+                </div>
+              </div>
+              <div className="inputFinish">
+                <ThemeProvider theme={materialTheme}>
+                  <DateTimePicker
+                    className="dtPicker"
+                    label="접수종료"
+                    inputVariant="outlined"
+                    value={finishDate}
+                    onChange={date => setFinishDate(date)}
+                    format="yyyy/MM/dd hh:mm a"
+                    disablePast={true}
+                    minDate={startDate}
+                    minDateMessage={false}
+                    strictCompareDates={true}
+                  />
+                </ThemeProvider>
+                <div className="input_sub_text">
+                  공지 종료일을 입력해주십시오
+                </div>
               </div>
             </div>
           </section>
