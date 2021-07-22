@@ -98,16 +98,13 @@ const IRRegi = () => {
     }
     if (!submitU2) return alert('접수방법을 선택해주십시오');
     if (!(submitDocs.length > 0)) return alert('제출서류를 선책해주십시오');
-
-    if (!(startDate > new Date()))
-      return alert('정확한 접수기간을 입력해주십시오');
-    if (!(startDate === finishDate))
-      return alert('정확한 접수기간을 입력해주십시오');
+    if (!(isRewardCash || isDirectReward))
+      return alert('보상 조건을 선택해주십시오');
+    if (!(startDate < finishDate))
+      return alert('접수 종료 기간을 입력해주십시오');
     if (!(startDate < finishDate))
       return alert('접수 종료 기간을 입력해주십시오');
     if (!noticeDate) return alert('공지 시작일을 선택해주십시오');
-    if (!(isRewardCash || isDirectReward))
-      return alert('보상 조건을 선택해주십시오');
     if (!admin) return alert('담당자명을 입력해주십시오');
     if (!(mobile1 && mobile2 && mobile3))
       return alert('연락처를 입력해주십시오');
