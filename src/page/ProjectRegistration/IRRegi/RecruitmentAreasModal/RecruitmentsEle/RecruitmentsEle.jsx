@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 const RecruitmentsEle = ({ ele, idx, handleSelectedList }) => {
   const [isChecked, setIsChecked] = useState(false);
 
-  console.log(isChecked);
   const handleChecked = e => {
     setIsChecked(!isChecked);
     handleSelectedList(e.target.value, isChecked);
   };
+
   return (
     <div
       className={`recuitment_modal_elements recuitment_modal_elements_${idx}`}
@@ -18,7 +18,7 @@ const RecruitmentsEle = ({ ele, idx, handleSelectedList }) => {
         key={`${ele}_${idx}`}
         name={`${ele}`}
         value={`${ele}`}
-        checked={isChecked}
+        // checked={isChecked}
         onChange={e => {
           handleChecked(e);
         }}

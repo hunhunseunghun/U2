@@ -11,6 +11,8 @@ import { RegiConationer } from './IRRegiStyled.jsx';
 import { DateTimePicker } from '@material-ui/pickers';
 import { createMuiTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
+
+import { TiDeleteOutline } from 'react-icons/ti';
 const IRRegi = () => {
   let history = useHistory();
   // handle modal state---------------------------------------
@@ -19,7 +21,28 @@ const IRRegi = () => {
   const [profiles, setProfiles] = useState([]);
   //handle recuritmentareas modal ----------------------------
   const [recruitmentModalOpen, setRecruitmentModalOpen] = useState(false);
+  const [recruitmentFieldList, setRecruitmentFieldList] = useState([]);
 
+  const handleRcruitmentList = selectedList => {
+    let instance = [...recruitmentFieldList];
+    for (let value of selectedList) {
+      instance.push(value);
+    }
+    setRecruitmentFieldList(instance);
+    console.log(instance);
+  };
+  console.log(recruitmentFieldList);
+
+  // const handleDeleteFieldList = target => {
+  //   console.log('handleDeleteFieldList excuted', target);
+  //   let instance = [...recruitmentFieldList];
+  //   instance.forEach((ele, idx) => {
+  //     if (ele === target) {
+  //       instance.splice(idx, 1);
+  //     }
+  //   });
+  //   setRecruitmentFieldList(instance);
+  // };
   //handle date ----------------------------------------------
   const [startDate, setStartDate] = useState(new Date());
   const [finishDate, setFinishDate] = useState(new Date());
@@ -156,9 +179,29 @@ const IRRegi = () => {
           <section className="ele">
             <div className="menu">* 모집분야</div>
             <div className="inputInfo irregi_name">
-              <div>
-                <input type="text" />
-              </div>
+              {recruitmentFieldList.map((ele, idx) => {
+                return (
+                  <div className="recruitment_filed_ele" key={idx}>
+                    {ele}{' '}
+                    <TiDeleteOutline
+                      key={`${ele}remove_btn`}
+                      src={TiDeleteOutline}
+                      alt=""
+                      className="removeFileBtn"
+                      onClick={() => {
+                        let instance = [...recruitmentFieldList];
+                        instance.forEach(filed => {
+                          if (filed === ele) {
+                            instance.splice(idx, 1);
+                          }
+                        });
+                        setRecruitmentFieldList(instance);
+                      }}
+                    />
+                  </div>
+                );
+              })}
+
               <button
                 onClick={() => {
                   setRecruitmentModalOpen(true);
@@ -169,6 +212,7 @@ const IRRegi = () => {
               <RecruitmentAreasModal
                 modalOpen={recruitmentModalOpen}
                 handleCloseModal={setRecruitmentModalOpen}
+                handleRcruitmentList={handleRcruitmentList}
               />
             </div>
           </section>

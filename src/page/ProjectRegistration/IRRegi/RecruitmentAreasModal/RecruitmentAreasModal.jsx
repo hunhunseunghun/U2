@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Container } from './RecruitmentAreasModalStyled.jsx';
 import RecruitmentsEle from './RecruitmentsEle/RecruitmentsEle.jsx';
 
-const RecruitmentAreasModal = ({ modalOpen, handleCloseModal }) => {
+const RecruitmentAreasModal = ({
+  modalOpen,
+  handleCloseModal,
+  handleRcruitmentList,
+}) => {
   const [recruitmentList, setRecruitmentList] = useState([
     'Photoshop',
     'Blender',
@@ -29,19 +33,14 @@ const RecruitmentAreasModal = ({ modalOpen, handleCloseModal }) => {
 
   const [selectedList, setSelectedList] = useState(new Set());
   const handleSelectedList = (value, isChecked) => {
-    if (isChecked) {
+    if (!isChecked) {
       selectedList.add(value);
       setSelectedList(selectedList);
-    } else if (!isChecked && selectedList.has(value)) {
+    } else if (isChecked && selectedList.has(value)) {
       selectedList.delete(value);
       setSelectedList(selectedList);
     }
-    console.log(selectedList);
   };
-
-  useEffect(() => {
-    console.log(selectedList);
-  }, [selectedList]);
 
   return (
     <Container>
@@ -106,11 +105,24 @@ const RecruitmentAreasModal = ({ modalOpen, handleCloseModal }) => {
               </section>
             </main>
             <footer>
-              <button className="close" onClick={handleCloseModal}>
+              <button
+                className="close"
+                onClick={() => {
+                  handleCloseModal(false);
+                  setSelectedList(new Set());
+                }}
+              >
                 {' '}
                 취소{' '}
               </button>
-              <button className="close" onClick={handleCloseModal}>
+              <button
+                className="close"
+                onClick={() => {
+                  handleCloseModal(false);
+                  handleRcruitmentList(selectedList);
+                  setSelectedList(new Set());
+                }}
+              >
                 {' '}
                 저장{' '}
               </button>
