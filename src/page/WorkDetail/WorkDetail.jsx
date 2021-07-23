@@ -4,6 +4,7 @@ import { WorkDetailContainer } from './WorkDetailStyled';
 import ChallengeTable from './tables/Challenge';
 import InspectTable from './tables/Inspect';
 import SubmissionModal from '../../component/Modals/Submission/SubmissionModal';
+import { getSingleFileFromBlob } from '../../library/azureBlob';
 import moment from 'moment';
 function WorkDetail(props) {
 	let [subject, setSubject] = useState('광고/홍보');
@@ -157,7 +158,7 @@ function WorkDetail(props) {
 				<section className="section1">
 					<div className="workdetail_img_wrap">
 						{mainImage !== null ? (
-							<img src={mainImage} alt="image"></img>
+							<img src={getSingleFileFromBlob(mainImage)} alt={mainImage}></img>
 						) : (
 							'No Image'
 						)}

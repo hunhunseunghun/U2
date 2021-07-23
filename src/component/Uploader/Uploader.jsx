@@ -36,7 +36,10 @@ const Uploader = ({
 	const fileChangeFunc = async (e) => {
 		let files = [];
 		let realFiles = e.target.files;
-		if (!realFiles) return;
+		if (!realFiles.length > 0) {
+			setFilePath(null);
+			return;
+		}
 		if (realFiles[0].size > _UPLOAD_FILE_LIMIT) {
 			alert('300MB 이상의 파일은 올릴 수 없습니다.');
 			return;
