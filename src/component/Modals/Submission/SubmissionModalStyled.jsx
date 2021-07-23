@@ -134,7 +134,9 @@ export const ModalContainer = styled.div`
 		padding: 0 10px;
 		font-size: 12px;
 		color: #747474;
-
+		img {
+			width: 100%;
+		}
 		.authorized {
 			align-items: center;
 			font-size: 11px;

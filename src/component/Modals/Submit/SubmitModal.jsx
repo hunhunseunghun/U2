@@ -54,6 +54,7 @@ const initialState = {
 	filmRequired: 0,
 	contactRequired: 0,
 	emailRequired: 0,
+	submitClicked: false,
 };
 function Modal({ open, challenge, handleModalClose }) {
 	// console.log(data);
@@ -101,6 +102,7 @@ function Modal({ open, challenge, handleModalClose }) {
 			filmRequired,
 			contactRequired,
 			emailRequired,
+			submitClicked,
 		},
 		setState,
 	] = useState({ ...initialState });
@@ -297,8 +299,11 @@ function Modal({ open, challenge, handleModalClose }) {
 				(data.buildingName && ' ' + data.buildingName),
 		}));
 	};
-
 	const checkSubmit = () => {
+		if (submitClicked) {
+			alert('제출 중입니다.');
+			return true;
+		}
 		if (!title || bankAccountErr || !address1 || !address2 || !address3) {
 			alert('모든 필수 항목을 입력해야 합니다.');
 			return true;
@@ -316,7 +321,8 @@ function Modal({ open, challenge, handleModalClose }) {
 				}
 			}
 		}
-		if (shareRequired === 2) {
+		console.log(shareRequired);
+		if (shareRequired === 2 && videos.length > 0) {
 			let totalArr = new Array().concat(YUarr, TTarr, VMarr);
 			if (!totalArr.length > 0) {
 				alert('영상 URL을 입력해주세요');
@@ -341,12 +347,13 @@ function Modal({ open, challenge, handleModalClose }) {
 	const handleSubmit = () => {
 		console.log(userInfo);
 		if (checkSubmit()) return;
+		setState((preState) => ({ ...preState, submitClicked: true }));
 		let totalURLs = new Array().concat(
 			YUarr,
 			TTarr,
 			VMarr,
 			DRarr,
-			videoFile && videoFile,
+			videoFile && videoFile.platform && videoFile,
 		);
 
 		var data = {

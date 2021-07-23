@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ModalContainer } from './SubmissionModalStyled';
 // ReactModal.setAppElement('#root');
+import { getSingleFileFromBlob } from '../../../library/azureBlob';
 import FeedbackModal from '../FeedBack/feedbackModal';
+
 function SubmissionModal({
 	open,
 	challengeIdx,
@@ -90,24 +92,6 @@ function SubmissionModal({
 					});
 				})
 				.catch((err) => console.log(err));
-
-			// var config2 = {
-			// 	method: 'get',
-			// 	url:
-			// 		process.env.REACT_APP_U2_DB_HOST +
-			// 		`/Campaign/challengesubmitfeedback?challengeIdx=${
-			// 			propsData.challengeIdx
-			// 		}&seq=${1}&memberIdx=${propsData.memberIdx}`,
-			// 	headers: {
-			// 		Authorization: 'Bearer ' + localStorage.getItem('token'),
-			// 		'Content-Type': 'application/json',
-			// 	},
-			// };
-			// console.log(config2.url);
-			// axios(config2).then((response) => {
-			// 	console.log(response);
-			// });
-			// setData(propsData);
 		}
 	}, [propsData]);
 	return (
@@ -129,37 +113,17 @@ function SubmissionModal({
 								<div className="inputInfo submission_inputinfo_challengevid">
 									{data.videos && data.videos.length > 0
 										? data.videos.map((el) => {
-												// let src = '';
-												// switch (el.platform) {
-												// 	case 'YU': {
-												// 		src =
-												// 			'https://www.youtube.com/watch?v=' + el.videoId;
-												// 		break;
-												// 	}
-												// 	case 'TT': {
-												// 		src = `https://www.tiktok.com/${el.videoId}`;
-												// 		break;
-												// 	}
-												// 	case 'VM': {
-												// 		src = `https://vimeo.com/${el.videoId}`;
-												// 		break;
-												// 	}
-												// 	case 'DR': {
-												// 		src = el.videoId;
-												// 		break;
-												// 	}
-												// 	case 'FS': {
-												// 		src = el.videoId;
-												// 		break;
-												// 	}
-												// 	default: {
-												// 		break;
-												// 	}
-												// }
 												return (
 													<div className="links">
-														<a href={el} target="_blank">
-															{el}
+														<a
+															href={
+																el.platform === 'FS'
+																	? getSingleFileFromBlob(el.videoId)
+																	: el.videoId
+															}
+															target="_blank"
+														>
+															{el.videoId}
 														</a>
 														<br />
 													</div>
@@ -212,7 +176,12 @@ function SubmissionModal({
 								<div className="menu">이미지</div>
 								<div className="inputInfo">
 									{data.photo ? (
-										<img src={data.photo} alt={data.photo}></img>
+										<img
+											src={(() => {
+												return getSingleFileFromBlob(data.photo);
+											})()}
+											alt={data.photo}
+										></img>
 									) : (
 										'-'
 									)}

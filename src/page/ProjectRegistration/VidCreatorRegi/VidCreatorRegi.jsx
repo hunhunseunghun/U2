@@ -140,8 +140,9 @@ const VidCreatorRegi = () => {
 			return alert('접수 종료 기간을 입력해주십시오');
 		if (!(noticeStart > new Date()))
 			return alert('공지 시작일을 선택해주십시오');
-		if (!rewardDate) return alert('보상일을 선택해주십시오');
-		if (!(isRewardCash || isDirectReward))
+		if (confirmRewardsDate && !rewardDate)
+			return alert('보상일을 선택해주십시오');
+		if (!isRewardCash && !isDirectReward)
 			return alert('보상 조건을 선택해주십시오');
 		if (!admin) return alert('담당자명을 입력해주십시오');
 		if (!(mobile1 && mobile2 && mobile3))
@@ -149,9 +150,11 @@ const VidCreatorRegi = () => {
 		if (!email) return alert('이메일을 입력해 주십시오');
 		return true;
 	};
+	const [submitClicked, setSubmitClicked] = useState(false);
 	const handleSubmit = () => {
+		if (submitClicked) return;
 		if (checkRequiredField() !== true) return;
-		console.log('userInfo: ', userInfo);
+		setSubmitClicked(true);
 		var rewards = [];
 
 		if (confirmRewardsDate && rewardDate && isRewardCash) {
@@ -179,7 +182,6 @@ const VidCreatorRegi = () => {
 			alert('모든 필수 입력란을 작성해주세요.');
 			return;
 		}
-		console.log(rewards);
 		var videos = [];
 		isYoutube && videos.push({ platform: 'YU' });
 		isTiktok && videos.push({ platform: 'TT' });
@@ -239,10 +241,12 @@ const VidCreatorRegi = () => {
 			.then((res) => {
 				console.log('videditorregi response data', res);
 				alert('등록이 완료되었습니다.');
+				setSubmitClicked(false);
 				history.push('/creatormarket');
 			})
 			.catch((err) => {
 				console.log(err);
+				setSubmitClicked(false);
 				alert(err);
 			});
 	};
