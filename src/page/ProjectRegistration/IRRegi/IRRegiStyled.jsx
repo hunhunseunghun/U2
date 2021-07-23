@@ -150,44 +150,73 @@ export const RegiConationer = styled.div`
     }
   }
 
+  //irregi_recruitment_field
+
+  .irregi_recruitment_field {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px 10px;
+    .recruitment_field_ele {
+      display: flex;
+      margin: 5px;
+      span {
+        display: grid;
+        place-items: center;
+      }
+
+      .remove_field_btn {
+        width: 1.5em;
+        height: 1.5em;
+
+        &:hover {
+          cursor: pointer;
+          color: #f84135;
+        }
+      }
+    }
+    .recuritment_filed_addbtn {
+      width: 50px;
+      padding: 5px;
+      background: linear-gradient(#fff, #f2f2f2);
+      border: 1px solid #eee;
+      color: #747474;
+      font-size: 12px;
+      margin: 5px;
+
+      &:hover {
+        cursor: pointer;
+        background: linear-gradient(#fff, #e0e0e0);
+      }
+    }
+  }
+
+  //irregi_submit_type
+
+  .irregi_submit_type {
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      div {
+        position: relative;
+        top: -1px;
+      }
+    }
+  }
+
   //irregi_submitdocs css ---------------------------------
 
-  .irregi_submitdocs {
+  .irregi_submit_docs {
     div {
       display: flex;
       justify-content: center;
       align-items: center;
       margin-right: 4px;
-    }
-    label {
-      position: relative;
-      top: -1px;
-      margin-left: 2px;
-    }
-  }
-
-  .ir_onlinemeet {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 200px;
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid #eee;
-    font-size: 12px;
-
-    img {
-      margin-right: 20px;
-    }
-
-    &:hover {
-      border: 1px solid #898989;
-      cursor: pointer;
-      transform: scale(1.01);
-    }
-
-    .onlineMeetText > div:first-child {
-      font-size: 16px;
+      div {
+        position: relative;
+        top: -1px;
+      }
     }
   }
 
@@ -312,7 +341,8 @@ export const RegiConationer = styled.div`
     display: block;
     padding: 5px;
   }
-  .choosedate_ircodition {
+  .choosedate_ircondition {
+    margin: 10px 0;
     display: flex;
     div {
       margin-left: 5px;
@@ -445,7 +475,10 @@ export const RegiConationer = styled.div`
   }
   //editor css ----------------------------------
   .notice_editor_form {
-    padding: 0 0 42px 0;
+    padding: 0;
+    .ckeditor_wrap {
+      width: 100%;
+    }
   }
   .notice_editor {
     width: 100%;

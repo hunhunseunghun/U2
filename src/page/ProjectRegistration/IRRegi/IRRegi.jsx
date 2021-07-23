@@ -255,16 +255,16 @@ const IRRegi = () => {
           </section>
           <section className="ele">
             <div className="menu">* 모집분야</div>
-            <div className="inputInfo irregi_name">
+            <div className="inputInfo irregi_recruitment_field">
               {recruitmentFieldList.map((ele, idx) => {
                 return (
-                  <div className="recruitment_filed_ele" key={idx}>
-                    {ele}{' '}
+                  <div className="recruitment_field_ele" key={idx}>
+                    <span>{ele}</span>
                     <TiDeleteOutline
                       key={`${ele}remove_btn`}
                       src={TiDeleteOutline}
                       alt=""
-                      className="removeFileBtn"
+                      className="remove_field_btn"
                       onClick={() => {
                         let instance = [...recruitmentFieldList];
                         instance.forEach(filed => {
@@ -280,11 +280,12 @@ const IRRegi = () => {
               })}
 
               <button
+                className="recuritment_filed_addbtn"
                 onClick={() => {
                   setRecruitmentModalOpen(true);
                 }}
               >
-                추가
+                +추가
               </button>
               <RecruitmentAreasModal
                 modalOpen={recruitmentModalOpen}
@@ -535,7 +536,7 @@ const IRRegi = () => {
           <section className="ele">
             <div className="menu">* 접수기간</div>
             <div className="inputInfo chooseDate">
-              <div className="choosedate_ircodition">
+              <div className="choosedate_ircondition">
                 <input
                   type="checkbox"
                   name="ircodition"
