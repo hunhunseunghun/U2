@@ -176,7 +176,7 @@ function ParticipateTable() {
 											return '??';
 										}
 									})(),
-									// feedback:
+									feedback: myApplication.hasFeedBack,
 
 									requestDate: myApplication.registDate.split('T')[0],
 									dueDate: el.missions[0].dateFin.split('T')[0],

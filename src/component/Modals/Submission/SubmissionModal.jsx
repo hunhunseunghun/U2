@@ -129,37 +129,37 @@ function SubmissionModal({
 								<div className="inputInfo submission_inputinfo_challengevid">
 									{data.videos && data.videos.length > 0
 										? data.videos.map((el) => {
-												let src = '';
-												switch (el.platform) {
-													case 'YU': {
-														src =
-															'https://www.youtube.com/watch?v=' + el.videoId;
-														break;
-													}
-													case 'TT': {
-														src = `https://www.tiktok.com/${el.videoId}`;
-														break;
-													}
-													case 'VM': {
-														src = `https://vimeo.com/${el.videoId}`;
-														break;
-													}
-													case 'DR': {
-														src = el.videoId;
-														break;
-													}
-													case 'FS': {
-														src = el.videoId;
-														break;
-													}
-													default: {
-														break;
-													}
-												}
+												// let src = '';
+												// switch (el.platform) {
+												// 	case 'YU': {
+												// 		src =
+												// 			'https://www.youtube.com/watch?v=' + el.videoId;
+												// 		break;
+												// 	}
+												// 	case 'TT': {
+												// 		src = `https://www.tiktok.com/${el.videoId}`;
+												// 		break;
+												// 	}
+												// 	case 'VM': {
+												// 		src = `https://vimeo.com/${el.videoId}`;
+												// 		break;
+												// 	}
+												// 	case 'DR': {
+												// 		src = el.videoId;
+												// 		break;
+												// 	}
+												// 	case 'FS': {
+												// 		src = el.videoId;
+												// 		break;
+												// 	}
+												// 	default: {
+												// 		break;
+												// 	}
+												// }
 												return (
 													<div className="links">
-														<a href={src} target="_blank">
-															링크
+														<a href={el} target="_blank">
+															{el}
 														</a>
 														<br />
 													</div>

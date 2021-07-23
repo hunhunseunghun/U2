@@ -180,9 +180,12 @@ const CompetitionRegi = () => {
 		if (!email) return alert('이메일을 입력해 주십시오');
 		return true;
 	};
-
+	const [submitClicked, setSubmitClicked] = useState(false);
 	const handleSubmit = () => {
+		if (submitClicked) return;
+
 		if (checkRequiredField() !== true) return;
+		setSubmitClicked(true);
 		console.log('userInfo: ', userInfo);
 		var rewards = [];
 		contest && rewards.push({ cat: 1 });
@@ -258,10 +261,12 @@ const CompetitionRegi = () => {
 					// 	// await uploadFileToBlob(etcFile)
 					// }
 					alert('등록이 완료되었습니다.');
+					setSubmitClicked(false);
 					history.push('/creatormarket');
 				})
 				.catch((err) => {
 					console.log(err);
+					setSubmitClicked(false);
 					alert('공모전 등록에 실패했습니다.' + err);
 				});
 		}

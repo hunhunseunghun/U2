@@ -1,5 +1,7 @@
+import { useHistory } from 'react-router-dom';
 import { PrjInfoContainer } from './ProjectInfoStyled';
 function ProjectInfo({ challenge }) {
+	const history = useHistory();
 	switch (
 		challenge.challengeTargetCode //1: 공모전, 2: 전문영상 편집자 , 3: 영상 크리에이터/언플루언서, 4: 강사채용
 	) {
@@ -22,9 +24,22 @@ function ProjectInfo({ challenge }) {
 								<th>홈페이지</th>
 								<td>
 									{challenge.url ? (
-										<a href={challenge.url} target={'_blank'}>
+										<div
+											onClick={() => {
+												let newurl = challenge.url;
+
+												if (
+													challenge.url.substring(0, 7) != 'http://' &&
+													challenge.url.substring(0, 8) != 'https://'
+												) {
+													newurl = 'http://' + challenge.url;
+												}
+												window.open(newurl, '_blank');
+											}}
+											style={{ cursor: 'pointer' }}
+										>
 											{challenge.url}
-										</a>
+										</div>
 									) : (
 										'no data'
 									)}
