@@ -10,20 +10,25 @@ const RecruitmentsEle = ({ ele, idx, handleSelectedList }) => {
 
   return (
     <div
-      className={`recuitment_modal_elements recuitment_modal_elements_${idx}`}
+      className={`recruitment_modal_elements recuitment_modal_elements_${idx}`}
       key={idx}
     >
-      <input
-        type="checkbox"
-        key={`${ele}_${idx}`}
-        name={`${ele}`}
-        value={`${ele}`}
-        // checked={isChecked}
-        onChange={e => {
-          handleChecked(e);
-        }}
-      />
-      <div key={`${idx}_${idx}`}>{ele}</div>
+      <div className="recruitment_modal_checkboxarea">
+        <input
+          type="checkbox"
+          key={`${ele}_${idx}`}
+          name={`${ele}`}
+          value={`${ele}`}
+          // checked={isChecked}
+          onChange={e => {
+            handleChecked(e);
+          }}
+        />
+      </div>
+
+      <div className="recruitment_modal_content" key={`${idx}_${idx}`}>
+        {ele}
+      </div>
     </div>
   );
 };

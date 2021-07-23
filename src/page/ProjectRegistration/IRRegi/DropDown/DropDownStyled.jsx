@@ -119,4 +119,18 @@ export const Container = styled.div`
   .competitionName {
     width: 200px;
   }
+  .inputSnsID {
+    display: flex;
+    input {
+      width: 100px;
+    }
+    select {
+      width: 80px;
+      height: 21px;
+      padding: 0 0 0 4px;
+      margin: 0;
+      margin-left: 5px;
+      font-size: 11px;
+    }
+  }
 `;

@@ -49,6 +49,70 @@ export const Container = styled.div`
     padding: 16px;
     border-bottom: 1px solid #dee2e6;
     border-top: 1px solid #dee2e6;
+
+    .recruitment_select_area {
+      display: flex;
+      flex-wrap: wrap;
+
+      .recruitment_modal_elements {
+        display: flex;
+        width: 49%;
+        margin: 1px;
+        border: 1px solid #dee2e6;
+
+        .recruitment_modal_checkboxarea {
+          border-right: 1px solid #dee2e6;
+
+          padding: 10px;
+        }
+        .recruitment_modal_content {
+          display: grid;
+          place-items: center;
+          margin-left: 7px;
+          word-break: break-all;
+        }
+      }
+    }
+    .recruitment_direct_area {
+      display: flex;
+
+      margin-top: 20px;
+
+      border: 1px solid #dee2e6;
+
+      .recruitment_direct_title {
+        padding: 5px;
+        padding-top: 7px;
+        border-right: 1px solid #dee2e6;
+      }
+      .recruitment_direct_input {
+        width: 80%;
+        display: flex;
+        padding: 5px;
+
+        input {
+          width: 70%;
+          margin-left: 10px;
+        }
+        button {
+          all: unset;
+          outline: none;
+          width: 40px;
+          padding: 4px 8px;
+          color: #fff;
+          background-color: #6c757d;
+          border-radius: 5px;
+          font-size: 11px;
+          margin-left: 5px;
+          text-align: center;
+
+          &:hover {
+            cursor: pointer;
+            background-color: #565d63;
+          }
+        }
+      }
+    }
   }
   .modal > section > footer {
     padding: 12px 16px;

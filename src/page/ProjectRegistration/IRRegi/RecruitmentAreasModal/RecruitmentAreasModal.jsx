@@ -60,7 +60,7 @@ const RecruitmentAreasModal = ({
               </button>
             </header>
             <main>
-              <section>
+              <section className="recruitment_select_area">
                 {recruitmentList.map((ele, idx) => {
                   return (
                     // <div
@@ -87,9 +87,9 @@ const RecruitmentAreasModal = ({
                 })}
               </section>
 
-              <section>
-                <div>직접입력</div>
-                <div>
+              <section className="recruitment_direct_area">
+                <div className="recruitment_direct_title">직접입력</div>
+                <div className="recruitment_direct_input">
                   <input
                     type="text"
                     naeme="addRecuritmentList"
@@ -101,6 +101,15 @@ const RecruitmentAreasModal = ({
                       setAddInputValue(e.target.value);
                     }}
                   />
+                  <button
+                    onClick={() => {
+                      let recruitmentListTemp = [...recruitmentList];
+                      recruitmentListTemp.push(addInputValue);
+                      setRecruitmentList(recruitmentListTemp);
+                    }}
+                  >
+                    추가
+                  </button>
                 </div>
               </section>
             </main>

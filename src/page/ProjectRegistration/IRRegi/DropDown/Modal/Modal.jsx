@@ -9,7 +9,6 @@ const Modal = ({
   header,
   handleNewData,
 }) => {
-  const [columnText, setColumnText] = useState('개인');
   const userInfo = useSelector(state => state.userInfo);
   const [ownerCat, setOwnerCat] = useState(0); // 0: 개인 , 1: 비지니스
   const [company, setCompany] = useState('');
@@ -69,9 +68,7 @@ const Modal = ({
         console.log(err);
       });
   };
-  const handleColumnText = e => {
-    setColumnText(e.target.value);
-  };
+
   return (
     <div className={modalOpen ? 'openModal modal' : 'modal'}>
       {modalOpen ? (
