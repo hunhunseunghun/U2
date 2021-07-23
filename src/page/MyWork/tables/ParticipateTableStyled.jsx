@@ -30,7 +30,7 @@ export const ParticipateTableContainer = styled.div`
       top: -1px;
       display: grid;
       place-items: center;
-      font-size: 12px;
+      font-size: 15px;
       color: #fff;
       margin-left: 5px;
     }
@@ -38,7 +38,7 @@ export const ParticipateTableContainer = styled.div`
   table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 12px;
+    font-size: 15px;
     margin-bottom: 20px;
   }
 
@@ -57,7 +57,7 @@ export const ParticipateTableContainer = styled.div`
     background-color: #e3e3e3;
     border-top: 2px solid #2d2123;
     border-bottom: 1px solid #eee;
-    font-size: 12px;
+    font-size: 15px;
     color: #747474;
     th {
       padding: 10px 0;

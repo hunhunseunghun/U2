@@ -271,14 +271,15 @@ export const ProjectDetailContainer = styled.div`
         align-items: center;
         padding: 5px 5px;
         border: 1px solid #bebebe;
-        background-color: #eaeaea;
+        background-color: #f7f7f7;
       }
       .comment_reply_name {
-        background-color: black;
+        background-color: #979797;
         padding: 2px 5px;
+        padding-bottom: 3px;
         border-radius: 4px;
         font-size: 11px;
-        color: #ffff00;
+        color: #ffffff;
         margin-left: 5px;
         text-align: center;
         min-width: 33px;
@@ -287,7 +288,7 @@ export const ProjectDetailContainer = styled.div`
         width: 100%;
         margin-left: 10px;
         font-size: 13px;
-        color: #4e4e4e;
+        color: #686868;
         font-weight: 400;
         word-break: break-all;
       }

@@ -47,7 +47,7 @@ export const MyWorkContainer = styled.div`
     position: relative;
     width: 120px;
     padding: 10px 10px;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 500;
     border: 1px solid #eee;
     border-bottom: 0;
