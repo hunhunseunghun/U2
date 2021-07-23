@@ -84,16 +84,16 @@ const CompetitionRegi = () => {
 
 	//담당자
 	const [admin, setAdmin] = useState('');
-	const [adminExposure, setAdminExposure] = useState(false);
+	const [adminExposure, setAdminExposure] = useState(true);
 	//연락처
 	const [mobile1, setMobile1] = useState('010');
 	const [mobile2, setMobile2] = useState('');
 	const [mobile3, setMobile3] = useState('');
-	const [mobileExposure, setMobileExposure] = useState(false);
+	const [mobileExposure, setMobileExposure] = useState(true);
 	//이메일
 	const [email, setEmail] = useState('');
 	const [emailErr, setEmailErr] = useState('');
-	const [emailExposure, setEmailExposure] = useState(false);
+	const [emailExposure, setEmailExposure] = useState(true);
 
 	//ownerIdx for API
 	const [ownerIdx, setOwnerIdx] = useState(0);
@@ -120,7 +120,6 @@ const CompetitionRegi = () => {
 	const handleCkeditorValue = (event, editor) => {
 		// console.log(text);
 		const data = editor.getData();
-		console.log(data);
 		setCkText(data);
 	};
 	const handleEmailValidation = (email) => {
@@ -153,14 +152,17 @@ const CompetitionRegi = () => {
 		if (!title) return alert('공모전명을 입력해주십시오');
 		if (!(isOnline || isVideoProduction))
 			return alert('접수방법을 선택해주십시오');
+		if (isOnline !== 0) {
+			if (isYoutube || isTiktok || isVimeo) {
+				return alert('온라인 게시방법을 선택해주십시오');
+			}
+		}
 		if (!(isEmail || isMobile))
 			return alert('제출자 개인정보 수집을 선택해주십시오');
 		// if (!(startDate > new Date()))
 		// 	return alert('정확한 접수기간을 입력해주십시오');
 		if (!(startDate < finishDate))
 			return alert('접수 종료 기간을 입력해주십시오');
-		if (!(noticeStart > new Date()))
-			return alert('공지 시작일을 선택해주십시오');
 		if (
 			!(
 				contest ||
@@ -178,6 +180,7 @@ const CompetitionRegi = () => {
 		if (!(mobile1 && mobile2 && mobile3))
 			return alert('연락처를 입력해주십시오');
 		if (!email) return alert('이메일을 입력해 주십시오');
+		if (ownerIdx === 0) return alert('주최사를 선택해주십시오');
 		return true;
 	};
 	const [submitClicked, setSubmitClicked] = useState(false);
