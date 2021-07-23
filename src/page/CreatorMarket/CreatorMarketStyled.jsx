@@ -34,6 +34,8 @@ export const MainContainer = styled.div`
     border-left: none;
     /* background-color: #f6f6f6; */
     color: #aaa;
+    font-weight: 600;
+    font-size: 18px;
 
     div {
       display: grid;
@@ -41,8 +43,7 @@ export const MainContainer = styled.div`
       text-align: center;
       width: 100%;
       height: 100%;
-      font-weight: 500;
-      font-size: 14px;
+
       line-height: 24px;
       border: 1px solid #eee;
       border-left: 0;
