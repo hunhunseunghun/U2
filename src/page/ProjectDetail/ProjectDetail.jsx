@@ -121,8 +121,10 @@ function ProjectDetail(props) {
 		if (userInfo.email) {
 			var body = {};
 			// TextFile(body);
-			if (!inputComment.length > 0) return alert('내용을 입력해주세요');
+
 			if (reply) {
+				if (!comments[reply.index].inputReply.length > 0)
+					return alert('내용을 입력해주세요');
 				body = {
 					challengeIdx: Number(challengeIdx),
 					seq: reply.seq,
@@ -130,6 +132,7 @@ function ProjectDetail(props) {
 					comment: comments[reply.index].inputReply,
 				};
 			} else {
+				if (!inputComment.length > 0) return alert('내용을 입력해주세요');
 				body = {
 					challengeIdx: Number(challengeIdx),
 

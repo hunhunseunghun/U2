@@ -30,7 +30,7 @@ const Uploader = ({
 	//filePath = 파일 경로, setFilePath = useState func
 
 	//바뀐 파일이름을 임시 저장하기 위한 state
-	const [blobname, setBlobname] = useState('');
+	const [blob, setBlob] = useState('');
 	const [file, setFile] = useState(null);
 	// posterfile upload handle------------------------------
 	const fileChangeFunc = async (e) => {
@@ -53,14 +53,17 @@ const Uploader = ({
 			}
 			files[key] = realFiles[key];
 		}
+		if (blob) {
+			await delteFileFromBlob(blob);
+		}
 
 		const { url, blobname } = await singleUploadAndReturnObj(realFiles, folder);
 		setFile(files);
-		setBlobname(blobname);
+		setBlob(blobname);
 		if (document.getElementById('upLoader').value) {
-			setFilePath(url);
+			setFilePath(blobname);
 		} else {
-			setFilePath('파일을 선택해주세요. (최대 300MB)');
+			setFilePath(null);
 		}
 	};
 
@@ -78,7 +81,7 @@ const Uploader = ({
 							onClick={() => {
 								const edit = file.slice();
 								edit.splice(idx, 1);
-								delteFileFromBlob(blobname);
+								delteFileFromBlob(blob);
 								// delete copyNamed[idx];
 								setFile(edit);
 								setFilePath('');
