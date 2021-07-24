@@ -104,8 +104,6 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 			memberIdx: memberIdx,
 			checkStatusCode: checkStatusCode,
 		};
-		console.log('body: ', body);
-		console.log('pagedSelected: ', pagedSelects);
 		var config = {
 			method: 'post',
 			url: process.env.REACT_APP_U2_DB_HOST + `/Campaign/challengesubmitcheck`,
@@ -115,8 +113,14 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 			},
 			data: body,
 		};
+		console.log('body: ', body);
+		console.log('config: ', config);
+		console.log(typeof body.challengeIdx);
+		console.log(typeof body.memberIdx);
+		console.log(typeof body.checkStatusCode);
 		axios(config)
 			.then((response) => {
+				console.log(response.data);
 				var config = {
 					method: 'get',
 					url:
@@ -164,7 +168,7 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 				memberIdx: pagedSubjects[indexs[i]].memberIdx,
 			});
 		}
-		console.log('body: ', body);
+		console.log('body: ', `body`);
 		var config = {
 			method: 'post',
 			url:

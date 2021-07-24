@@ -1,10 +1,17 @@
 import { useState, useEffect } from 'react';
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ModalContainer } from './fbModalStyled';
 import axios from 'axios';
-function FeedbackModal({ open, data, handleModalClose, isAdmin, refresh }) {
+function FeedbackModal({
+	open,
+	data,
+	handleModalClose,
+	isAdmin,
+	refresh,
+	challengeIdx,
+}) {
 	console.log('inside feedback data :', data);
-	// const userInfo = useSelector((state) => state.userInfo);
+	const userInfo = useSelector((state) => state.userInfo);
 
 	const [input, setInput] = useState(null);
 
@@ -13,6 +20,20 @@ function FeedbackModal({ open, data, handleModalClose, isAdmin, refresh }) {
 			setInput(data.feedback ? data.feedback.comment : '');
 		}
 	}, [data]);
+	useEffect(() => {
+		if (challengeIdx) {
+			axios
+				.get(
+					`https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmitfeedback?challengeIdx=${challengeIdx}&seq=1&memberIdx=${userInfo.memberIdx}`,
+				)
+				.then((response) => {
+					setInput(response.data.comment);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
+	}, [challengeIdx]);
 
 	const handleSubmit = () => {
 		console.log(input);
@@ -62,6 +83,8 @@ function FeedbackModal({ open, data, handleModalClose, isAdmin, refresh }) {
 								onChange={(e) => {
 									setInput(e.target.value);
 								}}
+								readOnly={!isAdmin}
+								style={{ resize: 'none' }}
 							></textarea>
 						</main>
 						<footer>

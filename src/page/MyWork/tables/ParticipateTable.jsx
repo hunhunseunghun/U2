@@ -10,6 +10,7 @@ import ResumeModal from '../../../component/Modals/Resume/resumeModal';
 import SubmitModal from '../../../component/Modals/Submit/SubmitModal';
 import SubmissionModal from '../../../component/Modals/Submission/SubmissionModal';
 import sortarrowdown from '../../../Img/Icons/sortarrowdown.png';
+import { getSingleFileFromBlob } from '../../../library/azureBlob';
 function ParticipateTable() {
 	const userInfo = useSelector((state) => state.userInfo);
 	const history = useHistory();
@@ -51,7 +52,7 @@ function ParticipateTable() {
 		setLoading(true);
 		axios(config)
 			.then((response) => {
-				console.log(response.data);
+				console.log('participateTable response: ', response.data);
 				var datas = response.data.entities;
 				var formedData = [];
 				if (datas)
@@ -63,7 +64,7 @@ function ParticipateTable() {
 						if (el.challengeTargetCode === 1 || el.challengeTargetCode === 3) {
 							if (myApplication) {
 								return {
-									img: el.mainImage,
+									img: el.logo,
 									category: (() => {
 										switch (el.challengeTargetCode) {
 											case 1: {
@@ -85,8 +86,6 @@ function ParticipateTable() {
 									})(),
 									title: el.title ? el.title : 'no data',
 									status: (() => {
-										console.log('el: ', el);
-
 										if (
 											//공모전 또는 전문영상편집자
 											el.challengeTargetCode === 1 ||
@@ -176,7 +175,7 @@ function ParticipateTable() {
 											return '??';
 										}
 									})(),
-									feedback: myApplication.hasFeedBack,
+									feedback: myApplication.hasFeedback,
 
 									requestDate: myApplication.registDate.split('T')[0],
 									dueDate: el.missions[0].dateFin.split('T')[0],
@@ -218,8 +217,9 @@ function ParticipateTable() {
 		getData(config);
 	};
 
-	const handleOpenFeedback = (feedback) => {
-		setFeedbackProps({ open: true, data: feedback });
+	const handleOpenFeedback = (challengeIdx) => {
+		console.log('open feedback: ', challengeIdx);
+		setFeedbackProps({ open: true, data: challengeIdx });
 	};
 	const handleOpenResume = (resume) => {
 		setResumeProps({ open: true, data: resume });
@@ -263,10 +263,11 @@ function ParticipateTable() {
 		<ParticipateTableContainer>
 			<FeedbackModal
 				open={feedbackProps.open}
-				challenge={feedbackProps.data}
+				challengeIdx={feedbackProps.data}
 				handleModalClose={(modalType) => {
 					handleModalClose(modalType);
 				}}
+				isAdmin={false}
 			/>
 			<ResumeModal
 				open={resumeProps.open}
@@ -361,12 +362,17 @@ function ParticipateTable() {
 						<tbody>
 							{quests.data
 								? quests.data.map((data) => {
+										// console.log('data: ', data);
 										if (data)
 											return (
 												<tr>
 													<td>
-														{data.img !== '' ? (
-															<img src={data.img}></img>
+														{data.img ? (
+															<img
+																src={getSingleFileFromBlob(data.img)}
+																alt={data.img}
+																style={{ width: '100px' }}
+															></img>
 														) : (
 															'no image'
 														)}
@@ -433,7 +439,7 @@ function ParticipateTable() {
 															<button
 																className="feedback-button"
 																onClick={() => {
-																	handleOpenFeedback(data.feedback);
+																	handleOpenFeedback(data.challengeIdx);
 																}}
 															>
 																보기
