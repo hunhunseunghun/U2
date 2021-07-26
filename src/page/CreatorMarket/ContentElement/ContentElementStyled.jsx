@@ -284,7 +284,6 @@ export const EleContainer = styled.div`
           width: 60%;
           margin-left: 5px;
           overflow: hidden;
-
           text-overflow: ellipsis;
         }
       }

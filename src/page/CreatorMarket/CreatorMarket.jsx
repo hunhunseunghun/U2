@@ -5,13 +5,11 @@ import { MainContainer } from './CreatorMarketStyled.jsx';
 import TopView from './TopView/TopView.jsx';
 import TopAds from './TopAds/TopAds.jsx';
 import ContentElement from './ContentElement/ContentElement.jsx';
-import MobileContentElement from './MobileContentElement/MobileContentElement.jsx';
 import bannerImg from '../../Img/cmBannerImg.png';
 import { useSelector } from 'react-redux';
 import { BiLoader } from 'react-icons/bi';
 import Pagination2 from '../../component/Pagination/Pagination2.jsx';
 import { paginate } from '../../component/Pagination/paginate.js';
-import Slider from 'react-slick';
 const Main = props => {
   const sliderRef = useRef();
   const [tabActive, setTabActive] = useState(0); // 탭 선택 소팅
@@ -34,38 +32,6 @@ const Main = props => {
   let walk;
   let startX;
   let scrollValue;
-
-  useEffect(() => {
-    sliderRef.current.scrollLeft =
-      window.innerWidth * 0.8 -
-      (window.innerWidth - window.innerWidth * 0.8) / 2;
-  }, []);
-  function slideTouchStart(e) {
-    startX = e.touches[0].pageX - sliderRef.current.offsetLeft;
-    scrollValue = sliderRef.current.scrollLeft;
-  }
-  function slideTouchMove(e) {
-    e.preventDefault();
-    walk = (e.touches[0].pageX - sliderRef.current.offsetLeft - startX) * 0.9;
-    sliderRef.current.scrollLeft = scrollValue - walk;
-  }
-  function slideTouchEnd() {
-    if (walk) {
-      sliderRef.current.scrollLeft =
-        window.innerWidth * 0.75 -
-        (window.innerWidth - window.innerWidth * 0.75) / 2;
-      if (walk < 0) {
-        if (walk < -120) {
-          setMobileTypes(state => state.slice(1, 3).concat(state[0]));
-        }
-      } else if (walk > 0) {
-        if (walk > 120) {
-          setMobileTypes(state => [state[2]].concat(state.slice(0, 2)));
-        }
-      }
-    }
-    walk = 0;
-  }
 
   useEffect(() => {
     function followInnerWidth() {
