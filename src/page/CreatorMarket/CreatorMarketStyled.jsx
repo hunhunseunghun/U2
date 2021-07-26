@@ -15,7 +15,6 @@ export const MainContainer = styled.div`
   .topWrap {
     position: relative;
     width: 100%;
-    height: 0;
     overflow: hidden;
     padding-bottom: 38.8%;
     display: flex;
@@ -144,7 +143,15 @@ export const MainContainer = styled.div`
   @media only screen and (max-width: 1500px) and (min-width: 1350px) {
     padding: 40px 45px 100px;
   }
-  @media only screen and (max-width: 1350px) and (min-width: 500px) {
-    padding: 40px 45px 100px;
+  @media only screen and (max-width: 900px) {
+    padding: 40px 10px 50px;
+    min-width: 0;
+
+    .topWrap {
+      position: static;
+      width: 100%;
+      padding-bottom: 0;
+      display: block;
+    }
   }
 `;

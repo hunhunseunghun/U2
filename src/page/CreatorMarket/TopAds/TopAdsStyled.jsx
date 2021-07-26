@@ -120,7 +120,7 @@ export const AdsContainer = styled.div`
       all: unset;
       font-weight: 500;
       width: 80%;
-      font-size: 12px;
+      font-size: 13px;
       line-height: 18px;
       letter-spacing: 0px;
       margin-top: 10%;
@@ -142,6 +142,79 @@ export const AdsContainer = styled.div`
       width: 80%;
       height: 38px;
       font-weight: 600;
+      background: linear-gradient(#ff5e52, #ff1100);
+      color: #fff;
+      border-radius: 4px;
+
+      &:hover {
+        cursor: pointer;
+        background: linear-gradient(#ff1100, #ff1100);
+      }
+    }
+  }
+  @media only screen and (max-width: 900px) {
+    position: static;
+    width: 100%;
+    display: grid;
+
+    background: linear-gradient(#ffffff, #c5c5c5);
+    text-align: center;
+
+    .contents_wrap {
+      position: static;
+      display: grid;
+      place-items: center;
+      grid-template-columns: 2fr 6fr 2fr;
+      width: 100%;
+      height: 100%;
+      padding: 10px 0;
+    }
+
+    .title {
+      padding-left: 5px;
+      font-size: 13px;
+      line-height: 15px;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 0;
+      word-break: break-all;
+      width: 100%;
+    }
+    p {
+      all: unset;
+      display: block;
+      font-weight: 500;
+      width: 100%;
+      font-size: 12px;
+      line-height: 15px;
+      letter-spacing: 0px;
+      padding: 0 10px;
+    }
+
+    .adsImgWrap {
+      display: none;
+      justify-content: center;
+      width: 100%;
+      margin-top: 0;
+    }
+    .adsBtnArea {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    button {
+      all: unset;
+      font-size: 13px;
+      width: 100%;
+      height: 28px;
+      min-width: 65px;
+      max-width: 100px;
+      font-weight: 500;
+      margin: 5px;
+      /* background-color: #ff4438; */
       background: linear-gradient(#ff5e52, #ff1100);
       color: #fff;
       border-radius: 4px;

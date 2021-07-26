@@ -49,4 +49,9 @@ export const TopViewContainer = styled.div`
   .arrow {
     display: none;
   }
+
+  @media only screen and (max-width: 900px) {
+    position: static;
+    width: 100%;
+  }
 `;
