@@ -156,7 +156,6 @@ export const AdsContainer = styled.div`
     position: static;
     width: 100%;
     display: grid;
-
     background: linear-gradient(#ffffff, #c5c5c5);
     text-align: center;
 
@@ -165,6 +164,7 @@ export const AdsContainer = styled.div`
       display: grid;
       place-items: center;
       grid-template-columns: 2fr 6fr 2fr;
+      grid-gap: 5px;
       width: 100%;
       height: 100%;
       padding: 10px 0;
