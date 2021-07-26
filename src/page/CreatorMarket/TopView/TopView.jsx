@@ -1,9 +1,6 @@
 import React from 'react';
 import { TopViewContainer } from './TopViewStyled.jsx';
 import Slider from 'react-slick';
-import Slider1 from '../../../Img/slider1.jpeg';
-import Slider2 from '../../../Img/slider2.jpeg';
-import Slider3 from '../../../Img/slider3.jpeg';
 import dummyImg from '../../../Img/topviewEX.png';
 
 const dummy = [dummyImg, dummyImg, dummyImg];

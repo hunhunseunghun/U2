@@ -1,35 +1,88 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { MainContainer } from './CreatorMarketStyled.jsx';
 import TopView from './TopView/TopView.jsx';
 import TopAds from './TopAds/TopAds.jsx';
 import ContentElement from './ContentElement/ContentElement.jsx';
+import MobileContentElement from './MobileContentElement/MobileContentElement.jsx';
 import bannerImg from '../../Img/cmBannerImg.png';
 import { useSelector } from 'react-redux';
 import { BiLoader } from 'react-icons/bi';
 import Pagination2 from '../../component/Pagination/Pagination2.jsx';
 import { paginate } from '../../component/Pagination/paginate.js';
-
+import Slider from 'react-slick';
 const Main = props => {
+  const sliderRef = useRef();
   const [tabActive, setTabActive] = useState(0); // 탭 선택 소팅
   //0: 전체, 1: 공모전, 2: 전문영상 편집자 , 3: 영상 크리에이터/언플루언서, 4: 강사채용
   const [challenges, setChallengs] = useState(null); // 챌린지 데이터
   const [sortedChallenges, setSortedChallenges] = useState([]);
   const [isLoadingChallenges, setIsLoadingChallenges] = useState(null);
   const [moreActive, setMoreActive] = useState(false);
+  const [mobileSize, setMobileSize] = useState(window.innerWidth);
   const userInfo = useSelector(state => state.userInfo);
 
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 6; //테스트를 위해 한페이지당 4개만 보여줌. 데이터가 많아지면 3단 * 2 = 6개씩 보여줘야함
   const pagedChallenges = paginate(sortedChallenges, currentPage, pageSize);
+  const [mobileTypes, setMobileTypes] = useState(sortedChallenges);
+  // 프로젝트 목록 mobile size carousel
 
-  // useEffect(()=>{
-  //   axios.get(`${server}/api/Campaign/challengemaster`).then(res=>{
-  //     setData(res.data)
-  //   }
-  //   )
-  // }, [])
+  console.log(pagedChallenges);
+  console.log(mobileTypes);
+  let walk;
+  let startX;
+  let scrollValue;
+
+  useEffect(() => {
+    sliderRef.current.scrollLeft =
+      window.innerWidth * 0.8 -
+      (window.innerWidth - window.innerWidth * 0.8) / 2;
+  }, []);
+  function slideTouchStart(e) {
+    startX = e.touches[0].pageX - sliderRef.current.offsetLeft;
+    scrollValue = sliderRef.current.scrollLeft;
+  }
+  function slideTouchMove(e) {
+    e.preventDefault();
+    walk = (e.touches[0].pageX - sliderRef.current.offsetLeft - startX) * 0.9;
+    sliderRef.current.scrollLeft = scrollValue - walk;
+  }
+  function slideTouchEnd() {
+    if (walk) {
+      sliderRef.current.scrollLeft =
+        window.innerWidth * 0.75 -
+        (window.innerWidth - window.innerWidth * 0.75) / 2;
+      if (walk < 0) {
+        if (walk < -120) {
+          setMobileTypes(state => state.slice(1, 3).concat(state[0]));
+        }
+      } else if (walk > 0) {
+        if (walk > 120) {
+          setMobileTypes(state => [state[2]].concat(state.slice(0, 2)));
+        }
+      }
+    }
+    walk = 0;
+  }
+
+  useEffect(() => {
+    function followInnerWidth() {
+      setMobileSize(window.innerWidth);
+    }
+    // Trigger this function on resize
+    window.addEventListener('resize', followInnerWidth);
+    //  Cleanup for componentWillUnmount
+    return () => window.removeEventListener('resize', followInnerWidth);
+  }, []);
+
+  useEffect(() => {
+    setMobileTypes(sortedChallenges);
+  }, [sortedChallenges]);
+
+  //----------------------------------
+
   const handleRequestClick = data => {
     // console.log(props);
     if (!userInfo.email) {
@@ -162,8 +215,9 @@ const Main = props => {
             </div>
           </section>
 
-          <div className="challange_ele">
-            {/* {isLoadingChallenges === null && <div>"no data"</div>}
+          {mobileSize > 900 ? (
+            <div className="challange_ele">
+              {/* {isLoadingChallenges === null && <div>"no data"</div>}
 						{isLoadingChallenges === false
 							? moreActive
 								? challenges.slice(0, 3).map((ele, idx) => {
@@ -183,80 +237,148 @@ const Main = props => {
 										);
 								  })
 							: 'loading'} */}
-            {(() => {
-              switch (isLoadingChallenges) {
-                case true: {
-                  return <BiLoader className="BiLoader" />;
+              {(() => {
+                switch (isLoadingChallenges) {
+                  case true: {
+                    return <BiLoader className="BiLoader" />;
+                  }
+                  case false: {
+                    return moreActive
+                      ? sortedChallenges.slice(0, 3).map((ele, idx) => {
+                          console.log('ele: ', ele);
+                          if (tabActive === 0) {
+                            return (
+                              <ContentElement
+                                challenge={ele}
+                                key={`${ele.challengeIdx}`}
+                                history={props.history}
+                              />
+                            );
+                          }
+                          if (ele.challengeTargetCode === tabActive) {
+                            return (
+                              <ContentElement
+                                challenge={ele}
+                                key={`${ele.challengeIdx}`}
+                                history={props.history}
+                              />
+                            );
+                          }
+                        })
+                      : pagedChallenges.map((ele, idx) => {
+                          console.log('ele: ', ele);
+                          if (tabActive === 0) {
+                            return (
+                              <ContentElement
+                                challenge={ele}
+                                key={`${ele.challengeIdx}`}
+                                history={props.history}
+                                idx={idx}
+                              />
+                            );
+                          }
+                          if (ele.challengeTargetCode === tabActive) {
+                            return (
+                              <ContentElement
+                                challenge={ele}
+                                key={`${ele.challengeIdx}`}
+                                history={props.history}
+                                idx={idx}
+                              />
+                            );
+                          }
+                        });
+                  }
+                  case null: {
+                    return 'no data';
+                  }
+                  default: {
+                    break;
+                  }
                 }
-                case false: {
-                  return moreActive
-                    ? sortedChallenges.slice(0, 3).map((ele, idx) => {
-                        console.log('ele: ', ele);
-                        if (tabActive === 0) {
-                          return (
-                            <ContentElement
-                              challenge={ele}
-                              key={`${ele.challengeIdx}`}
-                              history={props.history}
-                            />
-                          );
-                        }
-                        if (ele.challengeTargetCode === tabActive) {
-                          return (
-                            <ContentElement
-                              challenge={ele}
-                              key={`${ele.challengeIdx}`}
-                              history={props.history}
-                            />
-                          );
-                        }
-                      })
-                    : pagedChallenges.map((ele, idx) => {
-                        console.log('ele: ', ele);
-                        if (tabActive === 0) {
-                          return (
-                            <ContentElement
-                              challenge={ele}
-                              key={`${ele.challengeIdx}`}
-                              history={props.history}
-                            />
-                          );
-                        }
-                        if (ele.challengeTargetCode === tabActive) {
-                          return (
-                            <ContentElement
-                              challenge={ele}
-                              key={`${ele.challengeIdx}`}
-                              history={props.history}
-                            />
-                          );
-                        }
-                      });
+              })()}
+              {!moreActive && isLoadingChallenges === false && (
+                <Pagination2
+                  className="creatormarket_pagenation"
+                  itemsCount={
+                    challenges.filter(
+                      challenge =>
+                        challenge.challengeTargetCode === tabActive ||
+                        tabActive === 0
+                    ).length
+                  }
+                  pageSize={pageSize}
+                  handlePageChange={handlePageChange}
+                ></Pagination2>
+              )}
+            </div>
+          ) : (
+            <div ref={sliderRef} className="challange_mobile_ele">
+              {mobileTypes.map((ele, idx) => (
+                <ContentElement
+                  challenge={ele}
+                  key={`${ele.challengeIdx}`}
+                  history={props.history}
+                  idx={idx}
+                />
+              ))}
+
+              {(() => {
+                switch (isLoadingChallenges) {
+                  case true: {
+                    return <BiLoader className="BiLoader" />;
+                  }
+                  case false: {
+                    return mobileTypes.map((ele, idx) => {
+                      console.log('ele: ', ele);
+                      if (tabActive === 0) {
+                        return (
+                          <ContentElement
+                            challenge={ele}
+                            key={`${ele.challengeIdx}`}
+                            history={props.history}
+                            idx={idx}
+                          />
+                        );
+                      }
+                      if (ele.challengeTargetCode === tabActive) {
+                        return (
+                          <ContentElement
+                            challenge={ele}
+                            key={`${ele.challengeIdx}`}
+                            history={props.history}
+                            idx={idx}
+                          />
+                        );
+                      }
+                    });
+                  }
+                  case null: {
+                    return 'no data';
+                  }
+                  default: {
+                    break;
+                  }
                 }
-                case null: {
-                  return 'no data';
-                }
-                default: {
-                  break;
-                }
-              }
-            })()}
-            {!moreActive && isLoadingChallenges === false && (
-              <Pagination2
-                className="creatormarket_pagenation"
-                itemsCount={
-                  challenges.filter(
-                    challenge =>
-                      challenge.challengeTargetCode === tabActive ||
-                      tabActive === 0
-                  ).length
-                }
-                pageSize={pageSize}
-                handlePageChange={handlePageChange}
-              ></Pagination2>
-            )}
-          </div>
+              })()}
+            </div>
+          )}
         </section>
+        {/* 
+        {!moreActive && isLoadingChallenges === false && (
+          <Pagination2
+            className="creatormarket_pagenation"
+            itemsCount={
+              challenges.filter(
+                challenge =>
+                  challenge.challengeTargetCode === tabActive || tabActive === 0
+              ).length
+            }
+            pageSize={pageSize}
+            handlePageChange={handlePageChange}
+          ></Pagination2>
+        )} */}
+
         <section className="challenge_more_btn_area">
           {' '}
           <button

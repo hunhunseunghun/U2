@@ -45,12 +45,16 @@ export const MainContainer = styled.div`
       line-height: 24px;
       border: 1px solid #eee;
       border-left: 0;
+
       /* border-right: 1px solid #e2e2e2; */
 
       &:hover {
         cursor: pointer;
         background-color: #ebebeb;
         color: #0c0c0c;
+      }
+      span {
+        padding: 5px;
       }
     }
     .tab_ir {
@@ -64,6 +68,7 @@ export const MainContainer = styled.div`
   }
 
   .challange_ele {
+    margin-top: 10px;
     width: 100%;
   }
   .makeStyles-ul-1 {
@@ -166,17 +171,17 @@ export const MainContainer = styled.div`
       /* background-color: #f6f6f6; */
       color: #aaa;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 13px;
 
       div {
         display: grid;
         align-items: center;
         text-align: center;
         line-height: 16px;
-        width: 95%;
+        width: 100%;
         border: 1px solid #eee;
         border-left: 0;
-        padding: 2px;
+
         /* border-right: 1px solid #e2e2e2; */
 
         &:hover {
@@ -203,7 +208,7 @@ export const MainContainer = styled.div`
 
     .challange_ele {
       width: 100%;
-      margin-top: 30px;
+      margin-top: 25px;
     }
     .makeStyles-ul-1 {
       margin-bottom: 30px;
@@ -277,6 +282,17 @@ export const MainContainer = styled.div`
     .BiLoader {
       width: 100px;
       height: 100px;
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    .challange_mobile_ele {
+      margin: 15px 0;
+      position: relative;
+      width: 100%;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      white-space: nowrap;
     }
   }
 `;
