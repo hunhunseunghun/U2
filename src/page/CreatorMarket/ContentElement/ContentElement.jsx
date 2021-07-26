@@ -44,14 +44,13 @@ const ContentElement = (props) => {
 			<div>
 				{' '}
 				{props.badgeData.applies &&
-					props.badgeData.applies.has(30) && // should be userInfo.memberIdx
+					props.badgeData.applies.has(challenge.challengeIdx) && // should be challenge.challengeIdx
 					'내가 지원'}
 				{props.badgeData.submits &&
-					props.badgeData.submits.has(30) &&
+					props.badgeData.submits.has(challenge.challengeIdx) &&
 					'내가 제출'}
-				{props.badgeData.wishes && props.badgeData.wishes.has(30) && (
-					<BsStarFill />
-				)}
+				{props.badgeData.wishes &&
+					props.badgeData.wishes.has(challenge.challengeIdx) && <BsStarFill />}
 				{challenge.memberIdx === userInfo.memberIdx && '내가 등록'}
 			</div>
 			<div className="challenge_contents">
