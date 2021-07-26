@@ -56,9 +56,9 @@ function WorkDetail(props) {
 				}
 
 				//프로젝트 미팅 text
-				if (data.missions[0].contactRequired === 1) {
+				if (data.meetCode === 1) {
 					contactRequired = '비대면';
-				} else if (data.missions[0].contactRequired === 2) {
+				} else if (data.meetCode === 2) {
 					contactRequired = '오프라인';
 				}
 
@@ -89,11 +89,11 @@ function WorkDetail(props) {
 				setApplyPeriod(
 					moment(data.missions[0].dateBegin).format('YYYY-MM-DD') +
 						' ' +
-						moment(data.missions[0].dateBegin).format('hh:mm:ss') +
+						moment(data.missions[0].dateBegin).format('hh:mm') +
 						' ~ ' +
 						moment(data.missions[0].dateFin).format('YYYY-MM-DD') +
 						' ' +
-						moment(data.missions[0].dateFin).format('hh:mm:ss'),
+						moment(data.missions[0].dateFin).format('hh:mm'),
 				);
 
 				//과제완료조건 text
