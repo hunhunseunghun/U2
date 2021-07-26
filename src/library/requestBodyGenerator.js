@@ -11,7 +11,7 @@ export default function (params, type) {
 				chargeeMail: params.chargeeMail,
 				chargeeMailShown: params.chargeeMailShown ? 1 : 0,
 				fileRef: params.fileRef,
-				// logo: params.logo,
+				logo: params.logo,
 				// mainImage: 'test',
 				memberIdx: params.memberIdx,
 				missions: [

@@ -1115,18 +1115,6 @@ function Modal({ open, challenge, handleModalClose }) {
 							<section className="ele">
 								<div className="menu">이미지</div>
 								<div className="inputInfo">
-									{/* <input
-										type="file"
-										onChange={(e) => {
-											console.log(e.target.files);
-											// setImage(e.target.files[0].name);
-											setState((preState) => ({
-												...preState,
-												image: e.target.files[0].name,
-											}));
-										}}
-										// multiple
-									></input> */}
 									<Uploader
 										setFilePath={(path) => {
 											setState((preState) => ({ ...preState, image: path }));

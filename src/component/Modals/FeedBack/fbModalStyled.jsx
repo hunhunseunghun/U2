@@ -32,6 +32,7 @@ export const ModalContainer = styled.div`
 		padding: 16px 64px 16px 16px;
 		background-color: #1b1718;
 		font-weight: 700;
+		color: #999;
 	}
 	.modal > section > header button {
 		position: absolute;

@@ -33,9 +33,9 @@ const CompetitionRegi = () => {
 	}
 	// posterfile upload handle---------------------------------
 	// const [posterFile, setPosterFile] = useState([]); //포스터 파일, fileList 객체 -> 배열로 변환 후 -> posterfile에 할당
-	const [posterFilePath, setPosterFilePath] = useState('Choose file to upload'); //포스터 파일 업로드 파일패스 , placholder 값
+	const [posterFilePath, setPosterFilePath] = useState(''); //포스터 파일 업로드 파일패스 , placholder 값
 	// const [etcFile, setEtcFile] = useState(null);
-	const [etcFilePath, setEtcFilePath] = useState('Choose file to upload');
+	const [etcFilePath, setEtcFilePath] = useState('');
 	//handle date ----------------------------------------------
 	//handle editor ---------------------------------------------
 	const [title, setTitle] = useState('');
@@ -76,7 +76,9 @@ const CompetitionRegi = () => {
 	const [toggleDirect, setToggleDirect] = useState(false);
 	const [directInput, setDirectInput] = useState('');
 	//공모 공지글
-	const [CkText, setCkText] = useState('');
+	const [CkText, setCkText] = useState(
+		`<p>1. 제목</p><p>2. 응모 자격</p><p>3. 응모 주제</p><p>4. 시상 내역</p><p>5. 응모 일정</p><p>6. 제출 방법</p><p>7. 접수 방법</p><p>8. 심사 방법</p><p>&nbsp;</p><p>&nbsp;</p><p># 유의 사항</p><p>-</p><p># 문의 사항</p><p>-</p><p>&nbsp;</p>`,
+	);
 	//summernote
 	// const viewRef = useRef(null);
 	//댓글 기능
@@ -152,8 +154,8 @@ const CompetitionRegi = () => {
 		if (!title) return alert('공모전명을 입력해주십시오');
 		if (!(isOnline || isVideoProduction))
 			return alert('접수방법을 선택해주십시오');
-		if (isOnline !== 0) {
-			if (isYoutube || isTiktok || isVimeo) {
+		if (isOnline) {
+			if (!(isYoutube || isTiktok || isVimeo)) {
 				return alert('온라인 게시방법을 선택해주십시오');
 			}
 		}
@@ -915,7 +917,7 @@ const CompetitionRegi = () => {
 							<Ckeditor
 								className="ckeditor_wrap"
 								onChange={handleCkeditorValue}
-								data={`<p>제목</p><ol><li>응모 자격</li><li>-</li><li>응모 주제</li><li>-</li><li>시상 내역</li><li>-</li><li>응모 일정</li><li>-</li><li>제출 방법</li><li>-</li><li>접수 방법</li><li>-</li><li>심사 방법</li><li>-</li><li>유의 사항</li><li>-&nbsp;</li><li>문의 사항</li><li>-</li></ol>`}
+								data={CkText}
 							/>
 
 							{/* <QuillTextEditor

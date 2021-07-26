@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import { ModalContainer } from './SubmissionModalStyled';
 // ReactModal.setAppElement('#root');
 import { getSingleFileFromBlob } from '../../../library/azureBlob';
@@ -12,6 +13,7 @@ function SubmissionModal({
 	isAdmin,
 	propsData,
 }) {
+	const userInfo = useSelector((state) => state.userInfo);
 	// console.log('challengeIdx in submission: ', challengeIdx);
 	const [fbProps, setFbProps] = useState({ open: false, data: '' });
 	const [data, setData] = useState({});
@@ -207,7 +209,14 @@ function SubmissionModal({
 									{' '}
 									닫기{' '}
 								</button>
-								<button className="return">반려</button>
+								<button
+									className="return"
+									onClick={() => {
+										handleReturn();
+									}}
+								>
+									반려
+								</button>
 								<button
 									className="feedback"
 									onClick={() => {
@@ -216,7 +225,14 @@ function SubmissionModal({
 								>
 									피드백
 								</button>
-								<button className="okay">승인</button>
+								<button
+									className="okay"
+									onClick={() => {
+										handleOkay();
+									}}
+								>
+									승인
+								</button>
 							</footer>
 						) : (
 							<footer>
@@ -236,5 +252,56 @@ function SubmissionModal({
 			</div>
 		</ModalContainer>
 	);
+
+	function handleOkay() {
+		var body = {
+			challengeIdx: propsData.challengeIdx,
+			memberIdx: propsData.memberIdx,
+			checkStatusCode: 1,
+		};
+
+		var config = {
+			method: 'post',
+			url: process.env.REACT_APP_U2_DB_HOST + `/Campaign/challengesubmitcheck`,
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+			data: body,
+		};
+		axios(config)
+			.then((response) => {
+				alert('승인 되었습니다.');
+				console.log(response.data);
+			})
+			.catch((err) => {
+				alert(err);
+			});
+	}
+
+	function handleReturn() {
+		var body = {
+			challengeIdx: propsData.challengeIdx,
+			memberIdx: propsData.memberIdx,
+			checkStatusCode: -1,
+		};
+		var config = {
+			method: 'post',
+			url: process.env.REACT_APP_U2_DB_HOST + `/Campaign/challengesubmitcheck`,
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+			data: body,
+		};
+		axios(config)
+			.then((response) => {
+				alert('반려 되었습니다.');
+				console.log(response.data);
+			})
+			.catch((err) => {
+				alert(err);
+			});
+	}
 }
 export default SubmissionModal;

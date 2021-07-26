@@ -32,7 +32,9 @@ const VidCreatorRegi = () => {
 		}
 	}
 	//공모 공지글
-	const [ckText, setCkText] = useState('');
+	const [ckText, setCkText] = useState(
+		`<p>1. 제목</p><p>2. 응모 자격</p><p>3. 응모 주제</p><p>4. 시상 내역</p><p>5. 응모 일정</p><p>6. 제출 방법</p><p>7. 접수 방법</p><p>8. 심사 방법</p><p>&nbsp;</p><p>&nbsp;</p><p># 유의 사항</p><p>-</p><p># 문의 사항</p><p>-</p><p>&nbsp;</p>`,
+	);
 
 	const [title, setTitle] = useState('');
 	const [refvidUrl, setrefvidUrl] = useState('');
@@ -58,20 +60,21 @@ const VidCreatorRegi = () => {
 	//이메일
 	const [email, setEmail] = useState('');
 	const [emailErr, setEmailErr] = useState('');
-	const [emailExposure, setEmailExposure] = useState(false);
+	const [emailExposure, setEmailExposure] = useState(true);
 	//연락처
 	const [mobile1, setMobile1] = useState('010');
 	const [mobile2, setMobile2] = useState('');
 	const [mobile3, setMobile3] = useState('');
-	const [mobileExposure, setMobileExposure] = useState(false);
+	const [mobileExposure, setMobileExposure] = useState(true);
 	//담당자
 	const [admin, setAdmin] = useState('');
-	const [adminExposure, setAdminExposure] = useState(false);
+	const [adminExposure, setAdminExposure] = useState(true);
 	//댓글 기능
 	const [isComment, setIsComment] = useState(true);
 	//상세 내용
 	const [missionDesc, setMissionDesc] = useState('');
-
+	//포스터
+	const [posterFilePath, setPosterFilePath] = useState('');
 	//프로젝트 완료 조건
 	const [isOnline, setIsOnline] = useState(false);
 	const [isSnsRequired, setIsSnsRequired] = useState(true);
@@ -132,14 +135,20 @@ const VidCreatorRegi = () => {
 		if (!title) return alert('프로젝트명을 입력해주십시오');
 		if (!(isOnline || isVideoProduction))
 			return alert('접수방법을 선택해주십시오');
+		console.log('isOnline: ', isOnline);
+		if (isOnline) {
+			if (!(isYoutube || isTiktok || isVimeo)) {
+				return alert('온라인 게시방법을 선택해주십시오');
+			}
+		}
 		if (!(isEmail || isMobile))
 			return alert('제출자 개인정보 수집을 선택해주십시오');
 		// if (!(startDate > new Date()))
 		// 	return alert('정확한 접수기간을 입력해주십시오');
 		if (!(startDate < finishDate))
 			return alert('접수 종료 기간을 입력해주십시오');
-		if (!(noticeStart > new Date()))
-			return alert('공지 시작일을 선택해주십시오');
+		// if (!(noticeStart > new Date()))
+		// 	return alert('공지 시작일을 선택해주십시오');
 		if (confirmRewardsDate && !rewardDate)
 			return alert('보상일을 선택해주십시오');
 		if (!isRewardCash && !isDirectReward)
@@ -202,6 +211,7 @@ const VidCreatorRegi = () => {
 				missionDesc: missionDesc,
 				meetCode: meetCode,
 				// mainImage: posterFile.length > 0 ? posterFile[0].name : null,
+				logo: posterFilePath,
 				fileRef: etcFilePath,
 				shareRequired: isOnline ? (isSnsRequired ? 2 : 1) : 0,
 				filmRequired: isVideoProduction ? (isVidRequired ? 2 : 1) : 0,
@@ -448,6 +458,19 @@ const VidCreatorRegi = () => {
 					</section>
 
 					<section className="ele">
+						<div className="menu">포스터</div>
+						<div className="inputInfo videditor_files_uploader">
+							<div>공모전의 포스터가 있다면 업로드 해주세요</div>
+							<Uploader
+								setFilePath={setPosterFilePath}
+								multiple={false}
+								accept={'image/*'}
+								memberIdx={userInfo.memberIdx}
+								folder={'market-logo'}
+							/>
+						</div>
+					</section>
+					<section className="ele">
 						<div className="menu">파일 업로드</div>
 						<div className="inputInfo videditor_files_uploader">
 							<div>프로젝트에 관련한 자료를 업로드 해주세요</div>
@@ -455,7 +478,7 @@ const VidCreatorRegi = () => {
 								setFilePath={setEtcFilePath}
 								multiple={false}
 								accept={'*'}
-								foler={'market-fileref'}
+								folder={'market-fileref'}
 								memberIdx={userInfo.memberIdx}
 							/>
 						</div>
@@ -1014,7 +1037,7 @@ const VidCreatorRegi = () => {
 							<Ckeditor5
 								className="ckeditor_wrap"
 								onChange={handleCkeditorValue}
-								data={`<p>제목</p><ol><li>응모 자격</li><li>-</li><li>응모 주제</li><li>-</li><li>시상 내역</li><li>-</li><li>응모 일정</li><li>-</li><li>제출 방법</li><li>-</li><li>접수 방법</li><li>-</li><li>심사 방법</li><li>-</li><li>유의 사항</li><li>-&nbsp;</li><li>문의 사항</li><li>-</li></ol>`}
+								data={ckText}
 							/>
 						</div>
 					</section>
