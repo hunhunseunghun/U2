@@ -173,7 +173,11 @@ function RegistTable() {
 										<tr>
 											<td>
 												{data.logo ? (
-													<img src={getSingleFileFromBlob(data.logo)}></img>
+													<img
+														src={getSingleFileFromBlob(data.logo)}
+														alt={data.img}
+														style={{ width: '100px' }}
+													></img>
 												) : (
 													'No Image'
 												)}
