@@ -7,6 +7,7 @@ import { paginate } from '../../../component/Pagination/paginate';
 import { RegistTableContainer } from './RegistTableStyled';
 import sortarrowdown from '../../../Img/Icons/sortarrowdown.png';
 import moment from 'moment';
+import { getSingleFileFromBlob } from '../../../library/azureBlob';
 function RegistTable() {
 	const history = useHistory();
 	// let [quests, setQuests] = useState({
@@ -166,12 +167,13 @@ function RegistTable() {
 				<tbody>
 					{pagedQuests
 						? pagedQuests.map((data) => {
+								console.log('data: ', data);
 								return (
 									<>
 										<tr>
 											<td>
-												{data.mainImage ? (
-													<img src={data.mainImage}></img>
+												{data.logo ? (
+													<img src={getSingleFileFromBlob(data.logo)}></img>
 												) : (
 													'No Image'
 												)}
