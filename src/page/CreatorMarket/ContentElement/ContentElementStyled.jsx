@@ -172,23 +172,24 @@ export const EleContainer = styled.div`
     transform: scale(0.9);
 
     .challenge_img_area {
-      width: 100%;
-      height: 90px;
-      min-height: none;
       background-size: cover;
+      background-color: #eee;
+      width: 100%;
+      height: 120px;
+      min-height: none;
       background-color: #eee;
       display: flex;
       align-items: center;
       justify-content: center;
       border-bottom: #eee solid 1px;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
     .challenge_img {
-      width: 100%;
+      object-fit: cover;
+      background-color: #eee;
+      height: 100%;
+
       /* min-height: 230px;
 		max-height: 250px; */
-      height: 100%;
     }
     .challenge_contents {
       padding: 5px 10px;
@@ -208,7 +209,7 @@ export const EleContainer = styled.div`
 
     .challenge_sub {
       width: 95%;
-      height: 60%;
+      height: 80%;
       margin-top: 8px;
       font-size: 13px;
       color: #989898;
@@ -269,6 +270,7 @@ export const EleContainer = styled.div`
       font-weight: 600;
       font-size: 13px;
       box-sizing: border-box;
+      padding: 0 5px;
 
       .meetArea,
       .budgetArea,
