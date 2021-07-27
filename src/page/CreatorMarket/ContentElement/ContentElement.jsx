@@ -42,29 +42,30 @@ const ContentElement = props => {
         )} */}
         <div className="challenge_badge_area">
           <section className="challenge_badge_left">
-            <div className="challenge_badge_mysubmit">
-              {props.badgeData.applies &&
-                props.badgeData.applies.has(challenge.challengeIdx) && // should be challenge.challengeIdx
-                '내가 지원'}
-              {props.badgeData.submits &&
-                props.badgeData.submits.has(challenge.challengeIdx) &&
-                '내가 제출'}
-              내가 제출
-            </div>
-            <div className="challenge_badge_mysregi">
-              {challenge.memberIdx === userInfo.memberIdx && '내가 등록'}
-              내가 등록
-            </div>
+            {props.badgeData.applies &&
+              props.badgeData.applies.has(challenge.challengeIdx) && ( // should be challenge.challengeIdx
+                <div className="challenge_badge_mysubmit">내가 지원</div>
+              )}
+
+            {props.badgeData.submits &&
+              props.badgeData.submits.has(challenge.challengeIdx) && (
+                <div className="challenge_badge_mysubmit">내가 제출</div>
+              )}
+
+            {challenge.memberIdx === userInfo.memberIdx && (
+              <div className="challenge_badge_mysregi">내가 등록</div>
+            )}
           </section>
           <section className="challenge_badge_right">
-            <div className="challenge_badge_challengeuser">
-              {props.badgeData.wishes &&
-                props.badgeData.wishes.has(challenge.challengeIdx) && (
+            {props.badgeData.wishes &&
+              props.badgeData.wishes.has(challenge.challengeIdx) && (
+                <div className="challenge_badge_challengeuser">
+                  {' '}
                   <BsStarFill />
-                )}
-              <BsStarFill />
-              {/* <img src="/img/goldstaricon.png" alt="challengeuser" /> */}
-            </div>
+                </div>
+              )}
+
+            {/* <img src="/img/goldstaricon.png" alt="challengeuser" /> */}
           </section>{' '}
         </div>
       </div>
