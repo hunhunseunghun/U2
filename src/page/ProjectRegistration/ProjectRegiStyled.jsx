@@ -59,7 +59,7 @@ export const PrjRegiContainer = styled.div`
     border: 1px solid #eee;
     background-color: #fff;
 
-    padding: 15px 0;
+    padding: 10px 0;
     background: linear-gradient(#fff, #f2f2f2);
   }
 
@@ -100,6 +100,9 @@ export const PrjRegiContainer = styled.div`
       .prjregi_vidcreator_text {
         font-size: 14px;
       }
+      .prjregi_vidcreator_text_mobile {
+        display: none;
+      }
     }
 
     .projectregi_vidcreator_checkbox {
@@ -115,20 +118,20 @@ export const PrjRegiContainer = styled.div`
     display: flex;
     flex-direction: column;
 
-    .contentTitle {
-      padding-top: 10px;
-    }
     .contentTop {
       font-size: 15px;
       box-sizing: border-box;
-    }
-    p {
-      all: unset;
-      width: 80%;
-      font-size: 14px;
-      color: #898989;
-      word-break: break-all;
-      white-space: pre-line;
+      .contentTitle {
+        padding: 10px 0 5px 0;
+      }
+      p {
+        all: unset;
+        width: 80%;
+        font-size: 14px;
+        color: #898989;
+        word-break: break-all;
+        white-space: pre-line;
+      }
     }
 
     .contentBot {
@@ -240,10 +243,17 @@ export const PrjRegiContainer = styled.div`
           cursor: pointer;
           margin-right: 5px;
         }
+        .prjregi_vidcreator_text {
+          display: none;
+        }
+        .prjregi_vidcreator_text_mobile {
+          display: block;
+          line-height: 15px;
+        }
       }
 
       .projectregi_vidcreator_checkbox {
-        line-height: 10px;
+        line-height: 14px;
         font-size: 8px;
       }
     }
@@ -260,26 +270,35 @@ export const PrjRegiContainer = styled.div`
       font-size: 12px;
 
       .contentTop {
-        font-size: 12px;
-      }
-      p {
-        all: unset;
-        margin-left: 5px;
-        font-size: 12px;
-        color: #898989;
+        font-size: 14px;
+        box-sizing: border-box;
+        .contentTitle {
+          padding: 10px 0 5px 0;
+        }
+        p {
+          all: unset;
+          width: 80%;
+          font-size: 13px;
+          color: #898989;
+          word-break: break-all;
+          white-space: pre-line;
+        }
       }
 
       .contentBot {
-        padding: 5px 0px 5px 5px;
         display: flex;
         justify-content: center;
         align-items: center;
 
         .projectregi_content_item {
           width: 20vw;
+
           video {
             width: 99%;
           }
+        }
+        .contentBot_irregi_text {
+          font-size: 13px;
         }
       }
     }

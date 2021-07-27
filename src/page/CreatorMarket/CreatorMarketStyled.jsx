@@ -6,7 +6,7 @@ export const MainContainer = styled.div`
   background-color: #ffffff;
   display: flex;
   justify-content: center;
-  min-width: 900px;
+  min-width: 800px;
 
   .creatormarket_section {
     width: 100%;
@@ -268,11 +268,13 @@ export const MainContainer = styled.div`
     }
 
     .challenge_more_btn_area {
-      display: none;
       width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
+      button {
+        display: none;
+      }
     }
 
     .challenge_banner_area {
@@ -292,18 +294,17 @@ export const MainContainer = styled.div`
 
     .challenge_banner_btn_wrap {
       position: absolute;
-      right: 10%;
-      bottom: 33%;
+      right: 7%;
+      bottom: 25%;
     }
 
     .challenge_banner_btn {
-      display: none;
       border: 1px solid #ddd;
       width: 100%;
-      padding: 10px 30px;
-      height: 52px;
+      padding: 0 10px;
+      height: 30px;
       border-radius: 4px;
-      font-size: 16px;
+      font-size: 12px;
       font-weight: 600;
       color: #ddd;
       transition-duration: 0.2s;

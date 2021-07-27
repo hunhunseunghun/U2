@@ -187,6 +187,9 @@ const ProjectRegi = () => {
                   <div className="prjregi_vidcreator_text">
                     영상 크리에이터{<br />} 인플루언서
                   </div>
+                  <div className="prjregi_vidcreator_text_mobile">
+                    영상{<br />}크리에이터{<br />}인플루언서
+                  </div>
                 </div>
               </section>
               <section className="contentArea">

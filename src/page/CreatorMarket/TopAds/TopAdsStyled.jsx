@@ -9,7 +9,8 @@ export const AdsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(#ffffff, #c5c5c5);
+  /* background: linear-gradient(#ffffff, #ffffff); */
+  background-color: #fafafa;
   text-align: center;
   .contents_wrap {
     position: relative;
@@ -18,9 +19,10 @@ export const AdsContainer = styled.div`
   }
 
   .title {
-    font-size: 30px;
-    line-height: 72px;
+    font-size: 18px;
+    line-height: 30px;
     font-weight: 700;
+    padding-top: 10%;
     margin-top: 10%;
     margin-bottom: 10%;
   }
@@ -28,7 +30,7 @@ export const AdsContainer = styled.div`
     all: unset;
     font-weight: 500;
     width: 80%;
-    font-size: 14px;
+    font-size: 15px;
     line-height: 18px;
     letter-spacing: 0px;
     text-align: center;
@@ -39,6 +41,9 @@ export const AdsContainer = styled.div`
     justify-content: center;
     width: 100%;
     margin-top: 30%;
+    img {
+      width: 80%;
+    }
   }
   .adsBtnArea {
     width: 100%;
@@ -65,19 +70,15 @@ export const AdsContainer = styled.div`
   }
   @media only screen and (max-width: 1500px) and (min-width: 1350px) {
     .title {
-      font-size: 20px;
       line-height: 72px;
       font-weight: 600;
     }
 
-    .title {
-      font-size: 25px;
-    }
     p {
       all: unset;
       font-weight: 500;
       width: 80%;
-      font-size: 12px;
+      font-size: 14px;
       line-height: 18px;
       letter-spacing: 0px;
       margin-top: 10%;
@@ -106,22 +107,18 @@ export const AdsContainer = styled.div`
       }
     }
   }
-  @media only screen and (max-width: 1350px) and (min-width: 500px) {
+  @media only screen and (max-width: 1350px) and (min-width: 900px) {
     .title {
-      font-size: 20px;
       font-weight: 600;
       margin-top: 3%;
       margin-bottom: 3%;
     }
 
-    .title {
-      font-size: 25px;
-    }
     p {
       all: unset;
       font-weight: 500;
       width: 80%;
-      font-size: 13px;
+      font-size: 14px;
       line-height: 18px;
       letter-spacing: 0px;
       margin-top: 10%;
@@ -216,7 +213,6 @@ export const AdsContainer = styled.div`
       font-weight: 500;
       margin: 5px 7px;
 
-      /* background-color: #ff4438; */
       background: linear-gradient(#ff5e52, #ff1100);
       color: #fff;
       border-radius: 4px;
