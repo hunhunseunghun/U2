@@ -276,43 +276,45 @@ function ProjectDetail(props) {
 					</div>
 				</section>
 				<section className="prj_control_middle">
-					<button
-						onClick={() => {
-							history.push('/creatormarket');
-						}}
-					>
-						돌아가기
-					</button>
-					<button
-						onClick={() => {
-							if (userInfo.memberIdx) {
-								handleChallenge();
-							} else {
-								if (window.confirm('로그인이 필요합니다.')) {
-									history.push('/login');
+					<div className="prj_contorl_middle_btnwrap">
+						<button
+							onClick={() => {
+								history.push('/creatormarket');
+							}}
+						>
+							돌아가기
+						</button>
+						<button
+							onClick={() => {
+								if (userInfo.memberIdx) {
+									handleChallenge();
+								} else {
+									if (window.confirm('로그인이 필요합니다.')) {
+										history.push('/login');
+									}
 								}
-							}
-						}}
-					>
-						챌린지
-					</button>
-					{challenge.challengeTargetCode === 4 ? (
-						<button
-							onClick={() => {
-								handleApply();
 							}}
 						>
-							지원하기
+							챌린지
 						</button>
-					) : (
-						<button
-							onClick={() => {
-								handleSubmit();
-							}}
-						>
-							자료제출
-						</button>
-					)}
+						{challenge.challengeTargetCode === 4 ? (
+							<button
+								onClick={() => {
+									handleApply();
+								}}
+							>
+								지원하기
+							</button>
+						) : (
+							<button
+								onClick={() => {
+									handleSubmit();
+								}}
+							>
+								자료제출
+							</button>
+						)}
+					</div>
 				</section>
 
 				<section className="prj_control_right">
@@ -435,6 +437,11 @@ function ProjectDetail(props) {
 					}}
 				></textarea>
 				<button
+					className={
+						inputComment.length > 0
+							? 'commet_active_btn'
+							: 'comment_inactive_btn'
+					}
 					onClick={() => {
 						handleComment();
 					}}

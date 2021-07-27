@@ -14,6 +14,7 @@ export const EleContainer = styled.div`
     width: 100%;
     min-height: 100px;
     background-size: cover;
+    overflow: hidden;
     background-color: #eee;
     display: flex;
     align-items: center;
@@ -24,12 +25,12 @@ export const EleContainer = styled.div`
     width: 100%;
     /* min-height: 230px;
 		max-height: 250px; */
-    height: 230px;
+    /* height: 230px; */
   }
   .challenge_contents {
-    padding: 16px 25px;
+    padding: 10px 20px;
     box-sizing: border-box;
-    border-bottom: 1px solid #eee;
+    border: 1px solid #eee;
     border-top: none;
     height: 200px;
   }
@@ -43,7 +44,7 @@ export const EleContainer = styled.div`
   }
 
   .challenge_sub {
-    height: 60%;
+    height: 70%;
     margin-top: 8px;
     font-size: 14px;
     color: #989898;
@@ -60,25 +61,26 @@ export const EleContainer = styled.div`
     bottom: 20px;
     left: 0px;
     width: 100%;
-    padding: 5px 5px;
+    padding: 10px 20px;
     box-sizing: border-box;
     justify-items: center;
     justify-content: space-between;
     align-items: center;
+    border: 1px solid #eee;
+    border-top: 0;
   }
 
   .challenge_progress_area {
-    margin-top: 20px;
-    width: 90%;
-
+    width: 100%;
     .challenge_progress_text {
       display: flex;
-      font-size: 12px;
+      font-size: 15px;
       line-height: 18px;
       font-weight: 600;
       color: #ff1405;
 
       div {
+        margin-top: 10px;
         margin-right: 22px;
       }
     }
@@ -94,16 +96,26 @@ export const EleContainer = styled.div`
 
   .challenge_info_top {
     width: 100%;
-    margin-top: 22px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    /* grid-template-columns: 1fr 1fr 1fr; */
     place-items: center;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 15px;
 
     div {
-      display: grid;
-      place-items: center;
+      /* position: relative;
+      left: -3px;
+      width: 100%;
+      text-align: center; */
+    }
+
+    .meetArea,
+    .budgetArea,
+    .remainDateArea {
+      display: inline-block;
+      text-align: center;
     }
 
     input {
@@ -120,11 +132,11 @@ export const EleContainer = styled.div`
 
   .challenge_info_bot {
     width: 100%;
-    margin: 22px 0 10px 22px;
+    margin: 25px 0 10px 0;
     display: flex;
     font-weight: 500;
 
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .challenge_cmtval_area {
@@ -238,7 +250,8 @@ export const EleContainer = styled.div`
 
     .challenge_progress_area {
       margin-top: 10px;
-      width: 90%;
+      margin-left: 15px;
+      width: 100%;
 
       .challenge_progress_text {
         display: flex;

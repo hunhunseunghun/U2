@@ -26,10 +26,8 @@ import CreatorMarket from './page/CreatorMarket/CreatorMarket';
 import MyWork from './page/MyWork/MyWork.jsx';
 import WorkDetail from './page/WorkDetail/WorkDetail.jsx';
 import ProjectRegi from './page/ProjectRegistration/ProjectRegi.jsx';
-import SetTaskCondition from './page/ProjectRegistration/SetTaskCondition/SetTaskCondition.jsx';
 import CompetitionRegi from './page/ProjectRegistration/CompetitionRegi/CompetitionRegi.jsx';
 import VidCreatorRegi from './page/ProjectRegistration/VidCreatorRegi/VidCreatorRegi.jsx';
-// import VidEditorRegi from './page/ProjectRegistration/VidEditorRegi/VidEditorRegi.jsx';
 import IRRegi from './page/ProjectRegistration/IRRegi/IRRegi.jsx';
 import ProjectDetail from './page/ProjectDetail/ProjectDetail';
 import ErrorPage from './page/ErrorPage/ErrorPage.jsx';
@@ -114,11 +112,6 @@ function App() {
 							exact
 							path="/prjregi"
 							render={() => <ProjectRegi history={history} />}
-						/>
-						<Route
-							exact
-							path="/setTc"
-							render={() => <SetTaskCondition history={history} />}
 						/>
 						<Route
 							exact

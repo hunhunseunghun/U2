@@ -18,13 +18,14 @@ export const PrjInfoContainer = styled.div`
       padding: 5px 25px 5px 25px;
       border-bottom: 1px solid #dddddd;
       border-right: 1px solid #dddddd;
-      font-weight: 400;
+      font-weight: 500;
       max-width: 100px;
     }
 
     td {
-      font-size: 14px;
+      font-size: 15px;
       word-break: break-all;
+      font-weight: 400;
     }
 
     tr td:last-child {

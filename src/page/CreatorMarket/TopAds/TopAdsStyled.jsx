@@ -31,6 +31,7 @@ export const AdsContainer = styled.div`
     font-size: 14px;
     line-height: 18px;
     letter-spacing: 0px;
+    text-align: center;
   }
 
   .adsImgWrap {
@@ -158,33 +159,33 @@ export const AdsContainer = styled.div`
     display: grid;
     background: linear-gradient(#ffffff, #c5c5c5);
     text-align: center;
+    box-sizing: border-box;
 
     .contents_wrap {
       position: static;
       display: grid;
       place-items: center;
       grid-template-columns: 2fr 6fr 2fr;
-      grid-gap: 5px;
+      grid-gap: 7px;
       width: 100%;
       height: 100%;
       padding: 10px 0;
     }
 
     .title {
-      padding-left: 5px;
+      padding: 5px;
       font-size: 13px;
       line-height: 15px;
       font-weight: 700;
       margin-top: 0;
       margin-bottom: 0;
       word-break: break-all;
-      width: 100%;
     }
     p {
       all: unset;
       display: block;
       font-weight: 500;
-      width: 100%;
+
       font-size: 12px;
       line-height: 15px;
       letter-spacing: 0px;
@@ -213,7 +214,8 @@ export const AdsContainer = styled.div`
       min-width: 65px;
       max-width: 100px;
       font-weight: 500;
-      margin: 5px;
+      margin: 5px 7px;
+
       /* background-color: #ff4438; */
       background: linear-gradient(#ff5e52, #ff1100);
       color: #fff;

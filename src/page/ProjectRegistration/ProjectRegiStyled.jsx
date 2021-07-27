@@ -50,21 +50,23 @@ export const PrjRegiContainer = styled.div`
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 1fr;
-    grid-gap: 8px;
+    grid-gap: 10px;
     margin: 5px 0;
+    box-sizing: border-box;
   }
   .projectregi_item {
     /* margin: 10px 10px 10px 0; */
     border: 1px solid #eee;
     background-color: #fff;
+
+    padding: 15px 0;
+    background: linear-gradient(#fff, #f2f2f2);
   }
 
   .projectregi_item_innerwrap {
     display: flex;
     height: 100%;
-    background: linear-gradient(#fff, #f2f2f2);
     box-shadow: 0 8px 8px #fff inset, 0 -8px 8px #f2f2f2 inset;
-    padding: 2px;
   }
 
   .projectregi_checkbox_area {
@@ -79,10 +81,10 @@ export const PrjRegiContainer = styled.div`
 
     .projectregi_checkbox {
       display: flex;
-      justify-content: center;
+
       align-items: center;
       line-height: 20px;
-      font-size: 18px;
+      font-size: 15px;
       font-weight: 600;
       width: 130px;
 
@@ -91,6 +93,12 @@ export const PrjRegiContainer = styled.div`
         height: 18px;
         cursor: pointer;
         margin-right: 10px;
+      }
+      div {
+        font-size: 15px;
+      }
+      .prjregi_vidcreator_text {
+        font-size: 14px;
       }
     }
 
@@ -102,31 +110,40 @@ export const PrjRegiContainer = styled.div`
 
   .contentArea {
     width: 100%;
-    padding-left: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
 
     .contentTitle {
       padding-top: 10px;
     }
     .contentTop {
-      font-size: 16px;
+      font-size: 15px;
+      box-sizing: border-box;
     }
     p {
       all: unset;
-      margin-left: 5px;
+      width: 80%;
       font-size: 14px;
       color: #898989;
+      word-break: break-all;
+      white-space: pre-line;
     }
 
     .contentBot {
       width: 100%;
-      padding: 5px 0px 5px 5px;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+
+      box-sizing: border-box;
 
       .projectregi_content_item {
         width: 9vw;
-        margin: 5px 5px 0px 5px;
+        max-width: 150px;
+        margin: 5px 5px 5px 0px;
 
         video {
           width: 100%;
@@ -145,6 +162,11 @@ export const PrjRegiContainer = styled.div`
           background-color: #fff;
         }
       }
+    }
+    .contentBot_irregi_text {
+      all: unset;
+      width: 100%;
+      font-size: 14px;
     }
   }
 

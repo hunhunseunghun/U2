@@ -26,7 +26,7 @@ import Ckeditor from '../../../component/Ckeditor5/Ckeditor5.jsx';
 const CompetitionRegi = () => {
 	let history = useHistory();
 	const userInfo = useSelector((state) => state.userInfo);
-	if (!userInfo.email) {
+	if (!localStorage.getItem('token')) {
 		if (window.confirm('로그인이 필요한 서비스입니다. 로그인 하시겠습니까?')) {
 			history.push('/login');
 		} else {
@@ -279,6 +279,9 @@ const CompetitionRegi = () => {
 		}
 	};
 	useEffect(() => {
+		if (!userInfo.email) {
+			history.push('/creatormarket');
+		}
 		//summernote config---------------------------
 		// const script5 = document.createElement('script');
 		// script5.innerHTML = `$(document).ready(function () {
