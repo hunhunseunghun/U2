@@ -11,6 +11,7 @@ export const EleContainer = styled.div`
   background-color: #fff;
 
   .challenge_img_area {
+    position: relative;
     width: 100%;
     min-height: 100px;
     background-size: cover;
@@ -20,7 +21,57 @@ export const EleContainer = styled.div`
     align-items: center;
     justify-content: center;
     border-bottom: #eee solid 1px;
+
+    .challenge_badge_area {
+      width: 100%;
+      position: absolute;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      top: 0;
+      left: 0;
+
+      .challenge_badge_left {
+        display: flex;
+        align-items: center;
+        padding: 1px;
+
+        div {
+          border-radius: 2px;
+          border-bottom-right-radius: 9px;
+        }
+        .challenge_badge_mysubmit {
+          background-image: linear-gradient(#2e4063, #14263b);
+          padding: 2px 6px 3px 6px;
+          font-size: 12px;
+          color: white;
+          margin-right: 1px;
+        }
+        .challenge_badge_mysregi {
+          background-image: linear-gradient(#ff5e52, #ff1100);
+          padding: 2px 6px 3px 6px;
+          font-size: 12px;
+          color: white;
+        }
+      }
+      .challenge_badge_right {
+        .challenge_badge_challengeuser {
+          svg {
+            color: yellow;
+            height: 1.2em;
+            width: 1.2em;
+          }
+          padding-right: 1px;
+          img {
+            height: 1.2em;
+            width: 1.2em;
+          }
+        }
+      }
+    }
   }
+
   .challenge_img {
     width: 100%;
     /* min-height: 230px;

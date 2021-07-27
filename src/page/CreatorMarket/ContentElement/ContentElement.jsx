@@ -40,19 +40,35 @@ const ContentElement = props => {
             <span className={'not_contents'}>Image not found</span>
           </div>
         )} */}
+        <div className="challenge_badge_area">
+          <section className="challenge_badge_left">
+            <div className="challenge_badge_mysubmit">
+              {props.badgeData.applies &&
+                props.badgeData.applies.has(challenge.challengeIdx) && // should be challenge.challengeIdx
+                '내가 지원'}
+              {props.badgeData.submits &&
+                props.badgeData.submits.has(challenge.challengeIdx) &&
+                '내가 제출'}
+              내가 제출
+            </div>
+            <div className="challenge_badge_mysregi">
+              {challenge.memberIdx === userInfo.memberIdx && '내가 등록'}
+              내가 등록
+            </div>
+          </section>
+          <section className="challenge_badge_right">
+            <div className="challenge_badge_challengeuser">
+              {props.badgeData.wishes &&
+                props.badgeData.wishes.has(challenge.challengeIdx) && (
+                  <BsStarFill />
+                )}
+              <BsStarFill />
+              {/* <img src="/img/goldstaricon.png" alt="challengeuser" /> */}
+            </div>
+          </section>{' '}
+        </div>
       </div>
-      <div>
-        {' '}
-        {props.badgeData.applies &&
-          props.badgeData.applies.has(challenge.challengeIdx) && // should be challenge.challengeIdx
-          '내가 지원'}
-        {props.badgeData.submits &&
-          props.badgeData.submits.has(challenge.challengeIdx) &&
-          '내가 제출'}
-        {props.badgeData.wishes &&
-          props.badgeData.wishes.has(challenge.challengeIdx) && <BsStarFill />}
-        {challenge.memberIdx === userInfo.memberIdx && '내가 등록'}
-      </div>
+
       <div className="challenge_contents">
         <h1 className="challenge_title">{challenge.title}</h1>
         <div className="challenge_sub">{challenge.subtitle}</div>
