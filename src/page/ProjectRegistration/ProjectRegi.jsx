@@ -184,7 +184,9 @@ const ProjectRegi = () => {
                     onChange={handleChekcboxChange}
                     chekced={false}
                   />
-                  <div>영상 크리에이터{<br />} 인플루언서</div>
+                  <div className="prjregi_vidcreator_text">
+                    영상 크리에이터{<br />} 인플루언서
+                  </div>
                 </div>
               </section>
               <section className="contentArea">
@@ -239,10 +241,10 @@ const ProjectRegi = () => {
                   <p>{irData !== null ? irData.codeDesc : null}</p>
                 </div>
                 <div className="contentBot">
-                  <div>
+                  <span className="contentBot_irregi_text">
                     영상 촬영에서 편집까지 온/오프라인 강의를 위한 전문 강사를
                     U2에서 찾아보세요
-                  </div>
+                  </span>
                 </div>
               </section>
             </div>

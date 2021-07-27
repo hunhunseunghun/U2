@@ -96,7 +96,7 @@ export const EleContainer = styled.div`
 
   .challenge_info_top {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 25px;
     display: flex;
     justify-content: space-between;
     /* grid-template-columns: 1fr 1fr 1fr; */
@@ -132,7 +132,7 @@ export const EleContainer = styled.div`
 
   .challenge_info_bot {
     width: 100%;
-    margin: 20px 0 10px 0;
+    margin: 25px 0 10px 0;
     display: flex;
     font-weight: 500;
 

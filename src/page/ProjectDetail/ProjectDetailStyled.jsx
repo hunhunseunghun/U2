@@ -39,7 +39,8 @@ export const ProjectDetailContainer = styled.div`
 
     .prj_content_wrap {
       width: 100%;
-      font-size: 12px;
+      font-size: 15px;
+      padding: 0 20px;
     }
   }
 
@@ -66,8 +67,12 @@ export const ProjectDetailContainer = styled.div`
 
     .prj_control_middle {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-
+      place-items: center;
+      .prj_contorl_middle_btnwrap {
+        max-width: 330px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+      }
       button {
         width: 100px;
         border: 1px solid #d1d1d1;
@@ -191,8 +196,8 @@ export const ProjectDetailContainer = styled.div`
     margin-top: 20px;
     margin-bottom: 10px;
     min-height: 100px;
-    background-color: #eaeaea;
-    border: 1px solid #c5c5c5;
+    /* background-color: #eaeaea; */
+    /* border: 1px solid #c5c5c5; */
 
     textarea {
       height: 100%;
@@ -201,12 +206,24 @@ export const ProjectDetailContainer = styled.div`
       resize: none;
       font-size: 13px;
     }
-    button {
+    .commet_active_btn {
       background-color: #292727;
       color: white;
       font-size: 13px;
+      border-radius: 5px;
+      transition: background-color 0.2s;
       &:hover {
         cursor: pointer;
+      }
+    }
+    .comment_inactive_btn {
+      background-color: #b9b9b9;
+      color: white;
+      font-size: 13px;
+      border-radius: 5px;
+      transition: background-color 0.2s;
+      &:hover {
+        cursor: default;
       }
     }
   }
