@@ -21,13 +21,21 @@ const Main = props => {
   const [moreActive, setMoreActive] = useState(false);
   // const [mobileSize, setMobileSize] = useState(window.innerWidth);
   const userInfo = useSelector(state => state.userInfo);
-
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 6; //테스트를 위해 한페이지당 4개만 보여줌. 데이터가 많아지면 3단 * 2 = 6개씩 보여줘야함
   const pagedChallenges = paginate(sortedChallenges, currentPage, pageSize);
+
+  // 프로젝트 목록 mobile size carousel
+
+  // mobile size handling
   const [mobileTypes, setMobileTypes] = useState(sortedChallenges);
   const [mobileSize, setMobileSize] = useState(window.innerWidth);
-  // 프로젝트 목록 mobile size carousel
+  useEffect(() => {
+    setMobileTypes(pagedChallenges);
+  }, [currentPage]);
+  useEffect(() => {
+    setMobileTypes(sortedChallenges);
+  }, [sortedChallenges]);
   const handleResize = () => {
     setMobileSize(window.innerWidth);
     console.log('handleResize함수 실행', mobileSize);
@@ -39,6 +47,8 @@ const Main = props => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+  //모바일 creator_filter_section
+  const [filterDropdown, setFilterDropdown] = useState(false);
 
   //--------badge 관련
   const [applies, setApplies] = useState(null);
@@ -50,14 +60,6 @@ const Main = props => {
   let walk;
   let startX;
   let scrollValue;
-
-  useEffect(() => {
-    setMobileTypes(pagedChallenges);
-  }, [currentPage]);
-
-  useEffect(() => {
-    setMobileTypes(sortedChallenges);
-  }, [sortedChallenges]);
 
   //----------------------------------
 
@@ -150,8 +152,67 @@ const Main = props => {
         </section>
         <div className="creatormarket_filter_section">
           <div className="creatormarket_ft_deco">
-            <div className="ft_title mobile_view ">
+            <div
+              // className="ft_title mobile_view "
+              className={
+                filterDropdown
+                  ? 'ft_title mobile_view filter_arrow_up'
+                  : 'ft_title mobile_view filter_arrow_down'
+              }
+              onClick={() => {
+                setFilterDropdown(!filterDropdown);
+                console.log(filterDropdown);
+              }}
+            >
               필터 <img src="/img/ic_arrow_down.svg" />
+            </div>
+            <div
+              className={
+                filterDropdown
+                  ? 'sub_filter_section ft_price'
+                  : 'sub_filter_section_inactive'
+              }
+            >
+              <div
+                className="ft_title"
+                onClick={() => {
+                  handleTabChange(0);
+                }}
+              >
+                전체
+              </div>
+              <div
+                className="ft_title"
+                onClick={() => {
+                  handleTabChange(1);
+                }}
+              >
+                공모전
+              </div>
+              <div
+                className="ft_title"
+                onClick={() => {
+                  handleTabChange(3);
+                }}
+              >
+                영상크리에이터 / 인플루언서
+              </div>
+              <div
+                className="ft_title"
+                onClick={() => {
+                  handleTabChange(2);
+                }}
+              >
+                전문영상 편집자
+              </div>
+              <div
+                className="ft_title"
+                onClick={() => {
+                  handleTabChange(4);
+                }}
+              >
+                강사채용
+              </div>
             </div>
           </div>
           {mobileSize > 900 && (
@@ -243,14 +304,6 @@ const Main = props => {
               </div>
             </div>
           )}
-
-          {/* <div class="ft_right_section">
-            <div class="ftr_select_item">
-              <div class="ftr_selected ">
-                최신순 <img src="/img/ic_arrow_down.svg" />
-              </div>
-            </div>
-          </div> */}
         </div>
         <section className="challenge_wrap">
           {/* <section className="challenge_tab">
@@ -497,6 +550,19 @@ const Main = props => {
             </div>
           )}
         </section>
+        {!moreActive && isLoadingChallenges === false && (
+          <Pagination2
+            className="creatormarket_pagenation"
+            itemsCount={
+              challenges.filter(
+                challenge =>
+                  challenge.challengeTargetCode === tabActive || tabActive === 0
+              ).length
+            }
+            pageSize={pageSize}
+            handlePageChange={handlePageChange}
+          ></Pagination2>
+        )}
 
         <section className="challenge_more_btn_area">
           {' '}

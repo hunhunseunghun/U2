@@ -13,7 +13,7 @@ body {
 }
 ul,
 li {
-  // list-style: none;
+  list-style: none;
   margin: 0px;
   padding: 0px;
 }
@@ -918,6 +918,7 @@ textarea {
       flex: 1;
       display: flex;
       align-items: center;
+
       .ft_programs,
       .ft_title {
         display: none;

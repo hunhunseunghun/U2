@@ -37,6 +37,11 @@ export const MainContainer = styled.div`
     border-top: 0;
     .creatormarket_ft_deco {
       margin-top: 2px;
+      .ft_title {
+        &:hover {
+          cursor: pointer;
+        }
+      }
     }
     .creatormarket_fr_left_section {
       flex: 1 1;
@@ -329,9 +334,6 @@ export const MainContainer = styled.div`
       width: 100px;
       height: 100px;
     }
-  }
-
-  @media screen and (max-width: 900px) {
     .challange_mobile_ele {
       margin: 15px 0;
       position: relative;
@@ -340,5 +342,51 @@ export const MainContainer = styled.div`
       overflow-y: hidden;
       white-space: nowrap;
     }
+  }
+  .creatormarket_filter_section {
+    position: relative;
+    .sub_filter_section {
+      position: absolute;
+      top: 45px;
+      left: 0;
+      right: 0;
+      padding: 10px 20px;
+      background-color: #fff;
+      border-bottom: 1px solid #eee;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      .ft_title {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        margin: 10px 0 0;
+        &.filter_arrow_up {
+          img {
+            transform: rotateZ(180deg);
+          }
+        }
+      }
+    }
+    .creatormarket_ft_deco {
+      .ft_title {
+        &.filter_arrow_up {
+          img {
+            transform: rotateZ(180deg);
+            transition: transform 0.2s;
+          }
+        }
+        &.filter_arrow_down {
+          img {
+            transform: rotateZ(0deg);
+            transition: transform 0.2s;
+          }
+        }
+      }
+    }
+  }
+  .sub_filter_section_inactive {
+    display: none;
   }
 `;
