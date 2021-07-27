@@ -23,24 +23,46 @@ export const MainContainer = styled.div`
 
   .challenge_wrap {
   }
-  .filter_section {
+  .creatormarket_filter_section {
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    padding: 0px 60px;
+    height: 67px;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 600;
     margin-top: 10px;
     padding: 0 20px;
     border-top: 0;
-
-    .ftr_selected {
-      padding-bottom: 2px;
+    .creatormarket_ft_deco {
+      margin-top: 2px;
     }
-    .ftr_selected_active {
-      position: relative;
-      .style_mm_t {
-        position: absolute;
-        width: 4px;
-        height: 4px;
-        right: -6px;
-        top: 4px;
-        border-radius: 2px;
-        background-color: black;
+    .creatormarket_fr_left_section {
+      flex: 1 1;
+      display: flex;
+
+      .creatormarket_ftr_select_item {
+        margin-right: 30px;
+        position: relative;
+        &:hover {
+          cursor: pointer;
+        }
+        .creatormarket_ftr_selected {
+          padding-bottom: 2px;
+        }
+        .creatormarket_ftr_selected_active {
+          position: relative;
+          .style_mm_t {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            right: -6px;
+            top: 4px;
+            border-radius: 2px;
+            background-color: black;
+          }
+        }
       }
     }
   }

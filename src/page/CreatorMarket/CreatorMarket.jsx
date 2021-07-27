@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { BiLoader } from 'react-icons/bi';
 import Pagination2 from '../../component/Pagination/Pagination2.jsx';
 import { paginate } from '../../component/Pagination/paginate.js';
+
 const Main = props => {
   const sliderRef = useRef();
   const [tabActive, setTabActive] = useState(0); // 탭 선택 소팅
@@ -18,22 +19,34 @@ const Main = props => {
   const [sortedChallenges, setSortedChallenges] = useState([]);
   const [isLoadingChallenges, setIsLoadingChallenges] = useState(null);
   const [moreActive, setMoreActive] = useState(false);
-  const [mobileSize, setMobileSize] = useState(window.innerWidth);
+  // const [mobileSize, setMobileSize] = useState(window.innerWidth);
   const userInfo = useSelector(state => state.userInfo);
 
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 6; //테스트를 위해 한페이지당 4개만 보여줌. 데이터가 많아지면 3단 * 2 = 6개씩 보여줘야함
   const pagedChallenges = paginate(sortedChallenges, currentPage, pageSize);
   const [mobileTypes, setMobileTypes] = useState(sortedChallenges);
+  const [mobileSize, setMobileSize] = useState(window.innerWidth);
   // 프로젝트 목록 mobile size carousel
+  const handleResize = () => {
+    setMobileSize(window.innerWidth);
+    console.log('handleResize함수 실행', mobileSize);
+  };
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      // cleanup
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   //--------badge 관련
   const [applies, setApplies] = useState(null);
   const [submits, setSubmits] = useState(null);
   const [wishes, setWishes] = useState(null);
 
-  console.log(pagedChallenges);
-  console.log(mobileTypes);
+  // console.log(pagedChallenges);
+  // console.log(mobileTypes);
   let walk;
   let startX;
   let scrollValue;
@@ -69,8 +82,8 @@ const Main = props => {
       return;
     }
     var newArr = challenges.filter(el => el.challengeTargetCode === tab);
-    console.log('tab: ', tab);
-    console.log(newArr);
+    // console.log('tab: ', tab);
+    // console.log(newArr);
     setSortedChallenges(newArr);
   };
 
@@ -88,7 +101,7 @@ const Main = props => {
     };
     axios(config)
       .then(response => {
-        console.log('response.data: ', response.data);
+        // console.log('response.data: ', response.data);
         setApplies(new Set(response.data.applies));
         setSubmits(new Set(response.data.submits));
         setWishes(new Set(response.data.wishes));
@@ -99,7 +112,7 @@ const Main = props => {
     axios
       .get(process.env.REACT_APP_U2_DB_HOST + `/Campaign/challenge`)
       .then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         setChallengs(res.data);
         setSortedChallenges(res.data);
         setIsLoadingChallenges(false);
@@ -135,99 +148,102 @@ const Main = props => {
           <TopView challenges={challenges} />
           <TopAds handleRequestClick={handleRequestClick} />
         </section>
-        <div className="filter_section">
-          <div className="ft_deco">
+        <div className="creatormarket_filter_section">
+          <div className="creatormarket_ft_deco">
             <div className="ft_title mobile_view ">
               필터 <img src="/img/ic_arrow_down.svg" />
             </div>
           </div>
-          <div className="fr_left_section">
-            <div
-              className="ftr_select_item"
-              onClick={() => {
-                handleTabChange(0);
-              }}
-            >
+          {mobileSize > 900 && (
+            <div className="creatormarket_fr_left_section">
               <div
-                className={
-                  tabActive === 0
-                    ? 'ftr_selected ftr_selected_active'
-                    : 'ftr_selected'
-                }
+                className="creatormarket_ftr_select_item"
+                onClick={() => {
+                  handleTabChange(0);
+                }}
               >
-                전체
-                <div className="style_mm_t"></div>
+                <div
+                  className={
+                    tabActive === 0
+                      ? 'creatormarket_ftr_selected creatormarket_ftr_selected_active'
+                      : 'creatormarket_ftr_selected'
+                  }
+                >
+                  전체
+                  <div className="style_mm_t"></div>
+                </div>
+              </div>
+              <div
+                className="creatormarket_ftr_select_item"
+                onClick={() => {
+                  handleTabChange(1);
+                }}
+              >
+                <div
+                  className={
+                    tabActive === 1
+                      ? 'creatormarket_ftr_selected creatormarket_ftr_selected_active'
+                      : 'creatormarket_ftr_selected'
+                  }
+                >
+                  공모전
+                  <div className="style_mm_t"></div>
+                </div>
+              </div>
+              <div
+                className="creatormarket_ftr_select_item"
+                onClick={() => {
+                  handleTabChange(3);
+                }}
+              >
+                <div
+                  className={
+                    tabActive === 3
+                      ? 'creatormarket_ftr_selected creatormarket_ftr_selected_active'
+                      : 'creatormarket_ftr_selected'
+                  }
+                >
+                  영상크리에이터 / 인플루언서
+                  <div className="style_mm_t"></div>
+                </div>
+              </div>
+              <div
+                className="creatormarket_ftr_select_item"
+                onClick={() => {
+                  handleTabChange(2);
+                }}
+              >
+                <div
+                  className={
+                    tabActive === 2
+                      ? 'creatormarket_ftr_selected creatormarket_ftr_selected_active'
+                      : 'creatormarket_ftr_selected'
+                  }
+                >
+                  전문영상 편집자
+                  <div className="style_mm_t"></div>
+                </div>
+              </div>
+              <div
+                className="creatormarket_ftr_select_item"
+                onClick={() => {
+                  handleTabChange(4);
+                }}
+              >
+                <div
+                  className={
+                    tabActive === 4
+                      ? 'creatormarket_ftr_selected creatormarket_ftr_selected_active'
+                      : 'creatormarket_ftr_selected'
+                  }
+                >
+                  강사채용
+                  <div className="style_mm_t"></div>
+                </div>
               </div>
             </div>
-            <div
-              className="ftr_select_item"
-              onClick={() => {
-                handleTabChange(1);
-              }}
-            >
-              <div
-                className={
-                  tabActive === 1
-                    ? 'ftr_selected ftr_selected_active'
-                    : 'ftr_selected'
-                }
-              >
-                공모전
-                <div className="style_mm_t"></div>
-              </div>
-            </div>
-            <div
-              className="ftr_select_item"
-              onClick={() => {
-                handleTabChange(3);
-              }}
-            >
-              <div
-                className={
-                  tabActive === 3
-                    ? 'ftr_selected ftr_selected_active'
-                    : 'ftr_selected'
-                }
-              >
-                영상크리에이터 / 인플루언서
-                <div className="style_mm_t"></div>
-              </div>
-            </div>
-            <div
-              className="ftr_select_item"
-              onClick={() => {
-                handleTabChange(2);
-              }}
-            >
-              <div
-                className={
-                  tabActive === 2
-                    ? 'ftr_selected ftr_selected_active'
-                    : 'ftr_selected'
-                }
-              >
-                전문영상 편집자
-                <div className="style_mm_t"></div>
-              </div>
-            </div>
-            <div
-              className="ftr_select_item"
-              onClick={() => {
-                handleTabChange(4);
-              }}
-            >
-              <div
-                className={
-                  tabActive === 4
-                    ? 'ftr_selected ftr_selected_active'
-                    : 'ftr_selected'
-                }
-              >
-                강사채용
-                <div className="style_mm_t"></div>
-              </div>
-            </div>
-          </div>
+          )}
+
           {/* <div class="ft_right_section">
             <div class="ftr_select_item">
               <div class="ftr_selected ">
@@ -330,7 +346,7 @@ const Main = props => {
                   case false: {
                     return moreActive
                       ? sortedChallenges.slice(0, 3).map((ele, idx) => {
-                          console.log('ele: ', ele);
+                          // console.log('ele: ', ele);
                           if (tabActive === 0) {
                             return (
                               <ContentElement
@@ -361,7 +377,7 @@ const Main = props => {
                           }
                         })
                       : pagedChallenges.map((ele, idx) => {
-                          console.log('ele: ', ele);
+                          // console.log('ele: ', ele);
                           if (tabActive === 0) {
                             return (
                               <ContentElement
@@ -418,13 +434,17 @@ const Main = props => {
               )}
             </div>
           ) : (
-            <div ref={sliderRef} className="challange_mobile_ele">
+            <div className="challange_mobile_ele">
               {mobileTypes.map((ele, idx) => (
                 <ContentElement
                   challenge={ele}
                   key={`${ele.challengeIdx}`}
                   history={props.history}
-                  idx={idx}
+                  badgeData={{
+                    applies: applies,
+                    submits: submits,
+                    wishes: wishes,
+                  }}
                 />
               ))}
 
@@ -435,14 +455,18 @@ const Main = props => {
                   }
                   case false: {
                     return mobileTypes.map((ele, idx) => {
-                      console.log('ele: ', ele);
+                      // console.log('ele: ', ele);
                       if (tabActive === 0) {
                         return (
                           <ContentElement
                             challenge={ele}
                             key={`${ele.challengeIdx}`}
                             history={props.history}
-                            idx={idx}
+                            badgeData={{
+                              applies: applies,
+                              submits: submits,
+                              wishes: wishes,
+                            }}
                           />
                         );
                       }
@@ -452,7 +476,11 @@ const Main = props => {
                             challenge={ele}
                             key={`${ele.challengeIdx}`}
                             history={props.history}
-                            idx={idx}
+                            badgeData={{
+                              applies: applies,
+                              submits: submits,
+                              wishes: wishes,
+                            }}
                           />
                         );
                       }
