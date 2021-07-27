@@ -25,7 +25,14 @@ const Main = props => {
   const pageSize = 6; //테스트를 위해 한페이지당 4개만 보여줌. 데이터가 많아지면 3단 * 2 = 6개씩 보여줘야함
   const pagedChallenges = paginate(sortedChallenges, currentPage, pageSize);
 
-  // 프로젝트 목록 mobile size carousel
+  // 페이지네이션 -> filter_section 스크롤 이동
+  useEffect(() => {
+    var location =
+      document.querySelector('#creatormarket_filter').offsetTop - 60;
+    window.scrollTo({ top: location, behavior: 'smooth' });
+
+    setCurrentPage(1);
+  }, [currentPage]);
 
   // mobile size handling
   //모바일 creator_filter_section
@@ -150,7 +157,7 @@ const Main = props => {
           <TopView challenges={challenges} />
           <TopAds handleRequestClick={handleRequestClick} />
         </section>
-        <div className="creatormarket_filter_section">
+        <div id="creatormarket_filter" className="creatormarket_filter_section">
           <div className="creatormarket_ft_deco">
             <div
               // className="ft_title mobile_view "
@@ -379,7 +386,7 @@ const Main = props => {
           </section> */}
 
           {mobileSize > 900 ? (
-            <div className="challange_ele">
+            <div className="challenge_ele">
               {/* {isLoadingChallenges === null && <div>"no data"</div>}
 						{isLoadingChallenges === false
 							? moreActive

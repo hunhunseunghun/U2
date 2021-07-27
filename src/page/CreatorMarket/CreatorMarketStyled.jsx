@@ -22,17 +22,21 @@ export const MainContainer = styled.div`
   }
 
   .challenge_wrap {
+    margin-bottom: 10px;
+
+    background-color: #fafafa;
   }
   .creatormarket_filter_section {
+    background-color: #fff;
     border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
+    /* border-bottom: 1px solid #eee; */
     padding: 0px 60px;
     height: 67px;
     display: flex;
     align-items: center;
     font-size: 15px;
     font-weight: 600;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     padding: 0 20px;
     border-top: 0;
     .creatormarket_ft_deco {
@@ -118,12 +122,11 @@ export const MainContainer = styled.div`
     }
   }
 
-  .challange_ele {
-    margin-top: 10px;
+  .challenge_ele {
     width: 100%;
+    min-height: 300px;
   }
   .makeStyles-ul-1 {
-    margin-bottom: 30px;
   }
 
   .challenge_more_btn_area {
@@ -135,15 +138,17 @@ export const MainContainer = styled.div`
 
   .challange_more_btn {
     border: 1px solid #ddd;
-    width: 30%;
-    padding: 0 30px;
-    height: 52px;
+    width: 100%;
+    max-width: 110px;
+    padding: 0 15px;
+    height: 40px;
     border-radius: 4px;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     color: #898989;
     transition-duration: 0.2s;
-    margin-top: 30px;
+    margin-top: 10px;
+
     &:hover {
       cursor: pointer;
       transition-duration: 0.2s;
@@ -196,10 +201,10 @@ export const MainContainer = styled.div`
     height: 100px;
   }
   @media only screen and (max-width: 1500px) and (min-width: 1350px) {
-    padding: 40px 45px 100px;
+    padding: 0px 45px 100px;
   }
   @media only screen and (max-width: 900px) {
-    padding: 40px 10px 50px;
+    padding: 40px 0px 50px;
     min-width: 0;
 
     .topWrap {
@@ -261,35 +266,15 @@ export const MainContainer = styled.div`
       width: 100%;
       margin-top: 25px;
     }
-    .makeStyles-ul-1 {
-      margin-bottom: 30px;
-    }
 
     .challenge_more_btn_area {
+      display: none;
       width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    .challange_more_btn {
-      border: 1px solid #ddd;
-      width: 30%;
-      padding: 0 30px;
-      height: 52px;
-      border-radius: 4px;
-      font-size: 16px;
-      font-weight: 600;
-      color: #898989;
-      transition-duration: 0.2s;
-      margin-top: 30px;
-      &:hover {
-        cursor: pointer;
-        transition-duration: 0.2s;
-        color: black;
-        border-color: #898989;
-      }
-    }
     .challenge_banner_area {
       margin-top: 60px;
       position: relative;
@@ -312,6 +297,7 @@ export const MainContainer = styled.div`
     }
 
     .challenge_banner_btn {
+      display: none;
       border: 1px solid #ddd;
       width: 100%;
       padding: 10px 30px;
@@ -335,7 +321,7 @@ export const MainContainer = styled.div`
       height: 100px;
     }
     .challange_mobile_ele {
-      margin: 15px 0;
+      margin: 0 0 15px 0;
       position: relative;
       width: 100%;
       overflow-x: hidden;
