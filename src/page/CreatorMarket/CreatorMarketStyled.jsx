@@ -290,7 +290,7 @@ export const MainContainer = styled.div`
       margin: 15px 0;
       position: relative;
       width: 100%;
-      overflow-x: scroll;
+      overflow-x: hidden;
       overflow-y: hidden;
       white-space: nowrap;
     }

@@ -27,8 +27,6 @@ const Main = props => {
   const [mobileTypes, setMobileTypes] = useState(sortedChallenges);
   // 프로젝트 목록 mobile size carousel
 
-  console.log(pagedChallenges);
-  console.log(mobileTypes);
   let walk;
   let startX;
   let scrollValue;
@@ -44,8 +42,8 @@ const Main = props => {
   }, []);
 
   useEffect(() => {
-    setMobileTypes(sortedChallenges);
-  }, [sortedChallenges]);
+    setMobileTypes(pagedChallenges);
+  }, [currentPage]);
 
   //----------------------------------
 
@@ -330,7 +328,7 @@ const Main = props => {
             </div>
           )}
         </section>
-        {/* 
+
         {!moreActive && isLoadingChallenges === false && (
           <Pagination2
             className="creatormarket_pagenation"
@@ -343,7 +341,7 @@ const Main = props => {
             pageSize={pageSize}
             handlePageChange={handlePageChange}
           ></Pagination2>
-        )} */}
+        )}
 
         <section className="challenge_more_btn_area">
           {' '}
