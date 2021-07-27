@@ -30,7 +30,6 @@ const Main = props => {
     var location =
       document.querySelector('#creatormarket_filter').offsetTop - 60;
     window.scrollTo({ top: location, behavior: 'smooth' });
-    setCurrentPage(1);
   }, [currentPage]);
 
   // mobile size handling
