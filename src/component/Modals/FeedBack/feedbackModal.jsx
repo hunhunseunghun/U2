@@ -22,11 +22,17 @@ function FeedbackModal({
 	}, [data]);
 	useEffect(() => {
 		if (challengeIdx) {
-			axios
-				.get(
-					`https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmitfeedback?challengeIdx=${challengeIdx}&seq=1&memberIdx=${userInfo.memberIdx}`,
-				)
+			var config = {
+				method: 'get',
+				url: `https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmitfeedback?challengeIdx=${challengeIdx}&seq=1&memberIdx=${userInfo.memberIdx}`,
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+					'Content-Type': 'application/json',
+				},
+			};
+			axios(config)
 				.then((response) => {
+					console.log('feedback useEffect data: ', response.data);
 					setInput(response.data.comment);
 				})
 				.catch((err) => {
@@ -92,6 +98,7 @@ function FeedbackModal({
 								className="close"
 								onClick={() => {
 									handleModalClose('feedback');
+									setInput('');
 								}}
 							>
 								{' '}

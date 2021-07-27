@@ -25,6 +25,7 @@ const Uploader = ({
 	folder,
 	memberIdx,
 	challengeIdx,
+	placeholder,
 }) => {
 	//file = files 배열 , setFile = useState func
 	//filePath = 파일 경로, setFilePath = useState func
@@ -44,6 +45,7 @@ const Uploader = ({
 			alert('300MB 이상의 파일은 올릴 수 없습니다.');
 			return;
 		}
+		console.log('file: ', realFiles);
 		for (let key in realFiles) {
 			if (!isNaN(Number(key))) {
 				//파일 이름 바꾸기
@@ -111,7 +113,7 @@ const Uploader = ({
 				<input
 					type="text"
 					className="filePath"
-					placeholder={'Choose file to upload'}
+					placeholder={placeholder ? placeholder : 'Choose file to upload'}
 					// value={file}
 					readOnly
 				/>
@@ -122,6 +124,7 @@ const Uploader = ({
 					accept={accept}
 					// multiple={multiple}
 					onChange={fileChangeFunc}
+					width="100"
 				/>
 			</div>
 			<div className="filePreview">{handlePreview()}</div>

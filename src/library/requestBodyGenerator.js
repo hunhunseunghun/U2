@@ -3,7 +3,7 @@ export default function (params, type) {
 		case '전문영상편집자': {
 			return {
 				challengeDesc: params.challengeDesc,
-				challengeTargetCode: 2,
+				challengeTargetCode: params.challengeTargetCode,
 				charge: params.charge, //담당자
 				chargeContact: params.chargeContact,
 				chargeContactShown: params.chargeContactShown ? 1 : 0,

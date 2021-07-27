@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import requestBodyGenerator from '../../../../../library/requestBodyGenerator';
+import requestBodyGenerator from '../../../library/requestBodyGenerator';
 import { useSelector } from 'react-redux';
+import Uploader from '../../Uploader/Uploader';
 const Modal = ({
 	modalOpen,
 	handleOpenModal,
@@ -39,6 +40,7 @@ const Modal = ({
 		console.log(userInfo);
 		const data = requestBodyGenerator(
 			{
+				// logo:logo,
 				ownerIdx: userInfo.memberIdx,
 				memberIdx: userInfo.memberIdx,
 				ownerCat: ownerCat,
@@ -128,7 +130,7 @@ const Modal = ({
 							<div className="menu">대표 로고 이미지</div>
 							<div className="inputInfo">
 								<div className="competitionName">
-									<input
+									{/* <input
 										type="file"
 										accept="image/*"
 										className="competitionName"
@@ -137,6 +139,14 @@ const Modal = ({
 											// console.log(e.target.files[0]);
 											setLogo(e.target.files[0]);
 										}}
+									/> */}
+									<Uploader
+										setFilePath={setLogo}
+										multiple={false}
+										accept={'image/*'}
+										memberIdx={userInfo.memberIdx}
+										folder={'market-logo'}
+										placeholder="이미지 선택. (권장비율: 16:9)"
 									/>
 								</div>
 							</div>

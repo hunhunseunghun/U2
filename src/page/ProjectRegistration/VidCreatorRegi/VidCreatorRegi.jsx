@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import DropDown from './DropDown/DropDown.jsx';
+// import DropDown from './DropDown/DropDown.jsx';
+import DropDown from '../../../component/OwnerDropDown/DropDown.jsx';
 // import FileUploader from './FileUploader/FileUploader.jsx';
 import Uploader from '../../../component/Uploader/Uploader.jsx';
 // import EditFileUploader from './EditFileUploader/EditFileUploader.jsx';
@@ -205,6 +206,7 @@ const VidCreatorRegi = () => {
 				ownerName: profiles[defaultIdx].companyName,
 				ownerCat: profiles[defaultIdx].cat,
 				company: profiles[defaultIdx].companyName,
+				challengeTargetCode: 3,
 				// companyA: organizer,
 				// companyB: sponsor,
 				url: refvidUrl,
@@ -467,6 +469,7 @@ const VidCreatorRegi = () => {
 								accept={'image/*'}
 								memberIdx={userInfo.memberIdx}
 								folder={'market-logo'}
+								placeholder="이미지 선택. (권장비율: 16:9)"
 							/>
 						</div>
 					</section>
@@ -480,6 +483,7 @@ const VidCreatorRegi = () => {
 								accept={'*'}
 								folder={'market-fileref'}
 								memberIdx={userInfo.memberIdx}
+								placeholder="파일 선택. (최대 300MB)"
 							/>
 						</div>
 					</section>

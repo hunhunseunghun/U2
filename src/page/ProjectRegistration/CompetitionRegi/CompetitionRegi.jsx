@@ -6,7 +6,8 @@ import { useSelector } from 'react-redux';
 // import FileUploader from './FileUploader/FileUploader.jsx';
 import Uploader from '../../../component/Uploader/Uploader';
 import { RegiContainer } from './CompetitionRegiStyled.jsx';
-import DropDown from './DropDown/DropDown.jsx';
+// import DropDown from './DropDown/DropDown.jsx';
+import DropDown from '../../../component/OwnerDropDown/DropDown';
 import headerIcon from '../../../Img/Icons/headerIcon.png';
 import downArrowIcon from '../../../Img/Icons/sortarrowdown.png';
 // import QuillTextEditor from './QuillTextEditor/QuillTextEditor.jsx';
@@ -17,7 +18,8 @@ import { createMuiTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import { validateEmail } from '../../../library/validate.js';
 import axios from 'axios';
-import requestBodyGenerator from '../../../library/requestBodyGenerator.js';
+// import requestBodyGenerator from '../../../library/requestBodyGenerator.js';
+import requestBodyGenerator from '../../../library/requestBodyGenerator';
 import Ckeditor from '../../../component/Ckeditor5/Ckeditor5.jsx';
 // import writeJsonFile from 'write-json-file';
 
@@ -440,6 +442,7 @@ const CompetitionRegi = () => {
 								accept={'image/*'}
 								memberIdx={userInfo.memberIdx}
 								folder={'market-logo'}
+								placeholder="이미지 선택. (권장비율: 16:9)"
 							/>
 						</div>
 					</section>
@@ -454,6 +457,7 @@ const CompetitionRegi = () => {
 								accept={'*'}
 								memberIdx={userInfo.memberIdx}
 								folder={'market-fileref'}
+								placeholder="파일 선택. (최대 300MB)"
 							/>
 						</div>
 					</section>

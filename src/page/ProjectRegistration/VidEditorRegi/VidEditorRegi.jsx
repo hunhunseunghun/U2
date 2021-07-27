@@ -5,7 +5,8 @@ import uploadFileToBlob, {
 	isStorageConfigured,
 	getFilesFromBlob,
 } from '../../../library/azureBlob';
-import DropDown from './DropDown/DropDown.jsx';
+// import DropDown from './DropDown/DropDown.jsx';
+import DropDown from '../../../component/OwnerDropDown/DropDown';
 // import FileUploader from './FileUploader/FileUploader.jsx';
 import Uploader from '../../../component/Uploader/Uploader';
 // import EditFileUploader from './EditFileUploader/EditFileUploader.jsx';
@@ -42,7 +43,6 @@ const VidEditorRegi = () => {
 	const [title, setTitle] = useState('');
 	const [refvidUrl, setrefvidUrl] = useState('');
 	//대면미팅
-	const [meetCode, setMeetCode] = useState(1);
 	//handle date ----------------------------------------------
 	const [startDate, setStartDate] = useState(new Date());
 	const [finishDate, setFinishDate] = useState(new Date());
@@ -106,6 +106,7 @@ const VidEditorRegi = () => {
 	const [editTargetFilePath, setEditTargetFilePath] = useState('');
 
 	//-----------------------------------------------------
+	const [meetCode, setMeetCode] = useState(1);
 
 	const [onMeet, setOnMeet] = useState(null); //온라인 오프라인 미팅 state 값
 
@@ -195,6 +196,7 @@ const VidEditorRegi = () => {
 			{
 				challengeDesc: ckText,
 				memberIdx: userInfo.memberIdx,
+				challengeTargetCode: 2,
 				title: title,
 				ownerIdx: ownerIdx,
 				ownerName: profiles[defaultIdx].companyName,
@@ -253,6 +255,7 @@ const VidEditorRegi = () => {
 				setSubmitClicked(false);
 				alert(err);
 			});
+		// setSubmitClicked(false);
 	};
 	const handleNewData = (data) => {
 		var newForm = {
@@ -435,6 +438,7 @@ const VidEditorRegi = () => {
 								accept={'image/*'}
 								memberIdx={userInfo.memberIdx}
 								folder={'market-logo'}
+								placeholder="이미지 선택. (권장비율: 16:9)"
 							/>
 						</div>
 					</section>
@@ -448,6 +452,7 @@ const VidEditorRegi = () => {
 								accept={'*'}
 								folder={'market-fileref'}
 								memberIdx={userInfo.memberIdx}
+								placeholder="파일 선택. (최대 300MB)"
 							/>
 						</div>
 					</section>

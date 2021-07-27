@@ -6,7 +6,7 @@ import Pagination2 from '../../../component/Pagination/Pagination2';
 import { paginate } from '../../../component/Pagination/paginate';
 import { ParticipateTableContainer } from './ParticipateTableStyled';
 import FeedbackModal from '../../../component/Modals/FeedBack/feedbackModal';
-import ResumeModal from '../../../component/Modals/Resume/resumeModal';
+import ApplyModal from '../../../component/Modals/Resume/ApplyModal';
 import SubmitModal from '../../../component/Modals/Submit/SubmitModal';
 import SubmissionModal from '../../../component/Modals/Submission/SubmissionModal';
 import sortarrowdown from '../../../Img/Icons/sortarrowdown.png';
@@ -61,7 +61,7 @@ function ParticipateTable() {
 							(el) => el.memberIdx === userInfo.memberIdx,
 						)[0];
 						// var myHireApply = el.hireApply.filter(el=>el.memberIdx===userInfo.memberIdx)
-						if (el.challengeTargetCode === 1 || el.challengeTargetCode === 3) {
+						if (el.challengeTargetCode !== 4) {
 							if (myApplication) {
 								return {
 									img: el.logo,
@@ -185,7 +185,7 @@ function ParticipateTable() {
 								};
 							}
 						} else {
-							//영상크리에이터 / 인플루언서, 강사채용
+							//강사채용
 							//if(myHireApply){
 							// 	return {
 							// 		...
@@ -269,7 +269,7 @@ function ParticipateTable() {
 				}}
 				isAdmin={false}
 			/>
-			<ResumeModal
+			<ApplyModal
 				open={resumeProps.open}
 				challenge={resumeProps.data}
 				handleModalClose={(modalType) => {

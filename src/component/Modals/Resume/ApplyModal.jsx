@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { ModalContainer } from './rsModalStyled';
+import { ModalContainer } from './ApplyModalStyled';
 import { BsPlusSquareFill, BsDashSquareFill } from 'react-icons/bs';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import axios from 'axios';
@@ -8,6 +8,7 @@ import 'react-phone-number-input/style.css';
 import AddressModal from '../../address/AddressModal';
 import Banks from '../../banks';
 import { validateEmail } from '../../../library/validate';
+import { TextFile } from '../../../library/getJson';
 const initialState = {
 	title: '',
 	mobileNum: '',
@@ -278,7 +279,7 @@ function Modal({ open, challenge, handleModalClose }) {
 				};
 			}),
 			postCodeAddr: address2,
-			challengeIdx: 29, //challenge.challengeIdx
+			challengeIdx: challenge.challengeIdx, //challenge.challengeIdx
 			missonSeq: 1,
 			memberIdx: userInfo.memberIdx,
 			contactCode: 1,
@@ -291,7 +292,7 @@ function Modal({ open, challenge, handleModalClose }) {
 			// photo: 'string',
 			// note: 'string',
 			statusCode: 1,
-			checkStatusCode: 8,
+			checkStatusCode: 0,
 			dateApplied: new Date(),
 			name: userInfo.fullName,
 			// registMemberIdx: 0,
@@ -299,6 +300,7 @@ function Modal({ open, challenge, handleModalClose }) {
 			// modifyMemberIdx: 0,
 			// modifyDate: '2021-07-14T17:37:33.365Z',
 		};
+		// TextFile(data);
 		var config = {
 			method: 'post',
 			// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmit
@@ -319,8 +321,12 @@ function Modal({ open, challenge, handleModalClose }) {
 				}
 			})
 			.catch((err) => {
-				console.log('err: ', err);
-				alert(err);
+				console.log('err: ', err.response);
+				if (err.response.data.error === 'Already submitted') {
+					alert('이미 제출한 프로젝트 입니다.');
+				} else {
+					alert(err.response.data);
+				}
 			});
 	};
 
@@ -340,6 +346,29 @@ function Modal({ open, challenge, handleModalClose }) {
 			setState((preState) => ({ ...preState, banks: banks }));
 		});
 	}, []);
+	useEffect(() => {
+		if (challenge) {
+			var config = {
+				method: 'get',
+				url:
+					process.env.REACT_APP_U2_DB_HOST +
+					`/Campaign/challenge/${challenge.challengeIdx}`,
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+					'Content-Type': 'application/json',
+				},
+			};
+			if (challenge.challengeTargetCode === 4) {
+				axios(config)
+					.then((response) => {
+						console.log('apply modal useEffect Data: ', response.data);
+					})
+					.catch((err) => {
+						console.log(err);
+					});
+			}
+		}
+	}, [challenge]);
 
 	return (
 		<ModalContainer>

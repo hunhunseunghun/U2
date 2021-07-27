@@ -18,6 +18,7 @@ import topviewEx from '../../Img/topviewEX.png';
 import ReactHtmlParser from 'react-html-parser';
 // import SubmitModal from './Modal/SubmitModal';
 import SubmitModal from '../../component/Modals/Submit/SubmitModal';
+import ApplyModal from '../../component/Modals/Resume/ApplyModal';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
@@ -32,6 +33,7 @@ function ProjectDetail(props) {
 
 	//자료제출 모달
 	const [isSubmitOpen, setSubmitOpen] = useState(false);
+	const [isApplyOpen, setApplyOpen] = useState(false);
 	// console.log('challengeIdx: ', challengeIdx);
 	// console.log('challenge: ', challenge);
 	// console.log(props);
@@ -92,12 +94,25 @@ function ProjectDetail(props) {
 			}
 		}
 	};
-	const handleApply = () => {};
+	const handleApply = () => {
+		if (userInfo.email) {
+			setApplyOpen(true);
+		} else {
+			if (
+				window.confirm('로그인이 필요한 서비스입니다. 로그인 하시겠습니까?')
+			) {
+				history.push('/login');
+			}
+		}
+	};
 	const handleModalClose = (modalType) => {
 		switch (modalType) {
 			case 'submit': {
 				setSubmitOpen(false);
 				break;
+			}
+			case 'resume': {
+				setApplyOpen(false);
 			}
 			default: {
 				console.log('no such case');
@@ -215,12 +230,32 @@ function ProjectDetail(props) {
 					handleModalClose(modalType);
 				}}
 			/>
+			<ApplyModal
+				open={isApplyOpen}
+				challenge={challenge}
+				handleModalClose={(modalType) => {
+					handleModalClose(modalType);
+				}}
+			/>
 			<section className="prj_title_area">
 				<div className="prj_title">{challenge.title}</div>
 				<div className="prj_term">
 					{`기간 : `}
-					{moment(challenge.missions[0].dateBegin).format('YYYY-MM-DD')} ~{' '}
-					{moment(challenge.missions[0].dateFin).format('YYYY-MM-DD')}
+					{(() => {
+						if (challenge.challengeTargetCode === 4) {
+							return `${moment(challenge.hire.dateBegin).format(
+								'YYYY-MM-DD',
+							)} ~ ${moment(challenge.hire.dateFin).format('YYYY-MM-DD')}`;
+						} else {
+							return `${moment(challenge.missions[0].dateBegin).format(
+								'YYYY-MM-DD',
+							)} ~ ${moment(challenge.missions[0].dateFin).format(
+								'YYYY-MM-DD',
+							)}`;
+						}
+					})()}
+					{/* {moment(challenge.missions[0].dateBegin).format('YYYY-MM-DD')} ~{' '}
+					{moment(challenge.missions[0].dateFin).format('YYYY-MM-DD')} */}
 				</div>
 			</section>
 			<section className="prj-info">
@@ -391,53 +426,6 @@ function ProjectDetail(props) {
 				</section>
 			</section>
 
-			{/* <section>
-        {' '}
-        <KakaoShareButton
-          challengeTitle={challenge.title}
-          imageUrl={'test'}
-          tags={['#test1', '#test2', '#test3']}
-          social={{
-            likeCount: 10,
-            commentCount: 23,
-            sharedCount: 333,
-          }}
-          buttons={[
-            {
-              title: 'button1',
-              link: {
-                mobileWebUrl: window.location.href,
-                webUrl: window.location.href,
-              },
-            },
-            {
-              title: 'button2',
-              link: {
-                mobileWebUrl: window.location.href,
-                webUrl: window.location.href,
-              },
-            },
-          ]}
-        />
-        <FacebookShareButton
-          title={challenge.title}
-          url={'https://u2-web-dev.azurewebsites.net'}
-        >
-          <FaFacebookSquare />
-        </FacebookShareButton>
-        <TwitterShareButton
-          title={challenge.title}
-          url={'https://u2-web-dev.azurewebsites.net'}
-        >
-          <FaTwitter />
-        </TwitterShareButton>
-        <LineShareButton
-          title={challenge.title}
-          url={'https://u2-web-dev.azurewebsites.net'}
-        >
-          <FaLine />
-        </LineShareButton>
-      </section> */}
 			<section className="commentInput">
 				<textarea
 					type="text"

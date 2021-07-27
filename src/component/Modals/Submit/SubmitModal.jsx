@@ -111,8 +111,8 @@ function Modal({ open, challenge, handleModalClose }) {
 	};
 
 	useEffect(() => {
-		console.log('challenge in submit modal: ', challenge);
 		if (challenge) {
+			console.log('challenge in submit modal: ', challenge);
 			var config = {
 				method: 'get',
 				// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmit
@@ -123,22 +123,24 @@ function Modal({ open, challenge, handleModalClose }) {
 				},
 				// data: data,
 			};
-			axios(config)
-				.then((response) => {
-					console.log('submit modal useEffect data: ', response.data);
-					setState((state) => ({
-						...state,
-						videos: response.data.missions[0].videos,
-						fileOrUrl: response.data.missions[0].fileOrUrl,
-						shareRequired: response.data.missions[0].shareRequired,
-						filmRequired: response.data.missions[0].filmRequired,
-						contactRequired: response.data.missions[0].contactRequired,
-						emailRequired: response.data.missions[0].emailRequired,
-					}));
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+			if (challenge.challengeTargetCode !== 4) {
+				axios(config)
+					.then((response) => {
+						console.log('submit modal useEffect data: ', response.data);
+						setState((state) => ({
+							...state,
+							videos: response.data.missions[0].videos,
+							fileOrUrl: response.data.missions[0].fileOrUrl,
+							shareRequired: response.data.missions[0].shareRequired,
+							filmRequired: response.data.missions[0].filmRequired,
+							contactRequired: response.data.missions[0].contactRequired,
+							emailRequired: response.data.missions[0].emailRequired,
+						}));
+					})
+					.catch((err) => {
+						console.log(err);
+					});
+			}
 		}
 	}, [challenge]);
 	const handleValidateMobile = () => {
@@ -403,7 +405,7 @@ function Modal({ open, challenge, handleModalClose }) {
 		//1. 제출할때
 		//0. 챌린지
 		console.log('body: ', data);
-		TextFile(data);
+		// TextFile(data);
 		console.log('token: ', localStorage.getItem('token'));
 		var config = {
 			method: 'post',
@@ -426,8 +428,12 @@ function Modal({ open, challenge, handleModalClose }) {
 				}
 			})
 			.catch((err) => {
-				console.log('err: ', err);
-				alert(err);
+				console.log('err: ', err.response);
+				if (err.response.data.error === 'Already submitted') {
+					alert('이미 제출한 프로젝트 입니다.');
+				} else {
+					alert(err.response.data);
+				}
 			});
 	};
 

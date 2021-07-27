@@ -2,6 +2,7 @@ import { useHistory } from 'react-router-dom';
 import { PrjInfoContainer } from './ProjectInfoStyled';
 function ProjectInfo({ challenge }) {
 	const history = useHistory();
+	console.log('projectInfo challenge: ', challenge);
 	switch (
 		challenge.challengeTargetCode //1: 공모전, 2: 전문영상 편집자 , 3: 영상 크리에이터/언플루언서, 4: 강사채용
 	) {
@@ -246,7 +247,7 @@ function ProjectInfo({ challenge }) {
 								<th className="prjinfo_header">카테고리</th>
 								<td>강사 채용</td>
 								<th>의뢰 주체</th>
-								<td>{challenge.companyA ? challenge.companyA : 'no data'}</td>
+								<td>{challenge.ownerName ? challenge.ownerName : 'no data'}</td>
 							</tr>
 							<tr>
 								<th>강의형태</th>

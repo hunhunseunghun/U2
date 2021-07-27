@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import DropDown from './DropDown/DropDown.jsx';
+// import DropDown from './DropDown/DropDown.jsx';
+import DropDown from '../../../component/OwnerDropDown/DropDown.jsx';
 import RecruitmentAreasModal from './RecruitmentAreasModal/RecruitmentAreasModal.jsx';
 import headerIcon from '../../../Img/Icons/headerIcon.png';
 import downArrowIcon from '../../../Img/Icons/sortarrowdown.png';
@@ -20,6 +21,7 @@ const IRRegi = () => {
 	const myStorage = window.localStorage;
 	let history = useHistory();
 	const userInfo = useSelector((state) => state.userInfo);
+	console.log('userInfo; ', userInfo);
 	if (!userInfo.email) {
 		if (window.confirm('로그인이 필요한 서비스입니다. 로그인 하시겠습니까?')) {
 			history.push('/login');
@@ -73,16 +75,16 @@ const IRRegi = () => {
 	};
 	//담당자
 	const [admin, setAdmin] = useState('');
-	const [adminExposure, setAdminExposure] = useState(false);
+	const [adminExposure, setAdminExposure] = useState(true);
 	//이메일
 	const [email, setEmail] = useState('');
 	const [emailErr, setEmailErr] = useState('');
-	const [emailExposure, setEmailExposure] = useState(false);
+	const [emailExposure, setEmailExposure] = useState(true);
 	//연락처
 	const [mobile1, setMobile1] = useState('010');
 	const [mobile2, setMobile2] = useState('');
 	const [mobile3, setMobile3] = useState('');
-	const [mobileExposure, setMobileExposure] = useState(false);
+	const [mobileExposure, setMobileExposure] = useState(true);
 	//handle date ----------------------------------------------
 	const [startDate, setStartDate] = useState(new Date());
 	const [finishDate, setFinishDate] = useState(new Date());
@@ -180,7 +182,7 @@ const IRRegi = () => {
 			// challengeIdx: 0,
 			title: title,
 			// subtitle: 'string',
-			// ownerIdx: 0,
+			ownerIdx: ownerIdx,
 			// companyA: 'string',
 			// companyB: 'string',
 			// url: 'string',
@@ -406,6 +408,7 @@ const IRRegi = () => {
 								accept={'image/*'}
 								memberIdx={userInfo.memberIdx}
 								folder={'market-logo'}
+								placeholder="이미지 선택. (권장비율: 16:9)"
 							/>
 						</div>
 					</section>
