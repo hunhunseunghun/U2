@@ -27,23 +27,24 @@ const Main = props => {
   const [mobileTypes, setMobileTypes] = useState(sortedChallenges);
   // 프로젝트 목록 mobile size carousel
 
+  //--------badge 관련
+  const [applies, setApplies] = useState(null);
+  const [submits, setSubmits] = useState(null);
+  const [wishes, setWishes] = useState(null);
+
+  console.log(pagedChallenges);
+  console.log(mobileTypes);
   let walk;
   let startX;
   let scrollValue;
 
   useEffect(() => {
-    function followInnerWidth() {
-      setMobileSize(window.innerWidth);
-    }
-    // Trigger this function on resize
-    window.addEventListener('resize', followInnerWidth);
-    //  Cleanup for componentWillUnmount
-    return () => window.removeEventListener('resize', followInnerWidth);
-  }, []);
-
-  useEffect(() => {
     setMobileTypes(pagedChallenges);
   }, [currentPage]);
+
+  useEffect(() => {
+    setMobileTypes(sortedChallenges);
+  }, [sortedChallenges]);
 
   //----------------------------------
 
@@ -75,6 +76,25 @@ const Main = props => {
 
   useEffect(() => {
     setIsLoadingChallenges(true);
+
+    //------------------------badge
+    var config = {
+      method: 'get',
+      url: process.env.REACT_APP_U2_DB_HOST + '/Campaign/challengebadge',
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+        'Content-Type': 'application/json',
+      },
+    };
+    axios(config)
+      .then(response => {
+        console.log('response.data: ', response.data);
+        setApplies(new Set(response.data.applies));
+        setSubmits(new Set(response.data.submits));
+        setWishes(new Set(response.data.wishes));
+      })
+      .catch(err => console.log(err));
+    //----------------------------badge end
     // console.log('server: ', server);
     axios
       .get(process.env.REACT_APP_U2_DB_HOST + `/Campaign/challenge`)
@@ -115,8 +135,109 @@ const Main = props => {
           <TopView challenges={challenges} />
           <TopAds handleRequestClick={handleRequestClick} />
         </section>
+        <div className="filter_section">
+          <div className="ft_deco">
+            <div className="ft_title mobile_view ">
+              필터 <img src="/img/ic_arrow_down.svg" />
+            </div>
+          </div>
+          <div className="fr_left_section">
+            <div
+              className="ftr_select_item"
+              onClick={() => {
+                handleTabChange(0);
+              }}
+            >
+              <div
+                className={
+                  tabActive === 0
+                    ? 'ftr_selected ftr_selected_active'
+                    : 'ftr_selected'
+                }
+              >
+                전체
+                <div className="style_mm_t"></div>
+              </div>
+            </div>
+            <div
+              className="ftr_select_item"
+              onClick={() => {
+                handleTabChange(1);
+              }}
+            >
+              <div
+                className={
+                  tabActive === 1
+                    ? 'ftr_selected ftr_selected_active'
+                    : 'ftr_selected'
+                }
+              >
+                공모전
+                <div className="style_mm_t"></div>
+              </div>
+            </div>
+            <div
+              className="ftr_select_item"
+              onClick={() => {
+                handleTabChange(3);
+              }}
+            >
+              <div
+                className={
+                  tabActive === 3
+                    ? 'ftr_selected ftr_selected_active'
+                    : 'ftr_selected'
+                }
+              >
+                영상크리에이터 / 인플루언서
+                <div className="style_mm_t"></div>
+              </div>
+            </div>
+            <div
+              className="ftr_select_item"
+              onClick={() => {
+                handleTabChange(2);
+              }}
+            >
+              <div
+                className={
+                  tabActive === 2
+                    ? 'ftr_selected ftr_selected_active'
+                    : 'ftr_selected'
+                }
+              >
+                전문영상 편집자
+                <div className="style_mm_t"></div>
+              </div>
+            </div>
+            <div
+              className="ftr_select_item"
+              onClick={() => {
+                handleTabChange(4);
+              }}
+            >
+              <div
+                className={
+                  tabActive === 4
+                    ? 'ftr_selected ftr_selected_active'
+                    : 'ftr_selected'
+                }
+              >
+                강사채용
+                <div className="style_mm_t"></div>
+              </div>
+            </div>
+          </div>
+          {/* <div class="ft_right_section">
+            <div class="ftr_select_item">
+              <div class="ftr_selected ">
+                최신순 <img src="/img/ic_arrow_down.svg" />
+              </div>
+            </div>
+          </div> */}
+        </div>
         <section className="challenge_wrap">
-          <section className="challenge_tab">
+          {/* <section className="challenge_tab">
             <div
               className={
                 tabActive === 0
@@ -177,7 +298,7 @@ const Main = props => {
             >
               <span>강사채용</span>
             </div>
-          </section>
+          </section> */}
 
           {mobileSize > 900 ? (
             <div className="challange_ele">
@@ -216,6 +337,11 @@ const Main = props => {
                                 challenge={ele}
                                 key={`${ele.challengeIdx}`}
                                 history={props.history}
+                                badgeData={{
+                                  applies: applies,
+                                  submits: submits,
+                                  wishes: wishes,
+                                }}
                               />
                             );
                           }
@@ -225,6 +351,11 @@ const Main = props => {
                                 challenge={ele}
                                 key={`${ele.challengeIdx}`}
                                 history={props.history}
+                                badgeData={{
+                                  applies: applies,
+                                  submits: submits,
+                                  wishes: wishes,
+                                }}
                               />
                             );
                           }
@@ -238,6 +369,11 @@ const Main = props => {
                                 key={`${ele.challengeIdx}`}
                                 history={props.history}
                                 idx={idx}
+                                badgeData={{
+                                  applies: applies,
+                                  submits: submits,
+                                  wishes: wishes,
+                                }}
                               />
                             );
                           }
@@ -248,6 +384,11 @@ const Main = props => {
                                 key={`${ele.challengeIdx}`}
                                 history={props.history}
                                 idx={idx}
+                                badgeData={{
+                                  applies: applies,
+                                  submits: submits,
+                                  wishes: wishes,
+                                }}
                               />
                             );
                           }
@@ -328,20 +469,6 @@ const Main = props => {
             </div>
           )}
         </section>
-
-        {!moreActive && isLoadingChallenges === false && (
-          <Pagination2
-            className="creatormarket_pagenation"
-            itemsCount={
-              challenges.filter(
-                challenge =>
-                  challenge.challengeTargetCode === tabActive || tabActive === 0
-              ).length
-            }
-            pageSize={pageSize}
-            handlePageChange={handlePageChange}
-          ></Pagination2>
-        )}
 
         <section className="challenge_more_btn_area">
           {' '}

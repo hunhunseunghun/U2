@@ -73,7 +73,7 @@ export const EleContainer = styled.div`
 
     .challenge_progress_text {
       display: flex;
-      font-size: 12px;
+      font-size: 15px;
       line-height: 18px;
       font-weight: 600;
       color: #ff1405;
@@ -99,7 +99,7 @@ export const EleContainer = styled.div`
     grid-template-columns: 1fr 1fr 1fr;
     place-items: center;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 15px;
 
     div {
       display: grid;
@@ -124,7 +124,7 @@ export const EleContainer = styled.div`
     display: flex;
     font-weight: 500;
 
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .challenge_cmtval_area {

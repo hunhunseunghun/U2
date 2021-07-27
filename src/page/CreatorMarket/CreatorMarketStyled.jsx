@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 export const MainContainer = styled.div`
-  padding: 40px 45px 100px;
-  background-color: #fafafa;
+  padding: 0px 45px 100px;
+  /* background-color: #fafafa; */
+  background-color: #ffffff;
   display: flex;
   justify-content: center;
   min-width: 900px;
@@ -22,8 +23,29 @@ export const MainContainer = styled.div`
 
   .challenge_wrap {
   }
+  .filter_section {
+    margin-top: 10px;
+    padding: 0 20px;
+    border-top: 0;
+
+    .ftr_selected {
+      padding-bottom: 2px;
+    }
+    .ftr_selected_active {
+      position: relative;
+      .style_mm_t {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        right: -6px;
+        top: 4px;
+        border-radius: 2px;
+        background-color: black;
+      }
+    }
+  }
   .challenge_tab {
-    margin-top: 76px;
+    margin-top: 40px;
     max-width: 100%;
     height: 40px;
     display: grid;
@@ -32,9 +54,11 @@ export const MainContainer = styled.div`
     border-right: none;
     border-left: none;
     /* background-color: #f6f6f6; */
-    color: #aaa;
     font-weight: 600;
     font-size: 18px;
+
+    border-bottom: 1px solid #eee;
+    font-size: 15px;
 
     div {
       display: grid;

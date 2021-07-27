@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { FiCheck, FiX } from 'react-icons/fi';
+import { BsStarFill } from 'react-icons/bs';
 import { EleContainer } from './ContentElementStyled.jsx';
 import blankImg from '../../../Img/no_image.png';
 import { calcRemainDays } from '../../../library/timeSetting.js';
 import { getSingleFileFromBlob } from '../../../library/azureBlob.js';
+import { useSelector } from 'react-redux';
 const ContentElement = props => {
+  const userInfo = useSelector(state => state.userInfo);
   const [myRegistration, setMyRegistration] = useState(false);
   const [mySubmit, setMySubmit] = useState(false);
   const challenge = props.challenge;
   const [src, setSrc] = useState('');
   console.log('challenge inside contentelement: ', challenge);
-  useEffect(async () => {
+  console.log('props: ', props);
+  useEffect(() => {
     if (challenge.logo) {
-      setSrc(await getSingleFileFromBlob(challenge.logo));
+      setSrc(getSingleFileFromBlob(challenge.logo));
     } else {
       setSrc(blankImg);
     }
@@ -25,7 +29,10 @@ const ContentElement = props => {
         });
       }}
     >
-      <div className="challenge_img_area">
+      <div
+        className="challenge_img_area"
+        style={{ backgroundImage: `url(src)` }}
+      >
         <img src={src} alt={src} className="challenge_img" />
         {/* {tItem.bannerImage === null && (
           <div className={'no_img'}>
@@ -33,6 +40,18 @@ const ContentElement = props => {
             <span className={'not_contents'}>Image not found</span>
           </div>
         )} */}
+      </div>
+      <div>
+        {' '}
+        {props.badgeData.applies &&
+          props.badgeData.applies.has(challenge.challengeIdx) && // should be challenge.challengeIdx
+          '내가 지원'}
+        {props.badgeData.submits &&
+          props.badgeData.submits.has(challenge.challengeIdx) &&
+          '내가 제출'}
+        {props.badgeData.wishes &&
+          props.badgeData.wishes.has(challenge.challengeIdx) && <BsStarFill />}
+        {challenge.memberIdx === userInfo.memberIdx && '내가 등록'}
       </div>
       <div className="challenge_contents">
         <h1 className="challenge_title">{challenge.title}</h1>
@@ -63,7 +82,7 @@ const ContentElement = props => {
           </div>
           <div className="budgetArea">
             <div className="budget">
-              {challenge.reward ? challenge.reward : '---'}
+              {challenge.reward ? challenge.reward : '--'}
             </div>
             <div className="bugetText">예산금액</div>
           </div>
@@ -88,9 +107,7 @@ const ContentElement = props => {
           <div className="budgetArea">
             <div className="bugetText">예산금액</div>
             <div className="budget">
-              {challenge.reward
-                ? challenge.reward
-                : '--vadasdfadfavsdfasdvadfasdf-'}
+              {challenge.reward ? challenge.reward : '--'}
             </div>
           </div>
           <div className="remainDateArea">
