@@ -184,9 +184,9 @@ function RegistTable() {
 											</td>
 											<td>
 												{data.challengeTargetCode === 1 && '공모전'}
-												{data.challengeTargetCode === 2 &&
+												{data.challengeTargetCode === 2 && '전문영상 편집자'}
+												{data.challengeTargetCode === 3 &&
 													'영상 크리에이터/인플루언서'}
-												{data.challengeTargetCode === 3 && '전문영상 편집자'}
 												{data.challengeTargetCode === 4 && '강사채용'}
 											</td>
 											<td>

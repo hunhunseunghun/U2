@@ -22,10 +22,11 @@ import axios from 'axios';
 import { TextFile } from '../../../library/getJson';
 import Ckeditor5 from '../../../component/Ckeditor5/Ckeditor5.jsx';
 
-const VidCreatorRegi = () => {
+const VidCreatorRegi = (props) => {
 	let history = useHistory();
 	const userInfo = useSelector((state) => state.userInfo);
-	if (!userInfo.email) {
+	const path = props.location.pathname;
+	if (!localStorage.getItem('token')) {
 		if (window.confirm('로그인이 필요한 서비스입니다. 로그인 하시겠습니까?')) {
 			history.push('/login');
 		} else {
@@ -134,8 +135,13 @@ const VidCreatorRegi = () => {
 		// if(competition && title && (isOnline || isVideoProduction) && (isEmail || isMobile) && )
 		if (!(profiles.length > 0)) return alert('주최사를 선택해주십시오');
 		if (!title) return alert('프로젝트명을 입력해주십시오');
-		if (!(isOnline || isVideoProduction))
-			return alert('접수방법을 선택해주십시오');
+		if (!(isOnline || isVideoProduction)) {
+			return alert(
+				path === '/videditor'
+					? '온라인 게시방법을 선택해주십시오'
+					: '접수방법을 선택해주십시오',
+			);
+		}
 		console.log('isOnline: ', isOnline);
 		if (isOnline) {
 			if (!(isYoutube || isTiktok || isVimeo)) {
@@ -176,9 +182,6 @@ const VidCreatorRegi = () => {
 			};
 
 			rewards.push(rewardsEle);
-		} else {
-			alert('모든 필수 입력란을 작성해주세요.');
-			return;
 		}
 		if (confirmRewardsDate && rewardDate && isDirectReward) {
 			var rewardsEle = {
@@ -188,9 +191,6 @@ const VidCreatorRegi = () => {
 			};
 
 			rewards.push(rewardsEle);
-		} else {
-			alert('모든 필수 입력란을 작성해주세요.');
-			return;
 		}
 		var videos = [];
 		isYoutube && videos.push({ platform: 'YU' });
@@ -206,7 +206,7 @@ const VidCreatorRegi = () => {
 				ownerName: profiles[defaultIdx].companyName,
 				ownerCat: profiles[defaultIdx].cat,
 				company: profiles[defaultIdx].companyName,
-				challengeTargetCode: 3,
+				challengeTargetCode: path === '/videditor' ? 2 : 3,
 				// companyA: organizer,
 				// companyB: sponsor,
 				url: refvidUrl,
@@ -248,7 +248,6 @@ const VidCreatorRegi = () => {
 			},
 			data: body,
 		};
-		console.log('vidEditorRegi post body : ', body);
 		axios(config)
 			.then((res) => {
 				console.log('videditorregi response data', res);
@@ -257,9 +256,9 @@ const VidCreatorRegi = () => {
 				history.push('/creatormarket');
 			})
 			.catch((err) => {
-				console.log(err);
+				console.log(err.response);
 				setSubmitClicked(false);
-				alert(err);
+				alert(err.response.data);
 			});
 	};
 	const handleNewData = (data) => {
@@ -278,6 +277,11 @@ const VidCreatorRegi = () => {
 	};
 
 	useEffect(() => {
+		// props.props.match.params.challengeIdx;
+		console.log('props:', props);
+		if (!userInfo.email) {
+			history.push('/creatormarket');
+		}
 		var config = {
 			method: 'get',
 			url:
@@ -368,16 +372,30 @@ const VidCreatorRegi = () => {
 				</div>
 				<section className="videditorregi_title_sub">
 					<img src={headerIcon} alt="" />
-					<div>영상 크리에이터/ 인플루언서 등록</div>
+					{path === '/videditor' ? (
+						<div>전문영상 편집자 등록</div>
+					) : (
+						<div>영상 크리에이터/ 인플루언서 등록</div>
+					)}
+					{/* <div>영상 크리에이터/ 인플루언서 등록</div> */}
 				</section>
 				<section>
-					<div>
+					{path === '/vidcreator' && (
+						<div>
+							해당 영상 제작/편집 프리랜서들에게 단 몇 분만에 연락을 취해 보실
+							수 있습니다. 프로필 정보나 평가 등급, 포트폴리오 자료, 등을
+							확인해보신 다음에, 채팅 서비스를 이용하여 얘기도 나눠 보십시오.
+							작업 결과를 받으면, 그 결과를 확인하여 100% 만족하실 때에만 그
+							보상을 지불해 주십시오.
+						</div>
+					)}
+					{/* <div>
 						해당 영상 제작/편집 프리랜서들에게 단 몇 분만에 연락을 취해 보실 수
 						있습니다. 프로필 정보나 평가 등급, 포트폴리오 자료, 등을 확인해보신
 						다음에, 채팅 서비스를 이용하여 얘기도 나눠 보십시오. 작업 결과를
 						받으면, 그 결과를 확인하여 100% 만족하실 때에만 그 보상을 지불해
 						주십시오.
-					</div>
+					</div> */}
 				</section>
 
 				<section className="videditorregi_items">
@@ -544,7 +562,9 @@ const VidCreatorRegi = () => {
 						</div>
 					</section>
 					<section className="ele">
-						<div className="menu">* 접수방법</div>
+						<div className="menu">
+							{path === '/videditor' ? '* 편집자 포트폴리오' : '* 접수방법'}
+						</div>
 						<div className="inputInfo reception_info">
 							<div className="reception_form">
 								<table className="reception_table">
