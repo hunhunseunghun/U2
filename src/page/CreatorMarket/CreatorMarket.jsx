@@ -28,6 +28,8 @@ const Main = props => {
   // 프로젝트 목록 mobile size carousel
 
   // mobile size handling
+  //모바일 creator_filter_section
+  const [filterDropdown, setFilterDropdown] = useState(false);
   const [mobileTypes, setMobileTypes] = useState(sortedChallenges);
   const [mobileSize, setMobileSize] = useState(window.innerWidth);
   useEffect(() => {
@@ -38,7 +40,7 @@ const Main = props => {
   }, [sortedChallenges]);
   const handleResize = () => {
     setMobileSize(window.innerWidth);
-    console.log('handleResize함수 실행', mobileSize);
+    mobileSize > 900 && setFilterDropdown(false);
   };
   useEffect(() => {
     window.addEventListener('resize', handleResize);
@@ -47,8 +49,6 @@ const Main = props => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-  //모바일 creator_filter_section
-  const [filterDropdown, setFilterDropdown] = useState(false);
 
   //--------badge 관련
   const [applies, setApplies] = useState(null);
@@ -161,7 +161,6 @@ const Main = props => {
               }
               onClick={() => {
                 setFilterDropdown(!filterDropdown);
-                console.log(filterDropdown);
               }}
             >
               필터 <img src="/img/ic_arrow_down.svg" />
@@ -177,41 +176,51 @@ const Main = props => {
                 className="ft_title"
                 onClick={() => {
                   handleTabChange(0);
+                  setFilterDropdown(!filterDropdown);
                 }}
               >
                 전체
+                <div className={tabActive === 0 ? 'style_mm_t' : null}></div>
               </div>
               <div
                 className="ft_title"
                 onClick={() => {
                   handleTabChange(1);
+                  setFilterDropdown(!filterDropdown);
                 }}
               >
                 공모전
+                <div className={tabActive === 1 ? 'style_mm_t' : null}></div>
               </div>
               <div
                 className="ft_title"
                 onClick={() => {
                   handleTabChange(3);
+                  setFilterDropdown(!filterDropdown);
                 }}
               >
                 영상크리에이터 / 인플루언서
+                <div className={tabActive === 3 ? 'style_mm_t' : null}></div>
               </div>
               <div
                 className="ft_title"
                 onClick={() => {
                   handleTabChange(2);
+                  setFilterDropdown(!filterDropdown);
                 }}
               >
                 전문영상 편집자
+                <div className={tabActive === 2 ? 'style_mm_t' : null}></div>
               </div>
               <div
                 className="ft_title"
                 onClick={() => {
                   handleTabChange(4);
+                  setFilterDropdown(!filterDropdown);
                 }}
               >
                 강사채용
+                <div className={tabActive === 4 ? 'style_mm_t' : null}></div>
               </div>
             </div>
           </div>
@@ -471,7 +480,7 @@ const Main = props => {
                   }
                 }
               })()}
-              {!moreActive && isLoadingChallenges === false && (
+              {/* {!moreActive && isLoadingChallenges === false && (
                 <Pagination2
                   className="creatormarket_pagenation"
                   itemsCount={
@@ -484,7 +493,7 @@ const Main = props => {
                   pageSize={pageSize}
                   handlePageChange={handlePageChange}
                 ></Pagination2>
-              )}
+              )} */}
             </div>
           ) : (
             <div className="challange_mobile_ele">

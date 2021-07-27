@@ -12,7 +12,7 @@ export const EleContainer = styled.div`
 
   .challenge_img_area {
     width: 100%;
-    min-height: 100px;
+    /* min-height: 100px; */
     background-size: cover;
     background-color: #eee;
     display: flex;
@@ -24,12 +24,12 @@ export const EleContainer = styled.div`
     width: 100%;
     /* min-height: 230px;
 		max-height: 250px; */
-    height: 230px;
+    /* height: 230px; */
   }
   .challenge_contents {
-    padding: 16px 25px;
+    padding: 10px 20px;
     box-sizing: border-box;
-    border-bottom: 1px solid #eee;
+    border: 1px solid #eee;
     border-top: none;
     height: 200px;
   }
@@ -43,7 +43,7 @@ export const EleContainer = styled.div`
   }
 
   .challenge_sub {
-    height: 60%;
+    height: 70%;
     margin-top: 8px;
     font-size: 14px;
     color: #989898;
@@ -65,6 +65,7 @@ export const EleContainer = styled.div`
     justify-items: center;
     justify-content: space-between;
     align-items: center;
+    border: 1px solid #eee;
   }
 
   .challenge_progress_area {

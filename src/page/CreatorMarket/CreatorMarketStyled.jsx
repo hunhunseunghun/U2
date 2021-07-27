@@ -63,7 +63,7 @@ export const MainContainer = styled.div`
             width: 4px;
             height: 4px;
             right: -6px;
-            top: 4px;
+            top: 5px;
             border-radius: 2px;
             background-color: black;
           }
@@ -351,21 +351,32 @@ export const MainContainer = styled.div`
       left: 0;
       right: 0;
       padding: 10px 20px;
-      background-color: #fff;
-      border-bottom: 1px solid #eee;
+      background-color: #fffffff2;
+      /* border-bottom: 1px solid #eee; */
       z-index: 10;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+
       .ft_title {
+        position: relative;
         display: block;
-        font-size: 12px;
+        font-size: 15px;
         font-weight: 600;
         margin: 10px 0 0;
         &.filter_arrow_up {
           img {
             transform: rotateZ(180deg);
           }
+        }
+        .style_mm_t {
+          position: absolute;
+          width: 4px;
+          height: 4px;
+          right: -6px;
+          top: 5px;
+          border-radius: 2px;
+          background-color: black;
         }
       }
     }
