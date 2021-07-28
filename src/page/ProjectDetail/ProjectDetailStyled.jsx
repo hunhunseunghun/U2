@@ -40,7 +40,21 @@ export const ProjectDetailContainer = styled.div`
     .prj_content_wrap {
       width: 100%;
       font-size: 15px;
-      padding: 0 20px;
+      padding: 0 20px 20px 20px;
+      border-bottom: 1px solid #afafaf;
+    }
+
+    .image_resized {
+      width: 100%;
+      img {
+        width: 100%;
+      }
+    }
+    figure {
+      width: 100%;
+      img {
+        width: 100%;
+      }
     }
   }
 
@@ -79,8 +93,8 @@ export const ProjectDetailContainer = styled.div`
         padding: 5px 10px;
         margin: 0 5px;
         border-radius: 4px;
-        font-size: 16px;
-        font-weight: 600;
+        font-size: 15px;
+        font-weight: 500;
         color: #898989;
         transition-duration: 0.2s;
         &:hover {
@@ -93,19 +107,19 @@ export const ProjectDetailContainer = styled.div`
     }
     .prj_control_middle button:last-child {
       border: 1px solid #d1d1d1;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 500;
       color: #fff;
       padding: 4px 10px;
       transition-duration: 0.2s;
 
-      background-color: #f84135;
+      background-color: #ff4438;
       border-color: #f84135;
       &:hover {
         cursor: pointer;
         color: #fff;
-        background-color: #ff2a1b;
-        border-color: #ff2a1b;
+        background-color: #ff1100;
+        border-color: #d10e00;
         transition-duration: 0.2s;
       }
     }
@@ -207,21 +221,23 @@ export const ProjectDetailContainer = styled.div`
       font-size: 13px;
     }
     .commet_active_btn {
-      background-color: #292727;
+      background-color: #ff4438;
       color: white;
-      font-size: 13px;
+      font-size: 15px;
       border-radius: 5px;
       transition: background-color 0.2s;
       &:hover {
         cursor: pointer;
+        background-color: #ff1100;
       }
     }
     .comment_inactive_btn {
-      background-color: #b9b9b9;
-      color: white;
-      font-size: 13px;
+      color: #898989;
+      font-size: 15px;
       border-radius: 5px;
+      border: 1px solid #d1d1d1;
       transition: background-color 0.2s;
+      font-weight: 500;
       &:hover {
         cursor: default;
       }
@@ -232,7 +248,7 @@ export const ProjectDetailContainer = styled.div`
     display: flex;
     flex-direction: column;
     border-top: 2px solid #c5c5c5;
-    border-bottom: 2px solid #c5c5c5;
+    /* border-bottom: 2px solid #c5c5c5; */
     padding: 10px 5px;
     font-weight: 400;
 
