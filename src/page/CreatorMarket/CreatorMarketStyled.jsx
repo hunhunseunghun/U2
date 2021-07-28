@@ -19,6 +19,7 @@ export const MainContainer = styled.div`
     overflow: hidden;
     padding-bottom: 38.8%;
     display: flex;
+    box-sizing: border-box;
   }
 
   .challenge_wrap {

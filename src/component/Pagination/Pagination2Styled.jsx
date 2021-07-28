@@ -16,7 +16,6 @@ export const Pagination2Styled = styled.nav`
     margin: 0 1px;
     background-color: inherit;
     color: #747474;
-    border-radius: 100px;
   }
   button:hover {
     cursor: pointer;
@@ -27,9 +26,10 @@ export const Pagination2Styled = styled.nav`
     font-weight: bolder;
     background-color: #454545;
     color: #ffffff;
+    border-radius: 100px;
   }
   button.page {
-    width: 22px;
+    width: 20px;
     height: 20px;
     /* border: 1px solid #776666; */
     /* font-size: 13px; */

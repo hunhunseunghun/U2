@@ -4,7 +4,7 @@ export const AdsContainer = styled.div`
   position: absolute;
   top: 0;
   right: 0;
-  width: 20%;
+  width: 19.5%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -12,6 +12,7 @@ export const AdsContainer = styled.div`
   /* background: linear-gradient(#ffffff, #ffffff); */
   background-color: #fafafa;
   text-align: center;
+
   .contents_wrap {
     position: relative;
     width: 90%;
