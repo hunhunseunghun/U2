@@ -99,7 +99,12 @@ const ProjectRegi = () => {
                     onChange={handleChekcboxChange}
                     chekced={false}
                   />
-                  <div>공모전</div>
+                </div>
+                <div className="projectregi_checkbox_bottom">
+                  <div className="projectregi_checkbox_iconwrap">
+                    <img src="/img/trophy.png" alt="공모전" />
+                  </div>
+                  <div className="projectregi_checkbox_text">공모전</div>
                 </div>
               </section>
               <section className="contentArea">
@@ -140,7 +145,14 @@ const ProjectRegi = () => {
                     value="videditor"
                     onChange={handleChekcboxChange}
                   />
-                  <div>전문영상{<br />}편집자</div>
+                </div>
+                <div className="projectregi_checkbox_bottom">
+                  <div className="projectregi_checkbox_iconwrap">
+                    <img src="/img/film-editing.png" alt="전문영상편집자" />
+                  </div>
+                  <div className="projectregi_checkbox_text">
+                    전문영상{<br />}편집자
+                  </div>
                 </div>
               </section>
               <section className="contentArea">
@@ -184,11 +196,22 @@ const ProjectRegi = () => {
                     onChange={handleChekcboxChange}
                     chekced={false}
                   />
-                  <div className="prjregi_vidcreator_text">
+                  {/* <div className="prjregi_vidcreator_text">
                     영상 크리에이터{<br />} 인플루언서
                   </div>
                   <div className="prjregi_vidcreator_text_mobile">
                     영상{<br />}크리에이터{<br />}인플루언서
+                  </div> */}
+                </div>
+                <div className="projectregi_checkbox_bottom">
+                  <div className="projectregi_checkbox_iconwrap">
+                    <img
+                      src="/img/video-editing-app.png"
+                      alt="영상크리에이터인플루언서"
+                    />
+                  </div>
+                  <div className="projectregi_checkbox_text">
+                    영상 크리에이터{<br />} 인플루언서
                   </div>
                 </div>
               </section>
@@ -233,7 +256,12 @@ const ProjectRegi = () => {
                     onChange={handleChekcboxChange}
                     chekced={false}
                   />
-                  <div>강사 채용</div>
+                </div>
+                <div className="projectregi_checkbox_bottom">
+                  <div className="projectregi_checkbox_iconwrap">
+                    <img src="/img/teacher.png" alt="강사채용" />
+                  </div>
+                  <div className="projectregi_checkbox_text">강사 채용</div>
                 </div>
               </section>
               <section className="contentArea">

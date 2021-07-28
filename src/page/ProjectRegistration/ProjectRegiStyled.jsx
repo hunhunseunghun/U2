@@ -69,10 +69,9 @@ export const PrjRegiContainer = styled.div`
 
   .projectregi_checkbox_area {
     padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    place-items: center;
+
     /* background: linear-gradient(#fff, #f5f5f5);
     box-shadow: 0 8px 8px #fff inset, 0 -8px 8px #f5f5f5 inset; */
     background-color: #fff;
@@ -81,19 +80,20 @@ export const PrjRegiContainer = styled.div`
     /* background-color: #f3f3f3; */
 
     .projectregi_checkbox {
-      display: flex;
-
-      align-items: center;
-      line-height: 20px;
+      width: 100%;
+      display: grid;
+      place-items: center;
+      /* line-height: 20px;
       font-size: 18px;
       font-weight: 600;
-      width: 130px;
+      width: 130px; */
 
       input {
-        width: 18px;
+        width: 40px;
+        /* width: 18px;
         height: 18px;
         cursor: pointer;
-        margin-right: 10px;
+        margin-right: 10px; */
       }
       div {
         font-size: 18px;
@@ -103,6 +103,16 @@ export const PrjRegiContainer = styled.div`
       }
       .prjregi_vidcreator_text_mobile {
         display: none;
+      }
+    }
+    .projectregi_checkbox_bottom {
+      display: flex;
+      box-sizing: border-box;
+
+      .projectregi_checkbox_iconwrap {
+        img {
+          max-width: 50px;
+        }
       }
     }
 
