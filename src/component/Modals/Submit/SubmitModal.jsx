@@ -351,13 +351,18 @@ function Modal({ open, challenge, handleModalClose }) {
 		console.log(userInfo);
 		if (checkSubmit()) return;
 		setState((preState) => ({ ...preState, submitClicked: true }));
-		let totalURLs = new Array().concat(
-			YUarr,
-			TTarr,
-			VMarr,
-			DRarr,
-			videoFile && videoFile.platform && videoFile,
-		);
+		let totalURLs = [];
+		if (videoFile && videoFile.platform) {
+			totalURLs = new Array().concat(
+				YUarr,
+				TTarr,
+				VMarr,
+				DRarr,
+				videoFile && videoFile.platform && videoFile,
+			);
+		} else {
+			totalURLs = new Array().concat(YUarr, TTarr, VMarr, DRarr);
+		}
 
 		var data = {
 			videos: totalURLs.map((el, idx) => {

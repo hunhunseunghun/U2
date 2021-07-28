@@ -48,9 +48,9 @@ function WorkDetail(props) {
 				if (data.challengeTargetCode === 1) {
 					challengeTarget = '공모전';
 				} else if (data.challengeTargetCode === 2) {
-					challengeTarget = '영상 크리에이터 인플루언서';
-				} else if (data.challengeTargetCode === 3) {
 					challengeTarget = '전문영상 편집자';
+				} else if (data.challengeTargetCode === 3) {
+					challengeTarget = '영상 크리에이터 인플루언서';
 				} else if (data.challengeTargetCode === 4) {
 					challengeTarget = '강사 채용';
 				}

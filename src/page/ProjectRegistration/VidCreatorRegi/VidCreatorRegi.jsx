@@ -85,7 +85,7 @@ const VidCreatorRegi = (props) => {
 	const [isYoutube, setIsYoutube] = useState(false);
 	const [isTiktok, setIsTiktok] = useState(false);
 	const [isVimeo, setIsVimeo] = useState(false);
-	const [isFileOrUrl, setFileOrUrl] = useState(false);
+	const [isFileOrUrl, setFileOrUrl] = useState(true);
 	//제출자 개인정보 수집
 	const [isEmail, setIsEmail] = useState(false);
 	const [emailRequired, setEmailRequired] = useState(true);
@@ -235,7 +235,7 @@ const VidCreatorRegi = (props) => {
 				chargeeMail: email,
 				chargeeMailShown: emailExposure,
 			},
-			'전문영상편집자',
+			'영상',
 		);
 		// TextFile(body);
 		console.log('config body data', body);

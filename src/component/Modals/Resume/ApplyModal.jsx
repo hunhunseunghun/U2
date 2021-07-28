@@ -243,27 +243,17 @@ function Modal({ open, challenge, handleModalClose }) {
 			!address3
 		) {
 			alert('모든 필수 항목을 입력해야 합니다.');
-			return;
+			return true;
 		}
 	};
+	const [submitClicked, setSubmitClicked] = useState(false);
 	const handleSubmit = () => {
-		checkSubmit();
-
+		if (submitClicked) return;
+		if (checkSubmit() === true) {
+			return;
+		}
+		setSubmitClicked(true);
 		var data = {
-			// videos: [
-			// 	{
-			// 		challengeIdx: 0,
-			// 		missonSeq: 0,
-			// 		memberIdx: 0,
-			// 		seq: 0,
-			// 		platform: 'string',
-			// 		videoId: 'string',
-			// 		registMemberIdx: 0,
-			// 		registDate: '2021-07-14T17:37:33.365Z',
-			// 		modifyMemberIdx: 0,
-			// 		modifyDate: '2021-07-14T17:37:33.365Z',
-			// 	},
-			// ],
 			videos: pfURLs.map((el, idx) => {
 				return {
 					challengeIdx: 29, //challenge.challengeIdx
@@ -316,16 +306,23 @@ function Modal({ open, challenge, handleModalClose }) {
 				console.log('response: ');
 				console.log(response.data);
 				if (!alert('제출 완료되었습니다.')) {
-					handleModalClose('submit');
 					clearState();
+					handleModalClose('apply');
+					setSubmitClicked(false);
 				}
 			})
 			.catch((err) => {
 				console.log('err: ', err.response);
 				if (err.response.data.error === 'Already submitted') {
 					alert('이미 제출한 프로젝트 입니다.');
+					setSubmitClicked(false);
+					handleModalClose('apply');
+					clearState();
 				} else {
 					alert(err.response.data);
+					clearState();
+					handleModalClose('apply');
+					setSubmitClicked(false);
 				}
 			});
 	};
@@ -769,7 +766,7 @@ function Modal({ open, challenge, handleModalClose }) {
 							<button
 								className="close"
 								onClick={() => {
-									handleModalClose('resume');
+									handleModalClose('apply');
 								}}
 							>
 								{' '}

@@ -102,7 +102,7 @@ function ProjectDetail(props) {
 				setSubmitOpen(false);
 				break;
 			}
-			case 'resume': {
+			case 'apply': {
 				setApplyOpen(false);
 			}
 			default: {

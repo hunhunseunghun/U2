@@ -21,7 +21,6 @@ const IRRegi = () => {
 	const myStorage = window.localStorage;
 	let history = useHistory();
 	const userInfo = useSelector((state) => state.userInfo);
-	console.log('userInfo; ', userInfo);
 	if (!localStorage.getItem('token')) {
 		if (window.confirm('로그인이 필요한 서비스입니다. 로그인 하시겠습니까?')) {
 			history.push('/login');

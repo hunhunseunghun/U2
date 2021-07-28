@@ -1,6 +1,6 @@
 export default function (params, type) {
 	switch (type) {
-		case '전문영상편집자': {
+		case '영상': {
 			return {
 				challengeDesc: params.challengeDesc,
 				challengeTargetCode: params.challengeTargetCode,
