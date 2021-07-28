@@ -52,7 +52,7 @@ const IRRegi = () => {
 	//근무지역
 	const [irLocation, setIrLocation] = useState(null);
 	//접수방법 u2life ---
-	const [submitU2, setSubmitU2] = useState(false);
+	const [submitU2, setSubmitU2] = useState(true);
 	//제출 서류 ---
 	const [submitDocs, setSubmitDocs] = useState([]);
 	const [korChekced, setKorChecked] = useState(false);
@@ -207,7 +207,7 @@ const IRRegi = () => {
 			// modifyDate: '2021-07-26T07:31:59.884Z',
 		};
 		console.log('body: ', body);
-		TextFile(body);
+		// TextFile(body);
 		var config = {
 			method: 'post',
 			url: process.env.REACT_APP_U2_DB_HOST + '/Campaign/challenge',
@@ -225,9 +225,9 @@ const IRRegi = () => {
 				history.push('/creatormarket');
 			})
 			.catch((err) => {
-				console.log(err);
+				console.log(err.response.data);
 				setSubmitClicked(false);
-				alert(err);
+				alert(err.response.data);
 			});
 	};
 
@@ -347,7 +347,9 @@ const IRRegi = () => {
 				// setCompetition(newForm);
 				setProfiles(newForm);
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => {
+				console.log(err.response.data);
+			});
 	}, []);
 	return (
 		<RegiConationer className="contents_wrap">
@@ -521,6 +523,7 @@ const IRRegi = () => {
 									onChange={() => {
 										setSubmitU2(!submitU2);
 									}}
+									disabled={true}
 								/>
 								<div>U2.LIFE접수</div>
 							</div>
