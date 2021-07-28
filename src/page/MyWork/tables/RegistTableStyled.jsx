@@ -6,15 +6,28 @@ export const RegistTableContainer = styled.div`
   .prjregi_btn_area {
     display: flex;
     justify-content: flex-end;
-    margin: 30px 0 5px 0;
+    margin: 30px 0 10px 0;
 
     .prjregi_btn {
       display: flex;
       padding: 5px 12px;
-      background-color: #000000;
+      border: 1px solid #d1d1d1;
+      color: #898989;
+      background-color: #fff;
+      border-radius: 4px;
+      transition: all 0.2s;
       &:hover {
         cursor: pointer;
-        background-color: #353535;
+        color: #181818;
+        border-color: #898989;
+        transition: all 0.2s;
+        .prjregi_btn_plusicon,
+        .prjregi_btn_text {
+          cursor: pointer;
+          color: #181818;
+          border-color: #898989;
+          transition: all 0.2s;
+        }
       }
     }
     .prjregi_btn_plusicon {
@@ -22,7 +35,8 @@ export const RegistTableContainer = styled.div`
       place-items: center;
       font-weight: 800;
       font-size: 22px;
-      color: #fff;
+      color: #898989;
+      transition: all 0.2s;
     }
     .prjregi_btn_text {
       position: relative;
@@ -30,8 +44,9 @@ export const RegistTableContainer = styled.div`
       display: grid;
       place-items: center;
       font-size: 15px;
-      color: #fff;
+      color: #898989;
       margin-left: 5px;
+      transition: all 0.2s;
     }
   }
   table {
@@ -53,11 +68,13 @@ export const RegistTableContainer = styled.div`
     }
   }
   thead {
-    background-color: #e3e3e3;
-    border-top: 2px solid #2d2123;
+    background-color: #f8f8f8;
+    border-top: 2px solid #ddd;
     border-bottom: 1px solid #eee;
     font-size: 15px;
-    color: #747474;
+    color: #181818;
+    font-weight: 500;
+
     th {
       padding: 10px 0;
       section {
@@ -65,6 +82,10 @@ export const RegistTableContainer = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
+
+        span {
+          font-weight: 500;
+        }
 
         img {
           position: relative;
@@ -88,6 +109,7 @@ export const RegistTableContainer = styled.div`
     td {
       padding: 10px;
       height: 100px;
+      font-weight: 500;
     }
   }
 

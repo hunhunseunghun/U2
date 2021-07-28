@@ -14,14 +14,19 @@ export const InspectTableContainer = styled.div`
     .inspect_table_header_left {
       button {
         width: 68px;
-        height: 22px;
+        padding: 3px 5px;
         margin-right: 2px;
-        background-color: #a1a1a1;
         color: #fff;
-
+        font-size: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        color: #898989;
+        transition: border 0.2s;
         &:hover {
           cursor: pointer;
-          background-color: #929292;
+          color: black;
+          border-color: #898989;
+          transition: border 0.2s;
         }
       }
     }
@@ -74,12 +79,13 @@ export const InspectTableContainer = styled.div`
     }
 
     thead {
-      background-color: #e3e3e3;
-      border-top: 2px solid #2d2123;
+      background-color: #f8f8f8;
+      border-top: 2px solid #ddd;
       border-bottom: 1px solid #eee;
-      color: #747474;
+      color: #9c9c9c;
       th {
         padding: 20px 0px;
+        font-size: 13px;
       }
     }
 
@@ -144,10 +150,15 @@ export const InspectTableContainer = styled.div`
       background: linear-gradient(#fff, #f2f2f2);
       border: 1px solid #eee;
       color: #747474;
-      font-size: 12px;
+      transition: background 0.2s;
+      font-size: 15px;
+      font-weight: 500;
+
       &:hover {
         cursor: pointer;
         background: linear-gradient(#fff, #e0e0e0);
+        transition: background 0.2s;
+        color: #181818;
       }
     }
   }

@@ -46,18 +46,19 @@ export const ChallengeTableContainer = styled.div`
   .challenge_table {
     width: 800px;
     height: 100%;
-    border-top: 2px solid #2d2123;
+    border-top: 2px solid #ddd;
     border-spacing: 0;
     margin-bottom: 20px;
 
     thead {
-      background-color: #e3e3e3;
-      border-top: 2px solid #2d2123;
+      background-color: #f8f8f8;
+      border-top: 2px solid #ddd;
       border-bottom: 1px solid #eee;
 
       color: #747474;
       th {
         padding: 20px 0px;
+        font-size: 13px;
       }
     }
 
@@ -83,10 +84,13 @@ export const ChallengeTableContainer = styled.div`
       background: linear-gradient(#fff, #f2f2f2);
       border: 1px solid #eee;
       color: #747474;
-      font-size: 12px;
+
+      font-size: 15px;
+      font-weight: 500;
       &:hover {
         cursor: pointer;
         background: linear-gradient(#fff, #e0e0e0);
+        color: #181818;
       }
     }
   }

@@ -1,15 +1,14 @@
 import styled from 'styled-components';
 
 export const WorkDetailContainer = styled.div`
-  padding: 40px 45px 100px;
-  background-color: #fff;
+  padding: 60px 45px 100px;
+
   display: flex;
   justify-content: center;
   font-weight: 500;
   .workdetail-section {
     display: flex;
     grid-template-columns: 2fr 6.5fr;
-
     grid-gap: 3px;
   }
   .section1 {
@@ -35,12 +34,12 @@ export const WorkDetailContainer = styled.div`
         width: 100%;
       }
       .project_name_sub {
-        font-size: 12px;
+        font-size: 15px;
         line-height: 14px;
         color: #747474;
       }
       .porject_name {
-        font-size: 20px;
+        font-size: 18px;
         line-height: 24x;
       }
     }
@@ -52,7 +51,7 @@ export const WorkDetailContainer = styled.div`
         padding-bottom: 20px;
         border-bottom: 1px solid #eee;
         .project_target_sub {
-          font-size: 12px;
+          font-size: 15px;
           line-height: 14px;
           margin-bottom: 5px;
           color: #747474;
@@ -60,7 +59,7 @@ export const WorkDetailContainer = styled.div`
         .project_target {
           font-size: 18px;
           line-height: 21px;
-          color: #474747;
+          color: #181818;
         }
       }
       .project_info_lastchild {
@@ -77,14 +76,14 @@ export const WorkDetailContainer = styled.div`
       position: relative;
       width: 120px;
       padding: 10px 10px;
-      font-size: 12px;
+      font-size: 15px;
       font-weight: 500;
       border: 1px solid #eee;
       border-bottom: 0;
       text-align: center;
       align-items: center;
-      color: #535353;
-      background-color: #e3e3e3;
+      color: #9c9c9c;
+      background-color: #f8f8f8;
       border-bottom: 1px solid #eee;
       z-index: 2;
       &:hover {
@@ -114,5 +113,8 @@ export const WorkDetailContainer = styled.div`
     hr {
       width: inherit;
     }
+  }
+  @media only screen and (max-width: 900px) {
+    padding: 80px 5px 50px;
   }
 `;

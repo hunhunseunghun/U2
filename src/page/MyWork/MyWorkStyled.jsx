@@ -2,11 +2,11 @@ import styled from 'styled-components';
 const unselectedTab = require('../../Img/MWunselectedTab.png').default;
 const selectedTab = require('../../Img/MWselectedTab.png').default;
 export const MyWorkContainer = styled.div`
-  padding: 40px 45px 100px;
+  padding: 20px 45px 100px;
   display: grid;
   place-items: center;
   font-weight: 500;
-  /* background-color: #fafafa; */
+
   z-index: 1;
 
   .mywork_section {
@@ -29,7 +29,7 @@ export const MyWorkContainer = styled.div`
       text-align: center;
       justify-content: center;
       align-items: center;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 32px;
     }
 
@@ -70,8 +70,8 @@ export const MyWorkContainer = styled.div`
     border-bottom: 0;
   }
   span.unselected {
-    color: #535353;
-    background-color: #e3e3e3;
+    color: #afafaf;
+    background-color: #f3f3f3;
     border-bottom: 1px solid #eee;
   }
   span.newAlert {
