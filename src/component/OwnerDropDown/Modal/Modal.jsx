@@ -40,7 +40,7 @@ const Modal = ({
 		console.log(userInfo);
 		const data = requestBodyGenerator(
 			{
-				// logo:logo,
+				logo: logo,
 				ownerIdx: userInfo.memberIdx,
 				memberIdx: userInfo.memberIdx,
 				ownerCat: ownerCat,
@@ -145,7 +145,7 @@ const Modal = ({
 										multiple={false}
 										accept={'image/*'}
 										memberIdx={userInfo.memberIdx}
-										folder={'market-logo'}
+										folder={'market-owner-logo'}
 										placeholder="이미지 선택. (권장비율: 16:9)"
 									/>
 								</div>

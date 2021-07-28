@@ -119,7 +119,7 @@ function ProjectInfo({ challenge }) {
 								<th className="prjinfo_header">카테고리</th>
 								<td>전문 영상 편집자</td>
 								<th>의뢰 주체</th>
-								<td>{challenge.companyA ? challenge.companyA : 'no data'}</td>
+								<td>{challenge.ownerName ? challenge.ownerName : 'no data'}</td>
 							</tr>
 							<tr>
 								<th>미팅</th>
@@ -183,7 +183,7 @@ function ProjectInfo({ challenge }) {
 								<th className="prjinfo_header">카테고리</th>
 								<td>'영상 크리에이터/ 인플루언서</td>
 								<th>의뢰 주체</th>
-								<td>{challenge.companyA ? challenge.companyA : 'no data'}</td>
+								<td>{challenge.ownerName ? challenge.ownerName : 'no data'}</td>
 							</tr>
 							<tr>
 								<th>미팅</th>

@@ -1,19 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { ProjectDetailContainer } from './ProjectDetailStyled';
 import ProjectInfo from './PrjInfo/ProjectInfo';
-import {
-	FaShareSquare,
-	FaFacebookSquare,
-	FaTwitter,
-	FaLine,
-} from 'react-icons/fa';
+import { FaShareSquare } from 'react-icons/fa';
 import KakaoShareButton from '../../library/KakaoShareButton';
 import axios from 'axios';
-import {
-	FacebookShareButton,
-	TwitterShareButton,
-	LineShareButton,
-} from 'react-share';
+import { FacebookShareButton, TwitterShareButton } from 'react-share';
 import topviewEx from '../../Img/topviewEX.png';
 import ReactHtmlParser from 'react-html-parser';
 // import SubmitModal from './Modal/SubmitModal';
@@ -240,18 +231,19 @@ function ProjectDetail(props) {
 			<section className="prj_title_area">
 				<div className="prj_title">{challenge.title}</div>
 				<div className="prj_term">
-					{`기간 : `}
+					{/* {`기간 : `} */}
 					{(() => {
 						if (challenge.challengeTargetCode === 4) {
-							return `${moment(challenge.hire.dateBegin).format(
+							return `기간: ${moment(challenge.hire.dateBegin).format(
 								'YYYY-MM-DD',
 							)} ~ ${moment(challenge.hire.dateFin).format('YYYY-MM-DD')}`;
 						} else {
-							return `${moment(challenge.missions[0].dateBegin).format(
-								'YYYY-MM-DD',
-							)} ~ ${moment(challenge.missions[0].dateFin).format(
-								'YYYY-MM-DD',
-							)}`;
+							if (challenge.missions && challenge.missions.length > 0)
+								return `기간: ${moment(challenge.missions[0].dateBegin).format(
+									'YYYY-MM-DD',
+								)} ~ ${moment(challenge.missions[0].dateFin).format(
+									'YYYY-MM-DD',
+								)}`;
 						}
 					})()}
 					{/* {moment(challenge.missions[0].dateBegin).format('YYYY-MM-DD')} ~{' '}

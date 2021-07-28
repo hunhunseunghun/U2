@@ -127,15 +127,16 @@ function Modal({ open, challenge, handleModalClose }) {
 				axios(config)
 					.then((response) => {
 						console.log('submit modal useEffect data: ', response.data);
-						setState((state) => ({
-							...state,
-							videos: response.data.missions[0].videos,
-							fileOrUrl: response.data.missions[0].fileOrUrl,
-							shareRequired: response.data.missions[0].shareRequired,
-							filmRequired: response.data.missions[0].filmRequired,
-							contactRequired: response.data.missions[0].contactRequired,
-							emailRequired: response.data.missions[0].emailRequired,
-						}));
+						if (response.data.missions && response.data.missions.length > 0)
+							setState((state) => ({
+								...state,
+								videos: response.data.missions[0].videos,
+								fileOrUrl: response.data.missions[0].fileOrUrl,
+								shareRequired: response.data.missions[0].shareRequired,
+								filmRequired: response.data.missions[0].filmRequired,
+								contactRequired: response.data.missions[0].contactRequired,
+								emailRequired: response.data.missions[0].emailRequired,
+							}));
 					})
 					.catch((err) => {
 						console.log(err);
