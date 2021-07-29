@@ -107,7 +107,7 @@ function Modal({ open, challenge, handleModalClose }) {
 		setState,
 	] = useState({ ...initialState });
 	const clearState = () => {
-		setState({ ...initialState, videos: videos });
+		setState({ ...initialState });
 	};
 
 	useEffect(() => {
@@ -437,6 +437,7 @@ function Modal({ open, challenge, handleModalClose }) {
 				console.log('err: ', err.response);
 				if (err.response.data.error === 'Already submitted') {
 					alert('이미 제출한 프로젝트 입니다.');
+					clearState();
 				} else {
 					alert(err.response.data);
 				}
@@ -541,6 +542,7 @@ function Modal({ open, challenge, handleModalClose }) {
 															})}
 															<li>
 																<input
+																	value={DRinput}
 																	onChange={(e) => {
 																		setState((preState) => ({
 																			...preState,
@@ -560,6 +562,7 @@ function Modal({ open, challenge, handleModalClose }) {
 																			setState((preState) => ({
 																				...preState,
 																				DRarr: copyArr,
+																				DRinput: '',
 																			}));
 																		}
 																	}}

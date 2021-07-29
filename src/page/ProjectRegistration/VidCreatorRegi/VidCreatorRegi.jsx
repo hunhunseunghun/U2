@@ -367,7 +367,7 @@ const VidCreatorRegi = (props) => {
 		<RegiConationer className="contents_wrap">
 			<div className="videditorregi_section">
 				<div className="videditorregi_title_area">
-					<div onClick={handleSubmit}>프로젝트 등록</div>
+					<div>프로젝트 등록</div>
 					<div className="videditorregi_title_style"></div>
 				</div>
 				<section className="videditorregi_title_sub">

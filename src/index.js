@@ -6,10 +6,10 @@ import reportWebVitals from './reportWebVitals';
 
 window.Kakao.init('46d7dfe1c4549fb4de7fd95f5b8fa57e'); // Kakao init
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+	<React.StrictMode>
+		<App />
+	</React.StrictMode>,
+	document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function

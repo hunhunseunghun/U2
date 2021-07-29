@@ -245,9 +245,7 @@ function RegistTable() {
 											<td>
 												{`${moment(data.missions[0].dateFin).format(
 													'YYYY-MM-DD',
-												)} ${moment(data.missions[0].dateFin).format(
-													'hh:mm:ss',
-												)}`}
+												)} ${moment(data.missions[0].dateFin).format('hh:mm')}`}
 											</td>
 											{/* <td>{data.missions[0].dateFin}</td> */}
 										</tr>

@@ -8,6 +8,7 @@ import 'react-phone-number-input/style.css';
 import AddressModal from '../../address/AddressModal';
 import Banks from '../../banks';
 import { validateEmail } from '../../../library/validate';
+import Uploader from '../../Uploader/Uploader';
 import { TextFile } from '../../../library/getJson';
 const initialState = {
 	title: '',
@@ -27,6 +28,8 @@ const initialState = {
 	pfURLs: [],
 	pfURLinput: '',
 	pfFile: '',
+	cv: null,
+	cvEng: null,
 	bankAccountNum: '',
 	banks: [],
 	bankCode: 0,
@@ -62,6 +65,8 @@ function Modal({ open, challenge, handleModalClose }) {
 			pfURLinput,
 			pfURLs,
 			pfFile,
+			cv,
+			cvEng,
 			bankAccountNum,
 			banks,
 			bankCode,
@@ -592,26 +597,113 @@ function Modal({ open, challenge, handleModalClose }) {
 								</div>
 							</section>
 							<section className="ele">
-								<div className="menu">이력서</div>
+								<div className="menu">국문 이력서</div>
 								<div className="inputInfo">
-									<input
-										type="file"
-										onChange={(e) => {
-											console.log(e.target.files);
-											// setImage(e.target.files[0].name);
+									<Uploader
+										setFilePath={(path) => {
 											setState((preState) => ({
 												...preState,
-												resumeFiles: e.target.files,
+												cv: path,
 											}));
 										}}
-										multiple
-									></input>
+										multiple={false}
+										accept={'.pdf,.doc,.ppt'}
+										memberIdx={userInfo.memberIdx}
+										folder={'market-apply-cveng'}
+										placeholder="이력서 선택"
+									/>
+								</div>
+							</section>
+							<section className="ele">
+								<div className="menu">영문 이력서</div>
+								<div className="inputInfo">
+									<Uploader
+										setFilePath={(path) => {
+											setState((preState) => ({
+												...preState,
+												cvEng: path,
+											}));
+										}}
+										multiple={false}
+										accept={'.pdf,.doc,.ppt'}
+										memberIdx={userInfo.memberIdx}
+										folder={'market-apply-cveng'}
+										placeholder="Choose your curriculum vitae"
+									/>
 								</div>
 							</section>
 							<section className="ele">
 								<div className="menu">포트폴리오</div>
 								<div className="inputInfo URLs">
-									<span className="youtubeURL">URL:</span>
+									<table>
+										<tr>
+											<span className="youtubeURL">URL:</span>
+											<ul className="ul_URLs">
+												{pfURLs.map((el, idx) => {
+													return (
+														<li key={idx} className="li-url">
+															<input value={el} readOnly></input>
+															<BsDashSquareFill
+																className="plusMinus"
+																onClick={() => {
+																	let copyArr = pfURLs.slice();
+																	copyArr.splice(idx, 1);
+																	// setURLS(copyArr);
+																	setState((preState) => ({
+																		...preState,
+																		pfURLs: copyArr,
+																	}));
+																}}
+															/>
+														</li>
+													);
+												})}
+												<li>
+													<input
+														onChange={(e) => {
+															setState((preState) => ({
+																...preState,
+																pfURLinput: e.target.value,
+															}));
+														}}
+														value={pfURLinput}
+													></input>
+													<BsPlusSquareFill
+														className="plusMinus"
+														onClick={() => {
+															if (pfURLinput) {
+																let copyArr = pfURLs.slice();
+																copyArr.push(pfURLinput);
+																setState((preState) => ({
+																	...preState,
+																	pfURLs: copyArr,
+																	pfURLinput: '',
+																}));
+															}
+														}}
+													></BsPlusSquareFill>
+												</li>
+											</ul>
+										</tr>
+										<tr>
+											<div>
+												<Uploader
+													setFilePath={(path) => {
+														setState((preState) => ({
+															...preState,
+															pfFile: path,
+														}));
+													}}
+													multiple={false}
+													accept={'.pdf,.doc,.ppt'}
+													memberIdx={userInfo.memberIdx}
+													folder={'market-apply-potfolio '}
+													placeholder="포트폴리오 선택"
+												/>
+											</div>
+										</tr>
+									</table>
+									{/* <span className="youtubeURL">URL:</span>
 									<ul className="ul_URLs">
 										{pfURLs.map((el, idx) => {
 											return (
@@ -657,7 +749,22 @@ function Modal({ open, challenge, handleModalClose }) {
 												}}
 											></BsPlusSquareFill>
 										</li>
-									</ul>
+									</ul> */}
+									{/* <div>
+										<Uploader
+											setFilePath={(path) => {
+												setState((preState) => ({
+													...preState,
+													pfFile: path,
+												}));
+											}}
+											multiple={false}
+											accept={'.pdf,.doc,.ppt'}
+											memberIdx={userInfo.memberIdx}
+											folder={'market-apply-potfolio '}
+											placeholder="포트폴리오 선택"
+										/>
+									</div> */}
 								</div>
 							</section>
 							<section className="ele">

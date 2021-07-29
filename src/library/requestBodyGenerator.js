@@ -87,6 +87,7 @@ export default function (params, type) {
 				contact: params.contact,
 				socialMediaCode: params.socialMediaCode,
 				socialMediaId: params.socialMediaId,
+				logo: params.ownerLogo,
 				// "registMemberIdx": 0,
 				// "registDate": "2021-07-12T11:42:54.308Z",
 				// "modifyMemberIdx": 0,

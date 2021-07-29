@@ -18,7 +18,11 @@ const ContentElement = (props) => {
 		if (challenge.logo) {
 			setSrc(getSingleFileFromBlob(challenge.logo));
 		} else {
-			setSrc(blankImg);
+			if (challenge.ownerLogo) {
+				setSrc(getSingleFileFromBlob(challenge.ownerLogo));
+			} else {
+				setSrc(blankImg);
+			}
 		}
 	});
 	return (

@@ -4,16 +4,19 @@ import { WorkDetailContainer } from './WorkDetailStyled';
 import ChallengeTable from './tables/Challenge';
 import InspectTable from './tables/Inspect';
 import SubmissionModal from '../../component/Modals/Submission/SubmissionModal';
+import ApplymentModal from '../../component/Modals/Apply/applymentModal';
 import { getSingleFileFromBlob } from '../../library/azureBlob';
 import moment from 'moment';
 function WorkDetail(props) {
-	let [subject, setSubject] = useState('광고/홍보');
-	let [meeting, setMeeting] = useState('비대면');
-	let [terms, setTerms] = useState(['YouTube', 'TIKTOK', '파일 업로드']);
+	let [subject, setSubject] = useState('');
+	let [meeting, setMeeting] = useState();
+	let [terms, setTerms] = useState([]);
+	let [fields, setFields] = useState([]);
 	let [applyPeriod, setApplyPeriod] = useState(null);
-	let [prise, setPrise] = useState('10000원');
+	let [prise, setPrise] = useState([]);
 	let [projectTitle, setProjectTitle] = useState('');
 	let [mainImage, setMainImage] = useState(null);
+	let [challengeTargetCode, setChallengeTargetCode] = useState(0);
 	// let [currChallenges, setCurrChallenges] = useState(null);
 	let setTab;
 	if (props.location.state.isContriClicked) {
@@ -24,7 +27,8 @@ function WorkDetail(props) {
 		setTab = 0;
 	}
 	let [currentTab, setCurrentTab] = useState(setTab); //props에서 현재 탭 가져와 설정
-	let [modalProps, setModalProps] = useState({ open: false });
+	let [submission, setSubmission] = useState({ open: false });
+	let [applyment, setApplyment] = useState({ open: false });
 	// const [isLoading, setIsLoading] = useState(false);
 
 	// console.log(applyPeriod);
@@ -36,13 +40,15 @@ function WorkDetail(props) {
 					`/Campaign/challenge/${props.location.state.projectId}`, //sample data, should be challengeIdx.
 			)
 			.then((response) => {
-				console.log('imagesection response.data: ', response.data);
+				console.log('workdetail useEffect data: ', response.data);
 				let data = response.data;
 				let challengeTarget = '';
-				let contactRequired = '비대면';
+				let contactRequired = '';
 				let missionRequired = [];
 				let priceContent = [];
+				let fields = [];
 
+				setChallengeTargetCode(data.challengeTargetCode);
 				//대상 text
 
 				if (data.challengeTargetCode === 1) {
@@ -56,11 +62,6 @@ function WorkDetail(props) {
 				}
 
 				//프로젝트 미팅 text
-				if (data.meetCode === 1) {
-					contactRequired = '비대면';
-				} else if (data.meetCode === 2) {
-					contactRequired = '오프라인';
-				}
 
 				//보상 text
 				data.rewards.forEach((ele) => {
@@ -78,42 +79,73 @@ function WorkDetail(props) {
 						priceContent.push('정직원채용');
 					} else if (ele.cat === 7) {
 						priceContent.push('경품');
+					} else if (ele.cat === 0) {
+						priceContent.push(
+							`현금 : ${ele.pts} ${ele.currency.toUpperCase()}`,
+						);
 					}
 				});
 
 				setProjectTitle(data.title);
 				setSubject(challengeTarget);
-				setMeeting(contactRequired);
 				setMainImage(data.logo);
 				setPrise(priceContent);
-				setApplyPeriod(
-					moment(data.missions[0].dateBegin).format('YYYY-MM-DD') +
-						' ' +
-						moment(data.missions[0].dateBegin).format('hh:mm') +
-						' ~ ' +
-						moment(data.missions[0].dateFin).format('YYYY-MM-DD') +
-						' ' +
-						moment(data.missions[0].dateFin).format('hh:mm'),
-				);
+				if (data.challengeTargetCode !== 4) {
+					setApplyPeriod(
+						moment(data.missions[0].dateBegin).format('YYYY-MM-DD') +
+							' ' +
+							moment(data.missions[0].dateBegin).format('hh:mm') +
+							' ~ ' +
+							moment(data.missions[0].dateFin).format('YYYY-MM-DD') +
+							' ' +
+							moment(data.missions[0].dateFin).format('hh:mm'),
+					);
+					data.missions[0].videos.forEach((ele) => {
+						let result;
+						if (ele.platform === 'YU') {
+							result = 'YouTube';
+						} else if (ele.platform === 'TT') {
+							result = 'TIKTOK';
+						} else if (ele.platform === 'VM') {
+							result = 'Vimeo';
+						} else if (ele.platform === 'DR') {
+							result = '직접 입력';
+						} else if (ele.platform === 'FS') {
+							result = '파일 전송';
+						}
+						missionRequired.push(result);
+					});
+					setTerms(missionRequired);
+					if (data.meetCode === 1) {
+						contactRequired = '비대면';
+					} else if (data.meetCode === 2) {
+						contactRequired = '오프라인';
+					}
+					setMeeting(contactRequired);
+				} else {
+					console.log('data.hire.fields: ', data.hire.fields);
+
+					setFields(data.hire.fields);
+					setApplyPeriod(
+						moment(data.hire.dateBegin).format('YYYY-MM-DD') +
+							' ' +
+							moment(data.hire.dateBegin).format('hh:mm') +
+							' ~ ' +
+							moment(data.hire.dateFin).format('YYYY-MM-DD') +
+							' ' +
+							moment(data.hire.dateFin).format('hh:mm'),
+					);
+					if (data.hire.isOnline === 0) {
+						contactRequired = '온라인 비대면';
+					} else if (data.hire.isOnline === 1) {
+						contactRequired = '오프라인 대면';
+					} else if (data.hire.isOnline === 2) {
+						contactRequired = '추후협의';
+					}
+					setMeeting(contactRequired);
+				}
 
 				//과제완료조건 text
-				data.missions[0].videos.forEach((ele) => {
-					let result;
-					if (ele.platform === 'YU') {
-						result = 'YouTube';
-					} else if (ele.platform === 'TT') {
-						result = 'TIKTOK';
-					} else if (ele.platform === 'VM') {
-						result = 'Vimeo';
-					} else if (ele.platform === 'DR') {
-						result = '직접 입력';
-					} else if (ele.platform === 'FS') {
-						result = '파일 전송';
-					}
-					missionRequired.push(result);
-				});
-
-				setTerms(missionRequired);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -125,10 +157,26 @@ function WorkDetail(props) {
 	};
 	let handlePresentationClick = (data) => {
 		console.log('data: ', data);
-		setModalProps({ open: true, data: data });
+		if (challengeTargetCode === 4) {
+			setApplyment({ open: true, data });
+		} else {
+			setSubmission({ open: true, data: data });
+		}
 	};
-	let handleModalClose = () => {
-		setModalProps({ ...modalProps, open: false });
+	let handleModalClose = (modalType) => {
+		switch (modalType) {
+			case 'submission': {
+				setSubmission({ ...submission, open: false });
+				break;
+			}
+			case 'applyment': {
+				setApplyment({ ...applyment, open: false });
+				break;
+			}
+			default: {
+				break;
+			}
+		}
 	};
 	const tables = {
 		0: (
@@ -148,12 +196,20 @@ function WorkDetail(props) {
 	return (
 		<WorkDetailContainer id="workdetail-root">
 			<SubmissionModal
-				open={modalProps.open}
+				open={submission.open}
 				// challengeIdx={props.location.state.projectId}
 				handleModalClose={(modalType) => handleModalClose(modalType)}
 				isAdmin={true}
-				propsData={modalProps.data}
+				propsData={submission.data}
 			/>
+			<ApplymentModal
+				open={applyment.open}
+				handleModalClose={(modalType) => {
+					handleModalClose(modalType);
+				}}
+				propsData={applyment.data}
+			/>
+
 			<section className="workdetail-section">
 				<section className="section1">
 					<div className="workdetail_img_wrap">
@@ -178,23 +234,39 @@ function WorkDetail(props) {
 							<div className="project_target_sub">프로젝트 미팅</div>
 							<div className="project_target">{meeting}</div>
 						</section>
-						<section className="project_target_wrap">
-							<div className="project_target_sub">과제완료 조건</div>
-							{terms.map((term, idx) => {
-								return (
-									<div className="project_target" key={idx}>
-										{term}
-									</div>
-								);
-							})}
-						</section>
+						{challengeTargetCode !== 4 ? (
+							<section className="project_target_wrap">
+								<div className="project_target_sub">과제완료 조건</div>
+								{terms.map((term, idx) => {
+									return (
+										<div className="project_target" key={idx}>
+											{term}
+										</div>
+									);
+								})}
+							</section>
+						) : (
+							<section className="project_target_wrap">
+								<div className="project_target_sub">모집 분야</div>
+								{fields.map((field, idx) => {
+									return (
+										<div className="project_target" key={idx}>
+											{field.fieldName}
+										</div>
+									);
+								})}
+							</section>
+						)}
+
 						<section className="project_target_wrap ">
 							<div className="project_target_sub">접수기간</div>
 							<div className="project_target">{applyPeriod}</div>
 						</section>
 						<section className="project_target_wrap project_info_lastchild">
 							<div className="project_target_sub">보상</div>
-							<div className="project_target">{prise}</div>
+							<div className="project_target">
+								{prise.length > 0 ? prise : '-'}
+							</div>
 						</section>
 					</div>
 				</section>
