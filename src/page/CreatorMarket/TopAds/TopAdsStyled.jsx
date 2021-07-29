@@ -155,9 +155,10 @@ export const AdsContainer = styled.div`
     position: static;
     width: 100%;
     display: grid;
-    background: linear-gradient(#ffffff, #c5c5c5);
+    background-color: #fafafa;
     text-align: center;
     box-sizing: border-box;
+    margin-top: 5px;
 
     .contents_wrap {
       position: static;

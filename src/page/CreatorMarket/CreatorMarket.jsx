@@ -10,9 +10,19 @@ import { useSelector } from 'react-redux';
 import { BiLoader } from 'react-icons/bi';
 import Pagination2 from '../../component/Pagination/Pagination2.jsx';
 import { paginate } from '../../component/Pagination/paginate.js';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.min.css';
+import 'swiper/components/pagination/pagination.min.css';
+import 'swiper/components/navigation/navigation.min.css';
+import SwiperCore, {
+  Navigation,
+  Pagination,
+  Mousewheel,
+  Keyboard,
+} from 'swiper/core';
+SwiperCore.use([Navigation, Pagination, Mousewheel, Keyboard]);
 
 const Main = props => {
-  const sliderRef = useRef();
   const [tabActive, setTabActive] = useState(0); // 탭 선택 소팅
   //0: 전체, 1: 공모전, 2: 전문영상 편집자 , 3: 영상 크리에이터/언플루언서, 4: 강사채용
   const [challenges, setChallengs] = useState(null); // 챌린지 데이터
@@ -56,6 +66,8 @@ const Main = props => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  //mobile touch slider func---
 
   //--------badge 관련
   const [applies, setApplies] = useState(null);
@@ -465,24 +477,18 @@ const Main = props => {
                   }
                 }
               })()}
-              {/* {!moreActive && isLoadingChallenges === false && (
-                <Pagination2
-                  className="creatormarket_pagenation"
-                  itemsCount={
-                    challenges.filter(
-                      challenge =>
-                        challenge.challengeTargetCode === tabActive ||
-                        tabActive === 0
-                    ).length
-                  }
-                  pageSize={pageSize}
-                  handlePageChange={handlePageChange}
-                ></Pagination2>
-              )} */}
             </div>
           ) : (
-            <div className="challange_mobile_ele">
-              {mobileTypes.map((ele, idx) => (
+            <Swiper
+              slidesPerView={mobileSize < 430 ? 2 : 3}
+              spaceBetween={10}
+              freeMode={true}
+              mousewheel={true}
+              keyboard={true}
+              navigation={true}
+              className="challange_mobile_ele mySwiper"
+            >
+              {/* {challenges.map((ele, idx) => (
                 <ContentElement
                   challenge={ele}
                   key={`${ele.challengeIdx}`}
@@ -493,7 +499,7 @@ const Main = props => {
                     wishes: wishes,
                   }}
                 />
-              ))}
+              ))} */}
 
               {(() => {
                 switch (isLoadingChallenges) {
@@ -501,20 +507,22 @@ const Main = props => {
                     return <BiLoader className="BiLoader" />;
                   }
                   case false: {
-                    return mobileTypes.map((ele, idx) => {
+                    return challenges.map((ele, idx) => {
                       // console.log('ele: ', ele);
                       if (tabActive === 0) {
                         return (
-                          <ContentElement
-                            challenge={ele}
-                            key={`${ele.challengeIdx}`}
-                            history={props.history}
-                            badgeData={{
-                              applies: applies,
-                              submits: submits,
-                              wishes: wishes,
-                            }}
-                          />
+                          <SwiperSlide data-hash={`slide${idx}`}>
+                            <ContentElement
+                              challenge={ele}
+                              key={`${ele.challengeIdx}`}
+                              history={props.history}
+                              badgeData={{
+                                applies: applies,
+                                submits: submits,
+                                wishes: wishes,
+                              }}
+                            />
+                          </SwiperSlide>
                         );
                       }
                       if (ele.challengeTargetCode === tabActive) {
@@ -541,7 +549,7 @@ const Main = props => {
                   }
                 }
               })()}
-            </div>
+            </Swiper>
           )}
         </section>
         {!moreActive && isLoadingChallenges === false && (

@@ -388,4 +388,23 @@ export const MainContainer = styled.div`
   .sub_filter_section_inactive {
     display: none;
   }
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: #ff110036;
+
+    &:after {
+      font-size: 25px;
+    }
+    &:hover {
+      color: #ff1100;
+    }
+  }
+  .swiper-pagination-progressbar .swiper-pagination-progressbar-opposite {
+    top: unset;
+    bottom: 0;
+  }
+
+  .swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
+    background-color: black;
+  }
 `;

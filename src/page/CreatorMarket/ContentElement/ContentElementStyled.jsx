@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const EleContainer = styled.div`
   display: inline-block;
   vertical-align: top;
-  width: calc(33.3% - 30px);
-  margin: 25px 15px 25px 15px;
+  width: calc(33.3% - 40px);
+  margin: 25px 20px 25px 20px;
   position: relative;
   cursor: pointer;
   text-align: left;
@@ -83,7 +83,6 @@ export const EleContainer = styled.div`
     box-sizing: border-box;
     border: 1px solid #eee;
     border-top: none;
-    height: 200px;
   }
   .challenge_title {
     font-size: 18px;
@@ -95,7 +94,7 @@ export const EleContainer = styled.div`
   }
 
   .challenge_sub {
-    height: 70%;
+    max-height: 70%;
     margin-top: 8px;
     font-size: 14px;
     color: #989898;
@@ -147,7 +146,7 @@ export const EleContainer = styled.div`
 
   .challenge_info_top {
     width: 100%;
-    margin-top: 25px;
+    margin-top: 15px;
     display: flex;
     justify-content: space-between;
     /* grid-template-columns: 1fr 1fr 1fr; */
@@ -167,6 +166,12 @@ export const EleContainer = styled.div`
     .remainDateArea {
       display: inline-block;
       text-align: center;
+
+      .remainText,
+      .bugetText,
+      .meetText {
+        font-weight: 500;
+      }
     }
 
     input {
@@ -225,14 +230,12 @@ export const EleContainer = styled.div`
   @media screen and (max-width: 900px) {
     display: inline-block;
     vertical-align: top;
-    /* width: 80%; */
-    min-width: 170px;
-    margin: 0;
+    width: 98%;
+    margin: 10px 0;
     position: static;
     cursor: pointer;
     text-align: left;
     background-color: #fff;
-    transform: scale(0.9);
 
     .challenge_img_area {
       background-size: cover;
@@ -259,7 +262,6 @@ export const EleContainer = styled.div`
       box-sizing: border-box;
       border-bottom: 1px solid #eee;
       border-top: none;
-      height: 140px;
     }
     .challenge_title {
       font-size: 13px;

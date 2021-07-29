@@ -55,6 +55,8 @@ export const PrjRegiContainer = styled.div`
   }
   .projectregi_item {
     border: 1px solid #eee;
+    border: 1px solid #dadada;
+    border: 1px solid #cacaca;
     background-color: #fff;
   }
 
@@ -68,9 +70,12 @@ export const PrjRegiContainer = styled.div`
   .projectregi_checkbox_area {
     padding: 5% 5%;
     place-items: center;
+
     background-color: #fff;
     border-right: 1px solid #eee;
+    border-right: 1px solid #cacaca;
     text-align: center;
+
     .projectregi_checkbox {
       display: grid;
       place-items: center;
@@ -159,7 +164,7 @@ export const PrjRegiContainer = styled.div`
           text-overflow: ellipsis;
           white-space: nowrap;
           color: #898989;
-          background-color: #fff;
+          background-color: #f8f8f8;
         }
       }
     }
