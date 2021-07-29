@@ -241,7 +241,7 @@ export const EleContainer = styled.div`
       background-size: cover;
       background-color: #eee;
       width: 100%;
-      height: 120px;
+      /* height: 120px; */
       min-height: none;
       background-color: #eee;
       display: flex;
