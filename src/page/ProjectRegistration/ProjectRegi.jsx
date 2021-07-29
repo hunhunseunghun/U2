@@ -196,12 +196,6 @@ const ProjectRegi = () => {
                     onChange={handleChekcboxChange}
                     chekced={false}
                   />
-                  {/* <div className="prjregi_vidcreator_text">
-                    영상 크리에이터{<br />} 인플루언서
-                  </div>
-                  <div className="prjregi_vidcreator_text_mobile">
-                    영상{<br />}크리에이터{<br />}인플루언서
-                  </div> */}
                 </div>
                 <div className="projectregi_checkbox_bottom">
                   <div className="projectregi_checkbox_iconwrap">
@@ -210,8 +204,11 @@ const ProjectRegi = () => {
                       alt="영상크리에이터인플루언서"
                     />
                   </div>
-                  <div className="projectregi_checkbox_text">
+                  <div className="projectregi_checkbox_text vidcreator_checbox_text">
                     영상 크리에이터{<br />} 인플루언서
+                  </div>
+                  <div className="projectregi_checkbox_text vidcreator_checbox_text_smallsize">
+                    영상 크리에이터 인플루언서
                   </div>
                 </div>
               </section>

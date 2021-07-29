@@ -8,6 +8,7 @@ export const PrjRegiContainer = styled.div`
   font-weight: 500;
 
   .projectregi_section {
+    width: 100%;
   }
 
   .projectregi_title_area {
@@ -50,93 +51,82 @@ export const PrjRegiContainer = styled.div`
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 1fr;
-    grid-gap: 25px;
-    margin: 5px 0;
-    box-sizing: border-box;
+    grid-gap: 20px;
   }
   .projectregi_item {
-    /* margin: 10px 10px 10px 0; */
     border: 1px solid #eee;
     background-color: #fff;
-
-    box-sizing: border-box;
   }
 
   .projectregi_item_innerwrap {
-    display: flex;
+    display: grid;
+    grid-template-columns: 3fr 7fr;
     height: 100%;
+    box-sizing: border-box;
   }
 
   .projectregi_checkbox_area {
-    padding: 10px;
-    display: grid;
+    padding: 5% 5%;
     place-items: center;
-
-    /* background: linear-gradient(#fff, #f5f5f5);
-    box-shadow: 0 8px 8px #fff inset, 0 -8px 8px #f5f5f5 inset; */
     background-color: #fff;
     border-right: 1px solid #eee;
-
-    /* background-color: #f3f3f3; */
-
+    text-align: center;
     .projectregi_checkbox {
-      width: 100%;
       display: grid;
       place-items: center;
-      /* line-height: 20px;
-      font-size: 18px;
-      font-weight: 600;
-      width: 130px; */
+      padding: 20% 10% 5% 10%;
 
       input {
-        width: 40px;
-        /* width: 18px;
-        height: 18px;
-        cursor: pointer;
-        margin-right: 10px; */
+        width: 50px;
+        height: 50px;
       }
       div {
         font-size: 18px;
       }
-      .prjregi_vidcreator_text {
-        font-size: 18px;
-      }
+
       .prjregi_vidcreator_text_mobile {
         display: none;
       }
     }
     .projectregi_checkbox_bottom {
       display: flex;
+      justify-content: center;
       box-sizing: border-box;
+      margin: 5%;
 
       .projectregi_checkbox_iconwrap {
+        display: grid;
+        place-items: center;
         img {
           max-width: 50px;
         }
       }
-    }
-
-    .projectregi_vidcreator_checkbox {
-      line-height: 16px;
-      font-size: 14px;
+      .projectregi_checkbox_text {
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+        padding-left: 5%;
+      }
+      .vidcreator_checbox_text {
+        font-size: 15px;
+      }
+      .vidcreator_checbox_text_smallsize {
+        display: none;
+      }
     }
   }
 
   .contentArea {
-    width: 100%;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-
+    padding: 2%;
+    box-sizing: border-box;
     .contentTop {
-      font-size: 15px;
+      font-size: 16px;
       box-sizing: border-box;
       .contentTitle {
         padding: 10px 0 5px 0;
       }
       p {
         all: unset;
-        width: 80%;
         font-size: 14px;
         color: #898989;
         word-break: break-all;
@@ -145,18 +135,15 @@ export const PrjRegiContainer = styled.div`
     }
 
     .contentBot {
-      width: 100%;
-      display: flex;
+      width: 103%;
+      display: block;
       align-items: center;
-      justify-content: space-between;
       margin-top: 10px;
 
-      box-sizing: border-box;
-
       .projectregi_content_item {
-        width: 9vw;
-
-        margin: 5px 5px 5px 0px;
+        display: inline-block;
+        margin: 3px 0.5% 3px 0;
+        width: 32%;
 
         video {
           width: 100%;
@@ -237,6 +224,52 @@ export const PrjRegiContainer = styled.div`
     }
     /* height: 160px; */
   }
+  @media only screen and (max-width: 1350px) and (min-width: 900px) {
+    padding: 20px 10px 100px;
+    .projectregi_checkbox_area {
+      padding: 5% 5%;
+      place-items: center;
+      background-color: #fff;
+      border-right: 1px solid #eee;
+      text-align: center;
+      .projectregi_checkbox {
+        display: grid;
+        place-items: center;
+        padding: 20% 10% 5% 10%;
+
+        input {
+          width: 50px;
+          height: 50px;
+        }
+      }
+      .projectregi_checkbox_bottom {
+        display: flex;
+        justify-content: center;
+        box-sizing: border-box;
+        margin: 10% 5% 0 5%;
+
+        .projectregi_checkbox_iconwrap {
+          display: grid;
+          place-items: center;
+          img {
+            max-width: 35px;
+          }
+        }
+        .projectregi_checkbox_text {
+          display: flex;
+          align-items: center;
+          font-size: 16px;
+          padding-left: 5%;
+        }
+        .vidcreator_checbox_text {
+          display: none;
+        }
+        .vidcreator_checbox_text_smallsize {
+          font-size: 14px;
+        }
+      }
+    }
+  }
   @media only screen and (max-width: 900px) {
     padding: 40px 10px 50px;
 
@@ -257,36 +290,54 @@ export const PrjRegiContainer = styled.div`
         margin-right: 5px;
       }
     }
+    .projectregi_item_innerwrap {
+      display: grid;
+      grid-template-columns: 2.5fr 7.5fr;
+      height: 100%;
+      box-sizing: border-box;
+    }
     .projectregi_checkbox_area {
-      padding: 5px;
-
       .projectregi_checkbox {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        line-height: 16px;
-        font-size: 12px;
-        font-weight: 600;
-        width: 90px;
+        position: relative;
+        top: 13%;
 
+        padding: 10% 10% 5% 10%;
         input {
-          width: 12px;
-          height: 12px;
-          cursor: pointer;
+          width: 35px;
+          height: 35px;
+
           margin-right: 5px;
         }
-        .prjregi_vidcreator_text {
+      }
+      .projectregi_checkbox_bottom {
+        position: relative;
+        top: 8%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        margin: 5px 0 0 0;
+
+        .projectregi_checkbox_iconwrap {
+          img {
+            max-width: 30px;
+          }
+        }
+        .projectregi_checkbox_text {
+          margin-top: 4px;
+          font-size: 15px;
+          line-height: 16px;
+          padding-left: 0;
+        }
+        .vidcreator_checbox_text {
+          display: block;
+          font-size: 13px;
+          line-height: 14px;
+        }
+        .vidcreator_checbox_text_smallsize {
           display: none;
         }
-        .prjregi_vidcreator_text_mobile {
-          display: block;
-          line-height: 15px;
-        }
-      }
-
-      .projectregi_vidcreator_checkbox {
-        line-height: 14px;
-        font-size: 8px;
       }
     }
 
@@ -294,43 +345,34 @@ export const PrjRegiContainer = styled.div`
       display: grid;
       grid-template-columns: 1fr;
       grid-template-rows: 1fr 1fr 1fr 1fr;
-      grid-gap: 15px;
+      grid-gap: 10px;
     }
 
     .contentArea {
-      padding-left: 7px;
+      padding: 5px;
       font-size: 12px;
 
       .contentTop {
         font-size: 14px;
         box-sizing: border-box;
         .contentTitle {
-          padding: 10px 0 5px 0;
+          padding: 5px 0 3px 0;
         }
         p {
           all: unset;
           width: 80%;
           font-size: 13px;
+          line-height: 14px;
           color: #898989;
           word-break: break-all;
           white-space: pre-line;
         }
       }
-
       .contentBot {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        .projectregi_content_item {
-          width: 20vw;
-
-          video {
-            width: 99%;
-          }
-        }
+        margin-top: 3px;
         .contentBot_irregi_text {
-          font-size: 13px;
+          font-size: 12px;
+          line-height: 12px;
         }
       }
     }
