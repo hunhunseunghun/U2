@@ -8,6 +8,7 @@ import 'react-phone-number-input/style.css';
 import AddressModal from '../../address/AddressModal';
 import Banks from '../../banks';
 import { validateEmail } from '../../../library/validate';
+import Uploader from '../../Uploader/Uploader';
 import { TextFile } from '../../../library/getJson';
 const initialState = {
 	title: '',
@@ -27,6 +28,8 @@ const initialState = {
 	pfURLs: [],
 	pfURLinput: '',
 	pfFile: '',
+	cv: null,
+	cvEng: null,
 	bankAccountNum: '',
 	banks: [],
 	bankCode: 0,
@@ -62,6 +65,8 @@ function Modal({ open, challenge, handleModalClose }) {
 			pfURLinput,
 			pfURLs,
 			pfFile,
+			cv,
+			cvEng,
 			bankAccountNum,
 			banks,
 			bankCode,
@@ -592,20 +597,39 @@ function Modal({ open, challenge, handleModalClose }) {
 								</div>
 							</section>
 							<section className="ele">
-								<div className="menu">이력서</div>
+								<div className="menu">국문 이력서</div>
 								<div className="inputInfo">
-									<input
-										type="file"
-										onChange={(e) => {
-											console.log(e.target.files);
-											// setImage(e.target.files[0].name);
+									<Uploader
+										setFilePath={(path) => {
 											setState((preState) => ({
 												...preState,
-												resumeFiles: e.target.files,
+												cv: path,
 											}));
 										}}
-										multiple
-									></input>
+										multiple={false}
+										accept={'.pdf,.doc,.ppt'}
+										memberIdx={userInfo.memberIdx}
+										folder={'market-apply-cveng'}
+										placeholder="이력서를 선택해주세요."
+									/>
+								</div>
+							</section>
+							<section className="ele">
+								<div className="menu">영문 이력서</div>
+								<div className="inputInfo">
+									<Uploader
+										setFilePath={(path) => {
+											setState((preState) => ({
+												...preState,
+												cvEng: path,
+											}));
+										}}
+										multiple={false}
+										accept={'.pdf,.doc,.ppt'}
+										memberIdx={userInfo.memberIdx}
+										folder={'market-apply-cveng'}
+										placeholder="Choose your curriculum vitae"
+									/>
 								</div>
 							</section>
 							<section className="ele">
@@ -633,15 +657,19 @@ function Modal({ open, challenge, handleModalClose }) {
 											);
 										})}
 										<li>
-											<input
-												onChange={(e) => {
+											<Uploader
+												setFilePath={(path) => {
 													setState((preState) => ({
 														...preState,
-														pfURLinput: e.target.value,
+														pfFile: path,
 													}));
 												}}
-												value={pfURLinput}
-											></input>
+												multiple={false}
+												accept={'.pdf,.doc,.ppt'}
+												memberIdx={userInfo.memberIdx}
+												folder={'market-apply-potfolio'}
+												placeholder="포트폴리오를 선택해주세요"
+											/>
 											<BsPlusSquareFill
 												className="plusMinus"
 												onClick={() => {

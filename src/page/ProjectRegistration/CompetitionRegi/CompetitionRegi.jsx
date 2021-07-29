@@ -272,9 +272,9 @@ const CompetitionRegi = () => {
 					history.push('/creatormarket');
 				})
 				.catch((err) => {
-					console.log(err);
+					console.log(err.response.data);
 					setSubmitClicked(false);
-					alert('공모전 등록에 실패했습니다.' + err);
+					alert('공모전 등록에 실패했습니다.' + err.response.data);
 				});
 		}
 	};
@@ -364,7 +364,7 @@ const CompetitionRegi = () => {
 							<DropDown
 								setDefaultIdx={setDefaultIdx}
 								setOwnerIdx={setOwnerIdx}
-								competition={competition}
+								profiles={competition}
 								setIsActive={setIsActive}
 								isActive={isActive}
 								handleNewData={handleNewData}
@@ -379,7 +379,7 @@ const CompetitionRegi = () => {
 									type="text"
 									className="competition_name_input"
 									style={{ width: '280px' }}
-									onChange={(e) => {
+									onBlur={(e) => {
 										setTitle(e.target.value);
 									}}
 									maxLength={20}
@@ -395,7 +395,7 @@ const CompetitionRegi = () => {
 								<input
 									type="text"
 									className="organizer"
-									onChange={(e) => {
+									onBlur={(e) => {
 										setOrganizer(e.target.value);
 									}}
 									maxLength={20}
@@ -411,7 +411,7 @@ const CompetitionRegi = () => {
 								<input
 									type="text"
 									className="sponsor"
-									onChange={(e) => {
+									onBlur={(e) => {
 										setSponsor(e.target.value);
 									}}
 									maxLength={20}
@@ -427,7 +427,7 @@ const CompetitionRegi = () => {
 								<input
 									type="text"
 									className="webpageURL"
-									onChange={(e) => {
+									onBlur={(e) => {
 										setWebpageURL(e.target.value);
 									}}
 								/>

@@ -13,6 +13,7 @@ import { paginate } from '../../component/Pagination/paginate.js';
 
 const Main = (props) => {
 	const sliderRef = useRef();
+	const firstPageButtonRef = useRef();
 	const [tabActive, setTabActive] = useState(0); // 탭 선택 소팅
 	//0: 전체, 1: 공모전, 2: 전문영상 편집자 , 3: 영상 크리에이터/언플루언서, 4: 강사채용
 	const [challenges, setChallengs] = useState(null); // 챌린지 데이터
@@ -102,10 +103,12 @@ const Main = (props) => {
 	};
 	const handleTabChange = (tab) => {
 		setTabActive(tab);
+		setCurrentPage(1);
+		firstPageButtonRef.current.refreshFirstPage();
 		axios
 			.get(
 				process.env.REACT_APP_U2_DB_HOST +
-					`/Campaign/challenge?targetCode=${tab}&p=${currentPage}&size=${pageSize}`,
+					`/Campaign/challenge?targetCode=${tab}&p=${1}&size=${pageSize}`,
 			)
 			.then((res) => {
 				// console.log(res.data);
@@ -552,6 +555,7 @@ const Main = (props) => {
 						}
 						pageSize={pageSize}
 						handlePageChange={handlePageChange}
+						ref={firstPageButtonRef}
 					></Pagination2>
 				)}
 
@@ -574,7 +578,13 @@ const Main = (props) => {
 					/>
 
 					<div className="challenge_banner_btn_wrap">
-						<button className="challenge_banner_btn">
+						<button
+							className="challenge_banner_btn"
+							// onClick={() => {
+							// 	console.log(firstPageButtonRef);
+							// 	firstPageButtonRef.current.refreshFirstPage();
+							// }}
+						>
 							<Link to="/prjregi">프로젝트 등록</Link>
 						</button>
 					</div>

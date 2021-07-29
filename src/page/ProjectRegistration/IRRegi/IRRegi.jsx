@@ -395,7 +395,7 @@ const IRRegi = () => {
 							<div>
 								<input
 									type="text"
-									onChange={(e) => {
+									onBlur={(e) => {
 										setTitle(e.target.value);
 									}}
 									maxLength={20}

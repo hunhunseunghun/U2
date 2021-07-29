@@ -40,7 +40,7 @@ const Modal = ({
 		console.log(userInfo);
 		const data = requestBodyGenerator(
 			{
-				logo: logo,
+				ownerLogo: logo,
 				ownerIdx: userInfo.memberIdx,
 				memberIdx: userInfo.memberIdx,
 				ownerCat: ownerCat,

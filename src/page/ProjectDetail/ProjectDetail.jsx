@@ -13,9 +13,11 @@ import ApplyModal from '../../component/Modals/Resume/ApplyModal';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
+import { createBrowserHistory } from 'history';
 import { TextFile } from '../../library/getJson';
 function ProjectDetail(props) {
 	const history = useHistory();
+	const history2 = createBrowserHistory({ forceRefresh: true });
 	const userInfo = useSelector((state) => state.userInfo);
 	const challengeIdx = props.match.params.challengeIdx;
 	const [challenge, setChallenge] = useState({});
@@ -121,6 +123,10 @@ function ProjectDetail(props) {
 		document.execCommand('copy');
 		document.body.removeChild(dummy);
 		alert('URL이 복사되었습니다.');
+	};
+	const handleMore = () => {
+		console.log('challenge: ', challenge);
+		history2.push(`/prjdetail/${challenge.challengeJustBefore}`);
 	};
 
 	const handleComment = (reply) => {
@@ -263,7 +269,12 @@ function ProjectDetail(props) {
 			</section>
 			<section className="prj_control">
 				<section className="prj_control_left">
-					<div className="more_prj">
+					<div
+						className="more_prj"
+						onClick={() => {
+							handleMore();
+						}}
+					>
 						{challenge.ownerName}의 프로젝트 더 보기
 					</div>
 				</section>

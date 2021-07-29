@@ -10,7 +10,6 @@ function FeedbackModal({
 	refresh,
 	challengeIdx,
 }) {
-	console.log('inside feedback data :', data);
 	const userInfo = useSelector((state) => state.userInfo);
 
 	const [input, setInput] = useState(null);
