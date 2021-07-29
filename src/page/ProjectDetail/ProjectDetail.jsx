@@ -133,9 +133,14 @@ function ProjectDetail(props) {
 		if (userInfo.email) {
 			var body = {};
 			// TextFile(body);
-
+			// let copyComments = comments.slice();
 			if (reply) {
-				if (!comments[reply.index].inputReply.length > 0)
+				if (
+					!(
+						comments[reply.index].inputReply &&
+						comments[reply.index].inputReply.length > 0
+					)
+				)
 					return alert('내용을 입력해주세요');
 				body = {
 					challengeIdx: Number(challengeIdx),
@@ -143,6 +148,7 @@ function ProjectDetail(props) {
 
 					comment: comments[reply.index].inputReply,
 				};
+				// comments[reply.index].inputReply = '';
 			} else {
 				if (!inputComment.length > 0) return alert('내용을 입력해주세요');
 				body = {
@@ -171,7 +177,8 @@ function ProjectDetail(props) {
 						.then((response) => {
 							console.log('comments: ', response.data);
 							setInputComment('');
-							setComments(response.data);
+							let data = response.data;
+							setComments(data);
 						});
 				})
 				.catch((err) => {
@@ -438,6 +445,7 @@ function ProjectDetail(props) {
 					onChange={(e) => {
 						setInputComment(e.target.value);
 					}}
+					value={inputComment}
 				></textarea>
 				<button
 					className={
@@ -501,8 +509,11 @@ function ProjectDetail(props) {
 									}}
 								>
 									<input
-										onChange={(e) => {
-											comments[idx].inputReply = e.target.value;
+										onBlur={(e) => {
+											// comments[idx].inputReply = e.target.value;
+											let copyComments = comments.slice();
+											copyComments[idx].inputReply = e.target.value;
+											setComments(copyComments);
 										}}
 									></input>
 									<button

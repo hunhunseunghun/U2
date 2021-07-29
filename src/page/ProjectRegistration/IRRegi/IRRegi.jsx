@@ -149,7 +149,7 @@ const IRRegi = () => {
 				docs: doccode,
 				// challengeIdx: 0,
 				seq: 1,
-				isOnline: irOnline, //1: 온라인 비대면 , 2: 오프라인 , 3: 추후협의
+				isOnline: irOnline, //0: 온라인 비대면 , 1: 오프라인 , 2: 추후협의
 				loc: irLocation,
 				applyWay: submitU2 ? 1 : 0,
 				dateBegin: startDate,
@@ -347,7 +347,7 @@ const IRRegi = () => {
 				setProfiles(newForm);
 			})
 			.catch((err) => {
-				console.log(err.response.data);
+				console.log(err.response);
 			});
 	}, []);
 	return (

@@ -254,11 +254,14 @@ function ProjectInfo({ challenge }) {
 								<td>
 									{(() => {
 										switch (challenge.hire.isOnline) {
+											case 0: {
+												return '온라인 비대면';
+											}
 											case 1: {
-												return '비대면 미팅';
+												return '오프라인 대면';
 											}
 											case 2: {
-												return '오프라인 미팅';
+												return '추후 협의';
 											}
 										}
 									})()}
@@ -279,7 +282,11 @@ function ProjectInfo({ challenge }) {
 							</tr>
 							<tr>
 								<th>근무지역</th>
-								<td>{challenge.hire.loc ? challenge.hire.loc : 'no data'}</td>
+								<td>
+									{challenge.hire.isOnline === 1 && challenge.hire.loc
+										? challenge.hire.loc
+										: '-'}
+								</td>
 								<th>제출서류</th>
 								<td>이력서, 포트폴리오</td>
 							</tr>
