@@ -167,7 +167,6 @@ function RegistTable() {
 				<tbody>
 					{pagedQuests
 						? pagedQuests.map((data) => {
-								console.log('data: ', data);
 								return (
 									<>
 										<tr>

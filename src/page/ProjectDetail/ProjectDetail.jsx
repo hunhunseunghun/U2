@@ -126,7 +126,11 @@ function ProjectDetail(props) {
 	};
 	const handleMore = () => {
 		console.log('challenge: ', challenge);
-		history2.push(`/prjdetail/${challenge.challengeJustBefore}`);
+		if (challenge.challengeJustBefore !== 0) {
+			history2.push(`/prjdetail/${challenge.challengeJustBefore}`);
+		} else {
+			alert('다음 페이지가 없습니다.');
+		}
 	};
 
 	const handleComment = (reply) => {

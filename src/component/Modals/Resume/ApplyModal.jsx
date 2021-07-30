@@ -27,7 +27,7 @@ const initialState = {
 	resumeFiles: [],
 	pfURLs: [],
 	pfURLinput: '',
-	pfFile: '',
+	pfFile: null,
 	cv: null,
 	cvEng: null,
 	bankAccountNum: '',
@@ -258,48 +258,84 @@ function Modal({ open, challenge, handleModalClose }) {
 			return;
 		}
 		setSubmitClicked(true);
+		// var data = {
+		// 	videos: pfURLs.map((el, idx) => {
+		// 		return {
+		// 			challengeIdx: challenge.challengeIdx, //challenge.challengeIdx
+		// 			missonSeq: idx + 1,
+		// 			memberIdx: userInfo.memberIdx,
+		// 			seq: idx + 1,
+		// 			// platform: el.platform,
+		// 			videoId: el,
+		// 			// registMemberIdx: userInfo.memberIdx,
+		// 			// registDate: '2021-07-08T12:43:08.139Z',
+		// 			// modifyMemberIdx: userInfo.memberIdx,
+		// 			// modifyDate: '2021-07-08T12:43:08.139Z',
+		// 		};
+		// 	}),
+		// 	postCodeAddr: address2,
+		// 	challengeIdx: challenge.challengeIdx, //challenge.challengeIdx
+		// 	missonSeq: 1,
+		// 	memberIdx: userInfo.memberIdx,
+		// 	contactCode: 1,
+		// 	contact: mobileNum,
+		// 	email: email,
+		// 	postCode: address1,
+		// 	addr: address3,
+		// 	bankCode: bankCode,
+		// 	bankAccount: bankAccountNum,
+		// 	// photo: 'string',
+		// 	// note: 'string',
+		// 	statusCode: 1,
+		// 	checkStatusCode: 0,
+		// 	dateApplied: new Date(),
+		// 	name: userInfo.fullName,
+		// 	// registMemberIdx: 0,
+		// 	// registDate: '2021-07-14T17:37:33.365Z',
+		// 	// modifyMemberIdx: 0,
+		// 	// modifyDate: '2021-07-14T17:37:33.365Z',
+		// };
 		var data = {
-			videos: pfURLs.map((el, idx) => {
-				return {
-					challengeIdx: 29, //challenge.challengeIdx
-					missonSeq: idx + 1,
-					memberIdx: userInfo.memberIdx,
-					seq: idx + 1,
-					// platform: el.platform,
-					videoId: el,
-					// registMemberIdx: userInfo.memberIdx,
-					// registDate: '2021-07-08T12:43:08.139Z',
-					// modifyMemberIdx: userInfo.memberIdx,
-					// modifyDate: '2021-07-08T12:43:08.139Z',
-				};
-			}),
-			postCodeAddr: address2,
-			challengeIdx: challenge.challengeIdx, //challenge.challengeIdx
-			missonSeq: 1,
+			challengeIdx: challenge.challengeIdx,
+			seq: 1,
 			memberIdx: userInfo.memberIdx,
-			contactCode: 1,
-			contact: mobileNum,
+			mobile: mobileNum,
 			email: email,
-			postCode: address1,
-			addr: address3,
+			cv: cv,
+			cvEng: cvEng,
+			fileRef: pfFile,
 			bankCode: bankCode,
 			bankAccount: bankAccountNum,
-			// photo: 'string',
-			// note: 'string',
-			statusCode: 1,
-			checkStatusCode: 0,
-			dateApplied: new Date(),
-			name: userInfo.fullName,
-			// registMemberIdx: 0,
-			// registDate: '2021-07-14T17:37:33.365Z',
-			// modifyMemberIdx: 0,
-			// modifyDate: '2021-07-14T17:37:33.365Z',
+			postCode: address1,
+			addr: address3,
+			// bankName: "string",
+			postCodeAddr: address2,
+			// "urls": [
+			//   {
+			// 	"challengeIdx": 0,
+			// 	"seq": 0,
+			// 	"memberIdx": 0,
+			// 	"url": "string"
+			//   }
+			// ],
+			urls: pfURLs.map((el, idx) => {
+				return {
+					challengeIdx: challenge.challengeIdx, //challenge.challengeIdx
+					memberIdx: userInfo.memberIdx,
+					seq: idx + 1,
+					url: el,
+				};
+			}),
+			// "registMemberIdx": 0,
+			// "registDate": "2021-07-30T01:31:20.094Z",
+			// "modifyMemberIdx": 0,
+			// "modifyDate": "2021-07-30T01:31:20.094Z"
 		};
 		// TextFile(data);
 		var config = {
 			method: 'post',
-			// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmit
-			url: server + '/Campaign/challengesubmit',
+			// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengehireapply
+			url: server + '/Campaign/challengehireapply',
 			headers: {
 				Authorization: 'Bearer ' + localStorage.getItem('token'),
 				'Content-Type': 'application/json',
