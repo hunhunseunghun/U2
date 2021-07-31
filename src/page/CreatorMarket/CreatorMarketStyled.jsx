@@ -32,10 +32,10 @@ export const MainContainer = styled.div`
     border-top: 1px solid #eee;
     /* border-bottom: 1px solid #eee; */
     padding: 0px 60px;
-    height: 67px;
+    height: 50px;
     display: flex;
     align-items: center;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     /* margin-top: 10px; */
     padding: 0 20px;
@@ -216,6 +216,7 @@ export const MainContainer = styled.div`
     }
 
     .challenge_wrap {
+      padding: 0 3%;
     }
     .challenge_tab {
       margin-top: 30px;
@@ -279,7 +280,7 @@ export const MainContainer = styled.div`
     }
 
     .challenge_banner_area {
-      margin-top: 60px;
+      margin-top: 20px;
       position: relative;
       margin-bottom: 5rem;
     }
@@ -333,12 +334,14 @@ export const MainContainer = styled.div`
   }
   .creatormarket_filter_section {
     position: relative;
+    padding: 0 20px 0px;
+    height: 45px;
     .sub_filter_section {
       position: absolute;
-      top: 45px;
+      top: 36px;
       left: 0;
       right: 0;
-      padding: 10px 20px;
+      padding: 5px 20px;
       background-color: #fffffff2;
       /* border-bottom: 1px solid #eee; */
       z-index: 10;
@@ -349,9 +352,9 @@ export const MainContainer = styled.div`
       .ft_title {
         position: relative;
         display: block;
-        font-size: 15px;
+        font-size: 13px;
         font-weight: 600;
-        margin: 10px 0 0;
+        margin: 5px 0 0;
         &.filter_arrow_up {
           img {
             transform: rotateZ(180deg);
@@ -398,6 +401,8 @@ export const MainContainer = styled.div`
     &:hover {
       color: #ff1100;
     }
+  }
+  .swiper-button-next {
   }
   .swiper-pagination-progressbar .swiper-pagination-progressbar-opposite {
     top: unset;

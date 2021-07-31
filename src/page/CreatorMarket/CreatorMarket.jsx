@@ -481,11 +481,12 @@ const Main = props => {
           ) : (
             <Swiper
               slidesPerView={mobileSize < 430 ? 2 : 3}
+              // mobileSize < 430 ? 2 : 3
               spaceBetween={10}
               freeMode={true}
               mousewheel={true}
               keyboard={true}
-              navigation={true}
+              // navigation={true}
               className="challange_mobile_ele mySwiper"
             >
               {/* {challenges.map((ele, idx) => (

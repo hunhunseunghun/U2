@@ -158,22 +158,22 @@ export const AdsContainer = styled.div`
     background-color: #fafafa;
     text-align: center;
     box-sizing: border-box;
-    margin-top: 5px;
+    padding: 0 3%;
 
     .contents_wrap {
       position: static;
       display: grid;
       place-items: center;
-      grid-template-columns: 2fr 6fr 2fr;
-      grid-gap: 7px;
+      grid-template-columns: 2.2fr 6fr 2.2fr;
+      grid-gap: 5px;
       width: 100%;
       height: 100%;
-      padding: 10px 0;
+      padding: 5px 0;
     }
 
     .title {
       padding: 5px;
-      font-size: 13px;
+      font-size: 12px;
       line-height: 15px;
       font-weight: 700;
       margin-top: 0;
@@ -185,7 +185,7 @@ export const AdsContainer = styled.div`
       display: block;
       font-weight: 500;
 
-      font-size: 12px;
+      font-size: 11px;
       line-height: 15px;
       letter-spacing: 0px;
       padding: 0 10px;
@@ -207,7 +207,7 @@ export const AdsContainer = styled.div`
 
     button {
       all: unset;
-      font-size: 13px;
+      font-size: 12px;
       width: 100%;
       height: 28px;
       min-width: 65px;
