@@ -1,8 +1,14 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  width: 100%;
+  .ck-toolbar {
+    width: 100%;
+  }
   .ck-editor__editable {
-    min-height: 200px;
-    max-height: 300px;
+    width: 100%;
+  }
+  .ck.ck-toolbar.ck-toolbar_grouping > .ck-toolbar__items {
+    flex-wrap: wrap;
   }
 `;
