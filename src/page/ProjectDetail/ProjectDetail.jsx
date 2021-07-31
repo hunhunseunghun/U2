@@ -13,9 +13,11 @@ import ApplyModal from '../../component/Modals/Resume/ApplyModal';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
+import { createBrowserHistory } from 'history';
 import { TextFile } from '../../library/getJson';
 function ProjectDetail(props) {
 	const history = useHistory();
+	const history2 = createBrowserHistory({ forceRefresh: true });
 	const userInfo = useSelector((state) => state.userInfo);
 	const challengeIdx = props.match.params.challengeIdx;
 	const [challenge, setChallenge] = useState({});
@@ -122,14 +124,27 @@ function ProjectDetail(props) {
 		document.body.removeChild(dummy);
 		alert('URL이 복사되었습니다.');
 	};
+	const handleMore = () => {
+		console.log('challenge: ', challenge);
+		if (challenge.challengeJustBefore !== 0) {
+			history2.push(`/prjdetail/${challenge.challengeJustBefore}`);
+		} else {
+			alert('다음 페이지가 없습니다.');
+		}
+	};
 
 	const handleComment = (reply) => {
 		if (userInfo.email) {
 			var body = {};
 			// TextFile(body);
-
+			// let copyComments = comments.slice();
 			if (reply) {
-				if (!comments[reply.index].inputReply.length > 0)
+				if (
+					!(
+						comments[reply.index].inputReply &&
+						comments[reply.index].inputReply.length > 0
+					)
+				)
 					return alert('내용을 입력해주세요');
 				body = {
 					challengeIdx: Number(challengeIdx),
@@ -137,6 +152,7 @@ function ProjectDetail(props) {
 
 					comment: comments[reply.index].inputReply,
 				};
+				// comments[reply.index].inputReply = '';
 			} else {
 				if (!inputComment.length > 0) return alert('내용을 입력해주세요');
 				body = {
@@ -165,7 +181,8 @@ function ProjectDetail(props) {
 						.then((response) => {
 							console.log('comments: ', response.data);
 							setInputComment('');
-							setComments(response.data);
+							let data = response.data;
+							setComments(data);
 						});
 				})
 				.catch((err) => {
@@ -263,7 +280,12 @@ function ProjectDetail(props) {
 			</section>
 			<section className="prj_control">
 				<section className="prj_control_left">
-					<div className="more_prj">
+					<div
+						className="more_prj"
+						onClick={() => {
+							handleMore();
+						}}
+					>
 						{challenge.ownerName}의 프로젝트 더 보기
 					</div>
 				</section>
@@ -427,6 +449,7 @@ function ProjectDetail(props) {
 					onChange={(e) => {
 						setInputComment(e.target.value);
 					}}
+					value={inputComment}
 				></textarea>
 				<button
 					className={
@@ -490,8 +513,11 @@ function ProjectDetail(props) {
 									}}
 								>
 									<input
-										onChange={(e) => {
-											comments[idx].inputReply = e.target.value;
+										onBlur={(e) => {
+											// comments[idx].inputReply = e.target.value;
+											let copyComments = comments.slice();
+											copyComments[idx].inputReply = e.target.value;
+											setComments(copyComments);
 										}}
 									></input>
 									<button

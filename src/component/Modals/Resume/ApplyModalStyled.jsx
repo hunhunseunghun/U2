@@ -83,6 +83,7 @@ export const ModalContainer = styled.div`
 		padding: 0 10px;
 		font-size: 12px;
 		color: #747474;
+		/* overflow: auto; */
 
 		input {
 			padding: 5px;
@@ -180,7 +181,7 @@ export const ModalContainer = styled.div`
 		}
 	}
 	.URLs {
-		max-height: 100px;
+		max-height: 300px;
 		overflow: scroll;
 		overflow-x: hidden;
 		overflow-y: auto;

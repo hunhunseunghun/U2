@@ -256,9 +256,10 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 		};
 		axios(config)
 			.then((res) => {
-				// console.log('challengeidx response:');
-				// console.log(res);
-				// console.log(challengeIdx);
+				console.log(
+					`/Campaign/challengesubmitted/${challengeIdx}?size=${pageSize}&p=${page}`,
+				);
+				console.log('inspect useEffect Data: ', res.data);
 
 				setCount(res.data.total);
 				setPagedSubjects(res.data.entities);

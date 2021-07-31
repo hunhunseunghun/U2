@@ -38,7 +38,7 @@ const DropDown = ({
 								value={idx}
 								onClick={() => {
 									setIsActive(false);
-									setOwnerIdx(ele.ownerIdx);
+									setOwnerIdx(ele.id);
 									setDefaultIdx(idx);
 								}}
 							>

@@ -7,6 +7,7 @@ import { paginate } from '../../../component/Pagination/paginate';
 import { ParticipateTableContainer } from './ParticipateTableStyled';
 import FeedbackModal from '../../../component/Modals/FeedBack/feedbackModal';
 import ApplyModal from '../../../component/Modals/Resume/ApplyModal';
+import ApplymentModal from '../../../component/Modals/Apply/applymentModal';
 import SubmitModal from '../../../component/Modals/Submit/SubmitModal';
 import SubmissionModal from '../../../component/Modals/Submission/SubmissionModal';
 import sortarrowdown from '../../../Img/Icons/sortarrowdown.png';
@@ -26,7 +27,10 @@ function ParticipateTable() {
 		open: false,
 		data: null,
 	});
-	const [resumeProps, setResumeProps] = useState({ open: false, data: null });
+	const [applymentProps, setApplymentProps] = useState({
+		open: false,
+		data: null,
+	});
 	const [submitProps, setSubmitProps] = useState({
 		open: false,
 		data: null,
@@ -35,6 +39,7 @@ function ParticipateTable() {
 		open: false,
 		challengeIdx: null,
 	});
+	const [applyProps, setApplyProps] = useState({ open: false });
 	useEffect(() => {
 		var config = {
 			method: 'get',
@@ -57,141 +62,111 @@ function ParticipateTable() {
 				var formedData = [];
 				if (datas)
 					formedData = datas.map((el) => {
-						var myApplication = el.applications.filter(
-							(el) => el.memberIdx === userInfo.memberIdx,
-						)[0];
-						// var myHireApply = el.hireApply.filter(el=>el.memberIdx===userInfo.memberIdx)
-						if (el.challengeTargetCode !== 4) {
-							if (myApplication) {
-								return {
-									img: el.logo,
-									category: (() => {
-										switch (el.challengeTargetCode) {
+						var myApplication = el.applications[0];
+
+						var myHireApply = el.hireApply;
+						// if (el.challengeTargetCode !== 4) {
+						if (myApplication) {
+							return {
+								img: el.logo,
+								category: (() => {
+									switch (el.challengeTargetCode) {
+										case 1: {
+											return '공모전';
+										}
+										case 2: {
+											return '전문영상 편집자';
+										}
+										case 3: {
+											return '영상크리에이터 / 인플루언서';
+										}
+										case 4: {
+											return '강사채용';
+										}
+										default: {
+											return null;
+										}
+									}
+								})(),
+								title: el.title ? el.title : 'no data',
+								status: (() => {
+									if (
+										//공모전, 전문영상편집자, 영상크리에이터
+										el.challengeTargetCode !== 4
+									) {
+										if (myApplication.statusCode === 0) return '챌린지';
+										switch (myApplication.checkStatusCode) {
 											case 1: {
-												return '공모전';
+												return '승인';
 											}
-											case 2: {
-												return '전문영상 편집자';
+											case -1: {
+												return '반려';
 											}
-											case 3: {
-												return '영상크리에이터 / 인플루언서';
-											}
-											case 4: {
-												return '강사채용';
+											case 0: {
+												return '검수중';
 											}
 											default: {
 												return null;
 											}
 										}
-									})(),
-									title: el.title ? el.title : 'no data',
-									status: (() => {
-										if (
-											//공모전 또는 전문영상편집자
-											el.challengeTargetCode === 1 ||
-											el.challengeTargetCode === 3
-										) {
-											if (myApplication.statusCode === 0) return '챌린지';
-											switch (myApplication.checkStatusCode) {
-												case 1: {
-													return '승인';
-												}
-												case -1: {
-													return '반려';
-												}
-												case 0: {
-													return '검수중';
-												}
-												default: {
-													return null;
-												}
-											}
+									} else {
+										if (!myHireApply) {
+											return '챌린지';
 										} else {
-											// if (myHireApply.statusCode === 0) return '챌린지';
-											// switch (myHireApply.checkStatusCode) {
-											// 	case 1: {
-											// 		return '승인';
-											// 	}
-											// 	case -1: {
-											// 		return '반려';
-											// 	}
-											// 	case 0: {
-											// 		return '지원완료';
-											// 	}
-											// 	default: {
-											// 		return null;
-											// 	}
-											// }
+											return '지원완료';
 										}
-									})(),
-									presentationType: (() => {
-										if (
-											el.challengeTargetCode === 1 ||
-											el.challengeTargetCode === 3
-										) {
-											//공모전 or 영상크리에이터
-											if (myApplication.statusCode === 0) {
-												return '자료제출';
-											} else {
-												//statusCode === 1
-												return '제출자료';
-											}
+									}
+								})(),
+								presentationType: (() => {
+									if (el.challengeTargetCode !== 4) {
+										//공모전 or 영상크리에이터
+										if (myApplication.statusCode === 0) {
+											return '자료제출';
 										} else {
-											//challengeTargetCode === 3 , 4
-											if (myApplication.statusCode === 0) {
-												return '지원하기';
-											} else {
-												//statusCode === 1
-												return '지원서';
-											}
+											//statusCode === 1
+											return '제출자료';
 										}
-									})(),
-									presentation: (() => {
-										// var me = el.applications.filter(
-										// 	(el) => el.memberIdx === userInfo.memberIdx,
-										// )[0];
-										if (
-											el.challengeTargetCode === 1 ||
-											el.challengeTargetCode === 3
-										) {
-											//공모전 or 영상크리에이터
-											if (myApplication.statusCode === 0) {
-												return '자료제출';
-											} else {
-												//statusCode === 1
-												return myApplication.name
-													? myApplication.name
-													: 'no data';
-											}
+									} else {
+										//challengeTargetCode === 4 강사채용
+										if (myHireApply) {
+											return '지원서';
 										} else {
-											//challengeTargetCode === 3 , 4
-											// if (myHireApply.statusCode === 0) {
-											// 	// return myApplication.name;
-											// 	return '가짜데이터'
-											// } else {
-											// 	//statusCode === 1
-											// 	return '가짜데이터';
-											// }
-											return '??';
+											//statusCode === 1
+											return '지원하기';
 										}
-									})(),
-									feedback: myApplication.hasFeedback,
-
-									requestDate: myApplication.registDate.split('T')[0],
-									dueDate: el.missions[0].dateFin.split('T')[0],
-									challengeIdx: el.challengeIdx,
-									missions: el.missions,
-									application: myApplication,
-								};
-							}
-						} else {
-							//강사채용
-							//if(myHireApply){
-							// 	return {
-							// 		...
-							// 	}
-							// }
+									}
+								})(),
+								// feedback: myApplication.hasFeedback,
+								feedback: myApplication && myApplication.hasFeedback,
+								// requestDate: myApplication.registDate.split('T')[0],
+								requestDate: (() => {
+									if (el.challengeTargetCode !== 4) {
+										return myApplication.registDate.split('T')[0];
+									} else {
+										return myHireApply.registDate.split('T')[0];
+									}
+								})(),
+								// dueDate: el.missions[0].dateFin.split('T')[0],
+								dueDate: (() => {
+									if (el.challengeTargetCode !== 4) {
+										return el.missions[0].dateFin.split('T')[0];
+									} else {
+										return el.hire.dateFin.split('T')[0];
+									}
+								})(),
+								challengeIdx: el.challengeIdx,
+								missions: el.missions,
+								application: myApplication,
+							};
 						}
+						// } else {
+						// 	//강사채용
+						// 	if(myHireApply){
+						// 		return {
+						// 			...
+						// 		}
+						// 	}
+						// }
 					});
 				// setQuests({ ...quests, data: response.data.entities });
 				setQuests({ ...quests, data: formedData, total: response.data.total });
@@ -222,13 +197,16 @@ function ParticipateTable() {
 		setFeedbackProps({ open: true, data: challengeIdx });
 	};
 	const handleOpenResume = (resume) => {
-		setResumeProps({ open: true, data: resume });
+		setApplymentProps({ open: true, data: resume });
 	};
 	const handleOpenSubmit = (data) => {
 		setSubmitProps({ open: true, data: data });
 	};
 	const handleOpenSubmission = (data) => {
 		setSubmissionProps({ open: true, challengeIdx: data.challengeIdx });
+	};
+	const handleOpenApply = (data) => {
+		setApplyProps({ open: true, data: data });
 	};
 
 	const handleModalClose = (modalType) => {
@@ -237,8 +215,8 @@ function ParticipateTable() {
 				setFeedbackProps({ ...feedbackProps, open: false });
 				break;
 			}
-			case 'resume': {
-				setResumeProps({ ...resumeProps, open: false });
+			case 'applyment': {
+				setApplymentProps({ ...applymentProps, open: false });
 				break;
 			}
 			case 'submit': {
@@ -248,6 +226,9 @@ function ParticipateTable() {
 			case 'submission': {
 				setSubmissionProps({ ...submitProps, open: false });
 				break;
+			}
+			case 'apply': {
+				setApplyProps({ ...applyProps, open: false });
 			}
 			default: {
 				console.log('no such case');
@@ -270,8 +251,8 @@ function ParticipateTable() {
 				isAdmin={false}
 			/>
 			<ApplyModal
-				open={resumeProps.open}
-				challenge={resumeProps.data}
+				open={applyProps.open}
+				challenge={applyProps.data}
 				handleModalClose={(modalType) => {
 					handleModalClose(modalType);
 				}}
@@ -289,6 +270,14 @@ function ParticipateTable() {
 				handleModalClose={(modalType) => handleModalClose(modalType)}
 				isAdmin={false}
 			/>
+			<ApplymentModal
+				open={applymentProps.open}
+				challenge={applymentProps.data}
+				handleModalClose={(modalType) => {
+					handleModalClose(modalType);
+				}}
+			/>
+
 			<section className="prjregi_btn_area">
 				{' '}
 				<div
@@ -421,10 +410,26 @@ function ParticipateTable() {
 																	);
 																}
 																case '지원서': {
-																	return <button>지원서</button>;
+																	return (
+																		<button
+																			onClick={() => {
+																				handleOpenResume(data);
+																			}}
+																		>
+																			지원서
+																		</button>
+																	);
 																}
 																case '지원하기': {
-																	return <button>지원하기</button>;
+																	return (
+																		<button
+																			onClick={() => {
+																				// handleOpenApply(data)
+																			}}
+																		>
+																			지원하기
+																		</button>
+																	);
 																}
 																default: {
 																	return data.presentation

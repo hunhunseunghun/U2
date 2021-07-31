@@ -13,7 +13,7 @@ window.fbAsyncInit = function () {
 		appId: '4579024922127467',
 		cookie: true,
 		xfbml: true,
-		version: 'v10.0',
+		version: 'v20.0',
 	});
 	window.FB.AppEvents.logPageView();
 };
