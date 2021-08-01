@@ -126,6 +126,19 @@ export const MainContainer = styled.div`
   .challenge_ele {
     width: 100%;
     min-height: 300px;
+
+    .creaotrmarekt_loading_area {
+      height: 100%;
+      display: grid;
+      place-items: center;
+
+      .creatormarket_loader {
+        padding: 10%;
+        svg {
+          width: 50px;
+        }
+      }
+    }
   }
   .makeStyles-ul-1 {
   }
@@ -201,6 +214,7 @@ export const MainContainer = styled.div`
     width: 100px;
     height: 100px;
   }
+
   @media only screen and (max-width: 1500px) and (min-width: 1350px) {
     padding: 0px 45px 100px;
   }
@@ -330,6 +344,18 @@ export const MainContainer = styled.div`
       overflow-x: hidden;
       overflow-y: hidden;
       white-space: nowrap;
+      .creaotrmarekt_loading_area {
+        height: 100%;
+        display: grid;
+        place-items: center;
+
+        .creatormarket_loader {
+          padding: 10%;
+          svg {
+            width: 50px;
+          }
+        }
+      }
     }
   }
   .creatormarket_filter_section {

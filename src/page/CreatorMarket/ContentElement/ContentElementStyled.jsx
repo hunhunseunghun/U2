@@ -16,7 +16,7 @@ export const EleContainer = styled.div`
 
     background-size: cover;
     overflow: hidden;
-    background-color: #eee;
+    background-color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -70,6 +70,10 @@ export const EleContainer = styled.div`
         }
       }
     }
+  }
+  .challenge_default_img {
+    width: 20%;
+    margin: 15% 0;
   }
 
   .challenge_img {
@@ -240,11 +244,9 @@ export const EleContainer = styled.div`
 
     .challenge_img_area {
       background-size: cover;
-      background-color: #eee;
       width: 100%;
       /* height: 120px; */
       min-height: none;
-      background-color: #eee;
       display: flex;
       align-items: center;
       justify-content: center;

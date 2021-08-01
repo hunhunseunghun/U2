@@ -4,10 +4,12 @@ import axios from 'axios';
 import { MainContainer } from './CreatorMarketStyled.jsx';
 import TopView from './TopView/TopView.jsx';
 import TopAds from './TopAds/TopAds.jsx';
+import Loader from 'react-loader-spinner';
 import ContentElement from './ContentElement/ContentElement.jsx';
 import bannerImg from '../../Img/cmBannerImg.png';
 import { useSelector } from 'react-redux';
 import { BiLoader } from 'react-icons/bi';
+
 import Pagination2 from '../../component/Pagination/Pagination2.jsx';
 import { paginate } from '../../component/Pagination/paginate.js';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -46,15 +48,9 @@ const Main = props => {
   // mobile size handling
   //모바일 creator_filter_section
   const [filterDropdown, setFilterDropdown] = useState(false);
-  const [mobileTypes, setMobileTypes] = useState(challenges); //challenges로 유지
+
   const [mobileSize, setMobileSize] = useState(window.innerWidth);
-  useEffect(() => {
-    setMobileTypes(challenges);
-    console.log(mobileTypes);
-  }, [currentPage]);
-  useEffect(() => {
-    setMobileTypes(challenges);
-  }, [challenges]);
+
   const handleResize = () => {
     setMobileSize(window.innerWidth);
     mobileSize > 900 && setFilterDropdown(false);
@@ -400,7 +396,17 @@ const Main = props => {
               {(() => {
                 switch (isLoadingChallenges) {
                   case true: {
-                    return <BiLoader className="BiLoader" />;
+                    // return <BiLoader className="BiLoader" />;
+                    return (
+                      <section className="creaotrmarekt_loading_area">
+                        {' '}
+                        <Loader
+                          className="creatormarket_loader"
+                          type="Oval"
+                          color="#f84235"
+                        />
+                      </section>
+                    );
                   }
                   case false: {
                     return moreActive
@@ -485,7 +491,7 @@ const Main = props => {
               freeMode={true}
               mousewheel={true}
               keyboard={true}
-              navigation={true}
+              // navigation={true}
               className="challange_mobile_ele mySwiper"
             >
               {/* {challenges.map((ele, idx) => (
@@ -504,7 +510,16 @@ const Main = props => {
               {(() => {
                 switch (isLoadingChallenges) {
                   case true: {
-                    return <BiLoader className="BiLoader" />;
+                    return (
+                      <section className="creaotrmarekt_loading_area">
+                        {' '}
+                        <Loader
+                          className="creatormarket_loader"
+                          type="Oval"
+                          color="#f84235"
+                        />
+                      </section>
+                    );
                   }
                   case false: {
                     return challenges.map((ele, idx) => {
@@ -527,16 +542,18 @@ const Main = props => {
                       }
                       if (ele.challengeTargetCode === tabActive) {
                         return (
-                          <ContentElement
-                            challenge={ele}
-                            key={`${ele.challengeIdx}`}
-                            history={props.history}
-                            badgeData={{
-                              applies: applies,
-                              submits: submits,
-                              wishes: wishes,
-                            }}
-                          />
+                          <SwiperSlide data-hash={`slide${idx}`}>
+                            <ContentElement
+                              challenge={ele}
+                              key={`${ele.challengeIdx}`}
+                              history={props.history}
+                              badgeData={{
+                                applies: applies,
+                                submits: submits,
+                                wishes: wishes,
+                              }}
+                            />
+                          </SwiperSlide>
                         );
                       }
                     });
