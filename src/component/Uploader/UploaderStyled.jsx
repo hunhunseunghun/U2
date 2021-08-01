@@ -42,4 +42,11 @@ export const Container = styled.div`
       cursor: pointer;
     }
   }
+  @media screen and (max-width: 900px) {
+    #upLoader {
+      width: 68px;
+      height: 24px;
+      margin-left: 5px;
+    }
+  }
 `;

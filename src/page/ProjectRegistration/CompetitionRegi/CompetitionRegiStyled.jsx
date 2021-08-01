@@ -111,12 +111,15 @@ export const RegiContainer = styled.div`
     color: #747474;
   }
 
+  .competition_name,
   .competition_webpageURL,
   .competition_sponsor,
   .competition_organizer,
   .competition_name_input {
+    display: flex;
     input {
       width: 280px;
+      margin-right: 5px;
     }
   }
 
@@ -409,12 +412,13 @@ export const RegiContainer = styled.div`
     .competitionregi_title_sub {
       display: flex;
       align-items: center;
-      font-size: 22px;
+      font-size: 18px;
       font-weight: 600;
       color: #3b3b3b;
       margin-bottom: 10px;
       img {
-        margin-right: 10px;
+        margin-right: 5px;
+        width: 18px;
       }
     }
 
@@ -461,14 +465,14 @@ export const RegiContainer = styled.div`
     }
     .menu {
       display: flex;
-      min-width: 150px;
+      min-width: 80px;
       align-items: center;
       border-right: 1px solid#d8d8d8;
       border-top: 1px solid #d8d8d8;
       background-color: #f3f3f3;
-      padding-left: 10px;
-      min-height: 50px;
-      font-size: 15px;
+      padding-left: 5px;
+      min-height: 40px;
+      font-size: 13px;
     }
     .inputInfo {
       display: flex;
@@ -480,23 +484,41 @@ export const RegiContainer = styled.div`
       color: #747474;
     }
 
+    .competition_name,
     .competition_webpageURL,
     .competition_sponsor,
-    .competition_organizer,
-    .competition_name_input {
+    .competition_organizer {
+      display: block;
+      width: 100%;
+      padding: 5px 0;
       input {
-        width: 280px;
+        width: 50%;
       }
+    }
+
+    .competition_name_input {
+      width: 50%;
     }
 
     // 파일 업로더 css ----------------------------
     .infoPoster,
     .infoFiles {
-      font-size: 14px;
+      font-size: 12px;
       display: block;
 
       div {
-        margin: 10px 0;
+        margin: 5px 0;
+      }
+      .uploadArea {
+        width: 100%;
+        .filePath {
+          width: 70%;
+          font-size: 12px;
+        }
+        .upLoader {
+          width: 60px;
+          font-size: 12px;
+        }
       }
     }
     // --------------------------------------------
@@ -524,30 +546,30 @@ export const RegiContainer = styled.div`
         }
 
         .table_checkarea {
-          width: 40.5px;
+          width: unset;
           display: grid;
           place-items: center;
         }
         .table_title {
           text-align: center;
-          min-width: 90px;
+          min-width: 70px;
         }
         tr {
           border-top: 1px solid #d8d8d8;
         }
 
         td {
-          padding: 10px;
+          padding: 3px;
           border-left: 1px solid #d8d8d8;
         }
 
         td:first-child {
           border-left: 0;
-          width: 40px;
+          width: 20px;
         }
 
         td:nth-child(2) {
-          width: 110px;
+          width: 50px;
         }
 
         th:last-child,
@@ -573,11 +595,12 @@ export const RegiContainer = styled.div`
           text-align: left;
         }
         .reception_options {
-          display: flex;
+          display: block;
           justify-content: left;
 
           div {
-            width: 80px;
+            display: inline-block;
+            width: unset;
           }
         }
       }
