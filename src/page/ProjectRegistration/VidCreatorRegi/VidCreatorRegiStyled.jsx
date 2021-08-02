@@ -968,7 +968,6 @@ export const RegiConationer = styled.div`
         }
         .reception_options {
           display: block;
-          justify-content: left;
 
           div {
             display: inline-block;

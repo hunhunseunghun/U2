@@ -147,6 +147,7 @@ export const RegiConationer = styled.div`
     }
     label {
       margin-left: 2px;
+      font-size: 10px;
     }
   }
 
@@ -213,6 +214,7 @@ export const RegiConationer = styled.div`
       justify-content: center;
       align-items: center;
       margin-right: 4px;
+      font-size: 10px;
       div {
         position: relative;
         top: -1px;
@@ -484,6 +486,14 @@ export const RegiConationer = styled.div`
     width: 100%;
     height: 300px;
     border: 0;
+  }
+  .ck-editor__editable_inline {
+    width: 100%;
+    padding: 5%;
+    box-sizing: border-box;
+  }
+  .ck-button {
+    width: 15px;
   }
 
   //reply css -------------------------------------
@@ -849,80 +859,6 @@ export const RegiConationer = styled.div`
       transform: scale(1.01);
     }
 
-    // tabale css ------------------------------------
-
-    .ir_reception_info {
-      font-size: 12px;
-      padding: 0;
-      width: 100%;
-      border-top: 0;
-
-      .ir_reception_form {
-        width: 100%;
-        .ir_reception_table {
-          width: 100%;
-          border-collapse: collapse;
-        }
-
-        .table_checkarea {
-          width: 40.5px;
-          display: grid;
-          place-items: center;
-        }
-        .table_title {
-          text-align: center;
-          min-width: 90px;
-        }
-        tr {
-          border-top: 1px solid #d8d8d8;
-        }
-
-        td {
-          padding: 10px;
-          border-left: 1px solid #d8d8d8;
-        }
-
-        td:first-child {
-          border-left: 0;
-          width: 40px;
-        }
-
-        td:nth-child(2) {
-          width: 110px;
-        }
-
-        th:last-child,
-        td:last-child {
-          border-right: 0;
-        }
-
-        section {
-          width: 100%;
-          display: flex;
-          align-items: center;
-
-          div {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            text-align: center;
-          }
-        }
-        label {
-          margin-left: 1px;
-          min-width: 70px;
-          text-align: left;
-        }
-        .reception_options {
-          display: flex;
-          justify-content: left;
-
-          div {
-            width: 80px;
-          }
-        }
-      }
-    }
     // datetime picker css choosedate part---------------
 
     .chooseDate {
@@ -989,7 +925,7 @@ export const RegiConationer = styled.div`
 
     // reward type table css ---------------------------------------
     .ir_rewardtype {
-      font-size: 12px;
+      font-size: 10px;
       padding: 0;
       width: 100%;
       border-top: 0;
@@ -1002,30 +938,30 @@ export const RegiConationer = styled.div`
         }
 
         .table_checkarea {
-          width: 40.5px;
+          width: unset;
           display: grid;
           place-items: center;
         }
         .table_title {
           text-align: center;
-          min-width: 90px;
+          min-width: unset;
         }
         tr {
           border-top: 1px solid #d8d8d8;
         }
 
         td {
-          padding: 10px;
+          padding: 3px;
           border-left: 1px solid #d8d8d8;
         }
 
         td:first-child {
           border-left: 0;
-          width: 40px;
+          width: 20px;
         }
 
         td:nth-child(2) {
-          width: 110px;
+          width: 40px;
         }
 
         th:last-child,
@@ -1052,12 +988,28 @@ export const RegiConationer = styled.div`
           }
         }
         label {
+          position: relative;
+          top: -2px;
           margin-left: 1px;
           min-width: 70px;
           text-align: left;
         }
         .reception_options {
           display: block;
+          font-size: 10px;
+          div {
+            display: inline-block;
+            width: unset;
+            box-sizing: border-box;
+            input {
+              width: 95%;
+            }
+          }
+          .reward_type_rewardinput {
+            input {
+              width: 70px;
+            }
+          }
         }
       }
     }
@@ -1086,10 +1038,30 @@ export const RegiConationer = styled.div`
         margin-right: 3px;
       }
     }
+
+    // foster uploader css ----------------
+    .irregi_files_uploader {
+      display: block;
+      font-size: 10px;
+      div {
+        margin: 10px 0;
+      }
+      .uploadArea {
+        width: 100%;
+        .filePath {
+          width: 70%;
+          font-size: 12px;
+        }
+        #upLoader {
+          width: 72px;
+          font-size: 12px;
+        }
+      }
+    }
     //mananger css ------------------------------------
 
     .manager_items {
-      display: inline-block;
+      display: block;
       margin-right: 5px;
 
       section {
@@ -1100,6 +1072,14 @@ export const RegiConationer = styled.div`
         }
       }
     }
+    .manager_items_fore {
+      width: 50%;
+      input {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      margin-right: 5px;
+    }
 
     //phonenumber css---------------------------------
 
@@ -1108,19 +1088,24 @@ export const RegiConationer = styled.div`
       margin: 0 5px;
 
       #areacode {
-        padding: 0 5px;
-        width: 60px;
+        padding: 0 2px;
+        width: 50px;
         height: 21px;
         border: 1px solid #d8d8d8;
+        font-size: 11px;
       }
 
       input {
-        width: 34px;
+        width: 25px;
+        font-size: 11px;
       }
 
       section {
         display: flex;
       }
+    }
+    .phonenumber_noexposure {
+      display: inline-block;
     }
 
     //email css---------------------------------
@@ -1137,10 +1122,13 @@ export const RegiConationer = styled.div`
         }
       }
     }
-
-    .irregi_bottom_style {
-      background-color: #dddddd;
-      height: 1px;
+    .email_items_fore {
+      width: 50%;
+      input {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      margin-right: 5px;
     }
 
     // prev next button css ---------------------

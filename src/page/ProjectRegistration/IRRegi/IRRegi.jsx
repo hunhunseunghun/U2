@@ -67,7 +67,9 @@ const IRRegi = () => {
   //접수기간
   const [selectDeadline, setSelectDealine] = useState(false);
   //CKeditor 공모공지글
-  const [ckText, setCkText] = useState('');
+  const [ckText, setCkText] = useState(
+    `<p>1. 제목</p><p>2. 응모 자격</p><p>3. 응모 주제</p><p>4. 시상 내역</p><p>5. 응모 일정</p><p>6. 제출 방법</p><p>7. 접수 방법</p><p>8. 심사 방법</p><p>&nbsp;</p><p>&nbsp;</p><p># 유의 사항</p><p>-</p><p># 문의 사항</p><p>-</p><p>&nbsp;</p>`
+  );
   const handleCkeditorValue = (event, editor) => {
     const data = editor.getData();
     setCkText(data);
@@ -405,8 +407,9 @@ const IRRegi = () => {
           </section>
           <section className="ele">
             <div className="menu">포스터</div>
-            <div className="inputInfo irreg_files_uploader">
+            <div className="inputInfo irregi_files_uploader">
               <Uploader
+                className="irregi_file_uploder"
                 setFilePath={setPosterFilePath}
                 multiple={false}
                 accept={'image/*'}
@@ -621,7 +624,7 @@ const IRRegi = () => {
                       <td>
                         {' '}
                         <section className="reception_options">
-                          <div>
+                          <div className="reward_type_rewardinput">
                             <input
                               type="number"
                               name="rewardcash"
@@ -794,7 +797,7 @@ const IRRegi = () => {
           <section className="ele">
             <div className="menu">* 담당자</div>
             <section className="inputInfo manager_form">
-              <div className="manager_items">
+              <div className="manager_items manager_items_fore">
                 <input
                   type="text"
                   onChange={e => {
@@ -888,7 +891,7 @@ const IRRegi = () => {
           <section className="ele">
             <div className="menu">* 이메일</div>
             <section className="inputInfo email_form">
-              <div className="email_items">
+              <div className="email_items email_items_fore">
                 <input
                   type="text"
                   onChange={e => {
