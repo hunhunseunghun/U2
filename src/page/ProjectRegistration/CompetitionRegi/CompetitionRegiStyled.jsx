@@ -552,7 +552,8 @@ export const RegiContainer = styled.div`
         }
         .table_title {
           text-align: center;
-          min-width: 70px;
+
+          min-width: unset;
         }
         tr {
           border-top: 1px solid #d8d8d8;
@@ -569,7 +570,7 @@ export const RegiContainer = styled.div`
         }
 
         td:nth-child(2) {
-          width: 50px;
+          width: 40px;
         }
 
         th:last-child,
@@ -590,6 +591,8 @@ export const RegiContainer = styled.div`
           }
         }
         label {
+          position: relative;
+          top: -2px;
           margin-left: 1px;
           min-width: 70px;
           text-align: left;
@@ -645,7 +648,7 @@ export const RegiContainer = styled.div`
     }
     .reward_type_items {
       display: inline-block;
-      padding: 5px 0;
+      padding: 2px 0;
     }
     .reward_type_title {
       position: relative;
@@ -656,8 +659,12 @@ export const RegiContainer = styled.div`
 
     .reward_type_item_wrap {
       display: flex;
+      div {
+        width: 58px;
+      }
       input {
-        margin-left: 10px;
+        margin-left: 5px;
+        height: 17px;
       }
     }
 
@@ -669,6 +676,15 @@ export const RegiContainer = styled.div`
       width: 100%;
       height: 300px;
       border: 0;
+    }
+
+    .ck-editor__editable_inline {
+      width: 100%;
+      padding: 5%;
+      box-sizing: border-box;
+    }
+    .ck-button {
+      width: 15px;
     }
 
     //reply css -------------------------------------
