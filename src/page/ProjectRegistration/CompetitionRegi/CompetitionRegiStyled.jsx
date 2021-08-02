@@ -208,7 +208,6 @@ export const RegiContainer = styled.div`
       }
       .reception_options {
         display: flex;
-        justify-content: left;
 
         div {
           width: 80px;
@@ -397,7 +396,8 @@ export const RegiContainer = styled.div`
     }
   }
   @media only screen and (max-width: 900px) {
-    padding: 40px 10px 50px;
+    width: 100%;
+    padding: 40px 0px 50px;
 
     .competitionregi_title_area {
       margin-top: 0.5rem;
@@ -456,22 +456,11 @@ export const RegiContainer = styled.div`
 
     //----------
 
-    .noDisplay {
-      display: none;
-    }
-
-    .ele {
-      display: flex;
-    }
     .menu {
-      display: flex;
-      min-width: 80px;
-      align-items: center;
-      border-right: 1px solid#d8d8d8;
-      border-top: 1px solid #d8d8d8;
-      background-color: #f3f3f3;
-      padding-left: 5px;
-      min-height: 40px;
+      max-width: 70px;
+      width: 70px;
+      min-width: 70px;
+      min-height: 50px;
       font-size: 13px;
     }
     .inputInfo {
@@ -479,7 +468,7 @@ export const RegiContainer = styled.div`
       align-items: center;
       width: 100%;
       border-top: 1px solid #00000023;
-      padding: 0 10px;
+      padding: 0 5px;
       font-size: 12px;
       color: #747474;
     }
@@ -515,8 +504,8 @@ export const RegiContainer = styled.div`
           width: 70%;
           font-size: 12px;
         }
-        .upLoader {
-          width: 60px;
+        #upLoader {
+          width: 72px;
           font-size: 12px;
         }
       }
@@ -552,7 +541,6 @@ export const RegiContainer = styled.div`
         }
         .table_title {
           text-align: center;
-
           min-width: unset;
         }
         tr {
@@ -644,7 +632,8 @@ export const RegiContainer = styled.div`
 
     //reward type css --------------------------
 
-    .reward_type {
+    .reward_type_form {
+      padding: 0;
     }
     .reward_type_items {
       display: inline-block;
@@ -662,10 +651,9 @@ export const RegiContainer = styled.div`
       div {
         width: 58px;
       }
-      input {
-        margin-left: 5px;
-        height: 17px;
-      }
+    }
+    .reward_type_inputdirect {
+      width: 50%;
     }
 
     //editor css ----------------------------------
@@ -703,7 +691,7 @@ export const RegiContainer = styled.div`
     //mananger css ------------------------------------
 
     .manager_items {
-      display: inline-block;
+      display: block;
       margin-right: 5px;
 
       section {
@@ -714,6 +702,14 @@ export const RegiContainer = styled.div`
         }
       }
     }
+    .manager_items_fore {
+      width: 50%;
+      input {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      margin-right: 5px;
+    }
 
     //phonenumber css---------------------------------
 
@@ -722,19 +718,24 @@ export const RegiContainer = styled.div`
       margin: 0 5px;
 
       #areacode {
-        padding: 0 5px;
-        width: 60px;
+        padding: 0 2px;
+        width: 50px;
         height: 21px;
+        font-size: 11px;
         border: 1px solid #d8d8d8;
       }
 
       input {
-        width: 34px;
+        width: 25px;
+        font-size: 11px;
       }
 
       section {
         display: flex;
       }
+    }
+    .phonenumber_noexposure {
+      display: inline-block;
     }
 
     //email css---------------------------------
@@ -750,6 +751,14 @@ export const RegiContainer = styled.div`
           margin-right: 5px;
         }
       }
+    }
+    .email_items_fore {
+      width: 50%;
+      input {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      margin-right: 5px;
     }
 
     .competition_bottom_style {

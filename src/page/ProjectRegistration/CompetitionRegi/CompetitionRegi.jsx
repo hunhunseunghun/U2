@@ -807,7 +807,7 @@ const CompetitionRegi = () => {
           </section>
           <section className="ele">
             <div className="menu">* 시상종류</div>
-            <div className="inputInfo reward_type_from">
+            <div className="inputInfo reward_type_form">
               <div className="reward_type_section">
                 <div className="reward_type">
                   {/* <div className="reward_type_title">현상공모:</div> */}
@@ -896,7 +896,7 @@ const CompetitionRegi = () => {
                     </div>
                   </div>
                   <div className="reward_type_items">
-                    <div className="reward_type_item_wrap">
+                    <div className="reward_type_item_wrap ">
                       <input
                         type="checkbox"
                         value="직접입력"
@@ -906,6 +906,7 @@ const CompetitionRegi = () => {
                       />
                       <div>직접입력 :</div>
                       <input
+                        className="reward_type_inputdirect"
                         type="text"
                         onChange={e => {
                           setDirectInput(e.target.value);
@@ -983,7 +984,7 @@ const CompetitionRegi = () => {
           <section className="ele">
             <div className="menu">* 담당자</div>
             <section className="inputInfo manager_form">
-              <div className="manager_items">
+              <div className="manager_items manager_items_fore">
                 <input
                   type="text"
                   onChange={e => {
@@ -1077,7 +1078,7 @@ const CompetitionRegi = () => {
           <section className="ele">
             <div className="menu">* 이메일</div>
             <section className="inputInfo email_form">
-              <div className="email_items">
+              <div className="email_items email_items_fore">
                 <input
                   type="text"
                   onChange={e => {
