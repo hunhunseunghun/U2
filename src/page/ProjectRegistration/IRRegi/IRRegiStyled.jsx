@@ -82,8 +82,7 @@ export const RegiConationer = styled.div`
     justify-content: center;
     align-items: center;
     border: 1px soild #dddddd;
-    padding: 5px 5px 5px 10px;
-
+    padding: 5px 10px;
     img {
       position: relative;
       top: 2px;
@@ -684,7 +683,7 @@ export const RegiConationer = styled.div`
       justify-content: center;
       align-items: center;
       border: 1px soild #dddddd;
-      padding: 5px 5px 5px 10px;
+      padding: 5px 10px;
 
       img {
         position: relative;

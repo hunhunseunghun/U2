@@ -4,7 +4,7 @@ export const Container = styled.div`
   position: absolute;
   padding: 5px 10px;
   top: 7px;
-  left: 0;
+  left: -5px;
   z-index: 3;
 
   .modal_ele {
