@@ -269,7 +269,12 @@ function WorkDetail(props) {
             <section className="project_target_wrap project_info_lastchild">
               <div className="project_target_sub">보상</div>
               <div className="project_target">
-                {prise.length > 0 ? prise : '-'}
+                {/* {prise.length > 0 ? prise : '-'} */}
+                {prise.length > 0
+                  ? prise.map((ele, idx) => {
+                      return ele + ', ';
+                    })
+                  : '-'}
               </div>
             </section>
           </div>
