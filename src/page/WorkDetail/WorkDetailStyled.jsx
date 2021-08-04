@@ -23,11 +23,11 @@ export const WorkDetailContainer = styled.div`
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      background-color: #f3f3f3;
       padding: 20px 20px 0 20px;
       img {
         width: 100%;
         min-width: 100px;
+        min-height: 100px;
       }
       .project_name_wrap {
         margin: 25px 0;
@@ -43,7 +43,7 @@ export const WorkDetailContainer = styled.div`
         line-height: 24px;
       }
       .wordetail_noimage {
-        width: 80%;
+        width: 50%;
       }
     }
 

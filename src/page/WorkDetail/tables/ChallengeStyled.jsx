@@ -44,7 +44,6 @@ export const ChallengeTableContainer = styled.div`
   }
 
   .challenge_table {
-    width: 800px;
     height: 100%;
     border-top: 2px solid #ddd;
     border-spacing: 0;
@@ -57,7 +56,7 @@ export const ChallengeTableContainer = styled.div`
 
       color: #747474;
       th {
-        padding: 20px 0px;
+        padding: 20px 10px;
         font-size: 13px;
       }
     }

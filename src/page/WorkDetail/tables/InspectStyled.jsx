@@ -68,9 +68,8 @@ export const InspectTableContainer = styled.div`
   }
 
   .inspect_table {
-    width: 800px;
     height: 100%;
-    border-top: 2px solid #2d2123;
+    border-top: 2px solid #ddd;
     border-spacing: 0;
     margin-bottom: 20px;
 
@@ -82,9 +81,9 @@ export const InspectTableContainer = styled.div`
       background-color: #f8f8f8;
       border-top: 2px solid #ddd;
       border-bottom: 1px solid #eee;
-      color: #9c9c9c;
+      color: #747474;
       th {
-        padding: 20px 0px;
+        padding: 20px 10px;
         font-size: 13px;
       }
     }

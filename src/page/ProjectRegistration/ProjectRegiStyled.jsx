@@ -62,14 +62,17 @@ export const PrjRegiContainer = styled.div`
 
   .projectregi_item_innerwrap {
     display: grid;
-    grid-template-columns: 3fr 7fr;
+    grid-template-columns: 2.5fr 7.5fr;
     height: 100%;
     box-sizing: border-box;
   }
 
   .projectregi_checkbox_area {
     padding: 5% 5%;
-    place-items: center;
+    display: grid;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center; */
 
     background-color: #fff;
     border-right: 1px solid #eee;
@@ -78,12 +81,11 @@ export const PrjRegiContainer = styled.div`
 
     .projectregi_checkbox {
       display: grid;
-      place-items: center;
-      padding: 20% 10% 5% 10%;
+      place-items: end center;
 
       input {
-        width: 50px;
-        height: 50px;
+        width: 20px;
+        height: 20px;
       }
       div {
         font-size: 18px;
@@ -94,8 +96,10 @@ export const PrjRegiContainer = styled.div`
       }
     }
     .projectregi_checkbox_bottom {
-      display: flex;
-      justify-content: center;
+      display: grid;
+      /* display: flex;
+      flex-direction: column;
+      justify-content: center; */
       box-sizing: border-box;
       margin: 5%;
 
@@ -103,14 +107,15 @@ export const PrjRegiContainer = styled.div`
         display: grid;
         place-items: center;
         img {
-          max-width: 50px;
+          /* max-width: 100px; */
+          width: 100%;
         }
       }
       .projectregi_checkbox_text {
-        display: flex;
-        align-items: center;
+        text-align: center;
+        vertical-align: middle;
         font-size: 18px;
-        padding-left: 5%;
+        height: 100%;
       }
       .vidcreator_checbox_text {
         font-size: 15px;
@@ -122,6 +127,7 @@ export const PrjRegiContainer = styled.div`
   }
 
   .contentArea {
+    display: grid;
     padding: 2%;
     box-sizing: border-box;
     .contentTop {
@@ -229,7 +235,7 @@ export const PrjRegiContainer = styled.div`
     }
     /* height: 160px; */
   }
-  @media only screen and (max-width: 1350px) and (min-width: 900px) {
+  /* @media only screen and (max-width: 1350px) and (min-width: 900px) {
     padding: 20px 10px 100px;
     .projectregi_checkbox_area {
       padding: 5% 5%;
@@ -274,7 +280,7 @@ export const PrjRegiContainer = styled.div`
         }
       }
     }
-  }
+  } */
   @media only screen and (max-width: 900px) {
     padding: 40px 10px 50px;
 
