@@ -54,8 +54,6 @@ export const PrjRegiContainer = styled.div`
     grid-gap: 20px;
   }
   .projectregi_item {
-    border: 1px solid #eee;
-    border: 1px solid #dadada;
     border: 1px solid #cacaca;
     background-color: #fff;
   }
@@ -68,16 +66,27 @@ export const PrjRegiContainer = styled.div`
   }
 
   .projectregi_checkbox_area {
-    padding: 5% 5%;
+    padding: 5%;
     display: grid;
-    /* display: flex;
-    flex-direction: column;
-    justify-content: center; */
-
     background-color: #fff;
-    border-right: 1px solid #eee;
     border-right: 1px solid #cacaca;
     text-align: center;
+
+    .projectregi_checkbox_iconwrap {
+      display: grid;
+      place-items: center;
+      img {
+        width: 90%;
+      }
+    }
+
+    .projectregi_checkbox_text {
+      font-size: 18px;
+      margin: 2% 0 0% 0;
+    }
+    .vidcreator_checbox_text {
+      font-size: 15px;
+    }
 
     .projectregi_checkbox {
       display: grid;
@@ -86,42 +95,6 @@ export const PrjRegiContainer = styled.div`
       input {
         width: 20px;
         height: 20px;
-      }
-      div {
-        font-size: 18px;
-      }
-
-      .prjregi_vidcreator_text_mobile {
-        display: none;
-      }
-    }
-    .projectregi_checkbox_bottom {
-      display: grid;
-      /* display: flex;
-      flex-direction: column;
-      justify-content: center; */
-      box-sizing: border-box;
-      margin: 5%;
-
-      .projectregi_checkbox_iconwrap {
-        display: grid;
-        place-items: center;
-        img {
-          /* max-width: 100px; */
-          width: 100%;
-        }
-      }
-      .projectregi_checkbox_text {
-        text-align: center;
-        vertical-align: middle;
-        font-size: 18px;
-        height: 100%;
-      }
-      .vidcreator_checbox_text {
-        font-size: 15px;
-      }
-      .vidcreator_checbox_text_smallsize {
-        display: none;
       }
     }
   }
@@ -308,44 +281,35 @@ export const PrjRegiContainer = styled.div`
       box-sizing: border-box;
     }
     .projectregi_checkbox_area {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      .projectregi_checkbox {
-        padding: 0;
-        input {
-          width: 25px;
-          height: 25px;
+      padding: 5%;
+      display: grid;
+      background-color: #fff;
+      border-right: 1px solid #cacaca;
+      text-align: center;
+
+      .projectregi_checkbox_iconwrap {
+        display: grid;
+        place-items: center;
+        img {
+          width: 90%;
         }
       }
-      .projectregi_checkbox_bottom {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        box-sizing: border-box;
-        margin: 5px 0 0 0;
 
-        .projectregi_checkbox_iconwrap {
-          display: none;
-          img {
-            max-width: 30px;
-          }
-        }
-        .projectregi_checkbox_text {
-          margin-top: 4px;
-          font-size: 14px;
-          line-height: 14px;
-          padding-left: 0;
-        }
-        .vidcreator_checbox_text {
-          display: block;
-          font-size: 11px;
-          line-height: 11px;
-        }
-        .vidcreator_checbox_text_smallsize {
-          display: none;
+      .projectregi_checkbox_text {
+        font-size: 13px;
+        margin: 2% 0 0% 0;
+      }
+      .vidcreator_checbox_text {
+        font-size: 11px;
+      }
+
+      .projectregi_checkbox {
+        display: grid;
+        place-items: end center;
+
+        input {
+          width: 15px;
+          height: 15px;
         }
       }
     }

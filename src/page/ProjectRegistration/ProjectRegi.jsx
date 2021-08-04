@@ -89,10 +89,8 @@ const ProjectRegi = () => {
           <section className="projectregi_item">
             <div className="projectregi_item_innerwrap">
               <section className="projectregi_checkbox_area">
-                <div className="projectregi_checkbox_bottom">
-                  <div className="projectregi_checkbox_iconwrap">
-                    <img src="/img/trophy.png" alt="공모전" />
-                  </div>
+                <div className="projectregi_checkbox_iconwrap">
+                  <img src="/img/trophy.png" alt="공모전" />
                 </div>
                 <div className="projectregi_checkbox_text">공모전</div>
                 <div className="projectregi_checkbox">
@@ -137,10 +135,8 @@ const ProjectRegi = () => {
           <section className="projectregi_item">
             <div className="projectregi_item_innerwrap">
               <section className="projectregi_checkbox_area">
-                <div className="projectregi_checkbox_bottom">
-                  <div className="projectregi_checkbox_iconwrap">
-                    <img src="/img/film-editing.png" alt="전문영상편집자" />
-                  </div>
+                <div className="projectregi_checkbox_iconwrap">
+                  <img src="/img/film-editing.png" alt="전문영상편집자" />
                 </div>
                 <div className="projectregi_checkbox_text">전문영상 편집자</div>
                 <div className="projectregi_checkbox">
@@ -185,20 +181,14 @@ const ProjectRegi = () => {
           <section className="projectregi_item">
             <div className="projectregi_item_innerwrap">
               <section className="projectregi_checkbox_area">
-                <div className="projectregi_checkbox_bottom">
-                  <div className="projectregi_checkbox_iconwrap">
-                    <img
-                      src="/img/video-editing-app.png"
-                      alt="영상크리에이터인플루언서"
-                    />
-                  </div>
-
-                  <div className="projectregi_checkbox_text vidcreator_checbox_text_smallsize">
-                    영상 크리에이터 인플루언서
-                  </div>
+                <div className="projectregi_checkbox_iconwrap">
+                  <img
+                    src="/img/video-editing-app.png"
+                    alt="영상크리에이터인플루언서"
+                  />
                 </div>
                 <div className="projectregi_checkbox_text vidcreator_checbox_text">
-                  영상 크리에이터 인플루언서
+                  영상 크리에이터/인플루언서
                 </div>
                 <div className="projectregi_checkbox projectregi_vidcreator_checkbox">
                   <input
@@ -243,10 +233,8 @@ const ProjectRegi = () => {
           <section className="projectregi_item projectregi_item_ir">
             <div className="projectregi_item_innerwrap">
               <section className="projectregi_checkbox_area">
-                <div className="projectregi_checkbox_bottom">
-                  <div className="projectregi_checkbox_iconwrap">
-                    <img src="/img/teacher.png" alt="강사채용" />
-                  </div>
+                <div className="projectregi_checkbox_iconwrap">
+                  <img src="/img/teacher.png" alt="강사채용" />
                 </div>
                 <div className="projectregi_checkbox_text">강사 채용</div>
                 <div className="projectregi_checkbox ">
