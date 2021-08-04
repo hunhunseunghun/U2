@@ -9,6 +9,7 @@ export const WorkDetailContainer = styled.div`
   .workdetail-section {
     width: 100%;
     display: flex;
+    box-sizing: border-box;
   }
   .section1 {
     width: 224px;

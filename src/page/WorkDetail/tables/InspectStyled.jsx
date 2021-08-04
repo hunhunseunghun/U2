@@ -239,6 +239,7 @@ export const InspectTableContainer = styled.div`
       border-top: 2px solid #ddd;
       border-spacing: 0;
       margin-bottom: 10px;
+      box-sizing: border-box;
 
       input[type='checkbox'] {
         width: 20px;
@@ -268,9 +269,9 @@ export const InspectTableContainer = styled.div`
           display: flex;
           justify-content: center;
           select {
-            padding: 0px 15px 0px 5px;
+            padding: 0px 10px 0px 5px;
             height: 28px;
-            font-size: 12px;
+            font-size: 10px;
             color: #747474;
             margin-right: 2px;
           }
@@ -279,7 +280,7 @@ export const InspectTableContainer = styled.div`
             background-color: #f84135;
             border-color: #f84135;
             color: white;
-            padding: 0 10px;
+            padding: 0 5px;
             border-radius: 5px;
             &:hover {
               cursor: pointer;
