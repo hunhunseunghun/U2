@@ -40,10 +40,6 @@ const Pagination2 = forwardRef(
 		}));
 		if (pageCount === 1 || pageCount === 0) return null; // 1페이지 뿐이라면 페이지 수를 보여주지 않음
 
-		const refreshFirstPage = () => {
-			firstPage.item.onClick(firstPage.e);
-		};
-
 		return (
 			<Pagination2Styled>
 				<ul className={classes.ul}>

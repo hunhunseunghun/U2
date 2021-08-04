@@ -33,6 +33,7 @@ const initialState = {
 	bankAccountNum: '',
 	banks: [],
 	bankCode: 0,
+	bankName: '',
 	bankAccountErr: '',
 	BaErrShake: false,
 	bankAuthorized: false,
@@ -70,6 +71,7 @@ function Modal({ open, challenge, handleModalClose }) {
 			bankAccountNum,
 			banks,
 			bankCode,
+			bankName,
 			bankAccountErr,
 			BaErrShake,
 			bankAuthorized,
@@ -83,7 +85,7 @@ function Modal({ open, challenge, handleModalClose }) {
 	] = useState({ ...initialState });
 
 	const clearState = () => {
-		setState({ ...initialState });
+		setState({ ...initialState, pfURLs: [] });
 	};
 
 	const handleValidateMobile = () => {
@@ -200,10 +202,15 @@ function Modal({ open, challenge, handleModalClose }) {
 				(data.buildingName && ' ' + data.buildingName),
 		}));
 	};
-	const handleBankCode = (code) => {
-		// console.log('code: ', code);
-		// setBankCode(code);
-		setState((preState) => ({ ...preState, bankCode: code }));
+	const handleBankCode = (bank) => {
+		const bankArr = bank.split(',');
+		const bankCode = bankArr[0];
+		const bankName = bankArr[1];
+		setState((preState) => ({
+			...preState,
+			bankCode: bankCode,
+			bankName: bankName,
+		}));
 	};
 	const handleShake = (inputType) => {
 		switch (inputType) {
@@ -258,43 +265,6 @@ function Modal({ open, challenge, handleModalClose }) {
 			return;
 		}
 		setSubmitClicked(true);
-		// var data = {
-		// 	videos: pfURLs.map((el, idx) => {
-		// 		return {
-		// 			challengeIdx: challenge.challengeIdx, //challenge.challengeIdx
-		// 			missonSeq: idx + 1,
-		// 			memberIdx: userInfo.memberIdx,
-		// 			seq: idx + 1,
-		// 			// platform: el.platform,
-		// 			videoId: el,
-		// 			// registMemberIdx: userInfo.memberIdx,
-		// 			// registDate: '2021-07-08T12:43:08.139Z',
-		// 			// modifyMemberIdx: userInfo.memberIdx,
-		// 			// modifyDate: '2021-07-08T12:43:08.139Z',
-		// 		};
-		// 	}),
-		// 	postCodeAddr: address2,
-		// 	challengeIdx: challenge.challengeIdx, //challenge.challengeIdx
-		// 	missonSeq: 1,
-		// 	memberIdx: userInfo.memberIdx,
-		// 	contactCode: 1,
-		// 	contact: mobileNum,
-		// 	email: email,
-		// 	postCode: address1,
-		// 	addr: address3,
-		// 	bankCode: bankCode,
-		// 	bankAccount: bankAccountNum,
-		// 	// photo: 'string',
-		// 	// note: 'string',
-		// 	statusCode: 1,
-		// 	checkStatusCode: 0,
-		// 	dateApplied: new Date(),
-		// 	name: userInfo.fullName,
-		// 	// registMemberIdx: 0,
-		// 	// registDate: '2021-07-14T17:37:33.365Z',
-		// 	// modifyMemberIdx: 0,
-		// 	// modifyDate: '2021-07-14T17:37:33.365Z',
-		// };
 		var data = {
 			challengeIdx: challenge.challengeIdx,
 			seq: 1,
@@ -305,6 +275,7 @@ function Modal({ open, challenge, handleModalClose }) {
 			cvEng: cvEng,
 			fileRef: pfFile,
 			bankCode: bankCode,
+			bankName: bankName,
 			bankAccount: bankAccountNum,
 			postCode: address1,
 			addr: address3,
@@ -406,7 +377,7 @@ function Modal({ open, challenge, handleModalClose }) {
 					});
 			}
 		}
-	}, [challenge]);
+	}, [open]);
 
 	return (
 		<ModalContainer>
@@ -910,6 +881,7 @@ function Modal({ open, challenge, handleModalClose }) {
 								className="close"
 								onClick={() => {
 									handleModalClose('apply');
+									clearState();
 								}}
 							>
 								{' '}

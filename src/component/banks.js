@@ -32,7 +32,9 @@ export default function ({ handleBankCode }) {
 		>
 			<option value="">은행 선택</option>
 			{codes.map((el) => {
-				return <option value={el.code}>{el.bankName}</option>;
+				return (
+					<option value={`${el.code},${el.bankName}`}>{el.bankName}</option>
+				);
 			})}
 			{/* <option value="">은행 선택</option>
 			<option value="35">경남은행</option>

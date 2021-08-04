@@ -55,6 +55,7 @@ function ParticipateTable() {
 	}, []);
 	const getData = (config) => {
 		setLoading(true);
+		console.log('config: ', config);
 		axios(config)
 			.then((response) => {
 				console.log('participateTable response: ', response.data);
@@ -66,7 +67,7 @@ function ParticipateTable() {
 
 						var myHireApply = el.hireApply;
 						// if (el.challengeTargetCode !== 4) {
-						if (myApplication) {
+						if (myApplication || myHireApply.challengeIdx !== 0) {
 							return {
 								img: el.logo,
 								category: (() => {
@@ -91,10 +92,12 @@ function ParticipateTable() {
 								title: el.title ? el.title : 'no data',
 								status: (() => {
 									if (
-										//공모전, 전문영상편집자, 영상크리에이터
-										el.challengeTargetCode !== 4
+										//공모전, 영상크리에이터
+										el.challengeTargetCode === 1 ||
+										el.challengeTargetCode === 3
 									) {
-										if (myApplication.statusCode === 0) return '챌린지';
+										if (myApplication && myApplication.statusCode === 0)
+											return '챌린지';
 										switch (myApplication.checkStatusCode) {
 											case 1: {
 												return '승인';
@@ -110,7 +113,7 @@ function ParticipateTable() {
 											}
 										}
 									} else {
-										if (!myHireApply) {
+										if (myHireApply.challengeIdx === 0) {
 											return '챌린지';
 										} else {
 											return '지원완료';
@@ -118,7 +121,10 @@ function ParticipateTable() {
 									}
 								})(),
 								presentationType: (() => {
-									if (el.challengeTargetCode !== 4) {
+									if (
+										el.challengeTargetCode === 1 ||
+										el.challengeTargetCode === 3
+									) {
 										//공모전 or 영상크리에이터
 										if (myApplication.statusCode === 0) {
 											return '자료제출';
@@ -127,12 +133,13 @@ function ParticipateTable() {
 											return '제출자료';
 										}
 									} else {
-										//challengeTargetCode === 4 강사채용
-										if (myHireApply) {
-											return '지원서';
+										//challengeTargetCode === 2, 4 편집자, 강사채용
+										console.log('myHireApply: ', myHireApply);
+										if (myHireApply.challengeIdx === 0) {
+											return '지원하기';
 										} else {
 											//statusCode === 1
-											return '지원하기';
+											return '지원서';
 										}
 									}
 								})(),
@@ -140,7 +147,10 @@ function ParticipateTable() {
 								feedback: myApplication && myApplication.hasFeedback,
 								// requestDate: myApplication.registDate.split('T')[0],
 								requestDate: (() => {
-									if (el.challengeTargetCode !== 4) {
+									if (
+										el.challengeTargetCode === 1 ||
+										el.challengeTargetCode === 3
+									) {
 										return myApplication.registDate.split('T')[0];
 									} else {
 										return myHireApply.registDate.split('T')[0];
@@ -148,25 +158,23 @@ function ParticipateTable() {
 								})(),
 								// dueDate: el.missions[0].dateFin.split('T')[0],
 								dueDate: (() => {
-									if (el.challengeTargetCode !== 4) {
+									if (
+										el.challengeTargetCode === 1 ||
+										el.challengeTargetCode === 3
+									) {
 										return el.missions[0].dateFin.split('T')[0];
 									} else {
-										return el.hire.dateFin.split('T')[0];
+										// return myHireApply.dateFin.split('T')[0];
+										return '-';
 									}
 								})(),
 								challengeIdx: el.challengeIdx,
 								missions: el.missions,
 								application: myApplication,
 							};
+						} else {
+							//없을 경우
 						}
-						// } else {
-						// 	//강사채용
-						// 	if(myHireApply){
-						// 		return {
-						// 			...
-						// 		}
-						// 	}
-						// }
 					});
 				// setQuests({ ...quests, data: response.data.entities });
 				setQuests({ ...quests, data: formedData, total: response.data.total });
@@ -196,8 +204,8 @@ function ParticipateTable() {
 		console.log('open feedback: ', challengeIdx);
 		setFeedbackProps({ open: true, data: challengeIdx });
 	};
-	const handleOpenResume = (resume) => {
-		setApplymentProps({ open: true, data: resume });
+	const handleOpenApplyment = (applyment) => {
+		setApplymentProps({ open: true, data: applyment });
 	};
 	const handleOpenSubmit = (data) => {
 		setSubmitProps({ open: true, data: data });
@@ -373,12 +381,12 @@ function ParticipateTable() {
 													<td className="presentation-td">
 														{(() => {
 															switch (data.presentationType) {
-																case '지원서': {
+																case '지원하기': {
 																	return (
 																		<button
 																			className="resume"
 																			onClick={() => {
-																				handleOpenResume(data);
+																				handleOpenApplyment(data);
 																			}}
 																		>
 																			지원하기
@@ -413,10 +421,10 @@ function ParticipateTable() {
 																	return (
 																		<button
 																			onClick={() => {
-																				handleOpenResume(data);
+																				handleOpenApplyment(data);
 																			}}
 																		>
-																			지원서
+																			보기
 																		</button>
 																	);
 																}
