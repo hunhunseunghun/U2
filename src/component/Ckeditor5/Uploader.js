@@ -29,7 +29,6 @@ class FileUploadCommand extends Command {
 		const editor = this.editor;
 		const model = editor.model;
 
-		const fileRepository = editor.plugins.get(FileRepository);
 		const notification = editor.plugins.get(Notification);
 
 		const imageTypes = editor.config.get('image.upload.types');
@@ -39,20 +38,10 @@ class FileUploadCommand extends Command {
 			imageTypesRegExp.test(file.type),
 		);
 		if (imagesToUpload.length) {
-			// editor.execute('fileUpload', { files: files });
 			model.change((writer) => {
 				const imagesToUpload2 = Array.isArray(imagesToUpload)
 					? imagesToUpload
 					: [imagesToUpload];
-
-				// for (const file of imagesToUpload2) {
-				// 	console.log(file);
-				// 	if (file.size > _UPLOAD_FILE_LIMIT) {
-				// 		notification.showWarning('Can not upload files larger than 50MB');
-				// 		return;
-				// 	}
-				// }
-
 				if (imagesToUpload2[0].size > _UPLOAD_FILE_LIMIT) {
 					notification.showWarning('50MB 이상의 파일은 올릴 수 없습니다.');
 					return;
@@ -62,7 +51,6 @@ class FileUploadCommand extends Command {
 		}
 
 		if (filesToUpload.length) {
-			// editor.execute('fileUpload', { file: filesToUpload });
 			model.change((writer) => {
 				const filesToUpload2 = Array.isArray(filesToUpload)
 					? filesToUpload
@@ -72,23 +60,9 @@ class FileUploadCommand extends Command {
 					notification.showWarning('Can not upload files larger than 50MB');
 					return;
 				}
-				uploadFile(writer, model, fileRepository, filesToUpload2);
+				uploadFile(writer, model, filesToUpload2);
 			});
 		}
-		// model.change((writer) => {
-		// 	const filesToUpload = Array.isArray(filesToUpload)
-		// 		? filesToUpload
-		// 		: [filesToUpload];
-
-		// 	for (const file of filesToUpload) {
-		// 		console.log(file);
-		// 		if (file.size > _UPLOAD_FILE_LIMIT) {
-		// 			notification.showWarning('Can not upload files larger than 50MB');
-		// 			return;
-		// 		}
-		// 		uploadFile(writer, model, fileRepository, file);
-		// 	}
-		// });
 	}
 }
 function uploadImg(writer, model, file) {
@@ -96,13 +70,6 @@ function uploadImg(writer, model, file) {
 		model.document.selection,
 		model,
 	);
-	// uploadFileToBlob(file).then((blobs) => {
-	// 	getSingleFileFromBlob(file[0].name).then((url) => {
-	// 		const image = writer.createElement('image', { src: url });
-
-	// 		model.insertContent(image, insertAtSelection);
-	// 	});
-	// });
 	singleUploadAndReturnObj(file, 'market-texteditor').then(
 		({ url, blobname }) => {
 			const image = writer.createElement('image', { src: url });
@@ -116,23 +83,7 @@ function uploadImg(writer, model, file) {
 // @param {module:engine/model/writer~writer} writer
 // @param {module:engine/model/model~Model} model
 // @param {File} file
-function uploadFile(writer, model, fileRepository, file) {
-	// uploadFileToBlob(file).then((blobs) => {
-	// 	getSingleFileFromBlob(file[0].name).then((url) => {
-	// 		const attributes = {
-	// 			linkHref: url,
-	// 			titleTarget: file[0].name,
-	// 		};
-	// 		const fileElement = writer.createText(file[0].name, attributes);
-
-	// 		const insertAtSelection = findOptimalInsertionPosition(
-	// 			model.document.selection,
-	// 			model,
-	// 		);
-
-	// 		model.insertContent(fileElement, insertAtSelection);
-	// 	});
-	// });
+function uploadFile(writer, model, file) {
 	singleUploadAndReturnObj(file, 'market-texteditor').then(
 		({ url, blobname }) => {
 			const attributes = {
@@ -159,8 +110,6 @@ class Uploader extends Plugin {
 
 		editor.ui.componentFactory.add('insertFileAndImage', (locale) => {
 			const view = new FileDialogButtonView(locale);
-			// const imageTypes = editor.config.get('image.upload.types');
-			// const imageTypesRegExp = createImageTypeRegExp(imageTypes);
 
 			view.buttonView.set({
 				label: 'Insert image and file',

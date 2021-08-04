@@ -1,19 +1,17 @@
-import { divide } from 'lodash';
+// import { divide } from 'lodash';
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { TiDeleteOutline } from 'react-icons/ti'; // 파일삭제 버튼 icon
 import { Container } from './UploaderStyled.jsx';
 // import uploadFileToBlob, {
 // 	isStorageConfigured,
 // 	getFilesFromBlob,
 // } from '../../../library/azureBlob';
-import uploadFileToBlob, {
-	isStorageConfigured,
-	getFilesFromBlob,
-	getSingleFileFromBlob,
+import {
 	delteFileFromBlob,
 	singleUploadAndReturnObj,
 } from '../../library/azureBlob.js';
-// Object.defineProperty(fileToAmend, 'name', {
+// Object.defineProperty(fileToAmend, 'name', { //파일 이름 바꾸기
 //   writable: true,
 //   value: updatedFileName
 // });
