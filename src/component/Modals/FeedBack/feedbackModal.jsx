@@ -38,7 +38,7 @@ function FeedbackModal({
 					console.log(err);
 				});
 		}
-	}, [challengeIdx]);
+	}, [open]);
 
 	const handleSubmit = () => {
 		console.log(input);

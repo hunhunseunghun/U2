@@ -277,7 +277,7 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 			})
 			.catch((err) => {
 				console.log('workdetail error');
-				console.log(err);
+				console.log(err.response);
 			});
 	}, []);
 	return (
@@ -388,6 +388,7 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 											</td>
 											<td>
 												{(() => {
+													console.log('data: ', data);
 													switch (data.checkStatusCode) {
 														case 8: {
 															return '진행중';

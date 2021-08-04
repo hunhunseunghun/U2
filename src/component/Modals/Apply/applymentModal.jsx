@@ -56,14 +56,14 @@ function ApplymentModal({
 				method: 'get',
 				url:
 					process.env.REACT_APP_U2_DB_HOST +
-					`/Campaign/challengesubmit/${Number(challengeIdx)}`,
+					`/Campaign/challengehireapply/${Number(challengeIdx)}`,
 				headers: {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 					'Content-Type': 'application/json',
 				},
 			};
 			axios(config).then((response) => {
-				console.log('data in submission: ', response.data);
+				console.log('data in applyment: ', response);
 				setData(response.data);
 				setFbProps({ ...fbProps, data: response.data.feedback });
 			});
@@ -76,7 +76,7 @@ function ApplymentModal({
 				method: 'get',
 				url:
 					process.env.REACT_APP_U2_DB_HOST +
-					`/Campaign/challengesubmit/${Number(
+					`/Campaign/challengehireapply/${Number(
 						propsData.challengeIdx,
 					)}?memberIdx=${propsData.memberIdx}`,
 				headers: {
@@ -93,7 +93,7 @@ function ApplymentModal({
 						data: response.data,
 					});
 				})
-				.catch((err) => console.log(err));
+				.catch((err) => console.log(err.response));
 		}
 	}, [propsData]);
 	return (

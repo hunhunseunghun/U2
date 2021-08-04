@@ -313,7 +313,15 @@ function Modal({ open, challenge, handleModalClose }) {
 			alert('제출 중입니다.');
 			return true;
 		}
-		if (!title || bankAccountErr || !address1 || !address2 || !address3) {
+		if (
+			!title ||
+			bankAccountErr ||
+			!address1 ||
+			!address2 ||
+			!address3 ||
+			(contactRequired === 2 && !mobileAuthorized) ||
+			(emailRequired === 2 && !emailAuthorized)
+		) {
 			alert('모든 필수 항목을 입력해야 합니다.');
 			return true;
 		}
@@ -340,21 +348,16 @@ function Modal({ open, challenge, handleModalClose }) {
 		}
 		// contactRequired,
 		// 	emailRequired,
-		if (contactRequired === 1) {
-			if (mobileErr) {
-				alert('휴대전화 번호를 입력해주세요');
-				return true;
-			}
+		if (mobileErr) {
+			alert('정확한 휴대전화 번호를 입력해주세요');
+			return true;
 		}
-		if (emailRequired === 1) {
-			if (emailErr) {
-				alert('이메일을 입력해주세요');
-				return true;
-			}
+		if (emailErr) {
+			alert('정확한 이메일을 입력해주세요');
+			return true;
 		}
 	};
 	const handleSubmit = () => {
-		console.log(userInfo);
 		if (checkSubmit()) return;
 		setState((preState) => ({ ...preState, submitClicked: true }));
 		let totalURLs = [];
@@ -445,6 +448,7 @@ function Modal({ open, challenge, handleModalClose }) {
 				if (err.response.data.error === 'Already submitted') {
 					alert('이미 제출한 프로젝트 입니다.');
 					clearState();
+					handleModalClose('submit');
 				} else {
 					alert(err.response.data);
 				}

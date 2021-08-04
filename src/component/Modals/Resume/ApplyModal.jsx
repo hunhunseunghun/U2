@@ -338,7 +338,7 @@ function Modal({ open, challenge, handleModalClose }) {
 				}
 			});
 	};
-
+	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 	useEffect(() => {
 		var config = {
 			method: 'get',
@@ -367,7 +367,10 @@ function Modal({ open, challenge, handleModalClose }) {
 					'Content-Type': 'application/json',
 				},
 			};
-			if (challenge.challengeTargetCode === 4) {
+			if (
+				challenge.challengeTargetCode === 4 ||
+				challenge.challengeTargetCode === 2
+			) {
 				axios(config)
 					.then((response) => {
 						console.log('apply modal useEffect Data: ', response.data);
@@ -378,7 +381,7 @@ function Modal({ open, challenge, handleModalClose }) {
 			}
 		}
 	}, [open]);
-
+	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 	return (
 		<ModalContainer>
 			<div className={open ? 'openModal modal' : 'modal'}>

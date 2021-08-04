@@ -118,11 +118,23 @@ function SubmissionModal({
 												return (
 													<div className="links">
 														<a
-															href={
-																el.platform === 'FS'
-																	? getSingleFileFromBlob(el.videoId)
-																	: el.videoId
-															}
+															href={(() => {
+																if (el.platform === 'FS') {
+																	return getSingleFileFromBlob(el.videoId);
+																} else if (el.platform === 'DR') {
+																	let newurl = el.videoId;
+
+																	if (
+																		el.videoId.substring(0, 7) != 'http://' &&
+																		el.videoId.substring(0, 8) != 'https://'
+																	) {
+																		newurl = 'http://' + el.videoId;
+																	}
+																	return newurl;
+																} else {
+																	return el.videoId;
+																}
+															})()}
 															target="_blank"
 														>
 															{el.videoId}

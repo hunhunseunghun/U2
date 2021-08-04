@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
 import Pagination2 from '../../../component/Pagination/Pagination2';
-import { paginate } from '../../../component/Pagination/paginate';
 import { ParticipateTableContainer } from './ParticipateTableStyled';
 import FeedbackModal from '../../../component/Modals/FeedBack/feedbackModal';
 import ApplyModal from '../../../component/Modals/Resume/ApplyModal';
@@ -14,10 +13,11 @@ import sortarrowdown from '../../../Img/Icons/sortarrowdown.png';
 import { getSingleFileFromBlob } from '../../../library/azureBlob';
 function ParticipateTable() {
 	const userInfo = useSelector((state) => state.userInfo);
+	const paginationRef = useRef();
 	const history = useHistory();
 	const [quests, setQuests] = useState({
 		data: [],
-		pageSize: 10,
+		pageSize: 6,
 		currentPage: 1,
 		total: 0,
 	});
@@ -29,7 +29,7 @@ function ParticipateTable() {
 	});
 	const [applymentProps, setApplymentProps] = useState({
 		open: false,
-		data: null,
+		memberIdx: null,
 	});
 	const [submitProps, setSubmitProps] = useState({
 		open: false,
@@ -51,11 +51,10 @@ function ParticipateTable() {
 				'Content-Type': 'application/json',
 			},
 		};
-		getData(config);
+		getData(config, true, quests.currentPage);
 	}, []);
-	const getData = (config) => {
+	const getData = (config, isUseEffect = false, page) => {
 		setLoading(true);
-		console.log('config: ', config);
 		axios(config)
 			.then((response) => {
 				console.log('participateTable response: ', response.data);
@@ -67,117 +66,136 @@ function ParticipateTable() {
 
 						var myHireApply = el.hireApply;
 						// if (el.challengeTargetCode !== 4) {
-						if (myApplication || myHireApply.challengeIdx !== 0) {
-							return {
-								img: el.logo,
-								category: (() => {
-									switch (el.challengeTargetCode) {
+						// if (myApplication || myHireApply.challengeIdx !== 0) {
+						return {
+							img: el.logo,
+							category: (() => {
+								switch (el.challengeTargetCode) {
+									case 1: {
+										return '공모전';
+									}
+									case 2: {
+										return '전문영상 편집자';
+									}
+									case 3: {
+										return '영상크리에이터 / 인플루언서';
+									}
+									case 4: {
+										return '강사채용';
+									}
+									default: {
+										return null;
+									}
+								}
+							})(),
+							title: el.title ? el.title : 'no data',
+							status: (() => {
+								if (
+									//공모전, 영상크리에이터
+									el.challengeTargetCode === 1 ||
+									el.challengeTargetCode === 3
+								) {
+									if (myApplication && myApplication.statusCode === 0)
+										return '챌린지';
+									switch (myApplication.checkStatusCode) {
 										case 1: {
-											return '공모전';
+											return '승인';
 										}
-										case 2: {
-											return '전문영상 편집자';
+										case -1: {
+											return '반려';
 										}
-										case 3: {
-											return '영상크리에이터 / 인플루언서';
-										}
-										case 4: {
-											return '강사채용';
+										case 0: {
+											return '검수중';
 										}
 										default: {
 											return null;
 										}
 									}
-								})(),
-								title: el.title ? el.title : 'no data',
-								status: (() => {
-									if (
-										//공모전, 영상크리에이터
-										el.challengeTargetCode === 1 ||
-										el.challengeTargetCode === 3
-									) {
-										if (myApplication && myApplication.statusCode === 0)
-											return '챌린지';
-										switch (myApplication.checkStatusCode) {
-											case 1: {
-												return '승인';
-											}
-											case -1: {
-												return '반려';
-											}
-											case 0: {
-												return '검수중';
-											}
-											default: {
-												return null;
-											}
-										}
+								} else {
+									if (myHireApply.challengeIdx === 0) {
+										return '챌린지';
 									} else {
-										if (myHireApply.challengeIdx === 0) {
-											return '챌린지';
-										} else {
-											return '지원완료';
-										}
+										return '지원완료';
 									}
-								})(),
-								presentationType: (() => {
-									if (
-										el.challengeTargetCode === 1 ||
-										el.challengeTargetCode === 3
-									) {
-										//공모전 or 영상크리에이터
-										if (myApplication.statusCode === 0) {
-											return '자료제출';
-										} else {
-											//statusCode === 1
-											return '제출자료';
-										}
+								}
+							})(),
+							presentationType: (() => {
+								if (
+									el.challengeTargetCode === 1 ||
+									el.challengeTargetCode === 3
+								) {
+									//공모전 or 영상크리에이터
+									if (myApplication.statusCode === 0) {
+										return '자료제출';
 									} else {
-										//challengeTargetCode === 2, 4 편집자, 강사채용
-										console.log('myHireApply: ', myHireApply);
-										if (myHireApply.challengeIdx === 0) {
-											return '지원하기';
-										} else {
-											//statusCode === 1
-											return '지원서';
-										}
+										//statusCode === 1
+										return '제출자료';
 									}
-								})(),
-								// feedback: myApplication.hasFeedback,
-								feedback: myApplication && myApplication.hasFeedback,
-								// requestDate: myApplication.registDate.split('T')[0],
-								requestDate: (() => {
-									if (
-										el.challengeTargetCode === 1 ||
-										el.challengeTargetCode === 3
-									) {
-										return myApplication.registDate.split('T')[0];
+								} else {
+									//challengeTargetCode === 2, 4 편집자, 강사채용
+									if (myHireApply.challengeIdx === 0) {
+										return '지원하기';
 									} else {
-										return myHireApply.registDate.split('T')[0];
+										//statusCode === 1
+										return '지원서';
 									}
-								})(),
-								// dueDate: el.missions[0].dateFin.split('T')[0],
-								dueDate: (() => {
-									if (
-										el.challengeTargetCode === 1 ||
-										el.challengeTargetCode === 3
-									) {
-										return el.missions[0].dateFin.split('T')[0];
-									} else {
-										// return myHireApply.dateFin.split('T')[0];
-										return '-';
-									}
-								})(),
-								challengeIdx: el.challengeIdx,
-								missions: el.missions,
-								application: myApplication,
-							};
-						} else {
-							//없을 경우
-						}
+								}
+							})(),
+							// feedback: myApplication.hasFeedback,
+							feedback: myApplication && myApplication.hasFeedback,
+							// requestDate: myApplication.registDate.split('T')[0],
+							requestDate: (() => {
+								if (
+									el.challengeTargetCode === 1 ||
+									el.challengeTargetCode === 3
+								) {
+									return myApplication.registDate.split('T')[0];
+								} else {
+									return myHireApply.registDate.split('T')[0];
+								}
+							})(),
+							// dueDate: el.missions[0].dateFin.split('T')[0],
+							dueDate: (() => {
+								if (
+									el.challengeTargetCode === 1 ||
+									el.challengeTargetCode === 3
+								) {
+									return el.missions[0].dateFin.split('T')[0];
+								} else {
+									// return myHireApply.dateFin.split('T')[0];
+									return '-';
+								}
+							})(),
+							challengeIdx: el.challengeIdx,
+							missions: el.missions,
+							application: myApplication,
+							memberIdx: (() => {
+								if (
+									el.challengeTargetCode === 1 ||
+									el.challengeTargetCode === 3
+								) {
+									return myApplication.memberIdx;
+								} else {
+									return myHireApply.memberIdx;
+								}
+							})(),
+						};
+						// } else {
+						//강사채용 첼린지
+						// }
 					});
-				// setQuests({ ...quests, data: response.data.entities });
-				setQuests({ ...quests, data: formedData, total: response.data.total });
+				console.log('quests before set: ', quests);
+				setQuests({
+					...quests,
+					data: formedData,
+					total: response.data.total,
+					currentPage: page,
+				});
+				console.log('quests after set: ', quests);
+				if (isUseEffect) {
+					//페이지네이션 1페이지로 초기화
+					paginationRef.current.refreshFirstPage();
+				}
 				setLoading(false);
 			})
 			.catch((err) => {
@@ -197,7 +215,7 @@ function ParticipateTable() {
 				'Content-Type': 'application/json',
 			},
 		};
-		getData(config);
+		getData(config, false, page);
 	};
 
 	const handleOpenFeedback = (challengeIdx) => {
@@ -205,7 +223,8 @@ function ParticipateTable() {
 		setFeedbackProps({ open: true, data: challengeIdx });
 	};
 	const handleOpenApplyment = (applyment) => {
-		setApplymentProps({ open: true, data: applyment });
+		console.log('handle open applyment: ', applyment);
+		setApplymentProps({ open: true, memberIdx: applyment.memberIdx });
 	};
 	const handleOpenSubmit = (data) => {
 		setSubmitProps({ open: true, data: data });
@@ -218,6 +237,16 @@ function ParticipateTable() {
 	};
 
 	const handleModalClose = (modalType) => {
+		var config = {
+			method: 'get',
+			url:
+				process.env.REACT_APP_U2_DB_HOST +
+				`/Campaign/challengeinvolved?p=${quests.currentPage}&size=${quests.pageSize}`,
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+		};
 		switch (modalType) {
 			case 'feedback': {
 				setFeedbackProps({ ...feedbackProps, open: false });
@@ -229,6 +258,7 @@ function ParticipateTable() {
 			}
 			case 'submit': {
 				setSubmitProps({ ...submitProps, open: false });
+				getData(config, false, quests.currentPage);
 				break;
 			}
 			case 'submission': {
@@ -237,6 +267,8 @@ function ParticipateTable() {
 			}
 			case 'apply': {
 				setApplyProps({ ...applyProps, open: false });
+				getData(config, false, quests.currentPage);
+				break;
 			}
 			default: {
 				console.log('no such case');
@@ -280,7 +312,7 @@ function ParticipateTable() {
 			/>
 			<ApplymentModal
 				open={applymentProps.open}
-				challenge={applymentProps.data}
+				challengeIdx={applymentProps.memberIdx}
 				handleModalClose={(modalType) => {
 					handleModalClose(modalType);
 				}}
@@ -375,7 +407,11 @@ function ParticipateTable() {
 														)}
 													</td>
 													<td>{data.category}</td>
-													<td>{data.title}</td>
+													<td>
+														<Link to={`/prjdetail/${data.challengeIdx}`}>
+															{data.title}
+														</Link>
+													</td>
 													<td>{data.status}</td>
 													{/* <td>{data.presentation}</td> */}
 													<td className="presentation-td">
@@ -386,7 +422,7 @@ function ParticipateTable() {
 																		<button
 																			className="resume"
 																			onClick={() => {
-																				handleOpenApplyment(data);
+																				handleOpenApply(data);
 																			}}
 																		>
 																			지원하기
@@ -476,6 +512,7 @@ function ParticipateTable() {
 				itemsCount={quests.total}
 				handlePageChange={handlePageChange}
 				pageSize={quests.pageSize}
+				ref={paginationRef}
 			></Pagination2>
 		</ParticipateTableContainer>
 	);

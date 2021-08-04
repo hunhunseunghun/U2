@@ -418,7 +418,8 @@ function ProjectDetail(props) {
 						>
 							챌린지
 						</button>
-						{challenge.challengeTargetCode === 4 ? (
+						{challenge.challengeTargetCode === 4 ||
+						challenge.challengeTargetCode === 2 ? (
 							<button
 								onClick={() => {
 									handleApply();
@@ -443,7 +444,7 @@ function ProjectDetail(props) {
 				<textarea
 					type="text"
 					placeholder={
-						challenge.commentAllowed
+						!challenge.commentAllowed
 							? '댓글을 달 수 없는 프로젝트입니다'
 							: '댓글을 남겨보세요'
 					}
@@ -541,38 +542,3 @@ function ProjectDetail(props) {
 	);
 }
 export default ProjectDetail;
-// applications: []
-// challengeDesc: "NCT x 여친 생일축하 공모전"
-// challengeIdx: 7
-// challengeTargetCode: 1
-// challengerCount: 0
-// charge: null
-// chargeContact: null
-// chargeContactShown: 0
-// chargeShown: 0
-// chargeeMail: null
-// chargeeMailShown: 0
-// commentAllowed: 1
-// commentCount: 1
-// companyA: null
-// companyB: null
-// datePub: "2021-06-24T15:00:00+00:00"
-// fileRef: null
-// hire: {fields: null, docs: null, challengeIdx: 0, seq: 0, isOnline: 0, …}
-// logo: null
-// mainImage: null
-// meetCode: 0
-// memberIdx: 58
-// missions: [{…}]
-// modifyDate: "2021-07-08T14:55:31.5751142+00:00"
-// modifyMemberIdx: 0
-// ownerIdx: 0
-// ownerName: "SM엔터테인먼트"
-// promoting: 0
-// registDate: "2021-07-08T14:55:31.5751141+00:00"
-// registMemberIdx: 0
-// rewards: []
-// shareCount: 0
-// subtitle: "생일을 맞이한 여자 친구를 위한"
-// title: "NCT x 여친 생일축하 공모전"
-// url: null

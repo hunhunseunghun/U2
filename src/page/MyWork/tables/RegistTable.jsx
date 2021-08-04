@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -10,6 +10,7 @@ import moment from 'moment';
 import { getSingleFileFromBlob } from '../../../library/azureBlob';
 function RegistTable() {
 	const history = useHistory();
+	const paginationRef = useRef();
 	// let [quests, setQuests] = useState({
 	//   data: datas,
 	//   pageSize: 3,
@@ -17,7 +18,7 @@ function RegistTable() {
 	// });
 	let [quests, setQuests] = useState({
 		data: null,
-		pageSize: 3,
+		pageSize: 6,
 		currentPage: 1,
 	});
 	// console.log('datas: ', datas);
@@ -90,6 +91,7 @@ function RegistTable() {
 					data: response.data.entities,
 				});
 				setCount(response.data.total);
+				paginationRef.current.refreshFirstPage();
 			})
 			.catch((err) => {
 				console.log('response error:');
@@ -233,7 +235,17 @@ function RegistTable() {
 														},
 													}}
 												>
-													{data.challengerCompleteCount}
+													{/* {data.challengerCompleteCount} */}
+													{(() => {
+														if (
+															data.challengeTargetCode === 4 ||
+															data.challengeTargetCode === 2
+														) {
+															return '-';
+														} else {
+															return data.challengerCompleteCount;
+														}
+													})()}
 													{data.isNewInspect ? (
 														<span className="newAlert table_newalert">new</span>
 													) : (
@@ -261,6 +273,7 @@ function RegistTable() {
 					itemsCount={count}
 					handlePageChange={handlePageChange}
 					pageSize={quests.pageSize}
+					ref={paginationRef}
 				></Pagination2>
 			</div>
 		</RegistTableContainer>
