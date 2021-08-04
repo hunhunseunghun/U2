@@ -2,6 +2,7 @@ import { BlobServiceClient } from '@azure/storage-blob';
 import axios from 'axios';
 const containerName = `dev-qa`;
 let storageAccountName = process.env.REACT_APP_STORAGE_NAME;
+// const sasToken = process.env.REACT_APP_SAS;
 // // Feature flag - disable storage feature to app if not configured
 // export const isStorageConfigured = () => {
 // 	return !(!storageAccountName || !sasToken);
@@ -40,7 +41,7 @@ const createBlobInContainer = async (containerClient, file, folder) => {
 export const getSingleFileFromBlob = (name) => {
 	return `https://${storageAccountName}.blob.core.windows.net/${containerName}/${name}`;
 };
-export const delteFileFromBlob = async (name, sas) => {
+export const delteFileFromBlob = async (name) => {
 	const config = {
 		method: 'get',
 		url: process.env.REACT_APP_U2_DB_HOST + '/azure/sas/market',
@@ -50,8 +51,10 @@ export const delteFileFromBlob = async (name, sas) => {
 		},
 	};
 	const response = await axios(config);
-	const newSAS = response.data.sasUri;
-	const blobService = new BlobServiceClient(newSAS);
+	const newSAS = response.data.sasUri.split('?')[1];
+	const blobService = new BlobServiceClient(
+		`https://${storageAccountName}.blob.core.windows.net/?${newSAS}`,
+	);
 	// get Container - full public read access
 	const containerClient = blobService.getContainerClient(containerName);
 	try {
@@ -62,7 +65,7 @@ export const delteFileFromBlob = async (name, sas) => {
 		return false;
 	}
 };
-export const singleUploadAndReturnObj = async (files, folder, sas) => {
+export const singleUploadAndReturnObj = async (files, folder) => {
 	var file = files[0];
 	Object.defineProperty(file, 'name', {
 		//이름 바꾸기
@@ -79,8 +82,10 @@ export const singleUploadAndReturnObj = async (files, folder, sas) => {
 		},
 	};
 	const response = await axios(config);
-	const newSAS = response.data.sasUri;
-	const blobService = new BlobServiceClient(newSAS);
+	const newSAS = response.data.sasUri.split('?')[1];
+	const blobService = new BlobServiceClient(
+		`https://${storageAccountName}.blob.core.windows.net/?${newSAS}`,
+	);
 	// get Container - full public read access
 	const containerClient = blobService.getContainerClient(containerName);
 
