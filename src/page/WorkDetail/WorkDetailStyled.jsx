@@ -40,7 +40,10 @@ export const WorkDetailContainer = styled.div`
       }
       .porject_name {
         font-size: 18px;
-        line-height: 24x;
+        line-height: 24px;
+      }
+      .wordetail_noimage {
+        width: 80%;
       }
     }
 

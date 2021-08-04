@@ -78,6 +78,7 @@ export const ModalContainer = styled.div`
     min-height: 50px;
     font-size: 13px;
   }
+
   .inputInfo {
     display: flex;
     align-items: center;
@@ -184,6 +185,12 @@ export const ModalContainer = styled.div`
         color: #ff2a1b;
         font-weight: 400;
       }
+    }
+  }
+  .inputinfo_etc {
+    padding: 0;
+    textarea {
+      width: 100%;
     }
   }
   .URLs {
@@ -391,7 +398,7 @@ export const ModalContainer = styled.div`
       transform: translate3d(4px, 0, 0);
     }
   }
-  @media only screen and (max-width: 900px) {
+  @media only screen and (max-width: 550px) {
     .modal {
       display: none;
       position: fixed;

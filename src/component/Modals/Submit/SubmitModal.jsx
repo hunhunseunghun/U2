@@ -1146,7 +1146,7 @@ function Modal({ open, challenge, handleModalClose }) {
               </section>
               <section className="ele submit_modal_ele_last">
                 <div className="menu">비고</div>
-                <div className="inputInfo">
+                <div className="inputInfo inputinfo_etc">
                   <textarea
                     className="note-textarea"
                     maxLength={800}
