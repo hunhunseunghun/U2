@@ -146,7 +146,7 @@ export const RegiConationer = styled.div`
     }
     label {
       margin-left: 2px;
-      font-size: 10px;
+      font-size: 13px;
     }
   }
 
@@ -213,7 +213,8 @@ export const RegiConationer = styled.div`
       justify-content: center;
       align-items: center;
       margin-right: 4px;
-      font-size: 10px;
+      font-size: 13px;
+
       div {
         position: relative;
         top: -1px;
@@ -227,6 +228,9 @@ export const RegiConationer = styled.div`
     div {
       margin: 10px 0;
     }
+  }
+  #upLoader {
+    width: 75px;
   }
 
   // onlinemeet section css ---------------
@@ -422,6 +426,7 @@ export const RegiConationer = styled.div`
       .table_title {
         text-align: center;
         min-width: 90px;
+        font-size: 13px;
       }
       tr {
         border-top: 1px solid #d8d8d8;
@@ -744,6 +749,7 @@ export const RegiConationer = styled.div`
       }
       label {
         margin-left: 2px;
+        font-size: 10px;
       }
     }
 
@@ -810,6 +816,7 @@ export const RegiConationer = styled.div`
         justify-content: center;
         align-items: center;
         margin-right: 4px;
+        font-size: 10px;
         div {
           position: relative;
           top: -1px;
@@ -944,6 +951,7 @@ export const RegiConationer = styled.div`
         .table_title {
           text-align: center;
           min-width: unset;
+          font-size: 10px;
         }
         tr {
           border-top: 1px solid #d8d8d8;

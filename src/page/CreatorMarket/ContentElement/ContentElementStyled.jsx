@@ -86,7 +86,7 @@ export const EleContainer = styled.div`
     padding: 5px 10px;
     box-sizing: border-box;
     border: 1px solid #eee;
-    border-top: none;
+    border-top: 0;
   }
   .challenge_title {
     text-align: center;
@@ -116,7 +116,7 @@ export const EleContainer = styled.div`
     bottom: 20px;
     left: 0px;
     width: 100%;
-    padding: 10px 20px;
+    padding: 5% 10%;
     box-sizing: border-box;
     justify-items: center;
     justify-content: space-between;

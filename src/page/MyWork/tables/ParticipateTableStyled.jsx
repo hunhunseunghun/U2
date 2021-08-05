@@ -81,6 +81,9 @@ export const ParticipateTableContainer = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
+        span {
+          font-weight: 500;
+        }
 
         img {
           position: relative;
