@@ -17,7 +17,7 @@ export const PrjInfoContainer = styled.div`
         text-align: left;
         box-sizing: border-box;
         border-collapse: collapse;
-        max-width: 80px;
+        min-width: 90px;
       }
       th,
       td {
@@ -31,6 +31,7 @@ export const PrjInfoContainer = styled.div`
         font-size: 15px;
         word-break: break-all;
         font-weight: 400;
+        min-width: 120px;
       }
 
       tr td:last-child {
