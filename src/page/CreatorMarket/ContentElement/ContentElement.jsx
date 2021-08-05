@@ -150,9 +150,21 @@ const ContentElement = (props) => {
 						</div>
 					</div>
 					<div className="budgetArea">
-						<div className="bugetText">예산금액</div>
+						<div className="bugetText">보상</div>
 						<div className="budget">
-							{challenge.reward ? challenge.reward : '--'}
+							{(() => {
+								if (challenge.rewards && challenge.rewards.length > 0) {
+									if (challenge.rewards[0].cat === 0) {
+										return `현금 ${
+											challenge.rewards[0].pts
+										} ${challenge.rewards[0].currency.toUpperCase()}`;
+									} else {
+										return challenge.rewards[0].rewardDesc || '-';
+									}
+								} else {
+									return '-';
+								}
+							})()}
 						</div>
 					</div>
 					<div className="remainDateArea">
