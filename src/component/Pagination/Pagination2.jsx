@@ -34,8 +34,7 @@ const Pagination2 = forwardRef(
 		});
 		useImperativeHandle(ref, () => ({
 			refreshFirstPage() {
-				firstPage.item.onClick();
-				// console.log('firstPage: ', firstPage);
+				if (firstPage.item) firstPage.item.onClick();
 			},
 		}));
 		if (pageCount === 1 || pageCount === 0) return null; // 1페이지 뿐이라면 페이지 수를 보여주지 않음

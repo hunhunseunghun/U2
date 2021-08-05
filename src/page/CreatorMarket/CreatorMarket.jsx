@@ -154,7 +154,7 @@ const Main = (props) => {
 					`/Campaign/challenge?targetCode=${tabActive}&p=${currentPage}&size=${pageSize}`,
 			)
 			.then((res) => {
-				console.log('paged Challenges: ', res.data);
+				console.log('creator market useEffect response: ', res);
 				setChallengs(res.data.entities);
 				setTotalItems(res.data.total);
 				setIsLoadingChallenges(false);

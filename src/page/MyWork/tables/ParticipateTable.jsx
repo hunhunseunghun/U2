@@ -11,6 +11,7 @@ import SubmitModal from '../../../component/Modals/Submit/SubmitModal';
 import SubmissionModal from '../../../component/Modals/Submission/SubmissionModal';
 import sortarrowdown from '../../../Img/Icons/sortarrowdown.png';
 import { getSingleFileFromBlob } from '../../../library/azureBlob';
+import { isToday } from '../../../library/timeSetting';
 function ParticipateTable() {
 	const userInfo = useSelector((state) => state.userInfo);
 	const paginationRef = useRef();
@@ -34,6 +35,7 @@ function ParticipateTable() {
 	const [submitProps, setSubmitProps] = useState({
 		open: false,
 		data: null,
+		challengeTargetCode: 0,
 	});
 	const [submissionProps, setSubmissionProps] = useState({
 		open: false,
@@ -57,7 +59,7 @@ function ParticipateTable() {
 		setLoading(true);
 		axios(config)
 			.then((response) => {
-				console.log('participateTable response: ', response.data);
+				console.log('participateTable response: ', response);
 				var datas = response.data.entities;
 				var formedData = [];
 				if (datas)
@@ -134,16 +136,18 @@ function ParticipateTable() {
 								} else {
 									//challengeTargetCode === 2, 4 편집자, 강사채용
 									if (myHireApply.challengeIdx === 0) {
-										return '지원하기';
+										if (el.challengeTargetCode === 2) {
+											return '자료제출'; //편집자도 submit modal로 구현
+										} else {
+											return '지원하기';
+										}
 									} else {
 										//statusCode === 1
 										return '지원서';
 									}
 								}
 							})(),
-							// feedback: myApplication.hasFeedback,
 							feedback: myApplication && myApplication.hasFeedback,
-							// requestDate: myApplication.registDate.split('T')[0],
 							requestDate: (() => {
 								if (
 									el.challengeTargetCode === 1 ||
@@ -154,7 +158,6 @@ function ParticipateTable() {
 									return myHireApply.registDate.split('T')[0];
 								}
 							})(),
-							// dueDate: el.missions[0].dateFin.split('T')[0],
 							dueDate: (() => {
 								if (
 									el.challengeTargetCode === 1 ||
@@ -162,11 +165,15 @@ function ParticipateTable() {
 								) {
 									return el.missions[0].dateFin.split('T')[0];
 								} else {
-									// return myHireApply.dateFin.split('T')[0];
-									return '-';
+									if (el.hire) {
+										return el.hire.dateFin.split('T')[0];
+									} else {
+										return '-';
+									}
 								}
 							})(),
 							challengeIdx: el.challengeIdx,
+							challengeTargetCode: el.challengeTargetCode,
 							missions: el.missions,
 							application: myApplication,
 							memberIdx: (() => {
@@ -179,19 +186,19 @@ function ParticipateTable() {
 									return myHireApply.memberIdx;
 								}
 							})(),
+							challengerLast: el.challengerLast,
+							challengerCompleteLast: el.challengerCompleteLast,
 						};
 						// } else {
 						//강사채용 첼린지
 						// }
 					});
-				console.log('quests before set: ', quests);
 				setQuests({
 					...quests,
 					data: formedData,
 					total: response.data.total,
 					currentPage: page,
 				});
-				console.log('quests after set: ', quests);
 				if (isUseEffect) {
 					//페이지네이션 1페이지로 초기화
 					paginationRef.current.refreshFirstPage();
@@ -224,13 +231,24 @@ function ParticipateTable() {
 	};
 	const handleOpenApplyment = (applyment) => {
 		console.log('handle open applyment: ', applyment);
-		setApplymentProps({ open: true, memberIdx: applyment.memberIdx });
+		setApplymentProps({
+			open: true,
+			challengeIdx: applyment.challengeIdx,
+			challengeTargetCode: applyment.challengeTargetCode,
+		});
 	};
 	const handleOpenSubmit = (data) => {
-		setSubmitProps({ open: true, data: data });
+		setSubmitProps({
+			open: true,
+			data: data,
+			challengeTargetCode: data.challengeTargetCode,
+		});
 	};
 	const handleOpenSubmission = (data) => {
-		setSubmissionProps({ open: true, challengeIdx: data.challengeIdx });
+		setSubmissionProps({
+			open: true,
+			challengeIdx: data.challengeIdx,
+		});
 	};
 	const handleOpenApply = (data) => {
 		setApplyProps({ open: true, data: data });
@@ -300,6 +318,7 @@ function ParticipateTable() {
 			<SubmitModal
 				open={submitProps.open}
 				challenge={submitProps.data}
+				challengeTargetCode={submitProps.challengeTargetCode}
 				handleModalClose={(modalType) => {
 					handleModalClose(modalType);
 				}}
@@ -312,7 +331,8 @@ function ParticipateTable() {
 			/>
 			<ApplymentModal
 				open={applymentProps.open}
-				challengeIdx={applymentProps.memberIdx}
+				challengeIdx={applymentProps.challengeIdx}
+				challengeTargetCode={applymentProps.challengeTargetCode}
 				handleModalClose={(modalType) => {
 					handleModalClose(modalType);
 				}}

@@ -56,10 +56,9 @@ const initialState = {
 	emailRequired: 0,
 	submitClicked: false,
 };
-function Modal({ open, challenge, handleModalClose }) {
+function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 	// console.log(data);
 	const userInfo = useSelector((state) => state.userInfo);
-
 	const [
 		{
 			title,
@@ -108,11 +107,12 @@ function Modal({ open, challenge, handleModalClose }) {
 		setState,
 	] = useState({ ...initialState });
 	const clearState = () => {
-		setState({ ...initialState, DRarr: [] });
+		setState({ ...initialState });
 	};
 
 	useEffect(() => {
 		if (challenge) {
+			console.log('challengeTargetCode: ', challengeTargetCode);
 			console.log('challenge in submit modal: ', challenge);
 			var config = {
 				method: 'get',
@@ -124,25 +124,23 @@ function Modal({ open, challenge, handleModalClose }) {
 				},
 				// data: data,
 			};
-			if (challenge.challengeTargetCode !== 4) {
-				axios(config)
-					.then((response) => {
-						console.log('submit modal useEffect data: ', response.data);
-						if (response.data.missions && response.data.missions.length > 0)
-							setState((state) => ({
-								...state,
-								videos: response.data.missions[0].videos,
-								fileOrUrl: response.data.missions[0].fileOrUrl,
-								shareRequired: response.data.missions[0].shareRequired,
-								filmRequired: response.data.missions[0].filmRequired,
-								contactRequired: response.data.missions[0].contactRequired,
-								emailRequired: response.data.missions[0].emailRequired,
-							}));
-					})
-					.catch((err) => {
-						console.log(err);
-					});
-			}
+			axios(config)
+				.then((response) => {
+					console.log('submit modal useEffect data: ', response.data);
+					if (response.data.missions && response.data.missions.length > 0)
+						setState((state) => ({
+							...state,
+							videos: response.data.missions[0].videos,
+							fileOrUrl: response.data.missions[0].fileOrUrl,
+							shareRequired: response.data.missions[0].shareRequired,
+							filmRequired: response.data.missions[0].filmRequired,
+							contactRequired: response.data.missions[0].contactRequired,
+							emailRequired: response.data.missions[0].emailRequired,
+						}));
+				})
+				.catch((err) => {
+					console.log(err);
+				});
 		}
 	}, [open]);
 	const handleValidateMobile = () => {
@@ -319,10 +317,18 @@ function Modal({ open, challenge, handleModalClose }) {
 			!address1 ||
 			!address2 ||
 			!address3 ||
-			(contactRequired === 2 && !mobileAuthorized) ||
-			(emailRequired === 2 && !emailAuthorized)
+			(contactRequired === 2 && !mobileNum) ||
+			(emailRequired === 2 && !email)
 		) {
 			alert('모든 필수 항목을 입력해야 합니다.');
+			return true;
+		}
+		if (contactRequired === 2 && !mobileAuthorized) {
+			alert('휴대 전화 인증을 해주세요');
+			return true;
+		}
+		if (emailRequired === 2 && !emailAuthorized) {
+			alert('이메일 인증을 해주세요');
 			return true;
 		}
 		if (filmRequired === 2) {
@@ -382,10 +388,6 @@ function Modal({ open, challenge, handleModalClose }) {
 					seq: idx + 1,
 					platform: el.platform,
 					videoId: el.url,
-					// registMemberIdx: userInfo.memberIdx,
-					// registDate: '2021-07-08T12:43:08.139Z',
-					// modifyMemberIdx: userInfo.memberIdx,
-					// modifyDate: '2021-07-08T12:43:08.139Z',
 				};
 			}),
 			name: userInfo.fullName,
@@ -406,26 +408,11 @@ function Modal({ open, challenge, handleModalClose }) {
 			statusCode: 1,
 			checkStatusCode: 0,
 			dateApplied: new Date(),
-			// registMemberIdx: userInfo.memberIdx,
-			// registDate: '2021-07-08T12:43:08.139Z',
-			// modifyMemberIdx: userInfo.memberIdx,
-			// modifyDate: '2021-07-08T12:43:08.139Z',
 		};
-		//checkStatusCode
-		// 1. 승인
-		// 2. 반려
-		// 3. 피드백
-		//4. 챌린지
-		// 8. 진행중
-		//statusCode
-		//1. 제출할때
-		//0. 챌린지
 		console.log('body: ', data);
 		// TextFile(data);
-		console.log('token: ', localStorage.getItem('token'));
 		var config = {
 			method: 'post',
-			// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmit
 			url: server + '/Campaign/challengesubmit',
 			headers: {
 				Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -454,6 +441,89 @@ function Modal({ open, challenge, handleModalClose }) {
 				}
 			});
 	};
+	const handleSubmitEditor = () => {
+		if (checkSubmit()) return;
+		setState((preState) => ({ ...preState, submitClicked: true }));
+		let totalURLs = [];
+		if (videoFile && videoFile.platform) {
+			totalURLs = new Array().concat(
+				YUarr,
+				TTarr,
+				VMarr,
+				DRarr,
+				videoFile && videoFile.platform && videoFile,
+			);
+		} else {
+			totalURLs = new Array().concat(YUarr, TTarr, VMarr, DRarr);
+		}
+
+		var data = {
+			challengeIdx: challenge.challengeIdx,
+			seq: 1,
+			memberIdx: userInfo.memberIdx,
+			mobile: mobileNum,
+			email: email,
+			// cv: 'string',
+			// cvEng: 'string',
+			// fileRef: 'string',
+			bankCode: bankCode,
+			bankAccount: bankAccountNum,
+			postCode: address1,
+			addr: address3,
+			bankName: bankName,
+			postCodeAddr: address2,
+			// urls: [
+			// 	{
+			// 		challengeIdx: 0,
+			// 		seq: 0,
+			// 		memberIdx: 0,
+			// 		url: 'string',
+			// 	},
+			// ],
+			urls: totalURLs.map((el, idx) => {
+				return {
+					challengeIdx: challenge.challengeIdx,
+					seq: 1,
+					memberIdx: userInfo.memberIdx,
+					url: el.url,
+				};
+			}),
+		};
+		console.log('body: ', data);
+		// TextFile(data);
+		var config = {
+			method: 'post',
+			url: server + '/Campaign/challengehireapply',
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+			data: data,
+		};
+
+		axios(config)
+			.then((response) => {
+				console.log('response: ');
+				console.log(response.data);
+				if (!alert('제출 완료되었습니다.')) {
+					handleModalClose('submit');
+					clearState();
+				}
+			})
+			.catch((err) => {
+				console.log('err: ', err.response);
+				if (
+					err.response.data.error === 'Already submitted' ||
+					err.response.data.error === 'already applied'
+				) {
+					alert('이미 제출한 프로젝트 입니다.');
+					clearState();
+					handleModalClose('submit');
+				} else {
+					alert(err.response.data);
+				}
+			});
+	};
 
 	return (
 		<ModalContainer>
@@ -468,7 +538,9 @@ function Modal({ open, challenge, handleModalClose }) {
 				/>
 				{open ? (
 					<section>
-						<header>자료 제출</header>
+						<header>
+							{challengeTargetCode === 2 ? '지원하기' : '자료 제출'}
+						</header>
 						<main className={'sm-main'}>
 							<section className="ele">
 								<div className="menu">* 작품명</div>
@@ -489,8 +561,8 @@ function Modal({ open, challenge, handleModalClose }) {
 							</section>
 							<section className="ele">
 								<div className="menu">
-									{(filmRequired === 2 || shareRequired === 2) && '*'}프로젝트
-									영상
+									{(filmRequired === 2 || shareRequired === 2) && '* '}
+									{challengeTargetCode === 2 ? '포트폴리오' : '프로젝트 영상'}
 								</div>
 								<div className="inputInfo URLs">
 									{(() => {
@@ -565,7 +637,7 @@ function Modal({ open, challenge, handleModalClose }) {
 																	className="plusMinus"
 																	onClick={() => {
 																		if (DRinput) {
-																			let copyArr = DRarr;
+																			let copyArr = DRarr.slice();
 																			copyArr.push({
 																				platform: 'DR',
 																				url: DRinput,
@@ -665,39 +737,15 @@ function Modal({ open, challenge, handleModalClose }) {
 																							break;
 																						}
 																					}
-																					// setState((preState) => ({
-																					// 	...preState,
-																					// 	URLs: copyArr,
-																					// }));
 																				}}
 																			/>
 																		</li>
 																	);
 																});
 															})()}
-															{/* {URLs.map((el, idx) => {
-														return (
-															<li key={idx} className="li-url">
-																<input value={el.url} readOnly></input>
-																<BsDashSquareFill
-																	className="plusMinus"
-																	onClick={() => {
-																		let copyArr = URLs.slice();
-																		copyArr.splice(idx, 1);
-																		// setURLS(copyArr);
-																		setState((preState) => ({
-																			...preState,
-																			URLs: copyArr,
-																		}));
-																	}}
-																/>
-															</li>
-														);
-													})} */}
 															<li>
 																<input
 																	onChange={(e) => {
-																		// setURLinput(e.target.value);
 																		switch (video.platform) {
 																			case 'YU': {
 																				setState((preState) => ({
@@ -724,10 +772,6 @@ function Modal({ open, challenge, handleModalClose }) {
 																				break;
 																			}
 																		}
-																		// setState((preState) => ({
-																		// 	...preState,
-																		// 	URLinput: e.target.value,
-																		// }));
 																	}}
 																	value={(() => {
 																		switch (video.platform) {
@@ -782,45 +826,32 @@ function Modal({ open, challenge, handleModalClose }) {
 																		}
 																		if (input) {
 																			//input이 있을때만
-																			// let copyArr = URLs.slice();
 																			switch (video.platform) {
 																				case 'YU': {
-																					// copyArr.push(obj);
-																					// setURLS(copyArr);
-																					// setURLinput('');
 																					let copyYU = YUarr.slice();
 																					copyYU.push(obj);
 																					setState((preState) => ({
 																						...preState,
-																						// URLs: copyArr,
 																						YUinput: '',
 																						YUarr: copyYU,
 																					}));
 																					break;
 																				}
 																				case 'TT': {
-																					// copyArr.push(obj);
-																					// setURLS(copyArr);
-																					// setURLinput('');
 																					let copyTT = TTarr.slice();
 																					copyTT.push(obj);
 																					setState((preState) => ({
 																						...preState,
-																						// URLs: copyArr,
 																						TTinput: '',
 																						TTarr: copyTT,
 																					}));
 																					break;
 																				}
 																				case 'VM': {
-																					// copyArr.push(obj);
-																					// setURLS(copyArr);
-																					// setURLinput('');
 																					let copyVM = VMarr.slice();
 																					copyVM.push(obj);
 																					setState((preState) => ({
 																						...preState,
-																						// URLs: copyArr,
 																						VMinput: '',
 																						VMarr: copyVM,
 																					}));
@@ -839,8 +870,6 @@ function Modal({ open, challenge, handleModalClose }) {
 												);
 										  })
 										: 'No video required'}
-
-									{/* default input box */}
 								</div>
 							</section>
 							<section className="ele">
@@ -1078,7 +1107,12 @@ function Modal({ open, challenge, handleModalClose }) {
 									)}
 								</div>
 							</section>
-							<section className="ele">
+							<section
+								className={
+									'ele' +
+									(challengeTargetCode === 2 && ' submit_modal_ele_last')
+								}
+							>
 								<div className="menu">* 주소</div>
 								<div className="inputInfo Address">
 									<section className="address_ele">
@@ -1140,35 +1174,42 @@ function Modal({ open, challenge, handleModalClose }) {
 									</section>
 								</div>
 							</section>
-							<section className="ele">
-								<div className="menu">이미지</div>
-								<div className="inputInfo">
-									<Uploader
-										setFilePath={(path) => {
-											setState((preState) => ({ ...preState, image: path }));
-										}}
-										multiple={false}
-										accept={'image/*'}
-										folder={'market-submit-media'}
-										memberIdx={userInfo.memberIdx}
-										challengeIdx={challenge.challengeIdx}
-									/>
+							{challengeTargetCode !== 2 && (
+								<div>
+									<section className="ele">
+										<div className="menu">이미지</div>
+										<div className="inputInfo">
+											<Uploader
+												setFilePath={(path) => {
+													setState((preState) => ({
+														...preState,
+														image: path,
+													}));
+												}}
+												multiple={false}
+												accept={'image/*'}
+												folder={'market-submit-media'}
+												memberIdx={userInfo.memberIdx}
+												challengeIdx={challenge.challengeIdx}
+											/>
+										</div>
+									</section>
+									<section className="ele submit_modal_ele_last">
+										<div className="menu">비고</div>
+										<div className="inputInfo inputinfo_etc">
+											<textarea
+												className="note-textarea"
+												maxLength={800}
+												placeholder="800자 내 프로젝트에 대한 코멘트를 남겨 주세요"
+												aria-setsize="false"
+												onChange={(e) => {
+													handleNote(e.target.value);
+												}}
+											></textarea>
+										</div>
+									</section>
 								</div>
-							</section>
-							<section className="ele submit_modal_ele_last">
-								<div className="menu">비고</div>
-								<div className="inputInfo inputinfo_etc">
-									<textarea
-										className="note-textarea"
-										maxLength={800}
-										placeholder="800자 내 프로젝트에 대한 코멘트를 남겨 주세요"
-										aria-setsize="false"
-										onChange={(e) => {
-											handleNote(e.target.value);
-										}}
-									></textarea>
-								</div>
-							</section>
+							)}
 						</main>
 						<footer>
 							<button
@@ -1184,7 +1225,11 @@ function Modal({ open, challenge, handleModalClose }) {
 							<button
 								className="submit_btn"
 								onClick={() => {
-									handleSubmit();
+									if (challengeTargetCode === 2) {
+										handleSubmitEditor();
+									} else {
+										handleSubmit();
+									}
 								}}
 							>
 								제출

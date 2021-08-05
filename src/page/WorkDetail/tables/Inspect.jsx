@@ -4,20 +4,12 @@ import Pagination2 from '../../../component/Pagination/Pagination2';
 import { paginate } from '../../../component/Pagination/paginate';
 import { InspectTableContainer } from './InspectStyled';
 import excelIcon from '../../../Img/Icons/excelIcon.png';
-function InspectTable({ challengeIdx, handlePresentationClick }) {
-	// let [subjects, setSubjects] = useState({
-	// 	data: [],
-	// 	pageSize: 10,
-	// 	currentPage: 1,
-	// });
-	let [allCheckBoxes, setAllCheckBoxes] = useState(
-		// new Array(datas.length).fill(false),
-		[],
-	);
-	// const { data, pageSize, currentPage } = subjects;
-	// const pagedDatas = paginate(data, currentPage, pageSize);
-	// const pagedArr = paginate(allCheckBoxes, currentPage, pageSize);
-	// const { length: count } = subjects.data;
+function InspectTable({
+	challengeIdx,
+	challengeTargetCode,
+	handlePresentationClick,
+}) {
+	let [allCheckBoxes, setAllCheckBoxes] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [pageSize, setPageSize] = useState(10);
 	const [page, setPage] = useState(1);
@@ -25,12 +17,9 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 	const [pagedSubjects, setPagedSubjects] = useState(null);
 	const [pagedCheckboxes, setPagedCheckBoxes] = useState(null);
 	const [pagedSelects, setPagedSelects] = useState([]);
-	// let [pagedSubjects, setPagedSubjects] = useState(pagedDatas);
-	// let [pagedCheckboxes, setPagedCheckBoxes] = useState(pagedArr);
 	let [plusIndex, setPlusIndex] = useState(0);
 
 	let handlePageChange = (changedPage) => {
-		// setSubjects({ ...subjects, currentPage: page });
 		setPage(changedPage);
 		var config = {
 			method: 'get',
@@ -44,10 +33,6 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 		};
 		axios(config)
 			.then((res) => {
-				// console.log('handle page change res:');
-				// console.log(res.data);
-				// console.log(challengeIdx);
-
 				setCount(res.data.total);
 				setPlusIndex((changedPage - 1) * pageSize);
 				setPagedSubjects(res.data.entities);
@@ -59,9 +44,6 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 				console.log('workdetail error');
 				console.log(err);
 			});
-		// setPagedSubjects(paginate(data, page, pageSize));
-		// setPlusIndex((page - 1) * pageSize);
-		// setPagedCheckBoxes(paginate(allCheckBoxes, page, pageSize));
 	};
 	let handleSelectChange = (changedSize) => {
 		setPageSize(changedSize);
@@ -77,10 +59,6 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 		};
 		axios(config)
 			.then((res) => {
-				// console.log('handle page change res:');
-				// console.log(res.data);
-				// console.log(challengeIdx);
-
 				setCount(res.data.total);
 				setPagedSubjects(res.data.entities);
 				setPlusIndex((page - 1) * changedSize);
@@ -92,8 +70,6 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 				console.log('workdetail error');
 				console.log(err);
 			});
-		// setSubjects({ ...subjects, pageSize: pageSize });
-		// setPagedSubjects(paginate(data, 1, pageSize));
 	};
 	//0. 검수되지않은 경우
 	//1. 검수완료
@@ -113,11 +89,6 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 			},
 			data: body,
 		};
-		console.log('body: ', body);
-		console.log('config: ', config);
-		console.log(typeof body.challengeIdx);
-		console.log(typeof body.memberIdx);
-		console.log(typeof body.checkStatusCode);
 		axios(config)
 			.then((response) => {
 				console.log(response.data);
@@ -133,10 +104,6 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 				};
 				axios(config)
 					.then((res) => {
-						// console.log('challengeidx response:');
-						// console.log(res);
-						// console.log(challengeIdx);
-
 						setCount(res.data.total);
 						setPagedSubjects(res.data.entities);
 						setAllCheckBoxes(new Array(res.data.total).fill(false));
@@ -194,10 +161,6 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 				};
 				axios(config)
 					.then((res) => {
-						// console.log('challengeidx response:');
-						// console.log(res);
-						// console.log(challengeIdx);
-
 						setCount(res.data.total);
 						setPagedSubjects(res.data.entities);
 						setAllCheckBoxes(new Array(res.data.total).fill(false));
@@ -215,78 +178,153 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 			.catch((err) => console.log(err));
 	};
 	function handleExcel() {
-		var config = {
-			method: 'get',
-			url:
-				process.env.REACT_APP_U2_DB_HOST +
-				`/Campaign/challengesubmittedxls/${challengeIdx}`,
-			headers: {
-				Authorization: 'Bearer ' + localStorage.getItem('token'),
-				// 'Content-Type': 'application/json',
-			},
-			responseType: 'blob',
-		};
-		axios(config)
-			.then((response) => {
-				const url = window.URL.createObjectURL(
-					new Blob([response.data], { type: response.headers['content-type'] }),
-				);
-				const link = document.createElement('a');
-				link.href = url;
-				link.setAttribute('download', 'Inspectors.xlsx');
-				document.body.appendChild(link);
-				link.click();
-			})
-			.catch((err, b) => {
-				console.log('err: ', err);
-				console.log('b: ', b);
-			});
+		var config;
+		if (challengeTargetCode === 1 || challengeTargetCode === 3) {
+			config = {
+				method: 'get',
+				url:
+					process.env.REACT_APP_U2_DB_HOST +
+					`/Campaign/challengesubmittedxls/${challengeIdx}`,
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+				responseType: 'blob',
+			};
+			axios(config)
+				.then((response) => {
+					const url = window.URL.createObjectURL(
+						new Blob([response.data], {
+							type: response.headers['content-type'],
+						}),
+					);
+					const link = document.createElement('a');
+					link.href = url;
+					link.setAttribute('download', 'Inspectors.xlsx');
+					document.body.appendChild(link);
+					link.click();
+				})
+				.catch((err) => {
+					console.log('err: ', err);
+				});
+		} else {
+			config = {
+				method: 'get',
+				url:
+					process.env.REACT_APP_U2_DB_HOST +
+					`/Campaign/challengehireappliedxls/${challengeIdx}`,
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+				responseType: 'blob',
+			};
+			axios(config)
+				.then((response) => {
+					const url = window.URL.createObjectURL(
+						new Blob([response.data], {
+							type: response.headers['content-type'],
+						}),
+					);
+					const link = document.createElement('a');
+					link.href = url;
+					link.setAttribute('download', 'Appliers.xlsx');
+					document.body.appendChild(link);
+					link.click();
+				})
+				.catch((err) => {
+					console.log('err: ', err);
+				});
+		}
 	}
 
 	useEffect(() => {
-		var config = {
-			method: 'get',
-			url:
-				process.env.REACT_APP_U2_DB_HOST +
-				`/Campaign/challengesubmitted/${challengeIdx}?size=${pageSize}&p=${page}`,
-			headers: {
-				Authorization: 'Bearer ' + localStorage.getItem('token'),
-				'Content-Type': 'application/json',
-			},
-		};
-		axios(config)
-			.then((res) => {
-				console.log(
+		console.log('challengeTargetCode: ', challengeTargetCode);
+		if (challengeTargetCode === 1 || challengeTargetCode === 3) {
+			//공모전, 영상크리에이터
+			var config = {
+				method: 'get',
+				url:
+					process.env.REACT_APP_U2_DB_HOST +
 					`/Campaign/challengesubmitted/${challengeIdx}?size=${pageSize}&p=${page}`,
-				);
-				console.log('inspect useEffect Data: ', res.data);
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+					'Content-Type': 'application/json',
+				},
+			};
+			axios(config)
+				.then((res) => {
+					console.log(
+						`/Campaign/challengesubmitted/${challengeIdx}?size=${pageSize}&p=${page}`,
+					);
+					console.log('inspect useEffect Data: ', res.data);
 
-				setCount(res.data.total);
-				setPagedSubjects(res.data.entities);
-				setAllCheckBoxes(new Array(res.data.total).fill(false));
-				setPlusIndex((page - 1) * pageSize);
-				setPagedCheckBoxes(
-					paginate(
-						new Array(res.data.entities.length).fill(false),
-						page,
-						pageSize,
-					),
-				);
-				setPagedSelects(new Array(res.data.entities.length).fill(1));
-				setIsLoading(true);
-			})
-			.catch((err) => {
-				console.log('workdetail error');
-				console.log(err.response);
-			});
+					setCount(res.data.total);
+					setPagedSubjects(res.data.entities);
+					setAllCheckBoxes(new Array(res.data.total).fill(false));
+					setPlusIndex((page - 1) * pageSize);
+					setPagedCheckBoxes(
+						paginate(
+							new Array(res.data.entities.length).fill(false),
+							page,
+							pageSize,
+						),
+					);
+					setPagedSelects(new Array(res.data.entities.length).fill(1));
+					setIsLoading(true);
+				})
+				.catch((err) => {
+					console.log('workdetail error');
+					console.log(err.response);
+				});
+		} else {
+			//영상편집자, 강사채용
+			var config = {
+				method: 'get',
+				url:
+					process.env.REACT_APP_U2_DB_HOST +
+					`/Campaign/challengehireapplied/${challengeIdx}?size=${pageSize}&p=${page}`,
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+					'Content-Type': 'application/json',
+				},
+			};
+			axios(config)
+				.then((res) => {
+					console.log(
+						`/Campaign/challengehireapplied/${challengeIdx}?size=${pageSize}&p=${page}`,
+					);
+					console.log('inspect useEffect Data: ', res.data);
+
+					setCount(res.data.total);
+					setPagedSubjects(res.data.entities);
+					setAllCheckBoxes(new Array(res.data.total).fill(false));
+					setPlusIndex((page - 1) * pageSize);
+					setPagedCheckBoxes(
+						paginate(
+							new Array(res.data.entities.length).fill(false),
+							page,
+							pageSize,
+						),
+					);
+					setPagedSelects(new Array(res.data.entities.length).fill(1));
+					setIsLoading(true);
+				})
+				.catch((err) => {
+					console.log('workdetail error');
+					console.log(err.response);
+				});
+		}
 	}, []);
 	return (
 		<InspectTableContainer>
 			<section className="inspect_table_header">
 				<section className="inspect_table_header_left">
-					<button onClick={() => handleBulkOkay(1)}>승인</button>
-					<button onClick={() => handleBulkOkay(-1)}>반려</button>
-					<button onClick={() => handleBulkOkay(0)}>피드백</button>
+					{(challengeTargetCode === 1 || challengeTargetCode === 3) && (
+						<div>
+							<button onClick={() => handleBulkOkay(1)}>승인</button>
+							<button onClick={() => handleBulkOkay(-1)}>반려</button>
+							<button onClick={() => handleBulkOkay(0)}>피드백</button>
+						</div>
+					)}
 				</section>
 				<section className="inspect_table_header_right">
 					<div
@@ -316,34 +354,40 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 			<table className={'inspect_table'}>
 				<thead>
 					<tr>
-						<th>
-							<input
-								type={'checkbox'}
-								onChange={(e) => {
-									let newarr = allCheckBoxes.map((el, idx) => {
-										if (idx >= plusIndex && idx < plusIndex + pageSize) {
-											return e.target.checked;
-										} else {
-											return el;
+						{challengeTargetCode === 1 ||
+							(challengeTargetCode === 3 && (
+								<th>
+									<input
+										type={'checkbox'}
+										onChange={(e) => {
+											let newarr = allCheckBoxes.map((el, idx) => {
+												if (idx >= plusIndex && idx < plusIndex + pageSize) {
+													return e.target.checked;
+												} else {
+													return el;
+												}
+											});
+											setAllCheckBoxes(newarr);
+											if (pagedCheckboxes) {
+												let newarr2 = pagedCheckboxes.map(
+													(el) => e.target.checked,
+												);
+												setPagedCheckBoxes(newarr2);
+											}
+										}}
+										name="isSelectAll"
+										value="selectAll"
+										checked={
+											pagedCheckboxes &&
+											pagedCheckboxes.filter((el) => el).length ===
+												pagedCheckboxes.length
+												? true
+												: false
 										}
-									});
-									setAllCheckBoxes(newarr);
-									if (pagedCheckboxes) {
-										let newarr2 = pagedCheckboxes.map((el) => e.target.checked);
-										setPagedCheckBoxes(newarr2);
-									}
-								}}
-								name="isSelectAll"
-								value="selectAll"
-								checked={
-									pagedCheckboxes &&
-									pagedCheckboxes.filter((el) => el).length ===
-										pagedCheckboxes.length
-										? true
-										: false
-								}
-							></input>
-						</th>
+									></input>
+								</th>
+							))}
+
 						<th key="challengeTime">지원 일시</th>
 						<th key="ID">ID</th>
 						<th key="name">성명</th>
@@ -360,22 +404,26 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 								return (
 									<>
 										<tr>
-											<td>
-												<input
-													type="checkbox"
-													onClick={(e) => {
-														allCheckBoxes[index + plusIndex] = e.target.checked;
-														setAllCheckBoxes(allCheckBoxes.slice());
-														pagedCheckboxes[index] = e.target.checked;
-														setPagedCheckBoxes(pagedCheckboxes.slice());
-													}}
-													checked={allCheckBoxes[index + plusIndex]}
-												></input>
-											</td>
+											{challengeTargetCode === 1 ||
+												(challengeTargetCode === 3 && (
+													<td>
+														<input
+															type="checkbox"
+															onClick={(e) => {
+																allCheckBoxes[index + plusIndex] =
+																	e.target.checked;
+																setAllCheckBoxes(allCheckBoxes.slice());
+																pagedCheckboxes[index] = e.target.checked;
+																setPagedCheckBoxes(pagedCheckboxes.slice());
+															}}
+															checked={allCheckBoxes[index + plusIndex]}
+														></input>
+													</td>
+												))}
+
 											<td>{data.registDate.split('T')[0]}</td>
 											<td>{data.memberIdx}</td>
 											<td>{data.name ? data.name : 'no data'}</td>
-											{/* <td>{data.category}</td> */}
 											<td>
 												<button
 													className="presentation-button"
@@ -408,30 +456,35 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 													}
 												})()}
 											</td>
-											<td className="inspect_project">
-												<select
-													onChange={(e) => {
-														console.log(e.target.value);
-														let copyArr = pagedSelects.slice();
-														copyArr[index] = Number(e.target.value);
-														setPagedSelects(copyArr);
-													}}
-												>
-													<option value={1}>승인</option>
-													<option value={-1}>반려</option>
-													<option value={0}>피드백</option>
-												</select>
-												<button
-													onClick={() => {
-														handleSingleStatus(
-															data.memberIdx,
-															pagedSelects[index],
-														);
-													}}
-												>
-													확인
-												</button>
-											</td>
+											{challengeTargetCode === 2 ||
+											challengeTargetCode === 4 ? (
+												<td>-</td>
+											) : (
+												<td className="inspect_project">
+													<select
+														onChange={(e) => {
+															console.log(e.target.value);
+															let copyArr = pagedSelects.slice();
+															copyArr[index] = Number(e.target.value);
+															setPagedSelects(copyArr);
+														}}
+													>
+														<option value={1}>승인</option>
+														<option value={-1}>반려</option>
+														<option value={0}>피드백</option>
+													</select>
+													<button
+														onClick={() => {
+															handleSingleStatus(
+																data.memberIdx,
+																pagedSelects[index],
+															);
+														}}
+													>
+														확인
+													</button>
+												</td>
+											)}
 										</tr>
 									</>
 								);
@@ -450,7 +503,13 @@ function InspectTable({ challengeIdx, handlePresentationClick }) {
 				)}
 			</div>
 			<div className="bt_list">
-				<button>목록</button>
+				<button
+					onClick={() => {
+						window.location.href = '/mywork';
+					}}
+				>
+					목록
+				</button>
 			</div>
 		</InspectTableContainer>
 	);

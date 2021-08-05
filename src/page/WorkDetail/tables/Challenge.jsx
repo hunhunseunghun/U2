@@ -195,7 +195,13 @@ function ChallengeTable({ challengeIdx }) {
 				></Pagination2> */}
 			</div>{' '}
 			<div className="bt_list">
-				<button>목록</button>
+				<button
+					onClick={() => {
+						window.location.href = '/mywork';
+					}}
+				>
+					목록
+				</button>
 			</div>
 		</ChallengeTableContainer>
 	);

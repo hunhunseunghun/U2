@@ -54,3 +54,12 @@ export function calcRemainDays(dateFin) {
 	var newDateNow = get_date_str_gubun(new Date(), '-');
 	return between_date(newDateFin, newDateNow);
 }
+export const isToday = (strDate) => {
+	const today = new Date();
+	const someDate = to_date2(strDate);
+	return (
+		someDate.getDate() == today.getDate() &&
+		someDate.getMonth() == today.getMonth() &&
+		someDate.getFullYear() == today.getFullYear()
+	);
+};

@@ -42,11 +42,14 @@ const initialState = {
 	address3: '',
 	openAddrModal: false,
 	addrMobile: '',
+
+	isCv: false,
+	isCvEng: false,
+	isPf: false,
 };
 const server = process.env.REACT_APP_U2_DB_HOST;
 function Modal({ open, challenge, handleModalClose }) {
 	const userInfo = useSelector((state) => state.userInfo);
-	// console.log('challenge in resumemodal : ', challenge);
 	const [
 		{
 			title,
@@ -80,6 +83,10 @@ function Modal({ open, challenge, handleModalClose }) {
 			address3,
 			openAddrModal,
 			addrMobile,
+
+			isCv,
+			isCvEng,
+			isPf,
 		},
 		setState,
 	] = useState({ ...initialState });
@@ -91,7 +98,6 @@ function Modal({ open, challenge, handleModalClose }) {
 	const handleValidateMobile = () => {
 		if (mobileNum) {
 			if (isValidPhoneNumber(mobileNum)) {
-				// setMobileErr(null);
 				setState((preState) => ({ ...preState, mobileErr: null }));
 				//인증 구현 ----------------------
 				// setToggleMobileAuthInput(true);
@@ -101,7 +107,6 @@ function Modal({ open, challenge, handleModalClose }) {
 				setState((preState) => ({ ...preState, mobileAuthorized: true }));
 			} else {
 				handleShake('mobile');
-				// setMobileErr('옳바른 전화번호 형식이 아닙니다.');
 				setState((preState) => ({
 					...preState,
 					mobileErr: '옳바른 전화번호 형식이 아닙니다.',
@@ -109,7 +114,6 @@ function Modal({ open, challenge, handleModalClose }) {
 			}
 		} else {
 			handleShake('mobile');
-			// setMobileErr('전화번호를 입력해주세요.');
 			setState((preState) => ({
 				...preState,
 				mobileErr: '전화번호를 입력해주세요',
@@ -118,15 +122,12 @@ function Modal({ open, challenge, handleModalClose }) {
 	};
 
 	const handleAuthMobile = () => {
-		// setMobileAuthorized(mobileAuthInput === '0314');
 		setState((preState) => ({
 			...preState,
 			mobileAuthorized: mobileAuthInput === '0314',
 		}));
 	};
 	const handleMobileChange = (e) => {
-		// setMobileNum(e);
-		// setMobileAuthorized(false);
 		setState((preState) => ({
 			...preState,
 			mobileNum: e,
@@ -136,9 +137,6 @@ function Modal({ open, challenge, handleModalClose }) {
 	const handleValidateEmail = () => {
 		const { isValid, error } = validateEmail(email);
 		if (!isValid) {
-			// setEmailErr(error);
-			// setToggleEmailAuthInput(false);
-			// setEmailAuthorized(null);
 			setState((preState) => ({
 				...preState,
 				emailErr: error,
@@ -146,16 +144,12 @@ function Modal({ open, challenge, handleModalClose }) {
 				emailAuthorized: null,
 			}));
 		} else {
-			// setEmailErr(null);
 			setState((preState) => ({ ...preState, emailErr: null }));
 		}
 	};
 	const handleValidateBank = () => {
 		if (bankAccountNum) {
 			const replaced = bankAccountNum.replace(/[^0-9]/gi, '');
-			// setBankAccountNum(replaced);
-			// setBankAuthorized(true);
-			// setBankAccountErr(null);
 			setState((preState) => ({
 				...preState,
 				bankAccountNum: replaced,
@@ -164,14 +158,12 @@ function Modal({ open, challenge, handleModalClose }) {
 			}));
 		} else {
 			if (bankCode) {
-				// setBankAccountErr('계좌번호를 입력해주세요.');
 				setState((preState) => ({
 					...preState,
 					bankAccountErr: '계좌번호를 입력해주세요.',
 				}));
 				handleShake('bank');
 			} else {
-				// setBankAccountErr('은행을 선택해주세요.');
 				setState((preState) => ({
 					...preState,
 					bankAccountErr: '은행을 선택해주세요.',
@@ -181,19 +173,12 @@ function Modal({ open, challenge, handleModalClose }) {
 		}
 	};
 	const handleSearchAddress = () => {
-		// setOpenAddrModal(true);
 		setState((preState) => ({ ...preState, openAddrModal: true }));
 	};
 	const setAddressData = (data) => {
 		console.log('address data: ', data);
-		// setAddress1(data.zonecode);
 		setState((preState) => ({ ...preState, address1: data.zonecode }));
 
-		// setAddress2(
-		// 	data.address +
-		// 		(data.bname && ' ' + data.bname) +
-		// 		(data.buildingName && ' ' + data.buildingName),
-		// );
 		setState((preState) => ({
 			...preState,
 			address2:
@@ -215,27 +200,21 @@ function Modal({ open, challenge, handleModalClose }) {
 	const handleShake = (inputType) => {
 		switch (inputType) {
 			case 'email': {
-				// setEmailErrShake(true);
 				setState((preState) => ({ ...preState, emailErrShake: true }));
 				setTimeout(() => {
-					// setEmailErrShake(false);
 					setState((preState) => ({ ...preState, emailErrShake: false }));
 				}, 1000);
 				break;
 			}
 			case 'mobile': {
-				// setMobileErrShake(true);
 				setState((preState) => ({ ...preState, mobileErrShake: true }));
 				setTimeout(() => {
-					// setMobileErrShake(false);
 					setState((preState) => ({ ...preState, mobileErrShake: false }));
 				}, 1000);
 			}
 			case 'bank': {
-				// setBaErrShake(true);
 				setState((preState) => ({ ...preState, BaErrShake: true }));
 				setTimeout(() => {
-					// setBaErrShake(false);
 					setState((preState) => ({ ...preState, BaErrShake: false }));
 				}, 1000);
 			}
@@ -247,14 +226,22 @@ function Modal({ open, challenge, handleModalClose }) {
 	const checkSubmit = () => {
 		if (
 			!title ||
-			mobileErr ||
-			emailErr ||
+			!mobileNum ||
+			!email ||
 			bankAccountErr ||
 			!address1 ||
 			!address2 ||
 			!address3
 		) {
 			alert('모든 필수 항목을 입력해야 합니다.');
+			return true;
+		}
+		if (!mobileAuthorized) {
+			alert('휴대 전화 인증을 해주세요');
+			return true;
+		}
+		if (!emailAuthorized) {
+			alert('이메일 인증을 해주세요');
 			return true;
 		}
 	};
@@ -279,28 +266,15 @@ function Modal({ open, challenge, handleModalClose }) {
 			bankAccount: bankAccountNum,
 			postCode: address1,
 			addr: address3,
-			// bankName: "string",
 			postCodeAddr: address2,
-			// "urls": [
-			//   {
-			// 	"challengeIdx": 0,
-			// 	"seq": 0,
-			// 	"memberIdx": 0,
-			// 	"url": "string"
-			//   }
-			// ],
 			urls: pfURLs.map((el, idx) => {
 				return {
 					challengeIdx: challenge.challengeIdx, //challenge.challengeIdx
 					memberIdx: userInfo.memberIdx,
-					seq: idx + 1,
+					seq: 1,
 					url: el,
 				};
 			}),
-			// "registMemberIdx": 0,
-			// "registDate": "2021-07-30T01:31:20.094Z",
-			// "modifyMemberIdx": 0,
-			// "modifyDate": "2021-07-30T01:31:20.094Z"
 		};
 		// TextFile(data);
 		var config = {
@@ -325,7 +299,10 @@ function Modal({ open, challenge, handleModalClose }) {
 			})
 			.catch((err) => {
 				console.log('err: ', err.response);
-				if (err.response.data.error === 'Already submitted') {
+				if (
+					err.response.data.error === 'Already submitted' ||
+					err.response.data.error === 'already applied'
+				) {
 					alert('이미 제출한 프로젝트 입니다.');
 					setSubmitClicked(false);
 					handleModalClose('apply');
@@ -367,18 +344,29 @@ function Modal({ open, challenge, handleModalClose }) {
 					'Content-Type': 'application/json',
 				},
 			};
-			if (
-				challenge.challengeTargetCode === 4 ||
-				challenge.challengeTargetCode === 2
-			) {
-				axios(config)
-					.then((response) => {
-						console.log('apply modal useEffect Data: ', response.data);
-					})
-					.catch((err) => {
-						console.log(err);
-					});
-			}
+			axios(config)
+				.then((response) => {
+					console.log('apply modal useEffect response: ', response);
+					if (challenge.challengeTargetCode === 4) {
+						//강사채용일때
+						const docs = response.data.hire.docs;
+						const docsSet = new Set(docs.map((el) => el.docCode));
+						if (docsSet.has('1')) {
+							setState((preState) => ({ ...preState, isCv: true }));
+						}
+						if (docsSet.has('2')) {
+							setState((preState) => ({ ...preState, isPf: true }));
+						}
+						if (docsSet.has('3')) {
+							setState((preState) => ({ ...preState, isCvEng: true }));
+						}
+					} else if (challenge.challengeTargetCode === 2) {
+						//편집자 일때
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+				});
 		}
 	}, [open]);
 	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -398,7 +386,7 @@ function Modal({ open, challenge, handleModalClose }) {
 						<header>지원하기</header>
 						<main className="sm-main">
 							<section className="ele">
-								<div className="menu">프로젝트명</div>
+								<div className="menu">* 프로젝트명</div>
 								<div className="inputInfo">
 									<input
 										className="input_work_title"
@@ -415,7 +403,7 @@ function Modal({ open, challenge, handleModalClose }) {
 								</div>
 							</section>
 							<section className="ele">
-								<div className="menu">휴대전화</div>
+								<div className="menu">* 휴대전화</div>
 								<div className="inputInfo">
 									<div className="MobileContainer">
 										<PhoneInput
@@ -504,7 +492,7 @@ function Modal({ open, challenge, handleModalClose }) {
 								</div>
 							</section>
 							<section className="ele">
-								<div className="menu">이메일</div>
+								<div className="menu">* 이메일</div>
 								<div className="inputInfo">
 									<div className="EmailContainer">
 										<input
@@ -606,179 +594,124 @@ function Modal({ open, challenge, handleModalClose }) {
 									</div>
 								</div>
 							</section>
-							<section className="ele">
-								<div className="menu">국문 이력서</div>
-								<div className="inputInfo">
-									<Uploader
-										setFilePath={(path) => {
-											setState((preState) => ({
-												...preState,
-												cv: path,
-											}));
-										}}
-										multiple={false}
-										accept={'.pdf,.doc,.ppt'}
-										memberIdx={userInfo.memberIdx}
-										folder={'market-apply-cveng'}
-										placeholder="이력서 선택"
-									/>
-								</div>
-							</section>
-							<section className="ele">
-								<div className="menu">영문 이력서</div>
-								<div className="inputInfo">
-									<Uploader
-										setFilePath={(path) => {
-											setState((preState) => ({
-												...preState,
-												cvEng: path,
-											}));
-										}}
-										multiple={false}
-										accept={'.pdf,.doc,.ppt'}
-										memberIdx={userInfo.memberIdx}
-										folder={'market-apply-cveng'}
-										placeholder="Choose your curriculum vitae"
-									/>
-								</div>
-							</section>
-							<section className="ele">
-								<div className="menu">포트폴리오</div>
-								<div className="inputInfo URLs">
-									<table>
-										<tr>
-											<span className="youtubeURL">URL:</span>
-											<ul className="ul_URLs">
-												{pfURLs.map((el, idx) => {
-													return (
-														<li key={idx} className="li-url">
-															<input value={el} readOnly></input>
-															<BsDashSquareFill
-																className="plusMinus"
-																onClick={() => {
-																	let copyArr = pfURLs.slice();
-																	copyArr.splice(idx, 1);
-																	// setURLS(copyArr);
-																	setState((preState) => ({
-																		...preState,
-																		pfURLs: copyArr,
-																	}));
-																}}
-															/>
-														</li>
-													);
-												})}
-												<li>
-													<input
-														onChange={(e) => {
-															setState((preState) => ({
-																...preState,
-																pfURLinput: e.target.value,
-															}));
-														}}
-														value={pfURLinput}
-													></input>
-													<BsPlusSquareFill
-														className="plusMinus"
-														onClick={() => {
-															if (pfURLinput) {
-																let copyArr = pfURLs.slice();
-																copyArr.push(pfURLinput);
-																setState((preState) => ({
-																	...preState,
-																	pfURLs: copyArr,
-																	pfURLinput: '',
-																}));
-															}
-														}}
-													></BsPlusSquareFill>
-												</li>
-											</ul>
-										</tr>
-										<tr>
-											<div>
-												<Uploader
-													setFilePath={(path) => {
-														setState((preState) => ({
-															...preState,
-															pfFile: path,
-														}));
-													}}
-													multiple={false}
-													accept={'.pdf,.doc,.ppt'}
-													memberIdx={userInfo.memberIdx}
-													folder={'market-apply-potfolio '}
-													placeholder="포트폴리오 선택"
-												/>
-											</div>
-										</tr>
-									</table>
-									{/* <span className="youtubeURL">URL:</span>
-									<ul className="ul_URLs">
-										{pfURLs.map((el, idx) => {
-											return (
-												<li key={idx} className="li-url">
-													<input value={el} readOnly></input>
-													<BsDashSquareFill
-														className="plusMinus"
-														onClick={() => {
-															let copyArr = pfURLs.slice();
-															copyArr.splice(idx, 1);
-															// setURLS(copyArr);
-															setState((preState) => ({
-																...preState,
-																pfURLs: copyArr,
-															}));
-														}}
-													/>
-												</li>
-											);
-										})}
-										<li>
-											<input
-												onChange={(e) => {
-													setState((preState) => ({
-														...preState,
-														pfURLinput: e.target.value,
-													}));
-												}}
-												value={pfURLinput}
-											></input>
-											<BsPlusSquareFill
-												className="plusMinus"
-												onClick={() => {
-													if (pfURLinput) {
-														let copyArr = pfURLs.slice();
-														copyArr.push(pfURLinput);
-														setState((preState) => ({
-															...preState,
-															pfURLs: copyArr,
-															pfURLinput: '',
-														}));
-													}
-												}}
-											></BsPlusSquareFill>
-										</li>
-									</ul> */}
-									{/* <div>
+							{isCv && (
+								<section className="ele">
+									<div className="menu">국문 이력서</div>
+									<div className="inputInfo">
 										<Uploader
 											setFilePath={(path) => {
 												setState((preState) => ({
 													...preState,
-													pfFile: path,
+													cv: path,
 												}));
 											}}
 											multiple={false}
 											accept={'.pdf,.doc,.ppt'}
 											memberIdx={userInfo.memberIdx}
-											folder={'market-apply-potfolio '}
-											placeholder="포트폴리오 선택"
+											folder={'market-apply-cveng'}
+											placeholder="이력서 선택"
 										/>
-									</div> */}
-								</div>
-							</section>
+									</div>
+								</section>
+							)}
+							{isCvEng && (
+								<section className="ele">
+									<div className="menu">영문 이력서</div>
+									<div className="inputInfo">
+										<Uploader
+											setFilePath={(path) => {
+												setState((preState) => ({
+													...preState,
+													cvEng: path,
+												}));
+											}}
+											multiple={false}
+											accept={'.pdf,.doc,.ppt'}
+											memberIdx={userInfo.memberIdx}
+											folder={'market-apply-cveng'}
+											placeholder="Choose your curriculum vitae"
+										/>
+									</div>
+								</section>
+							)}
+							{isPf && (
+								<section className="ele">
+									<div className="menu">포트폴리오</div>
+									<div className="inputInfo URLs">
+										<table>
+											<tr>
+												<span className="youtubeURL">URL:</span>
+												<ul className="ul_URLs">
+													{pfURLs.map((el, idx) => {
+														return (
+															<li key={idx} className="li-url">
+																<input value={el} readOnly></input>
+																<BsDashSquareFill
+																	className="plusMinus"
+																	onClick={() => {
+																		let copyArr = pfURLs.slice();
+																		copyArr.splice(idx, 1);
+																		// setURLS(copyArr);
+																		setState((preState) => ({
+																			...preState,
+																			pfURLs: copyArr,
+																		}));
+																	}}
+																/>
+															</li>
+														);
+													})}
+													<li>
+														<input
+															onChange={(e) => {
+																setState((preState) => ({
+																	...preState,
+																	pfURLinput: e.target.value,
+																}));
+															}}
+															value={pfURLinput}
+														></input>
+														<BsPlusSquareFill
+															className="plusMinus"
+															onClick={() => {
+																if (pfURLinput) {
+																	let copyArr = pfURLs.slice();
+																	copyArr.push(pfURLinput);
+																	setState((preState) => ({
+																		...preState,
+																		pfURLs: copyArr,
+																		pfURLinput: '',
+																	}));
+																}
+															}}
+														></BsPlusSquareFill>
+													</li>
+												</ul>
+											</tr>
+											<tr>
+												<div>
+													<Uploader
+														setFilePath={(path) => {
+															setState((preState) => ({
+																...preState,
+																pfFile: path,
+															}));
+														}}
+														multiple={false}
+														accept={'.pdf,.doc,.ppt'}
+														memberIdx={userInfo.memberIdx}
+														folder={'market-apply-potfolio'}
+														placeholder="포트폴리오 선택"
+													/>
+												</div>
+											</tr>
+										</table>
+									</div>
+								</section>
+							)}
+
 							<section className="ele">
-								<div className="menu">계좌번호</div>
+								<div className="menu">* 계좌번호</div>
 								<div className="inputInfo banks_accout">
 									<Banks handleBankCode={handleBankCode} datas={banks} />
 									<input
@@ -786,8 +719,6 @@ function Modal({ open, challenge, handleModalClose }) {
 										type="number"
 										value={bankAccountNum}
 										onChange={(e) => {
-											// setBankAccountNum(e.target.value);
-											// setBankAuthorized(false);
 											setState((preState) => ({
 												...preState,
 												bankAccountNum: e.target.value,
@@ -817,7 +748,7 @@ function Modal({ open, challenge, handleModalClose }) {
 								</div>
 							</section>
 							<section className="ele">
-								<div className="menu">주소</div>
+								<div className="menu">* 주소</div>
 								<div className="inputInfo Address">
 									<section className="address_ele">
 										<div className="address_menu">받으시는 분 성함</div>

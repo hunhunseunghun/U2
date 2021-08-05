@@ -8,7 +8,8 @@ import { RegistTableContainer } from './RegistTableStyled';
 import sortarrowdown from '../../../Img/Icons/sortarrowdown.png';
 import moment from 'moment';
 import { getSingleFileFromBlob } from '../../../library/azureBlob';
-function RegistTable() {
+import { isToday } from '../../../library/timeSetting';
+function RegistTable({ setNewAccept }) {
 	const history = useHistory();
 	const paginationRef = useRef();
 	// let [quests, setQuests] = useState({
@@ -217,11 +218,25 @@ function RegistTable() {
 												>
 													{/* {data.contriNum} */}
 													{data.challengerCount}
-													{data.isNewContri ? (
-														<span className="newAlert table_newalert">new</span>
-													) : (
-														''
-													)}
+													{/* {data.challengerLast.split('-')[0] !== '0001' &&
+														isToday(data.challengerLast.split('T')[0]) && (
+															<span className="newAlert table_newalert">
+																new
+															</span>
+														)} */}
+													{(() => {
+														if (
+															data.challengerLast.split('-')[0] !== '0001' &&
+															isToday(data.challengerLast.split('T')[0])
+														) {
+															setNewAccept(true);
+															return (
+																<span className="newAlert table_newalert">
+																	new
+																</span>
+															);
+														}
+													})()}
 												</Link>
 											</td>
 											<td>
@@ -246,11 +261,30 @@ function RegistTable() {
 															return data.challengerCompleteCount;
 														}
 													})()}
-													{data.isNewInspect ? (
-														<span className="newAlert table_newalert">new</span>
-													) : (
-														''
-													)}
+													{/* {data.challengerCompleteLast.split('-')[0] !==
+														'0001' &&
+														isToday(
+															data.challengerCompleteLast.split('T')[0],
+														) && (
+															<span className="newAlert table_newalert">
+																new
+															</span>
+														)} */}
+													{(() => {
+														if (
+															data.challengerCompleteLast.split('-')[0] !==
+																'0001' &&
+															isToday(data.challengerCompleteLast.split('T')[0])
+														) {
+															setNewAccept(true);
+															return (
+																<span className="newAlert table_newalert">
+																	new
+																</span>
+															);
+														}
+													})()}
+													{/* <span className="newAlert table_newalert">new</span> */}
 												</Link>
 											</td>
 											<td>

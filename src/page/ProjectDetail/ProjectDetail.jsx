@@ -106,6 +106,7 @@ function ProjectDetail(props) {
 			}
 			case 'apply': {
 				setApplyOpen(false);
+				break;
 			}
 			default: {
 				console.log('no such case');
