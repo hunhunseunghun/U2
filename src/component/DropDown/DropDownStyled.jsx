@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const DdContainer = styled.div`
   position: relative;
@@ -8,6 +8,7 @@ export const DdContainer = styled.div`
     border-radius: 8px;
     position: absolute;
     left: -50%;
+
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
     opacity: 0;
     visibility: hidden;

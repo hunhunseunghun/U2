@@ -402,7 +402,7 @@ export const ModalContainer = styled.div`
     .modal {
       display: none;
       position: fixed;
-      top: 0;
+      top: 30px;
       right: 0;
       bottom: 0;
       left: 0;
@@ -536,7 +536,7 @@ export const ModalContainer = styled.div`
       .auth-btn {
         all: unset;
         padding: 0 2px;
-        font-size: 10x;
+        font-size: 10px;
         border: 1px solid #d1d1d1;
         margin: 5px;
         color: #808080;
