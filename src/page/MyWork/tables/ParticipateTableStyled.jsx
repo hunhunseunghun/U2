@@ -141,7 +141,7 @@ export const ParticipateTableContainer = styled.div`
   button.resume {
   }
 
-  @media only screen and (max-width: 900px) {
+  @media only screen and (max-width: 900px) and (min-width: 380px) {
     margin: 25px 0px;
     /* border: 1px solid; */
 
@@ -224,6 +224,154 @@ export const ParticipateTableContainer = styled.div`
           display: flex;
           justify-content: center;
           align-items: center;
+
+          img {
+            position: relative;
+            top: 1px;
+            margin-left: 2px;
+            width: 12px;
+
+            &:hover {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+
+    tbody {
+      text-align: center;
+
+      tr {
+        border-bottom: 1px solid #eee;
+      }
+
+      td {
+        padding: 2px;
+        height: 50px;
+        max-width: 30px;
+
+        img {
+          width: 100%;
+          max-width: 40px;
+          box-sizing: border-box;
+        }
+      }
+    }
+
+    tbody:last-child {
+      border: 0;
+    }
+
+    hr.row-line {
+      /* width: 100px; */
+    }
+    button.feedback-button {
+      cursor: pointer;
+      padding: 2px 5px;
+      background: linear-gradient(#fff, #f2f2f2);
+      border: 1px solid #eee;
+    }
+    button.feedback-button:hover {
+      background-color: #e3e3e3;
+    }
+    .presentation-td > button {
+      background: linear-gradient(#fff, #f2f2f2);
+      border: 1px solid #eee;
+      padding: 2px 5px;
+      transform: scale(0.7);
+      &:hover {
+        background-color: #e3e3e3;
+        cursor: pointer;
+      }
+    }
+    button.resume {
+    }
+  }
+  @media only screen and (max-width: 380px) {
+    margin: 25px 0px;
+    /* border: 1px solid; */
+
+    .prjregi_btn_area {
+      display: flex;
+      justify-content: flex-end;
+      margin: 20px 0 5px 0;
+
+      .prjregi_btn {
+        display: flex;
+        padding: 5px 10px;
+        border: 1px solid #d1d1d1;
+        color: #898989;
+        background-color: #fff;
+        border-radius: 4px;
+        transition: all 0.2s;
+        margin-right: 5px;
+        &:hover {
+          cursor: pointer;
+          color: black;
+          border-color: #898989;
+          transition: all 0.2s;
+          .prjregi_btn_plusicon,
+          .prjregi_btn_text {
+            cursor: pointer;
+            color: black;
+            border-color: #898989;
+            transition: all 0.2s;
+          }
+        }
+      }
+      .prjregi_btn_plusicon {
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        font-size: 18px;
+        color: #898989;
+        transition: all 0.2s;
+      }
+      .prjregi_btn_text {
+        position: relative;
+        top: -1px;
+        display: grid;
+        place-items: center;
+        font-size: 13px;
+        color: #898989;
+        margin-left: 5px;
+        transition: all 0.2s;
+      }
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 8px;
+      margin-bottom: 20px;
+    }
+
+    th,
+    td {
+      a {
+        position: relative;
+        .table_newalert {
+          position: absolute;
+          top: -10px;
+          left: 10px;
+        }
+      }
+    }
+    thead {
+      background-color: #f8f8f8;
+      border-top: 2px solid #ddd;
+      border-bottom: 1px solid #eee;
+      font-size: 8px;
+      color: #181818;
+      th {
+        padding: 10px 0;
+
+        section {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 8px;
 
           img {
             position: relative;
