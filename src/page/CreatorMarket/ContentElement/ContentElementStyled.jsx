@@ -297,9 +297,8 @@ export const EleContainer = styled.div`
       bottom: 20px;
       left: 0px;
       width: 100%;
-      padding: 10px 5px;
+      padding: 10px 10%;
       box-sizing: border-box;
-      justify-items: center;
       justify-content: space-between;
       align-items: center;
       font-weight: 500;
@@ -309,7 +308,7 @@ export const EleContainer = styled.div`
       margin-top: 5px;
       width: 100%;
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       .challenge_progress_text {
         display: flex;
         font-size: 12px;
@@ -336,7 +335,7 @@ export const EleContainer = styled.div`
     }
     .challenge_info_top_mobile {
       width: 100%;
-      margin-top: 0px;
+      margin-top: 5px;
       display: block;
       font-size: 13px;
       box-sizing: border-box;
@@ -346,9 +345,10 @@ export const EleContainer = styled.div`
       .meetArea,
       .budgetArea,
       .remainDateArea {
-        padding: 2px 5px 0 5px;
+        padding: 0px 0px 2px 0px;
+
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         box-sizing: border-box;
         align-items: center;
 
@@ -381,18 +381,20 @@ export const EleContainer = styled.div`
 
     .challenge_info_bot {
       width: 100%;
-      margin: 5px 0 5px 5px;
       display: flex;
       font-weight: 500;
       font-size: 12px;
-      justify-content: center;
+      justify-content: flex-end;
+      margin: 10px 0 5px 0;
     }
 
     .challenge_cmtval_area {
       display: flex;
 
-      align-items: center;
+      align-items: end;
       img {
+        position: relative;
+        top: 1px;
         width: 12px;
         height: 12px;
       }
@@ -406,16 +408,16 @@ export const EleContainer = styled.div`
 
     .challenge_shareval_area {
       display: flex;
-      align-items: center;
+      align-items: end;
       margin-left: 10px;
 
       img {
-        width: 12px;
-        height: 12px;
+        width: 13px;
+        height: 13px;
       }
 
       .shareIcon {
-        width: 12px;
+        width: 13px;
         margin-right: 2px;
       }
     }

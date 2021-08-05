@@ -21,9 +21,10 @@ export const Container = styled.div`
   }
 
   #upLoader {
-    width: 75px;
+    width: 72px;
     height: 24px;
     margin-left: 5px;
+    border: unset;
   }
 
   .filePreview {
