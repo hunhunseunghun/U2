@@ -6,6 +6,7 @@ export const WorkDetailContainer = styled.div`
   display: flex;
   justify-content: center;
   font-weight: 500;
+
   .workdetail-section {
     width: 100%;
     display: flex;
@@ -17,6 +18,7 @@ export const WorkDetailContainer = styled.div`
     display: flex;
     flex-direction: column;
     box-shadow: 1px 1px 1px #eee;
+    box-sizing: border-box;
 
     .workdetail_img_wrap {
       display: flex;
@@ -191,6 +193,7 @@ export const WorkDetailContainer = styled.div`
     }
 
     .section2 {
+      box-sizing: border-box;
       .tabs {
         display: flex;
       }
@@ -230,7 +233,7 @@ export const WorkDetailContainer = styled.div`
         position: relative;
         top: -1px;
         border: 1px solid #eee;
-        box-shadow: 1px 2px 1px #eee;
+        box-shadow: 1px 1px 1px #eee;
       }
       hr {
         width: inherit;
