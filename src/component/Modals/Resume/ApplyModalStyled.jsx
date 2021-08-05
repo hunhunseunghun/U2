@@ -377,7 +377,7 @@ export const ModalContainer = styled.div`
     .modal {
       display: none;
       position: fixed;
-      top: 30px;
+      top: 45px;
       right: 0;
       bottom: 0;
       left: 0;
