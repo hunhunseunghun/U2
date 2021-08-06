@@ -51,9 +51,12 @@ export const ModalContainer = styled.div`
       /* align-items: center; */
     }
   }
+
   .modal > section > footer {
+    width: 100%;
     padding: 12px 16px 30px 16px;
     text-align: center;
+    box-sizing: border-box;
   }
 
   .modal.openModal {
@@ -63,6 +66,9 @@ export const ModalContainer = styled.div`
   }
   .ele {
     display: flex;
+  }
+  .adress_ele {
+    border-bottom: 1px solid #d1d1d1;
   }
   .menu {
     display: flex;
@@ -180,6 +186,7 @@ export const ModalContainer = styled.div`
       }
     }
   }
+
   .URLs {
     max-height: 300px;
     overflow: scroll;
@@ -219,6 +226,7 @@ export const ModalContainer = styled.div`
   .Address {
     padding: 10px;
     display: block;
+
     .address_ele {
       display: flex;
       margin-bottom: 2px;

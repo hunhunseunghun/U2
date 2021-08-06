@@ -76,7 +76,7 @@ export const PrjRegiContainer = styled.div`
       display: grid;
       place-items: center;
       img {
-        width: 90%;
+        width: 70%;
       }
     }
 
@@ -93,8 +93,8 @@ export const PrjRegiContainer = styled.div`
       place-items: end center;
 
       input {
-        width: 20px;
-        height: 20px;
+        width: 30px;
+        height: 30px;
       }
     }
   }
@@ -308,8 +308,8 @@ export const PrjRegiContainer = styled.div`
         place-items: end center;
 
         input {
-          width: 15px;
-          height: 15px;
+          width: 20px;
+          height: 20px;
         }
       }
     }
