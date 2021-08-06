@@ -161,6 +161,7 @@ function ParticipateTable() {
 							dueDate: (() => {
 								if (
 									el.challengeTargetCode === 1 ||
+									el.challengeTargetCode === 2 ||
 									el.challengeTargetCode === 3
 								) {
 									return el.missions[0].dateFin.split('T')[0];

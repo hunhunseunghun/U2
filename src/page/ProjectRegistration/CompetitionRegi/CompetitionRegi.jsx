@@ -457,7 +457,7 @@ const CompetitionRegi = () => {
 							<Uploader
 								setFilePath={setEtcFilePath}
 								multiple={false}
-								accept={'*'}
+								accept={'image/*, video/*, .doc, .docx, .pdf, .ppt'}
 								memberIdx={userInfo.memberIdx}
 								folder={'market-fileref'}
 								placeholder="파일 선택. (최대 300MB)"

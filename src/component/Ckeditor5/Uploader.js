@@ -51,17 +51,18 @@ class FileUploadCommand extends Command {
 		}
 
 		if (filesToUpload.length) {
-			model.change((writer) => {
-				const filesToUpload2 = Array.isArray(filesToUpload)
-					? filesToUpload
-					: [filesToUpload];
+			notification.showWarning('파일은 업로드 할 수 없습니다.');
+			// model.change((writer) => {
+			// 	const filesToUpload2 = Array.isArray(filesToUpload)
+			// 		? filesToUpload
+			// 		: [filesToUpload];
 
-				if (filesToUpload2[0].size > _UPLOAD_FILE_LIMIT) {
-					notification.showWarning('Can not upload files larger than 50MB');
-					return;
-				}
-				uploadFile(writer, model, filesToUpload2);
-			});
+			// 	if (filesToUpload2[0].size > _UPLOAD_FILE_LIMIT) {
+			// 		notification.showWarning('50MB 이상의 파일은 올릴 수 없습니다');
+			// 		return;
+			// 	}
+			// 	uploadFile(writer, model, filesToUpload2);
+			// });
 		}
 	}
 }
@@ -112,7 +113,7 @@ class Uploader extends Plugin {
 			const view = new FileDialogButtonView(locale);
 
 			view.buttonView.set({
-				label: 'Insert image and file',
+				label: 'Insert image',
 				icon: imageIcon,
 				tooltip: true,
 			});

@@ -277,9 +277,9 @@ function Modal({ open, challenge, handleModalClose }) {
 			}),
 		};
 		// TextFile(data);
+		console.log('request body: ', data);
 		var config = {
 			method: 'post',
-			// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengehireapply
 			url: server + '/Campaign/challengehireapply',
 			headers: {
 				Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -608,6 +608,7 @@ function Modal({ open, challenge, handleModalClose }) {
 											multiple={false}
 											accept={'.pdf,.doc,.ppt'}
 											memberIdx={userInfo.memberIdx}
+											challengeIdx={challenge.challengeIdx}
 											folder={'market-apply-cveng'}
 											placeholder="이력서 선택"
 										/>
@@ -628,6 +629,7 @@ function Modal({ open, challenge, handleModalClose }) {
 											multiple={false}
 											accept={'.pdf,.doc,.ppt'}
 											memberIdx={userInfo.memberIdx}
+											challengeIdx={challenge.challengeIdx}
 											folder={'market-apply-cveng'}
 											placeholder="Choose your curriculum vitae"
 										/>
@@ -700,6 +702,7 @@ function Modal({ open, challenge, handleModalClose }) {
 														multiple={false}
 														accept={'.pdf,.doc,.ppt'}
 														memberIdx={userInfo.memberIdx}
+														challengeIdx={challenge.challengeIdx}
 														folder={'market-apply-potfolio'}
 														placeholder="포트폴리오 선택"
 													/>
@@ -824,6 +827,7 @@ function Modal({ open, challenge, handleModalClose }) {
 							<button
 								className="submit_btn"
 								onClick={() => {
+									console.log('제출');
 									handleSubmit();
 								}}
 							>

@@ -501,7 +501,7 @@ const VidCreatorRegi = (props) => {
 							<Uploader
 								setFilePath={setEtcFilePath}
 								multiple={false}
-								accept={'*'}
+								accept={'image/*, video/*, .doc, .docx, .pdf, .ppt'}
 								folder={'market-fileref'}
 								memberIdx={userInfo.memberIdx}
 								placeholder="파일 선택. (최대 300MB)"

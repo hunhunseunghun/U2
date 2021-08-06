@@ -63,11 +63,11 @@ const Uploader = ({
 		const { url, blobname } = await singleUploadAndReturnObj(realFiles, folder);
 		setFile(files);
 		setBlob(blobname);
-		if (document.getElementById('upLoader').value) {
-			setFilePath(blobname);
-		} else {
-			setFilePath(null);
-		}
+		setFilePath(blobname);
+		// if (document.getElementById('upLoader').value) {
+		// } else {
+		// 	setFilePath(null);
+		// }
 	};
 
 	//posterfile preview handle
@@ -87,7 +87,7 @@ const Uploader = ({
 								delteFileFromBlob(blob);
 								// delete copyNamed[idx];
 								setFile(edit);
-								setFilePath('');
+								setFilePath(null);
 								// setNamedFiles(copyNamed);
 							}}
 						></TiDeleteOutline>
@@ -101,7 +101,7 @@ const Uploader = ({
 
 	useEffect(() => {
 		if (file !== null && file.length === 0) {
-			setFilePath('Choose file to upload');
+			setFilePath(null);
 		}
 	}, [file]);
 

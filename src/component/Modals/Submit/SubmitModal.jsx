@@ -574,7 +574,7 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 														<span className="youtubeURL">파일 선택:</span>
 														<Uploader
 															setFilePath={(path) => {
-																if (path.length) {
+																if (path) {
 																	let obj = {
 																		platform: 'FS',
 																		url: path,
@@ -595,6 +595,7 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 															accept={'*'}
 															folder={'market-submit-media'}
 															memberIdx={userInfo.memberIdx}
+															challengeIdx={challenge.challengeIdx}
 														/>
 													</div>
 												);
