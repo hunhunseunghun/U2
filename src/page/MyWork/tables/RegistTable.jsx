@@ -211,6 +211,7 @@ function RegistTable({ setNewAccept }) {
 														pathname: '/workdetail',
 														state: {
 															projectId: data.challengeIdx,
+															challengeTargetCode: data.challengeTargetCode,
 															isContriClicked: true,
 															isInspectClicked: false,
 														},
@@ -245,6 +246,7 @@ function RegistTable({ setNewAccept }) {
 														pathname: '/workdetail',
 														state: {
 															projectId: data.challengeIdx,
+															challengeTargetCode: data.challengeTargetCode,
 															isContriClicked: false,
 															isInspectClicked: true,
 														},

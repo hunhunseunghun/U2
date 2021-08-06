@@ -8,12 +8,12 @@ import { GrAdd } from 'react-icons/gr';
 
 const MyWork = (props) => {
 	const userInfo = useSelector((state) => state.userInfo);
-	useEffect(() => {
-		if (!userInfo.email) {
-			alert('로그인이 필요한 서비스입니다.');
-			window.location.href = '/login';
-		}
-	}, []);
+	// useEffect(() => {
+	// 	if (!userInfo.email) {
+	// 		alert('로그인이 필요한 서비스입니다.');
+	// 		window.location.href = '/login';
+	// 	}
+	// }, []);
 	let twoTabs = ['등록 프로젝트', '참여 프로젝트'];
 	// if (participateDatas.length < registDatas.length) {
 	// 	twoTabs = ['등록 프로젝트', '참여 프로젝트'];

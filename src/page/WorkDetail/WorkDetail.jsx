@@ -16,9 +16,7 @@ function WorkDetail(props) {
 	let [prise, setPrise] = useState([]);
 	let [projectTitle, setProjectTitle] = useState('');
 	let [mainImage, setMainImage] = useState(null);
-	let [challengeTargetCode, setChallengeTargetCode] = useState(0);
 	let [rewardDate, setRewardDate] = useState('');
-	// let [currChallenges, setCurrChallenges] = useState(null);
 	let setTab;
 	if (props.location.state.isContriClicked) {
 		setTab = 0;
@@ -48,7 +46,7 @@ function WorkDetail(props) {
 				let missionRequired = [];
 				let priceContent = [];
 
-				setChallengeTargetCode(data.challengeTargetCode);
+				// setChallengeTargetCode(data.challengeTargetCode);
 				if (
 					data.rewards &&
 					data.rewards.length > 0 &&
@@ -167,11 +165,14 @@ function WorkDetail(props) {
 	};
 	let handlePresentationClick = (data) => {
 		console.log('handlePresentationClick data: ', data);
-		if (challengeTargetCode === 4 || challengeTargetCode === 2) {
+		if (
+			props.location.state.challengeTargetCode === 4 ||
+			props.location.state.challengeTargetCode === 2
+		) {
 			setApplyment({
 				open: true,
 				challengeIdx: data.challengeIdx,
-				challengeTargetCode: challengeTargetCode,
+				challengeTargetCode: props.location.state.challengeTargetCode,
 			});
 		} else {
 			setSubmission({ open: true, data: data });
@@ -203,7 +204,7 @@ function WorkDetail(props) {
 		1: (
 			<InspectTable
 				challengeIdx={props.location.state.projectId}
-				challengeTargetCode={challengeTargetCode}
+				challengeTargetCode={props.location.state.challengeTargetCode}
 				handlePresentationClick={handlePresentationClick}
 			></InspectTable>
 		),
@@ -250,11 +251,14 @@ function WorkDetail(props) {
 							<div className="project_target_sub">대상</div>
 							<div className="project_target">{subject}</div>
 						</section>
-						<section className="project_target_wrap">
-							<div className="project_target_sub">프로젝트 미팅</div>
-							<div className="project_target">{meeting}</div>
-						</section>
-						{challengeTargetCode !== 4 ? (
+						{props.location.state.challengeTargetCode !== 1 && (
+							<section className="project_target_wrap">
+								<div className="project_target_sub">프로젝트 미팅</div>
+								<div className="project_target">{meeting}</div>
+							</section>
+						)}
+
+						{props.location.state.challengeTargetCode !== 4 ? (
 							<section className="project_target_wrap">
 								<div className="project_target_sub">과제완료 조건</div>
 								{terms.map((term, idx) => {
@@ -324,7 +328,8 @@ function WorkDetail(props) {
 								handleTabClick(1);
 							}}
 						>
-							{challengeTargetCode === 1 || challengeTargetCode === 3
+							{props.location.state.challengeTargetCode === 1 ||
+							props.location.state.challengeTargetCode === 3
 								? '검수 대상자'
 								: '지원자'}
 						</div>

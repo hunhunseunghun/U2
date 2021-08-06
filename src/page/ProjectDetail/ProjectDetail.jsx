@@ -27,27 +27,12 @@ function ProjectDetail(props) {
 	//자료제출 모달
 	const [isSubmitOpen, setSubmitOpen] = useState(false);
 	const [isApplyOpen, setApplyOpen] = useState(false);
-	// console.log('challengeIdx: ', challengeIdx);
-	// console.log('challenge: ', challenge);
-	// console.log(props);
 	const [comments, setComments] = useState([]);
 	const [inputComment, setInputComment] = useState('');
 	const handleChallenge = () => {
-		//checkStatusCode
-		// 1. 승인
-		// 2. 반려
-		// 3. 피드백
-		//4. 챌린지
-		// 8. 진행중
-		//statusCode
-		//1. 제출완료
-		//2. 지원완료
-		//3. 미제출
-		//4. 미지원
 		if (userInfo.email) {
 			var config = {
 				method: 'post',
-				// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmit
 				url:
 					process.env.REACT_APP_U2_DB_HOST +
 					`/Campaign/challengewished/${challengeIdx}`,
@@ -330,7 +315,12 @@ function ProjectDetail(props) {
 
 						<ul>
 							<li>
-								<div className="sns_img">
+								<div
+									className="sns_img"
+									onClick={() => {
+										console.log('clicked');
+									}}
+								>
 									{/* <img src="/img/ic_facebook.svg" /> */}
 									<FacebookShareButton
 										title={challenge.title}
@@ -341,8 +331,13 @@ function ProjectDetail(props) {
 								</div>
 								<div className="sns_title">페이스북</div>
 							</li>
-							<li className="kakao_share">
-								<div className="sns_img">
+							<li
+								// className="kakao_share"
+								onClick={() => {
+									console.log('clicked');
+								}}
+							>
+								<div className="sns_img kakao_share">
 									<KakaoShareButton
 										challengeTitle={challenge.title}
 										imageUrl={'test'}
@@ -373,7 +368,12 @@ function ProjectDetail(props) {
 								<div className="sns_title">카카오톡</div>
 							</li>
 							<li>
-								<div className="sns_img">
+								<div
+									className="sns_img"
+									onClick={() => {
+										console.log('clicked');
+									}}
+								>
 									<TwitterShareButton
 										title={challenge.title}
 										url={'https://u2-web-dev.azurewebsites.net'}
@@ -383,12 +383,14 @@ function ProjectDetail(props) {
 								</div>
 								<div className="sns_title">트위터</div>
 							</li>
-							<li
-								onClick={() => {
-									handleCopyURL();
-								}}
-							>
-								<div class="sns_img">
+							<li>
+								<div
+									class="sns_img"
+									onClick={() => {
+										console.log('clicked');
+										handleCopyURL();
+									}}
+								>
 									<img src="/img/ic_url_copy.svg" />
 								</div>
 								<div class="sns_title">URL복사</div>

@@ -64,6 +64,9 @@ const KakaoShareButton = ({
 			className="kakao-share-button"
 			id="kakao-link-btn"
 			src="/img/ic_kakao.svg"
+			onClick={() => {
+				console.log('clicked');
+			}}
 		></img>
 	);
 };
