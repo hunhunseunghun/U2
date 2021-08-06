@@ -35,9 +35,9 @@ const CompetitionRegi = () => {
 	}
 	// posterfile upload handle---------------------------------
 	// const [posterFile, setPosterFile] = useState([]); //포스터 파일, fileList 객체 -> 배열로 변환 후 -> posterfile에 할당
-	const [posterFilePath, setPosterFilePath] = useState(''); //포스터 파일 업로드 파일패스 , placholder 값
+	const [posterFilePath, setPosterFilePath] = useState(null); //포스터 파일 업로드 파일패스 , placholder 값
 	// const [etcFile, setEtcFile] = useState(null);
-	const [etcFilePath, setEtcFilePath] = useState('');
+	const [etcFilePath, setEtcFilePath] = useState(null);
 	//handle date ----------------------------------------------
 	//handle editor ---------------------------------------------
 	const [title, setTitle] = useState('');
@@ -924,7 +924,7 @@ const CompetitionRegi = () => {
 						<div className="inputInfo notice_editor_form">
 							<Ckeditor
 								className="ckeditor_wrap"
-								onChange={handleCkeditorValue}
+								onBlur={handleCkeditorValue}
 								data={CkText}
 							/>
 

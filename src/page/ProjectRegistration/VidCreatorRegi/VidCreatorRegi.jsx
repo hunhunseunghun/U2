@@ -99,7 +99,7 @@ const VidCreatorRegi = (props) => {
 	const [profiles, setProfiles] = useState([]);
 	// file uploade ---------------------------------------
 	// const [etcFile, setEtcFile] = useState([]);
-	const [etcFilePath, setEtcFilePath] = useState('Choose file to upload');
+	const [etcFilePath, setEtcFilePath] = useState(null);
 	const [editTargetFile, setEditTargetFile] = useState([]);
 	const [editTargetFilePath, setEditTargetFilePath] = useState(
 		'Choose file to upload',
@@ -126,9 +126,8 @@ const VidCreatorRegi = (props) => {
 	};
 
 	const handleCkeditorValue = (event, editor) => {
-		// console.log(text);
 		const data = editor.getData();
-		console.log(data);
+		console.log('data: ', data);
 		setCkText(data);
 	};
 	const checkRequiredField = () => {
@@ -1063,7 +1062,7 @@ const VidCreatorRegi = (props) => {
 							{/* <QuillTextEditor className="notice_editor" /> */}
 							<Ckeditor5
 								className="ckeditor_wrap"
-								onChange={handleCkeditorValue}
+								onBlur={handleCkeditorValue}
 								data={ckText}
 							/>
 						</div>
