@@ -238,6 +238,7 @@ function ProjectDetail(props) {
 				handleModalClose={(modalType) => {
 					handleModalClose(modalType);
 				}}
+				challengeTargetCode={challenge.challengeTargetCode}
 			/>
 			<ApplyModal
 				open={isApplyOpen}
@@ -423,7 +424,11 @@ function ProjectDetail(props) {
 						challenge.challengeTargetCode === 2 ? (
 							<button
 								onClick={() => {
-									handleApply();
+									if (challenge.challengeTargetCode === 4) {
+										handleApply();
+									} else {
+										handleSubmit();
+									}
 								}}
 							>
 								지원하기

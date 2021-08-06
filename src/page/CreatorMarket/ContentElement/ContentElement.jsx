@@ -6,6 +6,7 @@ import blankImg from '../../../Img/no_image.png';
 import { calcRemainDays } from '../../../library/timeSetting.js';
 import { getSingleFileFromBlob } from '../../../library/azureBlob.js';
 import { useSelector } from 'react-redux';
+import { isFunction } from 'lodash';
 const ContentElement = (props) => {
 	const userInfo = useSelector((state) => state.userInfo);
 	const [myRegistration, setMyRegistration] = useState(false);
@@ -133,8 +134,18 @@ const ContentElement = (props) => {
 					</div>
 					<div className="remainDateArea">
 						<div className="remainDate">
-							{challenge.missions.length > 0 &&
-								calcRemainDays(challenge.missions[0].dateFin)}
+							{(() => {
+								if (challenge.challengeTargetCode === 4) {
+									return (
+										challenge.hire && calcRemainDays(challenge.hire.dateFin)
+									);
+								} else {
+									return (
+										challenge.missions.length > 0 &&
+										calcRemainDays(challenge.missions[0].dateFin)
+									);
+								}
+							})()}
 							일
 						</div>
 						<div className="remainText">남은 일자</div>

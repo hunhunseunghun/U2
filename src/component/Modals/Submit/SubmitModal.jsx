@@ -445,17 +445,7 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 		if (checkSubmit()) return;
 		setState((preState) => ({ ...preState, submitClicked: true }));
 		let totalURLs = [];
-		if (videoFile && videoFile.platform) {
-			totalURLs = new Array().concat(
-				YUarr,
-				TTarr,
-				VMarr,
-				DRarr,
-				videoFile && videoFile.platform && videoFile,
-			);
-		} else {
-			totalURLs = new Array().concat(YUarr, TTarr, VMarr, DRarr);
-		}
+		totalURLs = new Array().concat(YUarr, TTarr, VMarr, DRarr);
 
 		var data = {
 			challengeIdx: challenge.challengeIdx,
@@ -465,21 +455,13 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 			email: email,
 			// cv: 'string',
 			// cvEng: 'string',
-			// fileRef: 'string',
+			fileRef: videoFile ? videoFile.url : null,
 			bankCode: bankCode,
 			bankAccount: bankAccountNum,
 			postCode: address1,
 			addr: address3,
 			bankName: bankName,
 			postCodeAddr: address2,
-			// urls: [
-			// 	{
-			// 		challengeIdx: 0,
-			// 		seq: 0,
-			// 		memberIdx: 0,
-			// 		url: 'string',
-			// 	},
-			// ],
 			urls: totalURLs.map((el, idx) => {
 				return {
 					challengeIdx: challenge.challengeIdx,

@@ -104,14 +104,35 @@ function ApplymentModal({
 							)}
 							<section className="submission_modal_ele">
 								<div className="menu">포트폴리오</div>
-								<div className="inputInfo">
+								<div className="inputInfo_potfolio">
 									{data.fileRef ? (
-										<a href={getSingleFileFromBlob(data.fileRef)}>
+										<a
+											href={getSingleFileFromBlob(data.fileRef)}
+											target="_blank"
+										>
 											{data.fileRef.split('/')[1]}
 										</a>
 									) : (
 										'-'
 									)}
+
+									{data.urls && data.urls.length > 0
+										? data.urls.map((el) => {
+												let newurl = el.url;
+
+												if (
+													el.url.substring(0, 7) != 'http://' &&
+													el.url.substring(0, 8) != 'https://'
+												) {
+													newurl = 'http://' + el.url;
+												}
+												return (
+													<a href={newurl} target="_blank">
+														{el.url}
+													</a>
+												);
+										  })
+										: '-'}
 								</div>
 							</section>
 						</main>
