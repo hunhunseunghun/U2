@@ -750,7 +750,7 @@ function Modal({ open, challenge, handleModalClose }) {
 									)}
 								</div>
 							</section>
-							<section className="ele">
+							<section className="ele adress_ele">
 								<div className="menu">* 주소</div>
 								<div className="inputInfo Address">
 									<section className="address_ele">
