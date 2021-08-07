@@ -51,6 +51,7 @@ function App() {
 		script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
 		script.async = true;
 		document.body.appendChild(script);
+
 		// const script3 = document.createElement('script');
 		// script3.src =
 		// 	'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js';
