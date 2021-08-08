@@ -35,17 +35,58 @@ import ErrorPage from './page/ErrorPage/ErrorPage.jsx';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
+import ReactNotification, { store } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import axios from 'axios';
+
 const Middlewares = [penderMiddleware()];
 const isDev = process.env.NODE_ENV === 'development';
 const devTools = isDev && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 const composeEnhancers = devTools || compose;
-const store = createStore(
+const storeredux = createStore(
 	base,
 	composeEnhancers(applyMiddleware(...Middlewares)),
 );
 
 function App() {
 	const history = useHistory();
+	const handleNotification = (notifications) => {
+		console.log('notifications: ', notifications);
+		var unreads = notifications.filter(
+			(notification) => notification.read === 0,
+		);
+		console.log('unreads: ', unreads);
+		unreads.map((unread) => {
+			store.addNotification({
+				title: 'U2 알림',
+				message: unread.body,
+				type: 'info',
+				insert: 'top',
+				container: 'bottom-right',
+				animationIn: ['animate__animated', 'animate__fadeIn'],
+				animationOut: ['animate__animated', 'animate__fadeOut'],
+				dismiss: {
+					duration: 0,
+					onScreen: true,
+				},
+				onRemoval: () => {
+					var config = {
+						method: 'put',
+						url:
+							process.env.REACT_APP_U2_DB_HOST +
+							`/Campaign/notification/${unread.notifyIdx}?read=1`,
+						headers: {
+							Authorization: 'Bearer ' + localStorage.getItem('token'),
+							'Content-Type': 'application/json',
+						},
+					};
+					axios(config).then((response) => {
+						console.log('notification put response: ', response);
+					});
+				},
+			});
+		});
+	};
 	useEffect(() => {
 		const script = document.createElement('script');
 		script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
@@ -77,6 +118,23 @@ function App() {
 		// document.body.appendChild(script4);
 		// document.body.appendChild(link1);
 		// document.body.appendChild(link2);
+
+		// notificationInterval = setInterval(() => {
+		// 	console.log('interval called');
+		// 	store.addNotification({
+		// 		title: 'U2 알림',
+		// 		message: 'teodosii@react-notifications-component',
+		// 		type: 'info',
+		// 		insert: 'top',
+		// 		container: 'bottom-right',
+		// 		animationIn: ['animate__animated', 'animate__fadeIn'],
+		// 		animationOut: ['animate__animated', 'animate__fadeOut'],
+		// 		dismiss: {
+		// 			duration: 0,
+		// 			onScreen: true,
+		// 		},
+		// 	});
+		// }, 5000);
 		return () => {
 			document.body.removeChild(script);
 		};
@@ -84,9 +142,10 @@ function App() {
 	return (
 		<BrowserRouter>
 			<MuiPickersUtilsProvider utils={DateFnsUtils}>
-				<Provider store={store}>
+				<Provider store={storeredux}>
 					<div className={'app'} onClick={() => dispatch('@@popup/close')}>
-						<Header></Header>
+						<ReactNotification></ReactNotification>
+						<Header handleNotification={handleNotification}></Header>
 						<Route exact path="/" component={Main} />
 						<Route exact path="/login" component={Login} />
 						<Route exact path="/tutorial" component={Tutorial} />

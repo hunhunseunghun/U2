@@ -148,6 +148,7 @@ function ParticipateTable() {
 								}
 							})(),
 							feedback: myApplication && myApplication.hasFeedback,
+							feedbackRead: myApplication && myApplication.feedbackRead,
 							requestDate: (() => {
 								if (
 									el.challengeTargetCode === 1 ||
@@ -506,14 +507,21 @@ function ParticipateTable() {
 													</td>
 													<td>
 														{data.feedback ? (
-															<button
-																className="feedback-button"
-																onClick={() => {
-																	handleOpenFeedback(data.challengeIdx);
-																}}
-															>
-																보기
-															</button>
+															<div>
+																<button
+																	className="feedback-button"
+																	onClick={() => {
+																		handleOpenFeedback(data.challengeIdx);
+																	}}
+																>
+																	보기
+																</button>
+																{!data.feedbackRead && (
+																	<span className="newAlert table_newalert">
+																		new
+																	</span>
+																)}
+															</div>
 														) : (
 															'-'
 														)}
