@@ -183,6 +183,22 @@ function ProjectDetail(props) {
 			}
 		}
 	};
+	const handleShare = () => {
+		console.log('share clicked');
+		var config = {
+			method: 'put',
+			url:
+				process.env.REACT_APP_U2_DB_HOST +
+				`/Campaign/challengeshare/${challengeIdx}`,
+		};
+		axios(config)
+			.then((response) => {
+				console.log('share response: ', response);
+			})
+			.catch((err) => {
+				console.log(err.response);
+			});
+	};
 
 	useEffect(() => {
 		axios
@@ -318,7 +334,7 @@ function ProjectDetail(props) {
 								<div
 									className="sns_img"
 									onClick={() => {
-										console.log('clicked');
+										handleShare();
 									}}
 								>
 									{/* <img src="/img/ic_facebook.svg" /> */}
@@ -332,15 +348,13 @@ function ProjectDetail(props) {
 								<div className="sns_title">페이스북</div>
 							</li>
 							<li
-								// className="kakao_share"
-								onClick={() => {
-									console.log('clicked');
-								}}
+							// className="kakao_share"
 							>
 								<div className="sns_img kakao_share">
 									<KakaoShareButton
 										challengeTitle={challenge.title}
 										imageUrl={'test'}
+										onImgClick={handleShare}
 										// tags={['#test1', '#test2', '#test3']}
 										// social={{
 										// 	likeCount: 10,
@@ -371,7 +385,7 @@ function ProjectDetail(props) {
 								<div
 									className="sns_img"
 									onClick={() => {
-										console.log('clicked');
+										handleShare();
 									}}
 								>
 									<TwitterShareButton
@@ -387,7 +401,7 @@ function ProjectDetail(props) {
 								<div
 									class="sns_img"
 									onClick={() => {
-										console.log('clicked');
+										handleShare();
 										handleCopyURL();
 									}}
 								>

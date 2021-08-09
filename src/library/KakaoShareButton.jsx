@@ -16,10 +16,15 @@ const KakaoShareButton = ({
 	tags,
 	social,
 	buttons,
+	onImgClick,
 }) => {
 	useEffect(() => {
 		createKakaoButton();
-	}, []);
+		const kakaoImg = document.getElementById('kakao-link-btn');
+		kakaoImg.addEventListener('click', () => {
+			onImgClick();
+		});
+	});
 	const createKakaoButton = () => {
 		// kakao sdk script이 정상적으로 불러와졌으면 window.Kakao로 접근이 가능합니다
 		if (window.Kakao) {

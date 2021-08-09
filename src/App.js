@@ -87,7 +87,9 @@ function App() {
 						};
 						axios(config).then((response) => {
 							console.log('notification put response: ', response);
-							setNotifications(notifications.delete(unread.notifyIdx));
+							let copySet = new Set(notifications);
+							copySet.delete(unread.notifyIdx);
+							setNotifications(copySet);
 						});
 					},
 				});
@@ -126,22 +128,6 @@ function App() {
 		// document.body.appendChild(link1);
 		// document.body.appendChild(link2);
 
-		// notificationInterval = setInterval(() => {
-		// 	console.log('interval called');
-		// 	store.addNotification({
-		// 		title: 'U2 알림',
-		// 		message: 'teodosii@react-notifications-component',
-		// 		type: 'info',
-		// 		insert: 'top',
-		// 		container: 'bottom-right',
-		// 		animationIn: ['animate__animated', 'animate__fadeIn'],
-		// 		animationOut: ['animate__animated', 'animate__fadeOut'],
-		// 		dismiss: {
-		// 			duration: 0,
-		// 			onScreen: true,
-		// 		},
-		// 	});
-		// }, 5000);
 		return () => {
 			document.body.removeChild(script);
 		};

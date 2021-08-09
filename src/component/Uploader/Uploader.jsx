@@ -7,6 +7,7 @@ import { Container } from './UploaderStyled.jsx';
 // 	isStorageConfigured,
 // 	getFilesFromBlob,
 // } from '../../../library/azureBlob';
+import Loader from 'react-loader-spinner';
 import {
 	delteFileFromBlob,
 	singleUploadAndReturnObj,
@@ -24,6 +25,8 @@ const Uploader = ({
 	memberIdx,
 	challengeIdx,
 	placeholder,
+	loading,
+	setLoading,
 }) => {
 	//file = files 배열 , setFile = useState func
 	//filePath = 파일 경로, setFilePath = useState func
@@ -31,6 +34,9 @@ const Uploader = ({
 	//바뀐 파일이름을 임시 저장하기 위한 state
 	const [blob, setBlob] = useState('');
 	const [file, setFile] = useState(null);
+
+	//로딩중 구현
+	// const [loading, setLoading] = useState(false);
 	// posterfile upload handle------------------------------
 	const fileChangeFunc = async (e) => {
 		let files = [];
@@ -59,11 +65,12 @@ const Uploader = ({
 		if (blob) {
 			await delteFileFromBlob(blob);
 		}
-
+		setLoading(true);
 		const { url, blobname } = await singleUploadAndReturnObj(realFiles, folder);
 		setFile(files);
 		setBlob(blobname);
 		setFilePath(blobname);
+		setLoading(false);
 		// if (document.getElementById('upLoader').value) {
 		// } else {
 		// 	setFilePath(null);
@@ -95,8 +102,27 @@ const Uploader = ({
 				);
 			});
 		} else {
-			return null;
+			if (loading) {
+				console.log('loading...');
+				return (
+					<Loader
+						className="uploader_loading_Img"
+						type="Oval"
+						color="#f84235"
+					></Loader>
+				);
+			} else {
+				return null;
+			}
 		}
+
+		// return (
+		// 	<Loader
+		// 		className="uploader_loading_Img"
+		// 		type="Oval"
+		// 		color="#f84235"
+		// 	></Loader>
+		// );
 	};
 
 	useEffect(() => {
@@ -111,7 +137,7 @@ const Uploader = ({
 				<input
 					type="text"
 					className="filePath"
-					placeholder={placeholder ? placeholder : 'Choose file to upload'}
+					placeholder={placeholder ? placeholder : '파일을 선택하세요'}
 					// value={file}
 					readOnly
 				/>

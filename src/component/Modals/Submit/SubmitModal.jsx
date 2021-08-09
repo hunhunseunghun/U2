@@ -55,6 +55,8 @@ const initialState = {
 	contactRequired: 0,
 	emailRequired: 0,
 	submitClicked: false,
+	loading1: false,
+	loading2: false,
 };
 function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 	// console.log(data);
@@ -103,6 +105,8 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 			contactRequired,
 			emailRequired,
 			submitClicked,
+			loading1,
+			loading2,
 		},
 		setState,
 	] = useState({ ...initialState });
@@ -309,6 +313,10 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 	const checkSubmit = () => {
 		if (submitClicked) {
 			alert('제출 중입니다.');
+			return true;
+		}
+		if (loading1 || loading2) {
+			alert('업로드 중입니다');
 			return true;
 		}
 		if (
@@ -578,6 +586,13 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 															folder={'market-submit-media'}
 															memberIdx={userInfo.memberIdx}
 															challengeIdx={challenge.challengeIdx}
+															loading={loading1}
+															setLoading={(state) => {
+																setState((preState) => ({
+																	...preState,
+																	loading1: state,
+																}));
+															}}
 														/>
 													</div>
 												);
@@ -1174,6 +1189,13 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 												folder={'market-submit-media'}
 												memberIdx={userInfo.memberIdx}
 												challengeIdx={challenge.challengeIdx}
+												loading={loading2}
+												setLoading={(state) => {
+													setState((preState) => ({
+														...preState,
+														loading2: state,
+													}));
+												}}
 											/>
 										</div>
 									</section>

@@ -45,6 +45,8 @@ const IRRegi = () => {
 	};
 	//포스터
 	const [posterFilePath, setPosterFilePath] = useState(null);
+	const [loading, setLoading] = useState(false);
+
 	//강의형태
 	const [irOnline, setIrOnline] = useState(null);
 
@@ -235,6 +237,9 @@ const IRRegi = () => {
 
 	const checkRequiredField = () => {
 		// if(competition && title && (isOnline || isVideoProduction) && (isEmail || isMobile) && )
+		if (loading) {
+			return alert('파일 업로드 중입니다');
+		}
 		if (!(profiles.length > 0)) return alert('의뢰주체를 선택해주십시오');
 		if (!title) return alert('강사 채용 제목을 입력해주십시오');
 		if (!(recruitmentFieldList.length > 0))
@@ -417,6 +422,10 @@ const IRRegi = () => {
 								memberIdx={userInfo.memberIdx}
 								folder={'market-logo'}
 								placeholder="이미지 선택. (권장비율: 16:9)"
+								loading={loading}
+								setLoading={(state) => {
+									setLoading(state);
+								}}
 							/>
 						</div>
 					</section>

@@ -1,11 +1,14 @@
 import { ModalContainer } from './VideoModalStyled';
 import { useState, useEffect } from 'react';
+// import ReactHtmlParser from 'react-html-parser';
+import InnerHTML from 'dangerously-set-html-content';
 import axios from 'axios';
 function Modal({ open, handleModalClose, src }) {
 	console.log('inside video modal src: ', src);
 	const [newSrc, setNewSrc] = useState('');
 	const [srcType, setSrcType] = useState(null);
 	const [tiktok, setTiktok] = useState(null);
+
 	useEffect(() => {
 		switch (src.split('/')[2]) {
 			case 'youtu.be': {
@@ -47,7 +50,6 @@ function Modal({ open, handleModalClose, src }) {
 							{(() => {
 								switch (srcType) {
 									case 'youtube': {
-										console.log('newSrc in switch: ', newSrc);
 										return (
 											<iframe
 												src={
@@ -63,7 +65,10 @@ function Modal({ open, handleModalClose, src }) {
 									}
 									case 'tiktok': {
 										return (
-											<div dangerouslySetInnerHTML={{ __html: tiktok }}></div>
+											// ReactHtmlParser(tiktok) //이거로 하면 영상 재생이 안됨... 왜 그러는지???
+											<div>
+												<InnerHTML html={tiktok} />
+											</div>
 										);
 									}
 									default: {

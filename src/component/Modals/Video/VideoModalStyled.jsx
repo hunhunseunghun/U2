@@ -31,10 +31,12 @@ export const ModalContainer = styled.div`
 		padding: 0px;
 		border-bottom: 1px solid #dee2e6;
 		border-top: 1px solid #dee2e6;
-		height: 250px;
+		height: relative;
+		/* overflow: auto; */
+
 		iframe {
 			width: 100%;
-			height: 100%;
+			height: 250px;
 		}
 	}
 	.modal > section > footer {

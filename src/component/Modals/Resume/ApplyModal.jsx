@@ -46,6 +46,10 @@ const initialState = {
 	isCv: false,
 	isCvEng: false,
 	isPf: false,
+
+	loading1: false,
+	loading2: false,
+	loading3: false,
 };
 const server = process.env.REACT_APP_U2_DB_HOST;
 function Modal({ open, challenge, handleModalClose }) {
@@ -87,6 +91,10 @@ function Modal({ open, challenge, handleModalClose }) {
 			isCv,
 			isCvEng,
 			isPf,
+
+			loading1,
+			loading2,
+			loading3,
 		},
 		setState,
 	] = useState({ ...initialState });
@@ -224,6 +232,10 @@ function Modal({ open, challenge, handleModalClose }) {
 		}
 	};
 	const checkSubmit = () => {
+		if (loading1 || loading2 || loading3) {
+			alert('파일 업로드 중입니다.');
+			return true;
+		}
 		if (
 			!title ||
 			!mobileNum ||
@@ -611,6 +623,13 @@ function Modal({ open, challenge, handleModalClose }) {
 											challengeIdx={challenge.challengeIdx}
 											folder={'market-apply-cveng'}
 											placeholder="이력서 선택"
+											loading={loading1}
+											setLoading={(state) => {
+												setState((preState) => ({
+													...preState,
+													loading1: state,
+												}));
+											}}
 										/>
 									</div>
 								</section>
@@ -632,6 +651,13 @@ function Modal({ open, challenge, handleModalClose }) {
 											challengeIdx={challenge.challengeIdx}
 											folder={'market-apply-cveng'}
 											placeholder="Choose your curriculum vitae"
+											loading={loading2}
+											setLoading={(state) => {
+												setState((preState) => ({
+													...preState,
+													loading2: state,
+												}));
+											}}
 										/>
 									</div>
 								</section>
@@ -705,6 +731,13 @@ function Modal({ open, challenge, handleModalClose }) {
 														challengeIdx={challenge.challengeIdx}
 														folder={'market-apply-potfolio'}
 														placeholder="포트폴리오 선택"
+														loading={loading3}
+														setLoading={(state) => {
+															setState((preState) => ({
+																...preState,
+																loading3: state,
+															}));
+														}}
 													/>
 												</div>
 											</tr>

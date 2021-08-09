@@ -105,6 +105,10 @@ const VidCreatorRegi = (props) => {
 		'Choose file to upload',
 	);
 
+	//업로딩 체크
+	const [loading1, setLoading1] = useState(false);
+	const [loading2, setLoading2] = useState(false);
+
 	//-----------------------------------------------------
 
 	const [onMeet, setOnMeet] = useState(null); //온라인 오프라인 미팅 state 값
@@ -132,6 +136,9 @@ const VidCreatorRegi = (props) => {
 	};
 	const checkRequiredField = () => {
 		// if(competition && title && (isOnline || isVideoProduction) && (isEmail || isMobile) && )
+		if (loading1 || loading2) {
+			return alert('파일 업로드 중입니다');
+		}
 		if (!(profiles.length > 0)) return alert('주최사를 선택해주십시오');
 		if (!title) return alert('프로젝트명을 입력해주십시오');
 		if (!(isOnline || isVideoProduction)) {
@@ -490,6 +497,10 @@ const VidCreatorRegi = (props) => {
 								memberIdx={userInfo.memberIdx}
 								folder={'market-logo'}
 								placeholder="이미지 선택. (권장비율: 16:9)"
+								loading={loading1}
+								setLoading={(state) => {
+									setLoading1(state);
+								}}
 							/>
 						</div>
 					</section>
@@ -504,6 +515,10 @@ const VidCreatorRegi = (props) => {
 								folder={'market-fileref'}
 								memberIdx={userInfo.memberIdx}
 								placeholder="파일 선택. (최대 300MB)"
+								loading={loading2}
+								setLoading={(state) => {
+									setLoading2(state);
+								}}
 							/>
 						</div>
 					</section>

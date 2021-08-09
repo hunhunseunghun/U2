@@ -120,6 +120,9 @@ const ProjectRegi = () => {
 
 	return (
 		<PrjRegiContainer className="projectregi_contents_wrap">
+			{/*
+        video modal
+         */}
 			<VideoModal
 				src={videoModalProps.src}
 				open={videoModalProps.open}
@@ -128,19 +131,6 @@ const ProjectRegi = () => {
 				}}
 			/>
 			<section className="projectregi_section">
-				{/*
-        video modal
-         */}
-				<button
-					onClick={() => {
-						setvideoModalProps({
-							open: true,
-							src: 'https://www.youtube.com/embed/Jfrjeg26Cwk',
-						});
-					}}
-				>
-					show modal
-				</button>
 				<div className="projectregi_title_area">
 					<div>프로젝트 등록</div>
 					<div className="projectregi_title_style"></div>
