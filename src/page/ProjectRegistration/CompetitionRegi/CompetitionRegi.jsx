@@ -213,6 +213,7 @@ const CompetitionRegi = () => {
 			{
 				memberIdx: userInfo.memberIdx,
 				title: title,
+				subtitle: 'string',
 				ownerIdx: ownerIdx,
 				ownerName: competition[defaultIdx].companyName,
 				ownerCat: competition[defaultIdx].cat,

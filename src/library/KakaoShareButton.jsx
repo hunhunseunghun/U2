@@ -47,6 +47,16 @@ const KakaoShareButton = ({
 				// social: social,
 				// buttons: buttons,
 			});
+			// console.log('kakao: ', kakao);
+			// kakao.API.request({
+			// 	url: '/v1/api/talk/profile',
+			// 	success: function (response) {
+			// 		console.log('success response: ', response);
+			// 	},
+			// 	fail: function (error) {
+			// 		console.log(error);
+			// 	},
+			// });
 		}
 	};
 	return (
@@ -60,14 +70,17 @@ const KakaoShareButton = ({
 		// 	</button> */}
 		// 	<RiKakaoTalkFill  className="kakao-share-button" id="kakao-link-btn" ></RiKakaoTalkFill>
 		// </div>
-		<img
-			className="kakao-share-button"
-			id="kakao-link-btn"
-			src="/img/ic_kakao.svg"
+		<div
 			onClick={() => {
 				console.log('clicked');
 			}}
-		></img>
+		>
+			<img
+				className="kakao-share-button"
+				id="kakao-link-btn"
+				src="/img/ic_kakao.svg"
+			></img>
+		</div>
 	);
 };
 export default KakaoShareButton;

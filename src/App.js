@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './style/common.scss';
 import './style/mobile.scss';
 import { BrowserRouter } from 'react-router-dom';
@@ -36,7 +36,7 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
 import ReactNotification, { store } from 'react-notifications-component';
-import 'react-notifications-component/dist/theme.css';
+import './style/notification.css';
 import axios from 'axios';
 
 const Middlewares = [penderMiddleware()];
@@ -50,41 +50,48 @@ const storeredux = createStore(
 
 function App() {
 	const history = useHistory();
-	const handleNotification = (notifications) => {
+
+	const [notifications, setNotifications] = useState(new Set());
+	const handleNotification = (datas) => {
 		console.log('notifications: ', notifications);
-		var unreads = notifications.filter(
-			(notification) => notification.read === 0,
-		);
+		var unreads = datas.filter((notification) => notification.read === 0);
 		console.log('unreads: ', unreads);
-		unreads.map((unread) => {
-			store.addNotification({
-				title: 'U2 알림',
-				message: unread.body,
-				type: 'info',
-				insert: 'top',
-				container: 'bottom-right',
-				animationIn: ['animate__animated', 'animate__fadeIn'],
-				animationOut: ['animate__animated', 'animate__fadeOut'],
-				dismiss: {
-					duration: 0,
-					onScreen: true,
-				},
-				onRemoval: () => {
-					var config = {
-						method: 'put',
-						url:
-							process.env.REACT_APP_U2_DB_HOST +
-							`/Campaign/notification/${unread.notifyIdx}?read=1`,
-						headers: {
-							Authorization: 'Bearer ' + localStorage.getItem('token'),
-							'Content-Type': 'application/json',
-						},
-					};
-					axios(config).then((response) => {
-						console.log('notification put response: ', response);
-					});
-				},
-			});
+		unreads.forEach((unread) => {
+			console.log('unread: ', unread);
+			console.log('notifications: ', notifications);
+			if (!notifications.has(unread.notifyIdx)) {
+				setNotifications(new Set(notifications.add(unread.notifyIdx)));
+				store.addNotification({
+					id: unread.notifyIdx,
+					title: 'U2 알림',
+					message: unread.body,
+					type: 'info',
+					insert: 'top',
+					container: 'bottom-left',
+					animationIn: ['animate__animated', 'animate__fadeIn'],
+					animationOut: ['animate__animated', 'animate__fadeOut'],
+					dismiss: {
+						duration: 0,
+						onScreen: true,
+					},
+					onRemoval: () => {
+						var config = {
+							method: 'put',
+							url:
+								process.env.REACT_APP_U2_DB_HOST +
+								`/Campaign/notification/${unread.notifyIdx}?read=1`,
+							headers: {
+								Authorization: 'Bearer ' + localStorage.getItem('token'),
+								'Content-Type': 'application/json',
+							},
+						};
+						axios(config).then((response) => {
+							console.log('notification put response: ', response);
+							setNotifications(notifications.delete(unread.notifyIdx));
+						});
+					},
+				});
+			}
 		});
 	};
 	useEffect(() => {

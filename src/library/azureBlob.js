@@ -31,10 +31,20 @@ const createBlobInContainer = async (containerClient, file, folder) => {
 	);
 
 	// set mimetype as determined from browser with file upload control
-	const options = { blobHTTPHeaders: { blobContentType: file.type } };
+	const options = {
+		blobHTTPHeaders: {
+			blobContentType: file.type,
+		},
+		onprogress: (progress) => {
+			console.log('progress: ', progress);
+		},
+	};
 
 	// upload file
-	return await blobClient.uploadBrowserData(file, options);
+	const result = await blobClient.uploadBrowserData(file, options);
+	console.log('result: ', result);
+
+	return result;
 	// await blobClient.setMetadata({ UserName: 'lhj' });
 };
 
