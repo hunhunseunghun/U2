@@ -151,7 +151,10 @@ function App() {
 			<MuiPickersUtilsProvider utils={DateFnsUtils}>
 				<Provider store={storeredux}>
 					<div className={'app'} onClick={() => dispatch('@@popup/close')}>
-						<ReactNotification></ReactNotification>
+						<ReactNotification
+							isMobile={true}
+							breakpoint={768}
+						></ReactNotification>
 						<Header handleNotification={handleNotification}></Header>
 						<Route exact path="/" component={Main} />
 						<Route exact path="/login" component={Login} />

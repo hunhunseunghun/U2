@@ -5,7 +5,7 @@ import { PrjRegiContainer } from './ProjectRegiStyled.jsx';
 import logo from '../../Img/logo.svg';
 import headerIcon from '../../Img/Icons/headerIcon.png';
 import testVid from '../../Img/testVid.mp4';
-import testTumb from '../../Img/slider1.jpeg';
+import testTumb from '../../Img/no_image.png';
 import VideoModal from '../../component/Modals/Video/VideoModal';
 import { getSingleFileFromBlob } from '../../library/azureBlob.js';
 const ProjectRegi = () => {
@@ -343,11 +343,15 @@ const ProjectRegi = () => {
 									<p>{irData.desc !== null ? irData.desc : null}</p>
 								</div>
 								<div className="contentBot">
-									{vidCreatorData.videos.map((videodata) => {
+									{irData.videos.map((videodata) => {
 										return (
 											<div className="projectregi_content_item slide_inactive">
 												<img
-													src={getSingleFileFromBlob(videodata.img)}
+													src={
+														videodata.img
+															? getSingleFileFromBlob(videodata.img)
+															: testTumb
+													}
 													alt={videodata.img}
 													onClick={() => {
 														setvideoModalProps({
