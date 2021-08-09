@@ -197,16 +197,18 @@ const ProjectRegi = () => {
 									{competitionData.videos.map((videodata) => {
 										return (
 											<div className="projectregi_content_item slide_inactive">
-												<img
-													src={getSingleFileFromBlob(videodata.img)}
-													alt={videodata.img}
-													onClick={() => {
-														setvideoModalProps({
-															open: true,
-															src: videodata.url,
-														});
-													}}
-												/>
+												<div className="projectregi_content_img_wrap">
+													<img
+														src={getSingleFileFromBlob(videodata.img)}
+														alt={videodata.img}
+														onClick={() => {
+															setvideoModalProps({
+																open: true,
+																src: videodata.url,
+															});
+														}}
+													/>
+												</div>
 											</div>
 										);
 									})}
@@ -245,16 +247,18 @@ const ProjectRegi = () => {
 									{vidEditorData.videos.map((videodata) => {
 										return (
 											<div className="projectregi_content_item slide_inactive">
-												<img
-													src={getSingleFileFromBlob(videodata.img)}
-													alt={videodata.img}
-													onClick={() => {
-														setvideoModalProps({
-															open: true,
-															src: videodata.url,
-														});
-													}}
-												/>
+												<div className="projectregi_content_img_wrap">
+													<img
+														src={getSingleFileFromBlob(videodata.img)}
+														alt={videodata.img}
+														onClick={() => {
+															setvideoModalProps({
+																open: true,
+																src: videodata.url,
+															});
+														}}
+													/>
+												</div>
 											</div>
 										);
 									})}
@@ -299,16 +303,18 @@ const ProjectRegi = () => {
 									{vidCreatorData.videos.map((videodata) => {
 										return (
 											<div className="projectregi_content_item slide_inactive">
-												<img
-													src={getSingleFileFromBlob(videodata.img)}
-													alt={videodata.img}
-													onClick={() => {
-														setvideoModalProps({
-															open: true,
-															src: videodata.url,
-														});
-													}}
-												/>
+												<div className="projectregi_content_img_wrap">
+													<img
+														src={getSingleFileFromBlob(videodata.img)}
+														alt={videodata.img}
+														onClick={() => {
+															setvideoModalProps({
+																open: true,
+																src: videodata.url,
+															});
+														}}
+													/>
+												</div>
 											</div>
 										);
 									})}
@@ -346,20 +352,22 @@ const ProjectRegi = () => {
 									{irData.videos.map((videodata) => {
 										return (
 											<div className="projectregi_content_item slide_inactive">
-												<img
-													src={
-														videodata.img
-															? getSingleFileFromBlob(videodata.img)
-															: testTumb
-													}
-													alt={videodata.img}
-													onClick={() => {
-														setvideoModalProps({
-															open: true,
-															src: videodata.url,
-														});
-													}}
-												/>
+												<div className="projectregi_content_img_wrap">
+													<img
+														src={
+															videodata.img
+																? getSingleFileFromBlob(videodata.img)
+																: testTumb
+														}
+														alt={videodata.img}
+														onClick={() => {
+															setvideoModalProps({
+																open: true,
+																src: videodata.url,
+															});
+														}}
+													/>
+												</div>
 											</div>
 										);
 									})}
