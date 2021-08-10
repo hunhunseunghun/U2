@@ -21,7 +21,7 @@ export const Container = styled.div`
   }
 
   #submit_modal_upLoader {
-    width: 74px;
+    width: 72px;
     height: 24px;
     margin-left: 5px;
     border: unset;
