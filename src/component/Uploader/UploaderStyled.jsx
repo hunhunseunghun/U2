@@ -38,7 +38,7 @@ export const Container = styled.div`
 			font-size: 11px;
 			font-weight: 700;
 			overflow: hidden;
-			text-overflow: ellipsis;
+			text-overflow: ellipsis; //왜안되누...
 		}
 	}
 
