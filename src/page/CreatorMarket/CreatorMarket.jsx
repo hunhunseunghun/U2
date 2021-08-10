@@ -70,13 +70,6 @@ const Main = (props) => {
 	const [applies, setApplies] = useState(null);
 	const [submits, setSubmits] = useState(null);
 	const [wishes, setWishes] = useState(null);
-
-	// console.log(pagedChallenges);
-	// console.log(mobileTypes);
-	let walk;
-	let startX;
-	let scrollValue;
-
 	//----------------------------------
 
 	const handleRequestClick = (data) => {
@@ -132,21 +125,25 @@ const Main = (props) => {
 		setIsLoadingChallenges(true);
 
 		//------------------------badge
-		var config = {
-			method: 'get',
-			url: process.env.REACT_APP_U2_DB_HOST + '/Campaign/challengebadge',
-			headers: {
-				Authorization: 'Bearer ' + localStorage.getItem('token'),
-				'Content-Type': 'application/json',
-			},
-		};
-		axios(config)
-			.then((response) => {
-				setApplies(new Set(response.data.applies));
-				setSubmits(new Set(response.data.submits));
-				setWishes(new Set(response.data.wishes));
-			})
-			.catch((err) => console.log(err));
+		console.log('token: ', localStorage.getItem('token'));
+		if (localStorage.getItem('token')) {
+			var config = {
+				method: 'get',
+				url: process.env.REACT_APP_U2_DB_HOST + '/Campaign/challengebadge',
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+					'Content-Type': 'application/json',
+				},
+			};
+			axios(config)
+				.then((response) => {
+					setApplies(new Set(response.data.applies));
+					setSubmits(new Set(response.data.submits));
+					setWishes(new Set(response.data.wishes));
+				})
+				.catch((err) => console.log(err));
+		}
+
 		//----------------------------badge end
 		axios
 			.get(
