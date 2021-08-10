@@ -37,6 +37,8 @@ export const Container = styled.div`
 		div {
 			font-size: 11px;
 			font-weight: 700;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 	}
 

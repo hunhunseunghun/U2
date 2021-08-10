@@ -41,6 +41,7 @@ const Uploader = ({
 	const fileChangeFunc = async (e) => {
 		let files = [];
 		let realFiles = e.target.files;
+		console.log('real files: ', realFiles);
 		if (!realFiles.length > 0) {
 			setFilePath(null);
 			return;
@@ -62,10 +63,10 @@ const Uploader = ({
 			}
 			files[key] = realFiles[key];
 		}
+		setLoading(true);
 		if (blob) {
 			await delteFileFromBlob(blob);
 		}
-		setLoading(true);
 		const { url, blobname } = await singleUploadAndReturnObj(realFiles, folder);
 		setFile(files);
 		setBlob(blobname);
@@ -88,13 +89,17 @@ const Uploader = ({
 							src={TiDeleteOutline}
 							alt={TiDeleteOutline}
 							className="removeFileBtn"
-							onClick={() => {
+							onClick={async () => {
 								const edit = file.slice();
 								edit.splice(idx, 1);
-								delteFileFromBlob(blob);
+								setLoading(true);
+								await delteFileFromBlob(blob);
+								console.log('edit: ', edit);
 								// delete copyNamed[idx];
+								setBlob(null);
 								setFile(edit);
 								setFilePath(null);
+								setLoading(false);
 								// setNamedFiles(copyNamed);
 							}}
 						></TiDeleteOutline>
@@ -102,27 +107,8 @@ const Uploader = ({
 				);
 			});
 		} else {
-			if (loading) {
-				console.log('loading...');
-				return (
-					<Loader
-						className="uploader_loading_Img"
-						type="Oval"
-						color="#f84235"
-					></Loader>
-				);
-			} else {
-				return null;
-			}
+			return null;
 		}
-
-		// return (
-		// 	<Loader
-		// 		className="uploader_loading_Img"
-		// 		type="Oval"
-		// 		color="#f84235"
-		// 	></Loader>
-		// );
 	};
 
 	useEffect(() => {
@@ -150,8 +136,25 @@ const Uploader = ({
 					onChange={fileChangeFunc}
 					width="100"
 				/>
+				{/* <button
+					onClick={() => {
+						console.log('status: ');
+						console.log('blob: ', blob);
+						console.log('file: ', file);
+						console.log('loading: ', loading);
+					}}
+				>
+					check
+				</button> */}
 			</div>
 			<div className="filePreview">{handlePreview()}</div>
+			{loading && (
+				<Loader
+					className="uploader_loading_Img"
+					type="Oval"
+					color="#f84235"
+				></Loader>
+			)}
 		</Container>
 	);
 };

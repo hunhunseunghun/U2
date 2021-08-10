@@ -374,70 +374,72 @@ const Main = (props) => {
 									}
 									case false: {
 										return moreActive
-											? challenges.slice(0, 3).map((ele, idx) => {
-													// console.log('ele: ', ele);
-													if (tabActive === 0) {
-														return (
-															<ContentElement
-																challenge={ele}
-																key={`${ele.challengeIdx}`}
-																history={props.history}
-																badgeData={{
-																	applies: applies,
-																	submits: submits,
-																	wishes: wishes,
-																}}
-															/>
-														);
-													}
-													if (ele.challengeTargetCode === tabActive) {
-														return (
-															<ContentElement
-																challenge={ele}
-																key={`${ele.challengeIdx}`}
-																history={props.history}
-																badgeData={{
-																	applies: applies,
-																	submits: submits,
-																	wishes: wishes,
-																}}
-															/>
-														);
-													}
-											  })
-											: challenges.map((ele, idx) => {
-													// console.log('ele: ', ele);
-													if (tabActive === 0) {
-														return (
-															<ContentElement
-																challenge={ele}
-																key={`${ele.challengeIdx}`}
-																history={props.history}
-																idx={idx}
-																badgeData={{
-																	applies: applies,
-																	submits: submits,
-																	wishes: wishes,
-																}}
-															/>
-														);
-													}
-													if (ele.challengeTargetCode === tabActive) {
-														return (
-															<ContentElement
-																challenge={ele}
-																key={`${ele.challengeIdx}`}
-																history={props.history}
-																idx={idx}
-																badgeData={{
-																	applies: applies,
-																	submits: submits,
-																	wishes: wishes,
-																}}
-															/>
-														);
-													}
-											  });
+											? challenges &&
+													challenges.slice(0, 3).map((ele, idx) => {
+														// console.log('ele: ', ele);
+														if (tabActive === 0) {
+															return (
+																<ContentElement
+																	challenge={ele}
+																	key={`${ele.challengeIdx}`}
+																	history={props.history}
+																	badgeData={{
+																		applies: applies,
+																		submits: submits,
+																		wishes: wishes,
+																	}}
+																/>
+															);
+														}
+														if (ele.challengeTargetCode === tabActive) {
+															return (
+																<ContentElement
+																	challenge={ele}
+																	key={`${ele.challengeIdx}`}
+																	history={props.history}
+																	badgeData={{
+																		applies: applies,
+																		submits: submits,
+																		wishes: wishes,
+																	}}
+																/>
+															);
+														}
+													})
+											: challenges &&
+													challenges.map((ele, idx) => {
+														// console.log('ele: ', ele);
+														if (tabActive === 0) {
+															return (
+																<ContentElement
+																	challenge={ele}
+																	key={`${ele.challengeIdx}`}
+																	history={props.history}
+																	idx={idx}
+																	badgeData={{
+																		applies: applies,
+																		submits: submits,
+																		wishes: wishes,
+																	}}
+																/>
+															);
+														}
+														if (ele.challengeTargetCode === tabActive) {
+															return (
+																<ContentElement
+																	challenge={ele}
+																	key={`${ele.challengeIdx}`}
+																	history={props.history}
+																	idx={idx}
+																	badgeData={{
+																		applies: applies,
+																		submits: submits,
+																		wishes: wishes,
+																	}}
+																/>
+															);
+														}
+													});
 									}
 									case null: {
 										return 'no data';
