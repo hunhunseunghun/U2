@@ -1,7 +1,8 @@
 import { BlobServiceClient } from '@azure/storage-blob';
 import axios from 'axios';
-const containerName = `dev-qa`;
-let storageAccountName = process.env.REACT_APP_STORAGE_NAME;
+const containerName = process.env.REACT_APP_CONTAINER_NAME;
+const storageAccountName = process.env.REACT_APP_STORAGE_NAME;
+console.log('container name : ', containerName);
 // const sasToken = process.env.REACT_APP_SAS;
 // // Feature flag - disable storage feature to app if not configured
 // export const isStorageConfigured = () => {
@@ -77,6 +78,7 @@ export const delteFileFromBlob = async (name) => {
 };
 export const singleUploadAndReturnObj = async (files, folder) => {
 	var file = files[0];
+
 	Object.defineProperty(file, 'name', {
 		//이름 바꾸기
 		writable: true,
