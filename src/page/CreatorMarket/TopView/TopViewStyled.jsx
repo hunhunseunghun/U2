@@ -38,8 +38,8 @@ export const TopViewContainer = styled.div`
 	}
 	.slide img {
 		border: 0;
-		width: 1014px;
-		height: 492px;
+		width: 100%;
+		height: 100%;
 	}
 
 	.slide img:hover {
