@@ -1,7 +1,10 @@
 import { BlobServiceClient } from '@azure/storage-blob';
 import axios from 'axios';
-const containerName = `dev-qa`;
-let storageAccountName = process.env.REACT_APP_STORAGE_NAME;
+const containerName = process.env.REACT_APP_CONTAINER_NAME;
+// const storageAccountName = process.env.REACT_APP_STORAGE_NAME;
+const storageURL = process.env.REACT_APP_STORAGE_URL;
+console.log('container name : ', containerName);
+console.log('storage URL: ', storageURL);
 // const sasToken = process.env.REACT_APP_SAS;
 // // Feature flag - disable storage feature to app if not configured
 // export const isStorageConfigured = () => {
@@ -49,7 +52,8 @@ const createBlobInContainer = async (containerClient, file, folder) => {
 };
 
 export const getSingleFileFromBlob = (name) => {
-	return `https://${storageAccountName}.blob.core.windows.net/${containerName}/${name}`;
+	return `${storageURL}${containerName}/${name}`;
+	// return `https://${storageAccountName}.blob.core.windows.net/${containerName}/${name}`;
 };
 export const delteFileFromBlob = async (name) => {
 	const config = {
@@ -62,9 +66,7 @@ export const delteFileFromBlob = async (name) => {
 	};
 	const response = await axios(config);
 	const newSAS = response.data.sasUri.split('?')[1];
-	const blobService = new BlobServiceClient(
-		`https://${storageAccountName}.blob.core.windows.net/?${newSAS}`,
-	);
+	const blobService = new BlobServiceClient(`${storageURL}?${newSAS}`);
 	// get Container - full public read access
 	const containerClient = blobService.getContainerClient(containerName);
 	try {
@@ -77,6 +79,7 @@ export const delteFileFromBlob = async (name) => {
 };
 export const singleUploadAndReturnObj = async (files, folder) => {
 	var file = files[0];
+
 	Object.defineProperty(file, 'name', {
 		//이름 바꾸기
 		writable: true,
@@ -93,16 +96,14 @@ export const singleUploadAndReturnObj = async (files, folder) => {
 	};
 	const response = await axios(config);
 	const newSAS = response.data.sasUri.split('?')[1];
-	const blobService = new BlobServiceClient(
-		`https://${storageAccountName}.blob.core.windows.net/?${newSAS}`,
-	);
+	const blobService = new BlobServiceClient(`${storageURL}?${newSAS}`);
 	// get Container - full public read access
 	const containerClient = blobService.getContainerClient(containerName);
 
 	// upload file
 	await createBlobInContainer(containerClient, file, folder);
 	var returnObj = {
-		url: `https://${storageAccountName}.blob.core.windows.net/${containerName}/${folder}/${file.name}`,
+		url: `${storageURL}${containerName}/${folder}/${file.name}`,
 		blobname: `${folder}/${file.name}`,
 	};
 	// get list of blobs in container

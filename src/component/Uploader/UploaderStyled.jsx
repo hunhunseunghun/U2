@@ -20,7 +20,6 @@ export const Container = styled.div`
 		height: 18px;
 	}
 
-<<<<<<< HEAD
 	#submit_modal_upLoader {
 		width: 74px;
 		height: 24px;
@@ -33,20 +32,6 @@ export const Container = styled.div`
 			height: 27px;
 		}
 	}
-=======
-  #submit_modal_upLoader {
-    width: 72px;
-    height: 24px;
-    margin-left: 5px;
-    border: unset;
-  }
-  .uploader_loading_Img {
-    svg {
-      width: 27px;
-      height: 27px;
-    }
-  }
->>>>>>> ad0d3d9d1727fa6cbcf455cf234d06b223975bb5
 
 	.filePreview {
 		position: relative;

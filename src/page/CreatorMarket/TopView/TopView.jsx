@@ -1,24 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TopViewContainer } from './TopViewStyled.jsx';
 import Slider from 'react-slick';
 import dummyImg from '../../../Img/topviewEX.png';
 import noImg from '../../../Img/no_image.png';
 import axios from 'axios';
 import { getSingleFileFromBlob } from '../../../library/azureBlob.js';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper.min.css';
-import 'swiper/components/pagination/pagination.min.css';
-import 'swiper/components/navigation/navigation.min.css';
-import SwiperCore, {
-  Navigation,
-  Pagination,
-  Mousewheel,
-  Keyboard,
-} from 'swiper/core';
-SwiperCore.use([Navigation, Pagination, Mousewheel, Keyboard]);
 const dummy = [dummyImg, dummyImg, dummyImg];
 const TopView = () => {
-  const paginationRef = useRef();
   const [carousells, setCarousells] = useState([]);
   useEffect(() => {
     //카로셀 이미지
