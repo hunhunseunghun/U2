@@ -136,7 +136,7 @@ export const PrjRegiContainer = styled.div`
 
         .projectregi_content_img_wrap {
           overflow: hidden;
-          padding-bottom: 56.25%; /*Using 20% for padding makes the height of the box equal to 20% of its width.*/
+          padding-bottom: 56.25%;
           position: relative;
           height: 0;
 

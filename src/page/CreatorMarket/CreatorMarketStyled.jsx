@@ -16,8 +16,8 @@ export const MainContainer = styled.div`
   .topWrap {
     position: relative;
     width: 100%;
-    overflow: hidden;
-    padding-bottom: 38.8%;
+    /* overflow: hidden;
+    padding-bottom: 38.8%; */
     display: flex;
     box-sizing: border-box;
   }
