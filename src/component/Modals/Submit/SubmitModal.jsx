@@ -321,7 +321,8 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 		}
 		if (
 			!title ||
-			bankAccountErr ||
+			!bankCode ||
+			!bankName ||
 			!address1 ||
 			!address2 ||
 			!address3 ||
@@ -329,6 +330,10 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 			(emailRequired === 2 && !email)
 		) {
 			alert('모든 필수 항목을 입력해야 합니다.');
+			return true;
+		}
+		if (bankAccountErr) {
+			alert('정확한 계좌번호를 입력해주세요');
 			return true;
 		}
 		if (contactRequired === 2 && !mobileAuthorized) {

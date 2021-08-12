@@ -295,7 +295,24 @@ function ProjectInfo({ challenge }) {
 											: '-'}
 									</td>
 									<th>제출서류</th>
-									<td>이력서, 포트폴리오</td>
+									<td>
+										{(() => {
+											let docs = [];
+											let docsSet = new Set(
+												challenge.hire.docs.map((el) => el.docCode),
+											);
+											if (docsSet.has('1')) {
+												docs.push('국문 이력서');
+											}
+											if (docsSet.has('2')) {
+												docs.push('포트폴리오');
+											}
+											if (docsSet.has('3')) {
+												docs.push('영문 이력서');
+											}
+											return docs.join(',');
+										})()}
+									</td>
 								</tr>
 								<tr>
 									<th>모집분야</th>

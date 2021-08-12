@@ -32,7 +32,7 @@ const initialState = {
 	cvEng: null,
 	bankAccountNum: '',
 	banks: [],
-	bankCode: 0,
+	bankCode: null,
 	bankName: '',
 	bankAccountErr: '',
 	BaErrShake: false,
@@ -46,6 +46,8 @@ const initialState = {
 	isCv: false,
 	isCvEng: false,
 	isPf: false,
+
+	isCash: false,
 
 	loading1: false,
 	loading2: false,
@@ -91,6 +93,8 @@ function Modal({ open, challenge, handleModalClose }) {
 			isCv,
 			isCvEng,
 			isPf,
+
+			isCash,
 
 			loading1,
 			loading2,
@@ -232,19 +236,12 @@ function Modal({ open, challenge, handleModalClose }) {
 		}
 	};
 	const checkSubmit = () => {
+		console.log('check submit');
 		if (loading1 || loading2 || loading3) {
 			alert('파일 업로드 중입니다.');
 			return true;
 		}
-		if (
-			!title ||
-			!mobileNum ||
-			!email ||
-			bankAccountErr ||
-			!address1 ||
-			!address2 ||
-			!address3
-		) {
+		if (!title || !mobileNum || !email || !address1 || !address2 || !address3) {
 			alert('모든 필수 항목을 입력해야 합니다.');
 			return true;
 		}
@@ -255,6 +252,20 @@ function Modal({ open, challenge, handleModalClose }) {
 		if (!emailAuthorized) {
 			alert('이메일 인증을 해주세요');
 			return true;
+		}
+		if (isCash) {
+			if (!bankCode || !bankName) {
+				alert('계좌정보를 입력해주세요');
+				return true;
+			}
+			if (bankAccountErr) {
+				alert('정확한 계좌정보를 입력해주세요');
+				return true;
+			}
+			if (!bankAuthorized) {
+				alert('계좌 인증을 해주세요');
+				return true;
+			}
 		}
 	};
 	const [submitClicked, setSubmitClicked] = useState(false);
@@ -372,8 +383,13 @@ function Modal({ open, challenge, handleModalClose }) {
 						if (docsSet.has('3')) {
 							setState((preState) => ({ ...preState, isCvEng: true }));
 						}
+						const rewards = response.data.rewards;
+						const rewardsSet = new Set(rewards.map((el) => el.cat));
+						if (rewardsSet.has(0)) {
+							setState((preState) => ({ ...preState, isCash: true }));
+						}
 					} else if (challenge.challengeTargetCode === 2) {
-						//편집자 일때
+						//편집자 일때는 submit modal로 감
 					}
 				})
 				.catch((err) => {
@@ -745,44 +761,48 @@ function Modal({ open, challenge, handleModalClose }) {
 									</div>
 								</section>
 							)}
-
-							<section className="ele">
-								<div className="menu">* 계좌번호</div>
-								<div className="inputInfo banks_accout">
-									<Banks handleBankCode={handleBankCode} datas={banks} />
-									<input
-										className="banks_accout_input"
-										type="number"
-										value={bankAccountNum}
-										onChange={(e) => {
-											setState((preState) => ({
-												...preState,
-												bankAccountNum: e.target.value,
-												bankAuthorized: false,
-											}));
-										}}
-									></input>
-									{bankAuthorized ? (
-										<button className="auth-btn complete">인증완료</button>
-									) : (
-										<button
-											className="auth_btn_account"
-											onClick={() => {
-												handleValidateBank();
+							{isCash && (
+								<section className="ele">
+									<div className="menu">* 계좌번호</div>
+									<div className="inputInfo banks_accout">
+										<Banks handleBankCode={handleBankCode} datas={banks} />
+										<input
+											className="banks_accout_input"
+											type="number"
+											value={bankAccountNum}
+											onChange={(e) => {
+												setState((preState) => ({
+													...preState,
+													bankAccountNum: e.target.value,
+													bankAuthorized: false,
+												}));
 											}}
-										>
-											계좌인증
-										</button>
-									)}
-									{bankAccountErr && (
-										<div
-											className={'errorMessage' + (BaErrShake ? ' shake' : '')}
-										>
-											{bankAccountErr}
-										</div>
-									)}
-								</div>
-							</section>
+										></input>
+										{bankAuthorized ? (
+											<button className="auth-btn complete">인증완료</button>
+										) : (
+											<button
+												className="auth_btn_account"
+												onClick={() => {
+													handleValidateBank();
+												}}
+											>
+												계좌인증
+											</button>
+										)}
+										{bankAccountErr && (
+											<div
+												className={
+													'errorMessage' + (BaErrShake ? ' shake' : '')
+												}
+											>
+												{bankAccountErr}
+											</div>
+										)}
+									</div>
+								</section>
+							)}
+
 							<section className="ele adress_ele">
 								<div className="menu">* 주소</div>
 								<div className="inputInfo Address">
