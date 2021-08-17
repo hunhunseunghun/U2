@@ -38,7 +38,7 @@ const initialState = {
 	emailAuthInput: '',
 	emailAuthorized: null,
 	bankAccountNum: '',
-	bankCode: 0,
+	bankCode: null,
 	bankName: '',
 	bankAccountErr: '',
 	BaErrShake: false,
@@ -57,6 +57,8 @@ const initialState = {
 	submitClicked: false,
 	loading1: false,
 	loading2: false,
+
+	isCash: false,
 };
 function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 	// console.log(data);
@@ -107,6 +109,8 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 			submitClicked,
 			loading1,
 			loading2,
+
+			isCash,
 		},
 		setState,
 	] = useState({ ...initialState });
@@ -131,7 +135,7 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 			axios(config)
 				.then((response) => {
 					console.log('submit modal useEffect data: ', response.data);
-					if (response.data.missions && response.data.missions.length > 0)
+					if (response.data.missions && response.data.missions.length > 0) {
 						setState((state) => ({
 							...state,
 							videos: response.data.missions[0].videos,
@@ -141,6 +145,12 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 							contactRequired: response.data.missions[0].contactRequired,
 							emailRequired: response.data.missions[0].emailRequired,
 						}));
+					}
+					const rewards = response.data.rewards;
+					const rewardsSet = new Set(rewards.map((el) => el.cat));
+					if (rewardsSet.has(0)) {
+						setState((preState) => ({ ...preState, isCash: true }));
+					}
 				})
 				.catch((err) => {
 					console.log(err);
@@ -321,8 +331,6 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 		}
 		if (
 			!title ||
-			!bankCode ||
-			!bankName ||
 			!address1 ||
 			!address2 ||
 			!address3 ||
@@ -330,10 +338,6 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 			(emailRequired === 2 && !email)
 		) {
 			alert('모든 필수 항목을 입력해야 합니다.');
-			return true;
-		}
-		if (bankAccountErr) {
-			alert('정확한 계좌번호를 입력해주세요');
 			return true;
 		}
 		if (contactRequired === 2 && !mobileAuthorized) {
@@ -374,6 +378,20 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 		if (emailErr) {
 			alert('정확한 이메일을 입력해주세요');
 			return true;
+		}
+		if (isCash) {
+			if (!bankCode || !bankName) {
+				alert('계좌정보를 입력해주세요');
+				return true;
+			}
+			if (bankAccountErr) {
+				alert('정확한 계좌정보를 입력해주세요');
+				return true;
+			}
+			if (!bankAuthorized) {
+				alert('계좌 인증을 해주세요');
+				return true;
+			}
 		}
 	};
 	const handleSubmit = () => {
@@ -1071,45 +1089,50 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 									</div>
 								</div>
 							</section>
-							<section className="ele">
-								<div className="menu">* 계좌번호</div>
-								<div className="inputInfo banks_accout">
-									<Banks handleBankCode={handleBankCode} />
-									<input
-										className="banks_accout_input"
-										type="number"
-										value={bankAccountNum}
-										onChange={(e) => {
-											// setBankAccountNum(e.target.value);
-											// setBankAuthorized(false);
-											setState((preState) => ({
-												...preState,
-												bankAccountNum: e.target.value,
-												bankAuthorized: false,
-											}));
-										}}
-									></input>
-									{bankAuthorized ? (
-										<button className="auth-btn complete">인증완료</button>
-									) : (
-										<button
-											className="auth_btn_account"
-											onClick={() => {
-												handleValidateBank();
+							{isCash && (
+								<section className="ele">
+									<div className="menu">* 계좌번호</div>
+									<div className="inputInfo banks_accout">
+										<Banks handleBankCode={handleBankCode} />
+										<input
+											className="banks_accout_input"
+											type="number"
+											value={bankAccountNum}
+											onChange={(e) => {
+												// setBankAccountNum(e.target.value);
+												// setBankAuthorized(false);
+												setState((preState) => ({
+													...preState,
+													bankAccountNum: e.target.value,
+													bankAuthorized: false,
+												}));
 											}}
-										>
-											계좌인증
-										</button>
-									)}
-									{bankAccountErr && (
-										<div
-											className={'errorMessage' + (BaErrShake ? ' shake' : '')}
-										>
-											{bankAccountErr}
-										</div>
-									)}
-								</div>
-							</section>
+										></input>
+										{bankAuthorized ? (
+											<button className="auth-btn complete">인증완료</button>
+										) : (
+											<button
+												className="auth_btn_account"
+												onClick={() => {
+													handleValidateBank();
+												}}
+											>
+												계좌인증
+											</button>
+										)}
+										{bankAccountErr && (
+											<div
+												className={
+													'errorMessage' + (BaErrShake ? ' shake' : '')
+												}
+											>
+												{bankAccountErr}
+											</div>
+										)}
+									</div>
+								</section>
+							)}
+
 							<section
 								className={
 									'ele' +

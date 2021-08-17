@@ -62,10 +62,16 @@ function ApplymentModal({
 							<section className="submission_modal_ele">
 								<div className="menu">계좌번호</div>
 								<div className="inputInfo">
-									{data.bankName || 'no data'} | {data.bankAccount}
-									<div className="authorized">
-										<kbd>인증완료</kbd>
-									</div>
+									{data.bankName ? (
+										<>
+											{data.bankName} | {data.bankAccount}
+											<div className="authorized">
+												<kbd>인증완료</kbd>
+											</div>
+										</>
+									) : (
+										'-'
+									)}
 								</div>
 							</section>
 							{challengeTargetCode === 4 && (
