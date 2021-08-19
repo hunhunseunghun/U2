@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { RiKakaoTalkFill } from 'react-icons/ri';
 //상위 컴포넌트에서 해야할 설정사항:
 // useEffect(() => {
 //     const script = document.createElement('script');
@@ -52,29 +51,9 @@ const KakaoShareButton = ({
 				// social: social,
 				// buttons: buttons,
 			});
-			// console.log('kakao: ', kakao);
-			// kakao.API.request({
-			// 	url: '/v1/api/talk/profile',
-			// 	success: function (response) {
-			// 		console.log('success response: ', response);
-			// 	},
-			// 	fail: function (error) {
-			// 		console.log(error);
-			// 	},
-			// });
 		}
 	};
 	return (
-		// <div className="kakao-share-button">
-		// 	{/* Kakao share button */}
-		// 	{/* <button id="kakao-link-btn">
-		// 		<img
-		// 			src="https://t1.kakaocdn.net/kakaocorp/kakaocorp/admin/5f9c58c2017800001.png"
-		// 			alt="kakao-share-icon"
-		// 		/>
-		// 	</button> */}
-		// 	<RiKakaoTalkFill  className="kakao-share-button" id="kakao-link-btn" ></RiKakaoTalkFill>
-		// </div>
 		<div
 			onClick={() => {
 				console.log('clicked');

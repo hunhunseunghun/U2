@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
 import { ModalContainer } from './SubmissionModalStyled';
-// ReactModal.setAppElement('#root');
 import { getSingleFileFromBlob } from '../../../library/azureBlob';
 import FeedbackModal from '../FeedBack/feedbackModal';
 
@@ -13,8 +11,6 @@ function SubmissionModal({
 	isAdmin,
 	propsData,
 }) {
-	const userInfo = useSelector((state) => state.userInfo);
-	// console.log('challengeIdx in submission: ', challengeIdx);
 	const [fbProps, setFbProps] = useState({ open: false, data: '' });
 	const [data, setData] = useState({});
 	const handleFeedback = () => [
@@ -41,7 +37,6 @@ function SubmissionModal({
 		};
 		axios(config)
 			.then((response) => {
-				console.log('data in submission: ', response.data);
 				setData(response.data);
 				setFbProps({
 					open: false,
@@ -50,6 +45,54 @@ function SubmissionModal({
 			})
 			.catch((err) => console.log(err));
 	};
+	function handleOkay() {
+		var body = {
+			challengeIdx: propsData.challengeIdx,
+			memberIdx: propsData.memberIdx,
+			checkStatusCode: 1,
+		};
+
+		var config = {
+			method: 'post',
+			url: process.env.REACT_APP_U2_DB_HOST + `/Campaign/challengesubmitcheck`,
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+			data: body,
+		};
+		axios(config)
+			.then((response) => {
+				alert('승인 되었습니다.');
+			})
+			.catch((err) => {
+				alert(err);
+			});
+	}
+
+	function handleReturn() {
+		var body = {
+			challengeIdx: propsData.challengeIdx,
+			memberIdx: propsData.memberIdx,
+			checkStatusCode: -1,
+		};
+		var config = {
+			method: 'post',
+			url: process.env.REACT_APP_U2_DB_HOST + `/Campaign/challengesubmitcheck`,
+			headers: {
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
+				'Content-Type': 'application/json',
+			},
+			data: body,
+		};
+		axios(config)
+			.then((response) => {
+				alert('반려 되었습니다.');
+			})
+			.catch((err) => {
+				alert(err);
+			});
+	}
 	useEffect(() => {
 		if (challengeIdx && !propsData) {
 			var config = {
@@ -63,7 +106,6 @@ function SubmissionModal({
 				},
 			};
 			axios(config).then((response) => {
-				console.log('data in submission: ', response.data);
 				setData(response.data);
 				setFbProps({ ...fbProps, data: response.data.feedback });
 			});
@@ -71,7 +113,6 @@ function SubmissionModal({
 	}, [challengeIdx]);
 	useEffect(() => {
 		if (propsData) {
-			console.log('propsData: ', propsData);
 			var config = {
 				method: 'get',
 				url:
@@ -86,7 +127,6 @@ function SubmissionModal({
 			};
 			axios(config)
 				.then((response) => {
-					console.log('data in submission: ', response.data);
 					setData(response.data);
 					setFbProps({
 						...fbProps,
@@ -264,56 +304,5 @@ function SubmissionModal({
 			</div>
 		</ModalContainer>
 	);
-
-	function handleOkay() {
-		var body = {
-			challengeIdx: propsData.challengeIdx,
-			memberIdx: propsData.memberIdx,
-			checkStatusCode: 1,
-		};
-
-		var config = {
-			method: 'post',
-			url: process.env.REACT_APP_U2_DB_HOST + `/Campaign/challengesubmitcheck`,
-			headers: {
-				Authorization: 'Bearer ' + localStorage.getItem('token'),
-				'Content-Type': 'application/json',
-			},
-			data: body,
-		};
-		axios(config)
-			.then((response) => {
-				alert('승인 되었습니다.');
-				console.log(response.data);
-			})
-			.catch((err) => {
-				alert(err);
-			});
-	}
-
-	function handleReturn() {
-		var body = {
-			challengeIdx: propsData.challengeIdx,
-			memberIdx: propsData.memberIdx,
-			checkStatusCode: -1,
-		};
-		var config = {
-			method: 'post',
-			url: process.env.REACT_APP_U2_DB_HOST + `/Campaign/challengesubmitcheck`,
-			headers: {
-				Authorization: 'Bearer ' + localStorage.getItem('token'),
-				'Content-Type': 'application/json',
-			},
-			data: body,
-		};
-		axios(config)
-			.then((response) => {
-				alert('반려 되었습니다.');
-				console.log(response.data);
-			})
-			.catch((err) => {
-				alert(err);
-			});
-	}
 }
 export default SubmissionModal;

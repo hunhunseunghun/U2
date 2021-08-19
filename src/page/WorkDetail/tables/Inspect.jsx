@@ -41,7 +41,6 @@ function InspectTable({
 				setIsLoading(true);
 			})
 			.catch((err) => {
-				console.log('workdetail error');
 				console.log(err);
 			});
 	};
@@ -67,7 +66,6 @@ function InspectTable({
 				setIsLoading(true);
 			})
 			.catch((err) => {
-				console.log('workdetail error');
 				console.log(err);
 			});
 	};
@@ -91,7 +89,6 @@ function InspectTable({
 		};
 		axios(config)
 			.then((response) => {
-				console.log(response.data);
 				var config = {
 					method: 'get',
 					url:
@@ -115,7 +112,6 @@ function InspectTable({
 						setIsLoading(true);
 					})
 					.catch((err) => {
-						console.log('workdetail error');
 						console.log(err);
 					});
 			})
@@ -135,7 +131,6 @@ function InspectTable({
 				memberIdx: pagedSubjects[indexs[i]].memberIdx,
 			});
 		}
-		console.log('body: ', `body`);
 		var config = {
 			method: 'post',
 			url:
@@ -171,7 +166,6 @@ function InspectTable({
 						setIsLoading(true);
 					})
 					.catch((err) => {
-						console.log('workdetail error');
 						console.log(err);
 					});
 			})
@@ -237,7 +231,6 @@ function InspectTable({
 	}
 
 	useEffect(() => {
-		console.log('challengeTargetCode: ', challengeTargetCode);
 		if (challengeTargetCode === 1 || challengeTargetCode === 3) {
 			//공모전, 영상크리에이터
 			var config = {
@@ -252,11 +245,6 @@ function InspectTable({
 			};
 			axios(config)
 				.then((res) => {
-					console.log(
-						`/Campaign/challengesubmitted/${challengeIdx}?size=${pageSize}&p=${page}`,
-					);
-					console.log('inspect useEffect Data: ', res.data);
-
 					setCount(res.data.total);
 					setPagedSubjects(res.data.entities);
 					setAllCheckBoxes(new Array(res.data.total).fill(false));
@@ -272,7 +260,6 @@ function InspectTable({
 					setIsLoading(true);
 				})
 				.catch((err) => {
-					console.log('workdetail error');
 					console.log(err.response);
 				});
 		} else {
@@ -289,11 +276,6 @@ function InspectTable({
 			};
 			axios(config)
 				.then((res) => {
-					console.log(
-						`/Campaign/challengehireapplied/${challengeIdx}?size=${pageSize}&p=${page}`,
-					);
-					console.log('inspect useEffect Data: ', res.data);
-
 					setCount(res.data.total);
 					setPagedSubjects(res.data.entities);
 					setAllCheckBoxes(new Array(res.data.total).fill(false));
@@ -309,7 +291,6 @@ function InspectTable({
 					setIsLoading(true);
 				})
 				.catch((err) => {
-					console.log('workdetail error');
 					console.log(err.response);
 				});
 		}
@@ -391,7 +372,6 @@ function InspectTable({
 						<th key="challengeTime">지원 일시</th>
 						<th key="ID">ID</th>
 						<th key="name">성명</th>
-						{/* <th key="category">카테고리</th> */}
 						<th key="presentation">제출자료</th>
 						<th key="status">검수 상태</th>
 						<th>프로젝트 검수하기</th>
@@ -436,7 +416,6 @@ function InspectTable({
 											</td>
 											<td>
 												{(() => {
-													console.log('data: ', data);
 													switch (data.checkStatusCode) {
 														case 8: {
 															return '진행중';
@@ -463,7 +442,6 @@ function InspectTable({
 												<td className="inspect_project">
 													<select
 														onChange={(e) => {
-															console.log(e.target.value);
 															let copyArr = pagedSelects.slice();
 															copyArr[index] = Number(e.target.value);
 															setPagedSelects(copyArr);

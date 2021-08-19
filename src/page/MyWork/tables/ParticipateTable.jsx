@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
 import Pagination2 from '../../../component/Pagination/Pagination2';
@@ -11,9 +10,7 @@ import SubmitModal from '../../../component/Modals/Submit/SubmitModal';
 import SubmissionModal from '../../../component/Modals/Submission/SubmissionModal';
 import sortarrowdown from '../../../Img/Icons/sortarrowdown.png';
 import { getSingleFileFromBlob } from '../../../library/azureBlob';
-import { isToday } from '../../../library/timeSetting';
 function ParticipateTable() {
-	const userInfo = useSelector((state) => state.userInfo);
 	const paginationRef = useRef();
 	const history = useHistory();
 	const [quests, setQuests] = useState({
@@ -59,7 +56,6 @@ function ParticipateTable() {
 		setLoading(true);
 		axios(config)
 			.then((response) => {
-				console.log('participateTable response: ', response);
 				var datas = response.data.entities;
 				var formedData = [];
 				if (datas)
@@ -67,8 +63,6 @@ function ParticipateTable() {
 						var myApplication = el.applications[0];
 
 						var myHireApply = el.hireApply;
-						// if (el.challengeTargetCode !== 4) {
-						// if (myApplication || myHireApply.challengeIdx !== 0) {
 						return {
 							img: el.logo,
 							category: (() => {
@@ -228,11 +222,9 @@ function ParticipateTable() {
 	};
 
 	const handleOpenFeedback = (challengeIdx) => {
-		console.log('open feedback: ', challengeIdx);
 		setFeedbackProps({ open: true, data: challengeIdx });
 	};
 	const handleOpenApplyment = (applyment) => {
-		console.log('handle open applyment: ', applyment);
 		setApplymentProps({
 			open: true,
 			challengeIdx: applyment.challengeIdx,
@@ -297,9 +289,6 @@ function ParticipateTable() {
 		}
 	};
 
-	// useEffect(() => {
-	// 	setQuests({ ...quests, data: datas });
-	// }, [datas]);
 	return (
 		<ParticipateTableContainer>
 			<FeedbackModal
@@ -413,7 +402,6 @@ function ParticipateTable() {
 						<tbody>
 							{quests.data
 								? quests.data.map((data) => {
-										// console.log('data: ', data);
 										if (data)
 											return (
 												<tr>

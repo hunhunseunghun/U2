@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation, Link, useHistory } from 'react-router-dom';
 import qs from 'qs';
-import { API_URL, HOST_URL } from '../const/URL';
 import GoogleLogin from 'react-google-login';
 import { useDispatch } from 'react-redux';
 import * as baseActions from '../store/base';
@@ -43,9 +42,6 @@ function Login(props) {
 					googleToken,
 				headers: { Authorization: 'Bearer ' + googleToken },
 			}).then((result) => {
-				console.log(result);
-				console.log();
-
 				ourLogin({
 					email: result.data.email,
 					name: result.data.family_name + result.data.given_name,
@@ -57,7 +53,6 @@ function Login(props) {
 	}, []);
 
 	const ourLogin = (data) => {
-		//console.log(data);
 		axios
 			.post(process.env.REACT_APP_API_URL + '/member/login', {
 				email: data.email,
@@ -66,7 +61,6 @@ function Login(props) {
 				entryTypeCode: data.type,
 			})
 			.then((response) => {
-				console.log(response);
 				dispatch(
 					baseActions.login({
 						email: response.data.email,
@@ -96,8 +90,6 @@ function Login(props) {
 								'get',
 								{ fields: 'name,email' },
 								function (result) {
-									//console.log(result);
-									//console.log('https://graph.facebook.com/'+result.id+'/picture?type=large');
 									ourLogin({
 										email: result.email,
 										name: result.name,

@@ -43,7 +43,7 @@ class FileUploadCommand extends Command {
 					? imagesToUpload
 					: [imagesToUpload];
 				if (imagesToUpload2[0].size > _UPLOAD_FILE_LIMIT) {
-					notification.showWarning('50MB 이상의 파일은 올릴 수 없습니다.');
+					notification.showWarning('50MB 이상의 이미지는 올릴 수 없습니다.');
 					return;
 				}
 				uploadImg(writer, model, imagesToUpload2);
@@ -77,7 +77,6 @@ function uploadImg(writer, model, file) {
 			model.insertContent(image, insertAtSelection);
 		},
 	);
-	console.log(file.name);
 }
 // Handles uploading single file.
 //
@@ -101,7 +100,6 @@ function uploadFile(writer, model, file) {
 			model.insertContent(fileElement, insertAtSelection);
 		},
 	);
-	console.log(file.name);
 }
 
 class Uploader extends Plugin {

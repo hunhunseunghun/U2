@@ -8,9 +8,8 @@ import Banks from '../../banks';
 import { ModalContainer } from './SubmitModalStyled';
 import AddressModal from '../../address/AddressModal';
 import { validateEmail } from '../../../library/validate';
-import { TextFile } from '../../../library/getJson';
 import Uploader from '../../Uploader/Uploader';
-// import 'csshake.min.css'
+// import { TextFile } from '../../../library/getJson';
 const server = process.env.REACT_APP_U2_DB_HOST;
 const initialState = {
 	title: '',
@@ -61,7 +60,6 @@ const initialState = {
 	isCash: false,
 };
 function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
-	// console.log(data);
 	const userInfo = useSelector((state) => state.userInfo);
 	const [
 		{
@@ -120,21 +118,16 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 
 	useEffect(() => {
 		if (challenge) {
-			console.log('challengeTargetCode: ', challengeTargetCode);
-			console.log('challenge in submit modal: ', challenge);
 			var config = {
 				method: 'get',
-				// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmit
 				url: server + `/Campaign/challenge/${challenge.challengeIdx}`,
 				headers: {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 					'Content-Type': 'application/json',
 				},
-				// data: data,
 			};
 			axios(config)
 				.then((response) => {
-					console.log('submit modal useEffect data: ', response.data);
 					if (response.data.missions && response.data.missions.length > 0) {
 						setState((state) => ({
 							...state,
@@ -153,7 +146,7 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 					}
 				})
 				.catch((err) => {
-					console.log(err);
+					alert(err.response.data);
 				});
 		}
 	}, [open]);
@@ -166,11 +159,9 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 				// setToggleMobileAuthInput(true);
 
 				//인증 미구현----------------
-				// setMobileAuthorized(true);
 				setState((preState) => ({ ...preState, mobileAuthorized: true }));
 			} else {
 				handleShake('mobile');
-				// setMobileErr('옳바른 전화번호 형식이 아닙니다.');
 				setState((preState) => ({
 					...preState,
 					mobileErr: '옳바른 전화번호 형식이 아닙니다.',
@@ -178,7 +169,6 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 			}
 		} else {
 			handleShake('mobile');
-			// setMobileErr('전화번호를 입력해주세요.');
 			setState((preState) => ({
 				...preState,
 				mobileErr: '전화번호를 입력해주세요',
@@ -224,9 +214,6 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 	const handleValidateBank = () => {
 		if (bankAccountNum) {
 			const replaced = bankAccountNum.replace(/[^0-9]/gi, '');
-			// setBankAccountNum(replaced);
-			// setBankAuthorized(true);
-			// setBankAccountErr(null);
 			setState((preState) => ({
 				...preState,
 				bankAccountNum: replaced,
@@ -235,14 +222,12 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 			}));
 		} else {
 			if (bankCode) {
-				// setBankAccountErr('계좌번호를 입력해주세요.');
 				setState((preState) => ({
 					...preState,
 					bankAccountErr: '계좌번호를 입력해주세요.',
 				}));
 				handleShake('bank');
 			} else {
-				// setBankAccountErr('은행을 선택해주세요.');
 				setState((preState) => ({
 					...preState,
 					bankAccountErr: '은행을 선택해주세요.',
@@ -263,33 +248,26 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 		}));
 	};
 	const handleNote = (note) => {
-		// setNote(note);
 		setState((preState) => ({ ...preState, note: note }));
 	};
 	const handleShake = (inputType) => {
 		switch (inputType) {
 			case 'email': {
-				// setEmailErrShake(true);
 				setState((preState) => ({ ...preState, emailErrShake: true }));
 				setTimeout(() => {
-					// setEmailErrShake(false);
 					setState((preState) => ({ ...preState, emailErrShake: false }));
 				}, 1000);
 				break;
 			}
 			case 'mobile': {
-				// setMobileErrShake(true);
 				setState((preState) => ({ ...preState, mobileErrShake: true }));
 				setTimeout(() => {
-					// setMobileErrShake(false);
 					setState((preState) => ({ ...preState, mobileErrShake: false }));
 				}, 1000);
 			}
 			case 'bank': {
-				// setBaErrShake(true);
 				setState((preState) => ({ ...preState, BaErrShake: true }));
 				setTimeout(() => {
-					// setBaErrShake(false);
 					setState((preState) => ({ ...preState, BaErrShake: false }));
 				}, 1000);
 			}
@@ -299,19 +277,11 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 		}
 	};
 	const handleSearchAddress = () => {
-		// setOpenAddrModal(true);
 		setState((preState) => ({ ...preState, openAddrModal: true }));
 	};
 	const setAddressData = (data) => {
-		console.log('address data: ', data);
-		// setAddress1(data.zonecode);
 		setState((preState) => ({ ...preState, address1: data.zonecode }));
 
-		// setAddress2(
-		// 	data.address +
-		// 		(data.bname && ' ' + data.bname) +
-		// 		(data.buildingName && ' ' + data.buildingName),
-		// );
 		setState((preState) => ({
 			...preState,
 			address2:
@@ -361,7 +331,6 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 				}
 			}
 		}
-		console.log(shareRequired);
 		if (shareRequired === 2 && videos.length > 0) {
 			let totalArr = new Array().concat(YUarr, TTarr, VMarr);
 			if (!totalArr.length > 0) {
@@ -369,8 +338,6 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 				return true;
 			}
 		}
-		// contactRequired,
-		// 	emailRequired,
 		if (mobileErr) {
 			alert('정확한 휴대전화 번호를 입력해주세요');
 			return true;
@@ -440,7 +407,6 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 			checkStatusCode: 0,
 			dateApplied: new Date(),
 		};
-		console.log('body: ', data);
 		// TextFile(data);
 		var config = {
 			method: 'post',
@@ -454,15 +420,12 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 
 		axios(config)
 			.then((response) => {
-				console.log('response: ');
-				console.log(response.data);
 				if (!alert('제출 완료되었습니다.')) {
 					handleModalClose('submit');
 					clearState();
 				}
 			})
 			.catch((err) => {
-				console.log('err: ', err.response);
 				if (err.response.data.error === 'Already submitted') {
 					alert('이미 제출한 프로젝트 입니다.');
 					clearState();
@@ -484,8 +447,6 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 			memberIdx: userInfo.memberIdx,
 			mobile: mobileNum,
 			email: email,
-			// cv: 'string',
-			// cvEng: 'string',
 			fileRef: videoFile ? videoFile.url : null,
 			bankCode: bankCode,
 			bankAccount: bankAccountNum,
@@ -502,7 +463,6 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 				};
 			}),
 		};
-		console.log('body: ', data);
 		// TextFile(data);
 		var config = {
 			method: 'post',
@@ -516,15 +476,12 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 
 		axios(config)
 			.then((response) => {
-				console.log('response: ');
-				console.log(response.data);
 				if (!alert('제출 완료되었습니다.')) {
 					handleModalClose('submit');
 					clearState();
 				}
 			})
 			.catch((err) => {
-				console.log('err: ', err.response);
 				if (
 					err.response.data.error === 'Already submitted' ||
 					err.response.data.error === 'already applied'
@@ -544,7 +501,6 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 				<AddressModal
 					open={openAddrModal}
 					handleModalClose={() => {
-						// setOpenAddrModal(false);
 						setState((preState) => ({ ...preState, openAddrModal: false }));
 					}}
 					setAddressData={setAddressData}
@@ -702,7 +658,6 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 															URL :
 														</span>
 														<ul className="ul-URLs">
-															{/* show inputs */}
 															{(() => {
 																let urls = [];
 																switch (video.platform) {
@@ -731,7 +686,6 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 																				onClick={() => {
 																					let copyArr = urls.slice();
 																					copyArr.splice(idx, 1);
-																					// setURLS(copyArr);
 																					switch (video.platform) {
 																						case 'YU': {
 																							setState((preState) => ({
@@ -940,7 +894,6 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 												<input
 													placeholder="인증번호를 입력해 주십시오"
 													onChange={(e) => {
-														// setMobileAuthInput(e.target.value);
 														setState((preState) => ({
 															...preState,
 															mobileAuthInput: e.target.value,
@@ -993,7 +946,6 @@ function Modal({ open, challenge, challengeTargetCode, handleModalClose }) {
 											className="emailInput"
 											onChange={(e) => {
 												//email validation check per change
-												// setEmail(e.target.value);
 												setState((preState) => ({
 													...preState,
 													email: e.target.value,

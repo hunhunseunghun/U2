@@ -1,12 +1,6 @@
-// import { divide } from 'lodash';
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { TiDeleteOutline } from 'react-icons/ti'; // 파일삭제 버튼 icon
 import { Container } from './UploaderStyled.jsx';
-// import uploadFileToBlob, {
-// 	isStorageConfigured,
-// 	getFilesFromBlob,
-// } from '../../../library/azureBlob';
 import Loader from 'react-loader-spinner';
 import {
 	delteFileFromBlob,
@@ -36,13 +30,10 @@ const Uploader = ({
 	const [file, setFile] = useState(null);
 
 	//로딩중 구현
-	// const [loading, setLoading] = useState(false);
 	// posterfile upload handle------------------------------
 	const fileChangeFunc = async (e) => {
-		console.log('file change func callled');
 		let files = [];
 		let realFiles = e.target.files;
-		console.log('real files: ', realFiles);
 		if (!realFiles.length > 0) {
 			setFilePath(null);
 			return;
@@ -51,7 +42,6 @@ const Uploader = ({
 			alert('300MB 이상의 파일은 올릴 수 없습니다.');
 			return;
 		}
-		console.log('file: ', realFiles);
 		for (let key in realFiles) {
 			if (!isNaN(Number(key))) {
 				//파일 이름 바꾸기
@@ -74,10 +64,6 @@ const Uploader = ({
 		setBlob(blobname);
 		setFilePath(blobname);
 		setLoading(false);
-		// if (document.getElementById('upLoader').value) {
-		// } else {
-		// 	setFilePath(null);
-		// }
 	};
 
 	//posterfile preview handle
@@ -97,13 +83,10 @@ const Uploader = ({
 								setLoading(true);
 								await delteFileFromBlob(blob);
 								document.getElementById('submit_modal_upLoader').value = '';
-								console.log('edit: ', edit);
-								// delete copyNamed[idx];
 								setBlob(null);
 								setFile(edit);
 								setFilePath(null);
 								setLoading(false);
-								// setNamedFiles(copyNamed);
 							}}
 						></TiDeleteOutline>
 					</div>
@@ -127,7 +110,6 @@ const Uploader = ({
 					type="text"
 					className="filePath"
 					placeholder={placeholder ? placeholder : '파일을 선택하세요'}
-					// value={file}
 					readOnly
 				/>
 				<input
@@ -135,20 +117,9 @@ const Uploader = ({
 					id="submit_modal_upLoader"
 					className="upLoader"
 					accept={accept}
-					// multiple={multiple}
 					onChange={fileChangeFunc}
 					width="100"
 				/>
-				{/* <button
-					onClick={() => {
-						console.log('status: ');
-						console.log('blob: ', blob);
-						console.log('file: ', file);
-						console.log('loading: ', loading);
-					}}
-				>
-					check
-				</button> */}
 			</div>
 			<div className="filePreview">{handlePreview()}</div>
 			{loading && (

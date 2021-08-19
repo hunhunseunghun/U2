@@ -16,7 +16,7 @@ import axios from 'axios';
 import former from './RecruitmentAreasModal/recruitmentFormer.js';
 import { TiDeleteOutline } from 'react-icons/ti';
 import Uploader from '../../../component/Uploader/Uploader.jsx';
-import { TextFile } from '../../../library/getJson.js';
+// import { TextFile } from '../../../library/getJson.js';
 const IRRegi = () => {
 	const myStorage = window.localStorage;
 	let history = useHistory();
@@ -90,7 +90,7 @@ const IRRegi = () => {
 	const [mobileExposure, setMobileExposure] = useState(true);
 	//handle date ----------------------------------------------
 	const [startDate, setStartDate] = useState(new Date());
-	const [finishDate, setFinishDate] = useState(new Date());
+	const [finishDate, setFinishDate] = useState(null);
 	const [noticeDate, setNoticeDate] = useState(new Date());
 	//온라인 오프라인 미팅 state 값
 	const [onMeet, setOnMeet] = useState(null);
@@ -755,7 +755,7 @@ const IRRegi = () => {
 										format="yyyy/MM/dd hh:mm a"
 										disablePast={true}
 										minDate={startDate}
-										minDateMessage={false}
+										minDateMessage={'현 시각 이후부터 가능합니다'}
 										strictCompareDates={true}
 									/>
 								</ThemeProvider>

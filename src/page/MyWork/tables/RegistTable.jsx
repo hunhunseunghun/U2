@@ -12,22 +12,14 @@ import { isToday } from '../../../library/timeSetting';
 function RegistTable({ setNewAccept }) {
 	const history = useHistory();
 	const paginationRef = useRef();
-	// let [quests, setQuests] = useState({
-	//   data: datas,
-	//   pageSize: 3,
-	//   currentPage: 1,
-	// });
 	let [quests, setQuests] = useState({
 		data: null,
 		pageSize: 6,
 		currentPage: 1,
 	});
-	// console.log('datas: ', datas);
 	const { data, pageSize, currentPage } = quests;
 	const pagedQuests = paginate(data, currentPage, pageSize);
-	// const { length: count } = quests.data;
 	const [count, setCount] = useState(0);
-	// console.log('datas: ', datas);
 
 	let handlePageChange = (page) => {
 		setQuests({ ...quests, currentPage: page });
@@ -43,8 +35,6 @@ function RegistTable({ setNewAccept }) {
 		};
 		axios(config)
 			.then((response) => {
-				console.log('레지스트 테이블 response:');
-				console.log(response.data);
 				setQuests({
 					...quests,
 					data: response.data.entities,
@@ -52,23 +42,8 @@ function RegistTable({ setNewAccept }) {
 				setCount(response.data.total);
 			})
 			.catch((err) => {
-				console.log('response error:');
 				console.log(err);
 			});
-		// axios(config)
-		//   .then(response => {
-		//     console.log('레지스트테이블 response:');
-		//     console.log(response.data);
-		//     setQuests({
-		//       ...quests,
-		//       data: response.data.entities,
-		//     });
-		//     setCount(response.data.total);
-		//   })
-		//   .catch(err => {
-		//     console.log('response error:');
-		//     console.log(err);
-		//   });
 	};
 
 	var config = {
@@ -85,8 +60,6 @@ function RegistTable({ setNewAccept }) {
 	useEffect(() => {
 		axios(config)
 			.then((response) => {
-				console.log('레지스트 테이블 response:');
-				console.log(response.data);
 				setQuests({
 					...quests,
 					data: response.data.entities,
@@ -95,20 +68,9 @@ function RegistTable({ setNewAccept }) {
 				paginationRef.current.refreshFirstPage();
 			})
 			.catch((err) => {
-				console.log('response error:');
 				console.log(err);
 			});
-
-		console.log('퀘스트', quests);
-		console.log('카운트', count);
 	}, []);
-
-	// useEffect(() => {
-	//   console.log('datas:');
-	//   console.log(datas);
-	//   setQuests({ ...quests, data: datas });
-	// }, [datas]);
-
 	return (
 		<RegistTableContainer>
 			<section className="prjregi_btn_area">
@@ -218,14 +180,7 @@ function RegistTable({ setNewAccept }) {
 														},
 													}}
 												>
-													{/* {data.contriNum} */}
 													{data.challengerCount}
-													{/* {data.challengerLast.split('-')[0] !== '0001' &&
-														isToday(data.challengerLast.split('T')[0]) && (
-															<span className="newAlert table_newalert">
-																new
-															</span>
-														)} */}
 													{(() => {
 														if (
 															data.challengerLast.split('-')[0] !== '0001' &&
@@ -253,7 +208,6 @@ function RegistTable({ setNewAccept }) {
 														},
 													}}
 												>
-													{/* {data.challengerCompleteCount} */}
 													{(() => {
 														if (
 															data.challengeTargetCode === 4 ||
@@ -264,15 +218,7 @@ function RegistTable({ setNewAccept }) {
 															return data.challengerCompleteCount;
 														}
 													})()}
-													{/* {data.challengerCompleteLast.split('-')[0] !==
-														'0001' &&
-														isToday(
-															data.challengerCompleteLast.split('T')[0],
-														) && (
-															<span className="newAlert table_newalert">
-																new
-															</span>
-														)} */}
+
 													{(() => {
 														if (
 															data.challengerCompleteLast.split('-')[0] !==
@@ -287,7 +233,6 @@ function RegistTable({ setNewAccept }) {
 															);
 														}
 													})()}
-													{/* <span className="newAlert table_newalert">new</span> */}
 												</Link>
 											</td>
 											<td>
@@ -295,9 +240,7 @@ function RegistTable({ setNewAccept }) {
 													'YYYY-MM-DD',
 												)} ${moment(data.missions[0].dateFin).format('hh:mm')}`}
 											</td>
-											{/* <td>{data.missions[0].dateFin}</td> */}
 										</tr>
-										{/* <hr className="row-line"></hr> */}
 									</>
 								);
 						  })

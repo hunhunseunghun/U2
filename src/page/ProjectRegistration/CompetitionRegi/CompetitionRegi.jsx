@@ -1,27 +1,18 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
-// import PosterUploader from './PosterUploader/PosterUploader.jsx';
-// import FileUploader from './FileUploader/FileUploader.jsx';
 import Uploader from '../../../component/Uploader/Uploader';
 import { RegiContainer } from './CompetitionRegiStyled.jsx';
-// import DropDown from './DropDown/DropDown.jsx';
 import DropDown from '../../../component/OwnerDropDown/DropDown';
 import headerIcon from '../../../Img/Icons/headerIcon.png';
 import downArrowIcon from '../../../Img/Icons/sortarrowdown.png';
-// import QuillTextEditor from './QuillTextEditor/QuillTextEditor.jsx';
-// import Summernote from '../../../component/Summernote/summernote.jsx';
-// import { TiDeleteOutline } from 'react-icons/ti'; // 파일삭제 버튼 icon
 import { DateTimePicker } from '@material-ui/pickers';
 import { createMuiTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import { validateEmail } from '../../../library/validate.js';
 import axios from 'axios';
-// import requestBodyGenerator from '../../../library/requestBodyGenerator.js';
 import requestBodyGenerator from '../../../library/requestBodyGenerator';
 import Ckeditor from '../../../component/Ckeditor5/Ckeditor5.jsx';
-// import writeJsonFile from 'write-json-file';
 
 const CompetitionRegi = () => {
 	let history = useHistory();
@@ -34,14 +25,11 @@ const CompetitionRegi = () => {
 		}
 	}
 	// posterfile upload handle---------------------------------
-	// const [posterFile, setPosterFile] = useState([]); //포스터 파일, fileList 객체 -> 배열로 변환 후 -> posterfile에 할당
 	const [posterFilePath, setPosterFilePath] = useState(null); //포스터 파일 업로드 파일패스 , placholder 값
-	// const [etcFile, setEtcFile] = useState(null);
 	const [etcFilePath, setEtcFilePath] = useState(null);
 
 	const [loading1, setLoading1] = useState(false);
 	const [loading2, setLoading2] = useState(false);
-	//handle date ----------------------------------------------
 	//handle editor ---------------------------------------------
 	const [title, setTitle] = useState('');
 	const [organizer, setOrganizer] = useState('');
@@ -67,7 +55,7 @@ const CompetitionRegi = () => {
 
 	//접수기간
 	const [startDate, setStartDate] = useState(new Date());
-	const [finishDate, setFinishDate] = useState(new Date());
+	const [finishDate, setFinishDate] = useState(null);
 	//공지 시작일
 	const [noticeStart, setNoticeStart] = useState(new Date());
 	//시상종류
@@ -84,11 +72,8 @@ const CompetitionRegi = () => {
 	const [CkText, setCkText] = useState(
 		`<p>1. 제목</p><p>2. 응모 자격</p><p>3. 응모 주제</p><p>4. 시상 내역</p><p>5. 응모 일정</p><p>6. 제출 방법</p><p>7. 접수 방법</p><p>8. 심사 방법</p><p>&nbsp;</p><p>&nbsp;</p><p># 유의 사항</p><p>-</p><p># 문의 사항</p><p>-</p><p>&nbsp;</p>`,
 	);
-	//summernote
-	// const viewRef = useRef(null);
 	//댓글 기능
 	const [isComment, setIsComment] = useState(true);
-
 	//담당자
 	const [admin, setAdmin] = useState('');
 	const [adminExposure, setAdminExposure] = useState(true);
@@ -125,7 +110,6 @@ const CompetitionRegi = () => {
 	};
 
 	const handleCkeditorValue = (event, editor) => {
-		// console.log(text);
 		const data = editor.getData();
 		setCkText(data);
 	};
@@ -154,7 +138,6 @@ const CompetitionRegi = () => {
 		setCompetition([...competition, newForm]);
 	};
 	const checkRequiredField = () => {
-		// if(competition && title && (isOnline || isVideoProduction) && (isEmail || isMobile) && )
 		if (loading1 || loading2) {
 			return alert('파일 업로드 중입니다');
 		}
@@ -169,8 +152,6 @@ const CompetitionRegi = () => {
 		}
 		if (!(isEmail || isMobile))
 			return alert('제출자 개인정보 수집을 선택해주십시오');
-		// if (!(startDate > new Date()))
-		// 	return alert('정확한 접수기간을 입력해주십시오');
 		if (!(startDate < finishDate))
 			return alert('접수 종료 기간을 입력해주십시오');
 		if (
@@ -199,7 +180,6 @@ const CompetitionRegi = () => {
 
 		if (checkRequiredField() !== true) return;
 		setSubmitClicked(true);
-		console.log('userInfo: ', userInfo);
 		var rewards = [];
 		contest && rewards.push({ cat: 1, rewarddesc: '현상공모' });
 		overseas && rewards.push({ cat: 2, rewarddesc: '해외탐방' });
@@ -227,7 +207,6 @@ const CompetitionRegi = () => {
 				companyA: organizer,
 				companyB: sponsor,
 				url: webpageURL,
-				// mainImage: posterFilePath ? posterFilePath : null,
 				logo: posterFilePath ? posterFilePath : null,
 				fileRef: etcFilePath ? etcFilePath : null,
 				shareRequired: isOnline ? (isSnsRequired ? 2 : 1) : 0,
@@ -240,7 +219,6 @@ const CompetitionRegi = () => {
 				datePub: noticeStart,
 				rewards: rewards,
 				videos: videos,
-				// challengeDesc: viewRef.current.getAttribute('content_data'),
 				challengeDesc: CkText,
 				commentAllowed: isComment,
 				charge: admin,
@@ -263,17 +241,10 @@ const CompetitionRegi = () => {
 		};
 
 		// TextFile();
-		console.log('body: ', body);
-		console.log(etcFilePath);
-		console.log(posterFilePath);
 		let isConfirmed = window.confirm('등록하시겠습니까?');
 		if (isConfirmed) {
 			axios(config)
 				.then(async (response) => {
-					console.log(response.data);
-					// if(isStorageConfigured()){
-					// 	// await uploadFileToBlob(etcFile)
-					// }
 					alert('등록이 완료되었습니다.');
 					setSubmitClicked(false);
 					history.push('/creatormarket');
@@ -289,21 +260,7 @@ const CompetitionRegi = () => {
 		if (!userInfo.email) {
 			history.push('/creatormarket');
 		}
-		//summernote config---------------------------
-		// const script5 = document.createElement('script');
-		// script5.innerHTML = `$(document).ready(function () {
-		// $('#summernote').summernote()
-		// $('#summernote').on('summernote.change', function(we, contents, $editable) {
-		// 	const view = document.getElementById('view')
-		// 	view.setAttribute('content_data', contents)
-		//   });
-		// });`;
-		// script5.async = true;
-		// document.body.appendChild(script5);
-		//summernote config--------------------------- end
-
 		//competition data -----------------------------
-		console.log(userInfo);
 		var config = {
 			method: 'get',
 			url:
@@ -316,10 +273,7 @@ const CompetitionRegi = () => {
 		};
 		axios(config)
 			.then((response) => {
-				// console.log('challenge owner');
-
 				var data = response.data;
-				console.log('profile data: ', data);
 				var newForm = data.map((el) => {
 					return {
 						form: el.ownerCat ? '비즈프로필' : '개인',
@@ -788,7 +742,7 @@ const CompetitionRegi = () => {
 										format="yyyy/MM/dd hh:mm a"
 										disablePast={true}
 										minDate={startDate}
-										minDateMessage={false}
+										minDateMessage={'현 시각 이후부터 가능합니다'}
 										strictCompareDates={true}
 									/>
 								</ThemeProvider>
@@ -813,7 +767,6 @@ const CompetitionRegi = () => {
 										disablePast={true}
 										minDate={new Date()}
 										minDateMessage={false}
-										// minDateMessage="현 시각 이후부터 가능합니다"
 										strictCompareDates={true}
 									/>
 								</ThemeProvider>
@@ -825,7 +778,6 @@ const CompetitionRegi = () => {
 						<div className="inputInfo reward_type_form">
 							<div className="reward_type_section">
 								<div className="reward_type">
-									{/* <div className="reward_type_title">현상공모:</div> */}
 									<div className="reward_type_items">
 										<div className="reward_type_item_wrap">
 											<input

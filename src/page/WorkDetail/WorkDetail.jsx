@@ -28,9 +28,6 @@ function WorkDetail(props) {
 	let [currentTab, setCurrentTab] = useState(setTab); //props에서 현재 탭 가져와 설정
 	let [submission, setSubmission] = useState({ open: false });
 	let [applyment, setApplyment] = useState({ open: false });
-	// const [isLoading, setIsLoading] = useState(false);
-
-	// console.log(applyPeriod);
 	//image section data
 	useEffect(() => {
 		axios
@@ -39,14 +36,12 @@ function WorkDetail(props) {
 					`/Campaign/challenge/${props.location.state.projectId}`, //sample data, should be challengeIdx.
 			)
 			.then((response) => {
-				console.log('workdetail useEffect data: ', response.data);
 				let data = response.data;
 				let challengeTarget = '';
 				let contactRequired = '';
 				let missionRequired = [];
 				let priceContent = [];
 
-				// setChallengeTargetCode(data.challengeTargetCode);
 				if (
 					data.rewards &&
 					data.rewards.length > 0 &&
@@ -131,8 +126,6 @@ function WorkDetail(props) {
 					}
 					setMeeting(contactRequired);
 				} else {
-					console.log('data.hire.fields: ', data.hire.fields);
-
 					setFields(data.hire.fields);
 					setApplyPeriod(
 						moment(data.hire.dateBegin).format('YYYY-MM-DD') +
@@ -164,7 +157,6 @@ function WorkDetail(props) {
 		setCurrentTab(tab);
 	};
 	let handlePresentationClick = (data) => {
-		console.log('handlePresentationClick data: ', data);
 		if (
 			props.location.state.challengeTargetCode === 4 ||
 			props.location.state.challengeTargetCode === 2

@@ -22,10 +22,13 @@ function ApplymentModal({
 					'Content-Type': 'application/json',
 				},
 			};
-			axios(config).then((response) => {
-				console.log('data in applyment: ', response);
-				setData(response.data);
-			});
+			axios(config)
+				.then((response) => {
+					setData(response.data);
+				})
+				.catch((err) => {
+					alert(err.response.data);
+				});
 		}
 	}, [open]);
 

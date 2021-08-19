@@ -12,7 +12,6 @@ export default function (params, type) {
 				chargeeMailShown: params.chargeeMailShown ? 1 : 0,
 				fileRef: params.fileRef,
 				logo: params.logo,
-				// mainImage: 'test',
 				memberIdx: params.memberIdx,
 				missions: [
 					// 템플릿
@@ -45,12 +44,8 @@ export default function (params, type) {
 				ownerName: params.ownerName,
 				ownerCat: params.ownerCat,
 				company: params.company,
-				// companyA: params.organizer,
-				// companyB: params.sponsor,
 				url: params.url,
 				meetCode: params.meetCode,
-				// mainImage:
-				//   params.posterFile.length > 0 ? params.posterFile[0].name : null,
 				fileRef: params.etcFile,
 				shareRequired: params.isOnline ? (params.isSnsRequired ? 2 : 1) : 0,
 				filmRequired: params.isVideoProduction,
@@ -64,7 +59,6 @@ export default function (params, type) {
 						cat: el.cat,
 						qty: el.qty ? el.qty : 0,
 						pts: el.pts ? Number(el.pts) : 0,
-						// pts: 2000,
 						currency: el.currency ? el.currency : null,
 						rewarddesc: el.rewarddesc ? el.rewarddesc : null,
 						datePayment: el.datePayment,

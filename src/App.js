@@ -53,12 +53,8 @@ function App() {
 
 	const [notifications, setNotifications] = useState(new Set());
 	const handleNotification = (datas) => {
-		console.log('notifications: ', notifications);
 		var unreads = datas.filter((notification) => notification.read === 0);
-		console.log('unreads: ', unreads);
 		unreads.forEach((unread) => {
-			console.log('unread: ', unread);
-			console.log('notifications: ', notifications);
 			if (!notifications.has(unread.notifyIdx)) {
 				setNotifications(new Set(notifications.add(unread.notifyIdx)));
 				store.addNotification({
@@ -86,7 +82,6 @@ function App() {
 							},
 						};
 						axios(config).then((response) => {
-							console.log('notification put response: ', response);
 							let copySet = new Set(notifications);
 							copySet.delete(unread.notifyIdx);
 							setNotifications(copySet);

@@ -9,7 +9,7 @@ import AddressModal from '../../address/AddressModal';
 import Banks from '../../banks';
 import { validateEmail } from '../../../library/validate';
 import Uploader from '../../Uploader/Uploader';
-import { TextFile } from '../../../library/getJson';
+// import { TextFile } from '../../../library/getJson';
 const initialState = {
 	title: '',
 	mobileNum: '',
@@ -188,7 +188,6 @@ function Modal({ open, challenge, handleModalClose }) {
 		setState((preState) => ({ ...preState, openAddrModal: true }));
 	};
 	const setAddressData = (data) => {
-		console.log('address data: ', data);
 		setState((preState) => ({ ...preState, address1: data.zonecode }));
 
 		setState((preState) => ({
@@ -236,7 +235,6 @@ function Modal({ open, challenge, handleModalClose }) {
 		}
 	};
 	const checkSubmit = () => {
-		console.log('check submit');
 		if (loading1 || loading2 || loading3) {
 			alert('파일 업로드 중입니다.');
 			return true;
@@ -300,7 +298,6 @@ function Modal({ open, challenge, handleModalClose }) {
 			}),
 		};
 		// TextFile(data);
-		console.log('request body: ', data);
 		var config = {
 			method: 'post',
 			url: server + '/Campaign/challengehireapply',
@@ -312,8 +309,6 @@ function Modal({ open, challenge, handleModalClose }) {
 		};
 		axios(config)
 			.then((response) => {
-				console.log('response: ');
-				console.log(response.data);
 				if (!alert('제출 완료되었습니다.')) {
 					clearState();
 					handleModalClose('apply');
@@ -321,7 +316,6 @@ function Modal({ open, challenge, handleModalClose }) {
 				}
 			})
 			.catch((err) => {
-				console.log('err: ', err.response);
 				if (
 					err.response.data.error === 'Already submitted' ||
 					err.response.data.error === 'already applied'
@@ -342,13 +336,10 @@ function Modal({ open, challenge, handleModalClose }) {
 	useEffect(() => {
 		var config = {
 			method: 'get',
-			// https://u2-rest-dev.azurewebsites.net/api/Campaign/challengesubmit
 			url: server + '/common/bankcode',
 			headers: {
-				// Authorization: 'Bearer ' + localStorage.getItem('token'),
 				'Content-Type': 'application/json',
 			},
-			// data: data,
 		};
 		axios(config).then((response) => {
 			const banks = response.data;
@@ -369,7 +360,6 @@ function Modal({ open, challenge, handleModalClose }) {
 			};
 			axios(config)
 				.then((response) => {
-					console.log('apply modal useEffect response: ', response);
 					if (challenge.challengeTargetCode === 4) {
 						//강사채용일때
 						const docs = response.data.hire.docs;
@@ -393,7 +383,7 @@ function Modal({ open, challenge, handleModalClose }) {
 					}
 				})
 				.catch((err) => {
-					console.log(err);
+					alert(err.response.data);
 				});
 		}
 	}, [open]);
@@ -880,7 +870,6 @@ function Modal({ open, challenge, handleModalClose }) {
 							<button
 								className="submit_btn"
 								onClick={() => {
-									console.log('제출');
 									handleSubmit();
 								}}
 							>

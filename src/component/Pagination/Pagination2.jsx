@@ -1,9 +1,4 @@
-import React, {
-	useEffect,
-	useState,
-	forwardRef,
-	useImperativeHandle,
-} from 'react';
+import React, { forwardRef, useImperativeHandle } from 'react';
 import { usePagination } from '@material-ui/lab/Pagination';
 import { makeStyles } from '@material-ui/core/styles';
 import _ from 'lodash';
@@ -21,9 +16,7 @@ const Pagination2 = forwardRef(
 	({ itemsCount, pageSize, handlePageChange }, ref) => {
 		const classes = useStyles();
 		const pageCount = Math.ceil(itemsCount / pageSize); // 몇 페이지가 필요한지 계산
-		// console.log('pagination2 caleld');
 		let firstPage = {};
-		// const pages = _.range(1, pageCount + 1);
 		let { items } = usePagination({
 			count: pageCount,
 			showFirstButton: true,

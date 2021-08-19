@@ -20,24 +20,3 @@ export function validateEmail(input) {
 	}
 	return result;
 }
-
-// export function validateBank(input) {
-// 	let result = {
-// 		isValid: true,
-// 		error: '',
-// 	};
-
-// 	if (!input) {
-// 		result.isValid = false;
-// 		result.error = '계좌번호를 입력해주세요.';
-// 	}
-
-// 	if (typeof input !== 'undefined') {
-// 		var pattern = new RegExp('^(d{1,})(-(d{1,})){1,}');
-// 		if (!pattern.test(input)) {
-// 			result.isValid = false;
-// 			result.error = '정확한 계좌번호를 입력해주세요.';
-// 		}
-// 	}
-// 	return result;
-// }

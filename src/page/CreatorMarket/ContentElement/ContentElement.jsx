@@ -2,19 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { FiCheck, FiX } from 'react-icons/fi';
 import { BsStarFill } from 'react-icons/bs';
 import { EleContainer } from './ContentElementStyled.jsx';
-import blankImg from '../../../Img/no_image.png';
 import { calcRemainDays } from '../../../library/timeSetting.js';
 import { getSingleFileFromBlob } from '../../../library/azureBlob.js';
 import { useSelector } from 'react-redux';
-import { isFunction } from 'lodash';
 const ContentElement = (props) => {
 	const userInfo = useSelector((state) => state.userInfo);
-	const [myRegistration, setMyRegistration] = useState(false);
-	const [mySubmit, setMySubmit] = useState(false);
 	const challenge = props.challenge;
 	const [src, setSrc] = useState('');
-	// console.log('challenge inside contentelement: ', challenge);
-	// console.log('props: ', props);
 	useEffect(() => {
 		if (challenge.logo) {
 			setSrc(getSingleFileFromBlob(challenge.logo));
@@ -48,12 +42,6 @@ const ContentElement = (props) => {
 					<img src={src} alt={src} className="challenge_img" />
 				)}
 
-				{/* {tItem.bannerImage === null && (
-          <div className={'no_img'}>
-            <img src={'/img/no_image.png'} />
-            <span className={'not_contents'}>Image not found</span>
-          </div>
-        )} */}
 				<div className="challenge_badge_area">
 					<section className="challenge_badge_left">
 						{props.badgeData.applies &&
@@ -78,8 +66,6 @@ const ContentElement = (props) => {
 									<BsStarFill />
 								</div>
 							)}
-
-						{/* <img src="/img/goldstaricon.png" alt="challengeuser" /> */}
 					</section>{' '}
 				</div>
 			</div>
@@ -92,20 +78,11 @@ const ContentElement = (props) => {
 			<div className="challenge_bottom">
 				<div className="challenge_progress_area">
 					<div className="challenge_progress_text">
-						{/* <button className="paticipantBtn">+</button> */}
 						<div>챌린지 참여자</div> <div>{`${challenge.challengerCount}`}</div>
 					</div>
-					{/* 
-					<LinearProgress
-						className="challenge_progressBar"
-						variant="determinate"
-						color="secondary"
-						value={challenge.challengerCount}
-					/> */}
 				</div>
 				<section className="challenge_info_top">
 					<div className="meetArea">
-						{/* <input type="checkbox" name="chk_info" value="HTML" /> */}
 						<div className="meet_onoff">
 							{challenge.meetCode === 0 ? <FiX /> : <FiCheck />}
 						</div>
@@ -113,9 +90,6 @@ const ContentElement = (props) => {
 					</div>
 					<div className="budgetArea">
 						<div className="budget">
-							{/* {challenge.rewards && challenge.rewards.length > 0
-								? challenge.rewards[0].cat
-								: '--'} */}
 							{(() => {
 								if (challenge.rewards && challenge.rewards.length > 0) {
 									if (challenge.rewards[0].cat === 0) {
@@ -153,8 +127,6 @@ const ContentElement = (props) => {
 				</section>
 				<section className="challenge_info_top_mobile">
 					<div className="meetArea">
-						{/* <input type="checkbox" name="chk_info" value="HTML" /> */}
-
 						<div className="meetText">OFF 미팅</div>
 						<div className="meet_onoff">
 							{challenge.meetCode === 0 ? <FiX /> : <FiCheck />}

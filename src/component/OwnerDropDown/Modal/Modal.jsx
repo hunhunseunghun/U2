@@ -48,7 +48,6 @@ const Modal = ({
 		return true;
 	};
 	const handleSubmit = () => {
-		console.log(userInfo);
 		if (checkSubmit() !== true) return;
 		const data = requestBodyGenerator(
 			{
@@ -75,7 +74,6 @@ const Modal = ({
 		};
 		axios(config)
 			.then((response) => {
-				console.log(response.data);
 				handleNewData(response.data);
 				handleCloseModal();
 			})
@@ -144,16 +142,6 @@ const Modal = ({
 							<div className="modal_menu">대표 로고 이미지</div>
 							<div className="modal_inputInfo">
 								<div className="competitionName">
-									{/* <input
-										type="file"
-										accept="image/*"
-										className="competitionName"
-										onChange={(e) => {
-											// console.log(e.target.value);
-											// console.log(e.target.files[0]);
-											setLogo(e.target.files[0]);
-										}}
-									/> */}
 									<Uploader
 										setFilePath={setLogo}
 										multiple={false}
@@ -208,7 +196,6 @@ const Modal = ({
 									/>
 									<select
 										onChange={(e) => {
-											console.log('snsType: ', e.target.value);
 											setSnsType(e.target.value);
 										}}
 									>

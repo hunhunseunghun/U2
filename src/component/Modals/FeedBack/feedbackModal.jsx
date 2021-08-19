@@ -31,7 +31,6 @@ function FeedbackModal({
 			};
 			axios(config)
 				.then((response) => {
-					console.log('feedback useEffect data: ', response.data);
 					setInput(response.data.comment);
 				})
 				.catch((err) => {
@@ -41,19 +40,12 @@ function FeedbackModal({
 	}, [open]);
 
 	const handleSubmit = () => {
-		console.log(input);
 		var body = {
 			challengeIdx: data.challengeIdx,
-			// missionSeq: 0,
 			memberIdx: data.memberIdx,
 			comment: input,
 			statusCode: 1,
-			// registMemberIdx: 0,
-			// registDate: '2021-07-19T13:20:33.918Z',
-			// modifyMemberIdx: 0,
-			// modifyDate: '2021-07-19T13:20:33.918Z',
 		};
-		console.log('body: ', body);
 		var config = {
 			method: 'post',
 			url:
@@ -66,14 +58,13 @@ function FeedbackModal({
 		};
 		axios(config)
 			.then((response) => {
-				console.log(response.data);
 				window.alert('저장되었습니다.');
 				refresh();
 				handleModalClose();
 			})
-			.catch((err, asdf) => {
+			.catch((err) => {
 				window.alert('이미 피드백이 등록되어있습니다.');
-				console.log(asdf);
+				console.log(err.response);
 			});
 	};
 	return (

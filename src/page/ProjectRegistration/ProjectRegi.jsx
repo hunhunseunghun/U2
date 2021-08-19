@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { PrjRegiContainer } from './ProjectRegiStyled.jsx';
-import logo from '../../Img/logo.svg';
 import headerIcon from '../../Img/Icons/headerIcon.png';
-import testVid from '../../Img/testVid.mp4';
 import testTumb from '../../Img/no_image.png';
 import VideoModal from '../../component/Modals/Video/VideoModal';
 import { getSingleFileFromBlob } from '../../library/azureBlob.js';
@@ -58,9 +56,6 @@ const ProjectRegi = () => {
 		axios
 			.get(`${process.env.REACT_APP_U2_DB_HOST}/common/code/challengetarget`)
 			.then((res) => {
-				console.log(res.data);
-				console.log('project regi useEffect response: ', res);
-
 				if (Array.isArray(res.data)) {
 					res.data.forEach((ele) => {
 						if (ele.cd === '1') {
@@ -94,11 +89,6 @@ const ProjectRegi = () => {
 			.get(process.env.REACT_APP_U2_DB_HOST + '/Campaign/challengetarget')
 			.then((response) => {
 				const datas = response.data;
-				console.log('video data: ', datas);
-				console.log(
-					'competition videos: ',
-					datas.filter((el) => el.challengeTargetCode === 1),
-				);
 				setCompetitionData((pre) => ({
 					...pre,
 					videos: datas.filter((el) => el.challengeTargetCode === 1),
@@ -120,9 +110,6 @@ const ProjectRegi = () => {
 
 	return (
 		<PrjRegiContainer className="projectregi_contents_wrap">
-			{/*
-        video modal
-         */}
 			<VideoModal
 				src={videoModalProps.src}
 				open={videoModalProps.open}
@@ -139,7 +126,6 @@ const ProjectRegi = () => {
 					<img src={headerIcon} alt="" />
 					<div>대상선택</div>
 				</section>
-				{/* <ModalVideo isOpen={true} videoId={'KGqN8wLdHK4'}></ModalVideo> */}
 				<section className="projectregi_items prjSelect">
 					<section className="projectregi_item">
 						<div className="projectregi_item_innerwrap">
@@ -172,18 +158,6 @@ const ProjectRegi = () => {
 									</p>
 								</div>
 								<div className="contentBot">
-									{/* <div className="projectregi_content_item slide_inactive">
-										<video src={testVid} controls poster={testTumb} />
-										<div>10만 구독자 유튜버 XX  ⁠PPL 광고 영상.</div>
-									</div>
-									<div className="projectregi_content_item slide_inactive">
-										<video src={testVid} autoplay loop muted playsinline />
-										<div>10만 구독자 유튜버 XX  ⁠PPL 광고 영상.</div>
-									</div>
-									<div className="projectregi_content_item slide_inactive">
-										<video src={testVid} controls />
-										<div>10만 구독자 유튜버 XX  ⁠PPL 광고 영상.</div>
-									</div> */}
 									{competitionData.videos.map((videodata) => {
 										return (
 											<div className="projectregi_content_item slide_inactive">

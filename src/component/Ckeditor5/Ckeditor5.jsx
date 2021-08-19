@@ -74,7 +74,6 @@ const Ckeditor = (props) => {
 						TextTransformation,
 						Uploader,
 						SimpleUploadAdapter,
-						// CustomFigureAttributes,
 						LinkTitle,
 					],
 					toolbar: props.toolbar

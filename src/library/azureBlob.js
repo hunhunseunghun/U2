@@ -1,32 +1,7 @@
 import { BlobServiceClient } from '@azure/storage-blob';
 import axios from 'axios';
 const containerName = process.env.REACT_APP_CONTAINER_NAME;
-// const storageAccountName = process.env.REACT_APP_STORAGE_NAME;
 const storageURL = process.env.REACT_APP_STORAGE_URL;
-console.log('container name : ', containerName);
-console.log('storage URL: ', storageURL);
-// const sasToken = process.env.REACT_APP_SAS;
-// // Feature flag - disable storage feature to app if not configured
-// export const isStorageConfigured = () => {
-// 	return !(!storageAccountName || !sasToken);
-// };
-
-// // return list of blobs in container to display
-// const getBlobsInContainer = async (containerClient) => {
-// 	const returnedBlobUrls = [];
-
-// 	// get list of blobs in container
-// 	// eslint-disable-next-line
-// 	for await (const blob of containerClient.listBlobsFlat()) {
-// 		// if image is public, just construct URL
-// 		returnedBlobUrls.push(
-// 			`https://${storageAccountName}.blob.core.windows.net/${containerName}/${blob.name}`,
-// 		);
-// 	}
-
-// 	return returnedBlobUrls;
-// };
-
 const createBlobInContainer = async (containerClient, file, folder) => {
 	// create blobClient for container
 	const blobClient = containerClient.getBlockBlobClient(
@@ -38,22 +13,16 @@ const createBlobInContainer = async (containerClient, file, folder) => {
 		blobHTTPHeaders: {
 			blobContentType: file.type,
 		},
-		onprogress: (progress) => {
-			console.log('progress: ', progress);
-		},
 	};
 
 	// upload file
 	const result = await blobClient.uploadBrowserData(file, options);
-	console.log('result: ', result);
 
 	return result;
-	// await blobClient.setMetadata({ UserName: 'lhj' });
 };
 
 export const getSingleFileFromBlob = (name) => {
 	return `${storageURL}${containerName}/${name}`;
-	// return `https://${storageAccountName}.blob.core.windows.net/${containerName}/${name}`;
 };
 export const delteFileFromBlob = async (name) => {
 	const config = {
@@ -67,7 +36,6 @@ export const delteFileFromBlob = async (name) => {
 	const response = await axios(config);
 	const newSAS = response.data.sasUri.split('?')[1];
 	const blobService = new BlobServiceClient(`${storageURL}?${newSAS}`);
-	// get Container - full public read access
 	const containerClient = blobService.getContainerClient(containerName);
 	try {
 		await containerClient.deleteBlob(name);
@@ -97,7 +65,6 @@ export const singleUploadAndReturnObj = async (files, folder) => {
 	const response = await axios(config);
 	const newSAS = response.data.sasUri.split('?')[1];
 	const blobService = new BlobServiceClient(`${storageURL}?${newSAS}`);
-	// get Container - full public read access
 	const containerClient = blobService.getContainerClient(containerName);
 
 	// upload file
@@ -106,6 +73,5 @@ export const singleUploadAndReturnObj = async (files, folder) => {
 		url: `${storageURL}${containerName}/${folder}/${file.name}`,
 		blobname: `${folder}/${file.name}`,
 	};
-	// get list of blobs in container
 	return returnObj;
 };

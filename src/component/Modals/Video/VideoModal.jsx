@@ -1,10 +1,8 @@
 import { ModalContainer } from './VideoModalStyled';
 import { useState, useEffect } from 'react';
-// import ReactHtmlParser from 'react-html-parser';
 import InnerHTML from 'dangerously-set-html-content';
 import axios from 'axios';
 function Modal({ open, handleModalClose, src }) {
-	console.log('inside video modal src: ', src);
 	const [newSrc, setNewSrc] = useState('');
 	const [srcType, setSrcType] = useState(null);
 	const [tiktok, setTiktok] = useState(null);
@@ -12,18 +10,15 @@ function Modal({ open, handleModalClose, src }) {
 	useEffect(() => {
 		switch (src.split('/')[2]) {
 			case 'youtu.be': {
-				// newSrc = src.split('/')[3]
 				let youtubeid = src.split('/')[3];
 				setNewSrc(`https://www.youtube.com/embed/${youtubeid}`);
 				setSrcType('youtube');
 				break;
 			}
 			case 'www.tiktok.com': {
-				// newSrc= src.split('/')[5]
 				axios
 					.get(`https://www.tiktok.com/oembed?url=${src}`)
 					.then((response) => {
-						console.log('tiktok embed response: ', response);
 						setTiktok(response.data.html);
 					});
 
@@ -65,7 +60,6 @@ function Modal({ open, handleModalClose, src }) {
 									}
 									case 'tiktok': {
 										return (
-											// ReactHtmlParser(tiktok) //이거로 하면 영상 재생이 안됨... 왜 그러는지???
 											<div>
 												<InnerHTML html={tiktok} />
 											</div>

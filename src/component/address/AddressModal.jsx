@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { ModalContainer } from './AddressStyled';
 import DaumPostcode from 'react-daum-postcode';
 const postCodeStyle = {

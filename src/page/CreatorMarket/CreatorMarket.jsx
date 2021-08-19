@@ -8,10 +8,8 @@ import Loader from 'react-loader-spinner';
 import ContentElement from './ContentElement/ContentElement.jsx';
 import bannerImg from '../../Img/cmBannerImg.png';
 import { useSelector } from 'react-redux';
-import { BiLoader } from 'react-icons/bi';
 
 import Pagination2 from '../../component/Pagination/Pagination2.jsx';
-import { paginate } from '../../component/Pagination/paginate.js';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.min.css';
 import 'swiper/components/pagination/pagination.min.css';
@@ -29,22 +27,18 @@ const Main = (props) => {
 	const [tabActive, setTabActive] = useState(0); // 탭 선택 소팅
 	//0: 전체, 1: 공모전, 2: 전문영상 편집자 , 3: 영상 크리에이터/언플루언서, 4: 강사채용
 	const [challenges, setChallengs] = useState(null); // 챌린지 데이터
-	// const [sortedChallenges, setSortedChallenges] = useState([]);
 	const [isLoadingChallenges, setIsLoadingChallenges] = useState(null);
 	const [moreActive, setMoreActive] = useState(false);
-	// const [mobileSize, setMobileSize] = useState(window.innerWidth);
 	const userInfo = useSelector((state) => state.userInfo);
 	const [currentPage, setCurrentPage] = useState(1);
 	const pageSize = 6; //테스트를 위해 한페이지당 4개만 보여줌. 데이터가 많아지면 3단 * 2 = 6개씩 보여줘야함
 	const [totalItems, setTotalItems] = useState(0);
-	// const pagedChallenges = paginate(sortedChallenges, currentPage, pageSize);
-
+	//--------badge 관련
+	const [applies, setApplies] = useState(null);
+	const [submits, setSubmits] = useState(null);
+	const [wishes, setWishes] = useState(null);
+	//----------------------------------
 	// 페이지네이션 -> filter_section 스크롤 이동
-	useEffect(() => {
-		var location =
-			document.querySelector('#creatormarket_filter').offsetTop - 60;
-		window.scrollTo({ top: location, behavior: 'smooth' });
-	}, [currentPage]);
 
 	// mobile size handling
 	//모바일 creator_filter_section
@@ -56,24 +50,10 @@ const Main = (props) => {
 		setMobileSize(window.innerWidth);
 		mobileSize > 900 && setFilterDropdown(false);
 	};
-	useEffect(() => {
-		window.addEventListener('resize', handleResize);
-		return () => {
-			// cleanup
-			window.removeEventListener('resize', handleResize);
-		};
-	}, []);
 
 	//mobile touch slider func---
 
-	//--------badge 관련
-	const [applies, setApplies] = useState(null);
-	const [submits, setSubmits] = useState(null);
-	const [wishes, setWishes] = useState(null);
-	//----------------------------------
-
 	const handleRequestClick = (data) => {
-		// console.log(props);
 		if (!userInfo.email) {
 			if (window.confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?')) {
 				props.history.push('/login');
@@ -91,7 +71,6 @@ const Main = (props) => {
 					`/Campaign/challenge?targetCode=${tabActive}&p=${page}&size=${pageSize}`,
 			)
 			.then((res) => {
-				console.log('paged Challenges: ', res.data);
 				setChallengs(res.data.entities);
 				setTotalItems(res.data.total);
 				setIsLoadingChallenges(false);
@@ -110,7 +89,6 @@ const Main = (props) => {
 					`/Campaign/challenge?targetCode=${tab}&p=${currentPage}&size=${pageSize}`,
 			)
 			.then((res) => {
-				console.log('paged Challenges: ', res.data);
 				setChallengs(res.data.entities);
 				setTotalItems(res.data.total);
 				setIsLoadingChallenges(false);
@@ -125,7 +103,6 @@ const Main = (props) => {
 		setIsLoadingChallenges(true);
 
 		//------------------------badge
-		console.log('token: ', localStorage.getItem('token'));
 		if (localStorage.getItem('token')) {
 			var config = {
 				method: 'get',
@@ -151,7 +128,6 @@ const Main = (props) => {
 					`/Campaign/challenge?targetCode=${tabActive}&p=${currentPage}&size=${pageSize}`,
 			)
 			.then((res) => {
-				console.log('creator market useEffect response: ', res);
 				setChallengs(res.data.entities);
 				setTotalItems(res.data.total);
 				setIsLoadingChallenges(false);
@@ -160,26 +136,19 @@ const Main = (props) => {
 				setIsLoadingChallenges(null);
 				throw err;
 			});
-
-		// console.log('.env 설정: ');
-		// console.log(
-		// 	'process.env.REACT_APP_U2_DB_HOST: ',
-		// 	process.env.REACT_APP_U2_DB_HOST,
-		// );
-		// console.log(
-		// 	'process.env.REACT_APP_HOST_URL: ',
-		// 	process.env.REACT_APP_HOST_URL,
-		// );
-		// console.log(
-		// 	'process.env.REACT_APP_API_URL: ',
-		// 	process.env.REACT_APP_API_URL,
-		// );
-
-		// console.log(
-		// 	'process.env.REACT_APP_GOOGLE_CLIENTID: ',
-		// 	process.env.REACT_APP_GOOGLE_CLIENTID,
-		// );
 	}, []);
+	useEffect(() => {
+		window.addEventListener('resize', handleResize);
+		return () => {
+			// cleanup
+			window.removeEventListener('resize', handleResize);
+		};
+	}, []);
+	useEffect(() => {
+		var location =
+			document.querySelector('#creatormarket_filter').offsetTop - 60;
+		window.scrollTo({ top: location, behavior: 'smooth' });
+	}, [currentPage]);
 	return (
 		<MainContainer className="contents_wrap">
 			<div className="creatormarket_section">
@@ -190,7 +159,6 @@ const Main = (props) => {
 				<div id="creatormarket_filter" className="creatormarket_filter_section">
 					<div className="creatormarket_ft_deco">
 						<div
-							// className="ft_title mobile_view "
 							className={
 								filterDropdown
 									? 'ft_title mobile_view filter_arrow_up'
@@ -357,7 +325,6 @@ const Main = (props) => {
 							{(() => {
 								switch (isLoadingChallenges) {
 									case true: {
-										// return <BiLoader className="BiLoader" />;
 										return (
 											<section className="creaotrmarekt_loading_area">
 												{' '}
@@ -373,7 +340,6 @@ const Main = (props) => {
 										return moreActive
 											? challenges &&
 													challenges.slice(0, 3).map((ele, idx) => {
-														// console.log('ele: ', ele);
 														if (tabActive === 0) {
 															return (
 																<ContentElement
@@ -405,7 +371,6 @@ const Main = (props) => {
 													})
 											: challenges &&
 													challenges.map((ele, idx) => {
-														// console.log('ele: ', ele);
 														if (tabActive === 0) {
 															return (
 																<ContentElement
@@ -454,22 +419,8 @@ const Main = (props) => {
 							freeMode={true}
 							mousewheel={true}
 							keyboard={true}
-							// navigation={true}
 							className="challange_mobile_ele mySwiper"
 						>
-							{/* {challenges.map((ele, idx) => (
-                <ContentElement
-                  challenge={ele}
-                  key={`${ele.challengeIdx}`}
-                  history={props.history}
-                  badgeData={{
-                    applies: applies,
-                    submits: submits,
-                    wishes: wishes,
-                  }}
-                />
-              ))} */}
-
 							{(() => {
 								switch (isLoadingChallenges) {
 									case true: {
@@ -486,7 +437,6 @@ const Main = (props) => {
 									}
 									case false: {
 										return challenges.map((ele, idx) => {
-											// console.log('ele: ', ele);
 											if (tabActive === 0) {
 												return (
 													<SwiperSlide data-hash={`slide${idx}`}>
@@ -535,14 +485,7 @@ const Main = (props) => {
 				{!moreActive && isLoadingChallenges === false && (
 					<Pagination2
 						className="creatormarket_pagenation"
-						itemsCount={
-							// challenges.filter(
-							// 	(challenge) =>
-							// 		challenge.challengeTargetCode === tabActive ||
-							// 		tabActive === 0,
-							// ).length
-							totalItems
-						}
+						itemsCount={totalItems}
 						pageSize={pageSize}
 						handlePageChange={handlePageChange}
 						ref={paginationRef}
@@ -579,16 +522,3 @@ const Main = (props) => {
 };
 
 export default Main;
-
-// <section className="campArea">
-//           <div className="campListWrap">
-//             <div className="campTitle">
-//               <div className="campTitle_top">U2 와 함께한</div>
-//               <div className="campTitle_bottom">스마트한 영상 제작</div>
-//             </div>
-
-//             <div className="campList"></div>
-//           </div>
-
-//           <div className="campSlideWrap">{ <CampaignSlide />}</div>
-//         </section>

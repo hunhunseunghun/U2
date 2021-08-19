@@ -2,12 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-// import DropDown from './DropDown/DropDown.jsx';
 import DropDown from '../../../component/OwnerDropDown/DropDown.jsx';
-// import FileUploader from './FileUploader/FileUploader.jsx';
 import Uploader from '../../../component/Uploader/Uploader.jsx';
-// import EditFileUploader from './EditFileUploader/EditFileUploader.jsx';
-// import QuillTextEditor from './QuillTextEditor/QuillTextEditor.jsx';
 import { RegiConationer } from './VidCreatorRegiStyled';
 import headerIcon from '../../../Img/Icons/headerIcon.png';
 import onlineIcon from '../../../Img/Icons/onlineIcon.png';
@@ -19,8 +15,8 @@ import { ThemeProvider } from '@material-ui/styles';
 import requestBodyGenerator from '../../../library/requestBodyGenerator.js';
 import { validateEmail } from '../../../library/validate.js';
 import axios from 'axios';
-import { TextFile } from '../../../library/getJson';
 import Ckeditor5 from '../../../component/Ckeditor5/Ckeditor5.jsx';
+// import { TextFile } from '../../../library/getJson';
 
 const VidCreatorRegi = (props) => {
 	let history = useHistory();
@@ -44,7 +40,7 @@ const VidCreatorRegi = (props) => {
 	const [meetCode, setMeetCode] = useState(1);
 	//handle date ----------------------------------------------
 	const [startDate, setStartDate] = useState(new Date());
-	const [finishDate, setFinishDate] = useState(new Date());
+	const [finishDate, setFinishDate] = useState(null);
 	const [rewardDate, setRewardDate] = useState(null);
 	//보상일 비활성화
 	const [confirmRewardsDate, SetConfirmRewardsDate] = useState(true);
@@ -100,11 +96,6 @@ const VidCreatorRegi = (props) => {
 	// file uploade ---------------------------------------
 	// const [etcFile, setEtcFile] = useState([]);
 	const [etcFilePath, setEtcFilePath] = useState(null);
-	const [editTargetFile, setEditTargetFile] = useState([]);
-	const [editTargetFilePath, setEditTargetFilePath] = useState(
-		'Choose file to upload',
-	);
-
 	//업로딩 체크
 	const [loading1, setLoading1] = useState(false);
 	const [loading2, setLoading2] = useState(false);
@@ -112,8 +103,6 @@ const VidCreatorRegi = (props) => {
 	//-----------------------------------------------------
 
 	const [onMeet, setOnMeet] = useState(null); //온라인 오프라인 미팅 state 값
-
-	const [blobList, setBlobList] = useState([]);
 	const myStorage = window.localStorage;
 
 	// handle datetime picker theme------------------------------
@@ -131,11 +120,9 @@ const VidCreatorRegi = (props) => {
 
 	const handleCkeditorValue = (event, editor) => {
 		const data = editor.getData();
-		console.log('data: ', data);
 		setCkText(data);
 	};
 	const checkRequiredField = () => {
-		// if(competition && title && (isOnline || isVideoProduction) && (isEmail || isMobile) && )
 		if (loading1 || loading2) {
 			return alert('파일 업로드 중입니다');
 		}
@@ -148,7 +135,6 @@ const VidCreatorRegi = (props) => {
 					: '접수방법을 선택해주십시오',
 			);
 		}
-		console.log('isOnline: ', isOnline);
 		if (isOnline) {
 			if (!(isYoutube || isTiktok || isVimeo)) {
 				return alert('온라인 게시방법을 선택해주십시오');
@@ -216,12 +202,9 @@ const VidCreatorRegi = (props) => {
 				ownerCat: profiles[defaultIdx].cat,
 				company: profiles[defaultIdx].companyName,
 				challengeTargetCode: path === '/videditor' ? 2 : 3,
-				// companyA: organizer,
-				// companyB: sponsor,
 				url: refvidUrl,
 				missionDesc: missionDesc,
 				meetCode: meetCode,
-				// mainImage: posterFile.length > 0 ? posterFile[0].name : null,
 				logo: posterFilePath,
 				fileRef: etcFilePath,
 				shareRequired: isOnline ? (isSnsRequired ? 2 : 1) : 0,
@@ -233,8 +216,6 @@ const VidCreatorRegi = (props) => {
 				dateFin: finishDate,
 				datePub: noticeStart,
 				rewards: rewards,
-				// // challengeDesc: viewRef.current.getAttribute('content_data'),
-				// // challengeDesc: quillText,
 				videos: videos,
 				commentAllowed: isComment,
 				charge: admin,
@@ -247,7 +228,6 @@ const VidCreatorRegi = (props) => {
 			'영상',
 		);
 		// TextFile(body);
-		console.log('config body data', body);
 		var config = {
 			method: 'post',
 			url: process.env.REACT_APP_U2_DB_HOST + '/Campaign/challenge',
@@ -259,7 +239,6 @@ const VidCreatorRegi = (props) => {
 		};
 		axios(config)
 			.then((res) => {
-				console.log('videditorregi response data', res);
 				alert('등록이 완료되었습니다.');
 				setSubmitClicked(false);
 				history.push('/creatormarket');
@@ -287,7 +266,6 @@ const VidCreatorRegi = (props) => {
 
 	useEffect(() => {
 		// props.props.match.params.challengeIdx;
-		console.log('props:', props);
 		if (!userInfo.email) {
 			history.push('/creatormarket');
 		}
@@ -348,21 +326,6 @@ const VidCreatorRegi = (props) => {
 		setOnMeet(false);
 	};
 
-	// 첨부 파일 업로드 로직
-	// const uploadFile = async (e) => {
-	//   const formData = new FormData();
-	//   formData.append("file", uploadFile);
-	//   formData.append("fileName", upLoadFileName);
-	//   try {
-	//     const res = await axios.post(
-	//       "http://locathisIdxlhost:3000/upload",
-	//       formData
-	//     );
-	//     console.log(res);
-	//   } catch (ex) {
-	//     console.log(ex);
-	//   }
-	// };
 	const handleEmailValidation = (email) => {
 		const { isValid, error } = validateEmail(email);
 		if (!isValid) {
@@ -386,7 +349,6 @@ const VidCreatorRegi = (props) => {
 					) : (
 						<div>영상 크리에이터/ 인플루언서 등록</div>
 					)}
-					{/* <div>영상 크리에이터/ 인플루언서 등록</div> */}
 				</section>
 				<section>
 					{path === '/vidcreator' && (
@@ -398,13 +360,6 @@ const VidCreatorRegi = (props) => {
 							보상을 지불해 주십시오.
 						</div>
 					)}
-					{/* <div>
-						해당 영상 제작/편집 프리랜서들에게 단 몇 분만에 연락을 취해 보실 수
-						있습니다. 프로필 정보나 평가 등급, 포트폴리오 자료, 등을 확인해보신
-						다음에, 채팅 서비스를 이용하여 얘기도 나눠 보십시오. 작업 결과를
-						받으면, 그 결과를 확인하여 100% 만족하실 때에만 그 보상을 지불해
-						주십시오.
-					</div> */}
 				</section>
 
 				<section className="videditorregi_items">
@@ -522,19 +477,6 @@ const VidCreatorRegi = (props) => {
 							/>
 						</div>
 					</section>
-					{/* <section className="ele">
-						<div className="menu">* 편집 대상 파일</div>
-						<div className="inputInfo videditor_files_uploader">
-							<div>편집 대상 파일을 올려주세요</div>
-							<EditFileUploader
-								file={editTargetFile}
-								setFile={setEditTargetFile}
-								filePath={editTargetFilePath}
-								setFilePath={setEditTargetFilePath}
-							/>
-						</div>
-					</section> */}
-
 					<section className="ele ">
 						<div className="menu">* 프로젝트 미팅 여부</div>
 						<div className="inputInfo project_meet_type">
@@ -890,7 +832,7 @@ const VidCreatorRegi = (props) => {
 										format="yyyy/MM/dd hh:mm a"
 										disablePast={true}
 										minDate={startDate}
-										minDateMessage={false}
+										minDateMessage={'현 시각 이후부터 가능합니다'}
 										strictCompareDates={true}
 									/>
 								</ThemeProvider>

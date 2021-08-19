@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Pagination2 from '../../../component/Pagination/Pagination2';
 import { paginate } from '../../../component/Pagination/paginate';
@@ -27,19 +26,13 @@ function ChallengeTable({ challengeIdx }) {
 		};
 		axios(config)
 			.then((res) => {
-				console.log('challengeidx response:');
-				console.log(res);
-				console.log(challengeIdx);
-
 				setCount(res.data.total);
 				setPagedSubjects(paginate(res.data.entities, res.data.page, pageSize));
 				setIsLoading(true);
 			})
 			.catch((err) => {
-				console.log('workdetail error');
 				console.log(err);
 			});
-		// setPagedSubjects(paginate(data, page, pageSize));
 	};
 	let handleSelectChange = (changedSize) => {
 		setPageSize(changedSize);
@@ -55,16 +48,11 @@ function ChallengeTable({ challengeIdx }) {
 		};
 		axios(config)
 			.then((res) => {
-				console.log('challengeidx response:');
-				console.log(res);
-				console.log(challengeIdx);
-
 				setCount(res.data.total);
 				setPagedSubjects(paginate(res.data.entities, res.data.page, pageSize));
 				setIsLoading(true);
 			})
 			.catch((err) => {
-				console.log('workdetail error');
 				console.log(err);
 			});
 	};
@@ -76,7 +64,6 @@ function ChallengeTable({ challengeIdx }) {
 				`/Campaign/challengesubmittingxls/${challengeIdx}`,
 			headers: {
 				Authorization: 'Bearer ' + localStorage.getItem('token'),
-				// 'Content-Type': 'application/json',
 			},
 			responseType: 'blob',
 		};
@@ -91,9 +78,8 @@ function ChallengeTable({ challengeIdx }) {
 				document.body.appendChild(link);
 				link.click();
 			})
-			.catch((err, b) => {
-				console.log('err: ', err);
-				console.log('b: ', b);
+			.catch((err) => {
+				console.log(err);
 			});
 	}
 	useEffect(() => {
@@ -109,16 +95,11 @@ function ChallengeTable({ challengeIdx }) {
 		};
 		axios(challengesConfig)
 			.then((res) => {
-				console.log('challengeidx response:');
-				console.log(res);
-				console.log(challengeIdx);
-
 				setCount(res.data.total);
 				setPagedSubjects(paginate(res.data.entities, res.data.page, pageSize));
 				setIsLoading(true);
 			})
 			.catch((err) => {
-				console.log('workdetail error');
 				console.log(err);
 			});
 	}, []);
@@ -188,11 +169,6 @@ function ChallengeTable({ challengeIdx }) {
 						pageSize={pageSize}
 					></Pagination2>
 				)}
-				{/* <Pagination2
-					itemsCount={count}
-					handlePageChange={handlePageChange}
-					pageSize={subjects.pageSize}
-				></Pagination2> */}
 			</div>{' '}
 			<div className="bt_list">
 				<button
