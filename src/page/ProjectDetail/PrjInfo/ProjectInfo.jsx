@@ -1,8 +1,5 @@
-import { useHistory } from 'react-router-dom';
 import { PrjInfoContainer } from './ProjectInfoStyled';
 function ProjectInfo({ challenge }) {
-	const history = useHistory();
-	console.log('projectInfo challenge: ', challenge);
 	switch (
 		challenge.challengeTargetCode //1: 공모전, 2: 전문영상 편집자 , 3: 영상 크리에이터/언플루언서, 4: 강사채용
 	) {

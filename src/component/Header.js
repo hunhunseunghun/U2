@@ -1,15 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useLocation, Link, useHistory } from 'react-router-dom';
-import { API_URL, IMG_URL } from '../const/URL';
 import { useDispatch, useSelector } from 'react-redux';
 import * as baseActions from '../store/base';
 import useBus from 'use-bus';
 import axios from 'axios';
-import DdProfile from './DropDown/DdProfile.jsx';
-const newAPI = process.env.REACT_APP_TEST_API;
 function Header(props) {
 	const history = useHistory();
-	const [mobileYn, setMobileYn] = useState(false);
+	// const [mobileYn, setMobileYn] = useState(false);
 	const [whiteFix, setWhiteFix] = useState(false);
 	const [headerFix, setHeaderFix] = useState(false);
 	const [mobileMenuActive, setMobileMenuActive] = useState(false);
@@ -21,13 +18,12 @@ function Header(props) {
 	const dispatch = useDispatch();
 	const userInfo = useSelector((state) => state.userInfo);
 	useEffect(() => {
-		if (window.innerWidth < 900) {
-			setMobileYn(true);
-		}
+		// if (window.innerWidth < 900) {
+		// 	setMobileYn(true);
+		// }
 		setMobileMenuActive(false);
 		if (location.pathname === '/') {
 			setWhiteFix(true);
-			//console.log(whiteFix);
 		} else {
 			setWhiteFix(false);
 		}
@@ -51,7 +47,6 @@ function Header(props) {
 						},
 					})
 					.then((result) => {
-						console.log(result);
 						dispatch(
 							baseActions.setUserInfo({
 								email: result.data.email,

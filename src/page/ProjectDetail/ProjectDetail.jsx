@@ -5,7 +5,6 @@ import { FaShareSquare } from 'react-icons/fa';
 import KakaoShareButton from '../../library/KakaoShareButton';
 import axios from 'axios';
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
-import topviewEx from '../../Img/topviewEX.png';
 import ReactHtmlParser from 'react-html-parser';
 // import SubmitModal from './Modal/SubmitModal';
 import SubmitModal from '../../component/Modals/Submit/SubmitModal';
@@ -14,7 +13,7 @@ import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { createBrowserHistory } from 'history';
-import { TextFile } from '../../library/getJson';
+// import { TextFile } from '../../library/getJson';
 function ProjectDetail(props) {
 	const history = useHistory();
 	const history2 = createBrowserHistory({ forceRefresh: true });
@@ -44,8 +43,6 @@ function ProjectDetail(props) {
 
 			axios(config)
 				.then((response) => {
-					console.log('response: ');
-					console.log(response.data);
 					alert('챌린지 목록에 추가되었습니다.');
 				})
 				.catch((err) => {
@@ -111,7 +108,6 @@ function ProjectDetail(props) {
 		alert('URL이 복사되었습니다.');
 	};
 	const handleMore = () => {
-		console.log('challenge: ', challenge);
 		if (challenge.challengeJustBefore !== 0) {
 			history2.push(`/prjdetail/${challenge.challengeJustBefore}`);
 		} else {
@@ -158,14 +154,12 @@ function ProjectDetail(props) {
 			};
 			axios(config)
 				.then((response) => {
-					console.log('new comment: ', response.data);
 					axios
 						.get(
 							process.env.REACT_APP_U2_DB_HOST +
 								`/Campaign/challengecomments/${challengeIdx}`,
 						)
 						.then((response) => {
-							console.log('comments: ', response.data);
 							setInputComment('');
 							let data = response.data;
 							setComments(data);
@@ -184,7 +178,6 @@ function ProjectDetail(props) {
 		}
 	};
 	const handleShare = () => {
-		console.log('share clicked');
 		var config = {
 			method: 'put',
 			url:
@@ -193,7 +186,7 @@ function ProjectDetail(props) {
 		};
 		axios(config)
 			.then((response) => {
-				console.log('share response: ', response);
+				console.log('share success');
 			})
 			.catch((err) => {
 				console.log(err.response);
@@ -207,7 +200,6 @@ function ProjectDetail(props) {
 					`/Campaign/challenge/${challengeIdx}`, //sample data, should be challengeIdx.
 			)
 			.then((response) => {
-				console.log('response.data: ', response.data);
 				setChallenge(response.data);
 				setIsDataReady(true);
 			})
@@ -220,7 +212,6 @@ function ProjectDetail(props) {
 					`/Campaign/challengecomments/${challengeIdx}`,
 			)
 			.then((response) => {
-				console.log('comments: ', response.data);
 				var comments = response.data;
 				let newForm = comments.map((el) => {
 					return { ...el, isReply: false };
@@ -303,7 +294,6 @@ function ProjectDetail(props) {
 						id="prjdetail_sns_text"
 						onClick={() => {
 							setIsShareActive(true);
-							console.log(isShareActive);
 						}}
 					>
 						공유
